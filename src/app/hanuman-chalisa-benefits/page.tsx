@@ -1,0 +1,114 @@
+import React from "react";
+import Link from "next/link";
+import CarvedDivider from "@/components/CarvedDivider";
+import { BENEFITS_DATA } from "@/data/benefits";
+
+export const metadata = {
+  title: "Hanuman Chalisa Benefits — Recitation Advantages by Life Situation",
+  description: "Discover the spiritual, psychological, and physical benefits of reciting Hanuman Chalisa. Situation-based guides for career, health, studies, and protection.",
+};
+
+export default function BenefitsHubPage() {
+  const benefitsList = Object.values(BENEFITS_DATA);
+
+  return (
+    <div className="space-y-10 max-w-5xl mx-auto">
+      
+      {/* Header */}
+      <div className="text-center space-y-3">
+        <span className="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+          Spiritual Power (फलश्रुति)
+        </span>
+        <h2 className="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+          Hanuman Chalisa Benefits & Blessings
+        </h2>
+        <p className="text-xs text-charcoal-brown/70 max-w-2xl mx-auto leading-relaxed">
+          Reciting the Hanuman Chalisa brings spiritual strength, peace, and protection. Devotees chant specific verses to focus on career growth, physical healing, studies, protection from negative energies, or relationship harmony.
+        </p>
+      </div>
+
+      <CarvedDivider icon="✨" />
+
+      {/* AdSense Top Slot */}
+      <div className="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
+        Ad Slot — Benefits Page Top (Layout Stable Skeleton)
+      </div>
+
+      {/* Grid of Benefit Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {benefitsList.map((benefit) => (
+          <div
+            key={benefit.slug}
+            className="p-6 bg-stone-ivory border border-brass-gold/30 hover:border-marigold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-4"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl p-2 bg-marigold/10 rounded-full border border-marigold/20">
+                  {benefit.icon}
+                </span>
+                <h3 className="font-serif-display text-lg font-bold text-maroon-deep leading-snug">
+                  {benefit.title}
+                </h3>
+              </div>
+              
+              <p className="text-xs text-brass-gold uppercase font-bold tracking-wider">
+                Focus: {benefit.situation}
+              </p>
+              
+              <p className="text-xs sm:text-sm text-charcoal-brown/85 leading-relaxed line-clamp-3">
+                {benefit.description}
+              </p>
+            </div>
+
+            <div className="pt-2 border-t border-brass-gold/10 flex justify-between items-center">
+              <span className="text-[10px] font-bold text-charcoal-brown/50">
+                Chaupai {benefit.targetVerseNumber} Reference
+              </span>
+              <Link
+                href={`/hanuman-chalisa-benefits/${benefit.slug}`}
+                className="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-4 py-1.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-colors duration-200"
+              >
+                Read Guide &rarr;
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <CarvedDivider icon="🕉️" />
+
+      {/* General Benefits Summary */}
+      <section className="bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-8 rounded-lg space-y-6">
+        <h3 className="font-serif-display text-xl text-marigold uppercase tracking-wider text-center font-bold">
+          Why Recite Hanuman Chalisa Daily?
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm leading-relaxed text-stone-ivory/90">
+          <div className="space-y-2">
+            <h4 className="font-bold text-marigold uppercase tracking-wide">
+              1. Overcoming Shani (Saturn) Influence
+            </h4>
+            <p className="text-xs text-stone-ivory/80">
+              According to scriptures, Lord Saturn (Shani Dev) promised Lord Hanuman that he would never trouble Hanuman&apos;s devotees. Chating the Chalisa on Tuesdays and Saturdays protects devotees from the harsh phases of Saturn (Sade Sati, Dhayya).
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <h4 className="font-bold text-marigold uppercase tracking-wide">
+              2. Cultivating Humility (Bhakti)
+            </h4>
+            <p className="text-xs text-stone-ivory/80">
+              Despite having immeasurable strength, Hanuman is the epitome of absolute humility and devotion to Lord Rama. Reciting his verses eliminates ego, helps control anger, and opens the heart to devotion and kindness.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* AdSense Footer Slot */}
+      <div className="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
+        Ad Slot — Benefits Page Bottom (Layout Stable Skeleton)
+      </div>
+
+    </div>
+  );
+}

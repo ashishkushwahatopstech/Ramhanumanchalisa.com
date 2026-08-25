@@ -1,0 +1,321 @@
+{
+  "lang": "te",
+  "title": "శ్రీ హనుమాన్ చాలీసా — తెలుగు లిపి, అనువాదం, పిడిఎఫ్ మరియు ఆడియో",
+  "metaDescription": "శ్రీ హనుమాన్ చాలీసా తెలుగు సాహిత్యం మరియు ప్రతి పద్యం యొక్క సరళ తెలుగు అర్థం. ఇక్కడ ఆడియో మరియు పిడిఎఫ్ ఉచితంగా లభిస్తాయి.",
+  "h1": "శ్రీ హనుమాన్ చాలీసా",
+  "intro": "గోస్వామి తులసీదాస్ రచించిన ఈ 40 శ్లోకాలు హనుమంతుని శౌర్యం, భక్తి మరియు దివ్య శక్తులను కీర్తిస్తాయి.",
+  "meaningSummary": "హనుమాన్ చాలీసా పఠించడం వల్ల మనశ్శాంతి లభిస్తుంది, భయాలు తొలగిపోతాయి మరియు అన్ని రకాల ఆటంకాలు నివారించబడతాయి.",
+  "verses": [
+    {
+      "id": "doha-01",
+      "verse_number": "Doha 1",
+      "text": "శ్రీగురు చరన సరోజ రజ,\nనిజ మన ముకురు సుధారి।\nబరనఉం రఘుబర బిమల జసు,\nజో దాయకు ఫల చారి।।",
+      "transliteration": "Shri Guru charan saroj raj,\nNij man mukuru sudhari\nBarnau Raghubar bimal jasu,\nJo dayaku phal chari",
+      "meaning": "With the dust of my Guru's lotus feet, I cleanse the mirror of my mind and describe the pure glory of Raghubar (Lord Rama), which grants the four fruits."
+    },
+    {
+      "id": "doha-02",
+      "verse_number": "Doha 2",
+      "text": "బుద్ధిహీన తను జానికే,\nసుమిరౌం పవన-కుమార।\nబల బుద్ధి బిద్యా దేహు మోహిం,\nహరహు కలేస బికార।।",
+      "transliteration": "Buddhiheen tanu janike,\nSumirou pavan-kumar\nBal buddhi bidya dehu mohin,\nHarahu kales bikar",
+      "meaning": "Knowing myself to be lacking in intelligence, I remember the son of the wind. Please grant me strength, wisdom, and knowledge, and remove my suffering and impurities."
+    },
+    {
+      "id": "chaupai-01",
+      "verse_number": 1,
+      "text": "జయ హనుమాన\nజ్ఞాన గున సాగర।\nజయ కపీస\nతిహుం లోక ఉజాగర।।",
+      "transliteration": "Jai Hanuman\nGyaan gun saagar\nJai Kapis\nTihun lok ujagar",
+      "meaning": "Hail Hanuman, ocean of knowledge and virtues. Hail the lord of monkeys, who illuminates the three worlds."
+    },
+    {
+      "id": "chaupai-02",
+      "verse_number": 2,
+      "text": "రామ దూత\nఅతులిత బల ధామా।\nఅంజని-పుత్ర\nపవనసుత నామా।।",
+      "transliteration": "Ram doot\nAtulit bal dhama\nAnjani-putra\nPavansut nama",
+      "meaning": "You are Rama's messenger, repository of incomparable strength. You are known as the son of Anjani and the son of the wind."
+    },
+    {
+      "id": "chaupai-03",
+      "verse_number": 3,
+      "text": "మహాబీర\nబిక్రమ బజరంగీ।\nకుమతి నివార\nసుమతి కే సంగీ।।",
+      "transliteration": "Mahavir\nBikram bajrangi\nKumati nivar\nSumati ke sangi",
+      "meaning": "O great hero of immense valor, with a body strong as a thunderbolt, you remove evil thoughts and are the companion of good thoughts."
+    },
+    {
+      "id": "chaupai-04",
+      "verse_number": 4,
+      "text": "కంచన బరన బిరాజ సుబేసా।\nకానన కుండల కుంచిత కేసా।।",
+      "transliteration": "Kanchan varan viraj subesa\nKanan kundal kunchit kesa",
+      "meaning": "Your complexion is golden, and you shine in beautiful attire, with earrings in your ears and curly hair."
+    },
+    {
+      "id": "chaupai-05",
+      "verse_number": 5,
+      "text": "హాథ బజ్ర ఔ ధ్వజా బిరాజై।\nకాంధే మూంజ జనేఊ సాజై।।",
+      "transliteration": "Hath bajra au dhvaja virajai\nKandhe moonj janeoo sajai",
+      "meaning": "In your hand shine the mace and flag, and on your shoulder rests the sacred thread."
+    },
+    {
+      "id": "chaupai-06",
+      "verse_number": 6,
+      "text": "శంకర సువన కేసరీ నందన।\nతేజ ప్రతాప మహా జగ బందన।।",
+      "transliteration": "Shankar suvan Kesari nandan\nTej pratap maha jag bandan",
+      "meaning": "You are like Shiva, son and delight of Kesari, possessing great radiance and glory, saluted by the entire world.\n"
+    },
+    {
+      "id": "chaupai-07",
+      "verse_number": 7,
+      "text": "విద్యావాన గుణీ అతి చాతుర।\nరామ కాజ కరిబే కో ఆతుర।।",
+      "transliteration": "Vidyavan guni ati chatur\nRam kaaj karibe ko aatur",
+      "meaning": "You are highly learned, virtuous, and extremely clever, and are eager to do Rama's work.\n"
+    },
+    {
+      "id": "chaupai-08",
+      "verse_number": 8,
+      "text": "ప్రభు చరిత్ర సునిబే కో రసియా।\nరామ లఖన సీతా మన బసియా।।",
+      "transliteration": "Prabhu charitra sunibe ko rasiya\nRam lakhan Sita man basiya",
+      "meaning": "You are passionate about listening to the Lord's stories, and Rama, Lakshmana, and Sita dwell in your heart.\n"
+    },
+    {
+      "id": "chaupai-09",
+      "verse_number": 9,
+      "text": "సూక్ష్మ రూప ధరి సియహిం దిఖావా।\nబికట రూప ధరి లంక జరావా।।",
+      "transliteration": "Sukshma roop dhari siyahin dikhava\nBikat roop dhari Lanka jarava",
+      "meaning": "Taking a tiny form, you appeared before Sita; assuming a gigantic fierce form, you burned Lanka."
+    },
+    {
+      "id": "chaupai-10",
+      "verse_number": 10,
+      "text": "భీమ రూప ధరి అసుర సంహారే।\nరామచంద్ర కే కాజ సంవారే।।",
+      "transliteration": "Bhima roop dhari asur sanhare\nRamchandra ke kaaj sanvare",
+      "meaning": "Taking a terrible form, you destroyed demons and accomplished Rama's tasks perfectly.\n"
+    },
+    {
+      "id": "chaupai-11",
+      "verse_number": 11,
+      "text": "లాయ సజీవన లఖన జియాయే।\nశ్రీ రఘుబీర హరషి ఉర లాయే।।",
+      "transliteration": "Laaye sajeevan Lakhan jiyaye\nShri Raghubir harashi ur laye",
+      "meaning": "You brought the Sanjeevani herb and revived Lakshmana; Rama joyfully embraced you to his chest."
+    },
+    {
+      "id": "chaupai-12",
+      "verse_number": 12,
+      "text": "రఘుపతి కీన్హీ బహుత బड़ాఈ।\nతుమ మమ ప్రియ భరతహి సమ భాఈ।।",
+      "transliteration": "Raghupati kinhi bahut badai\nTum mam priya Bharatahi sam bhai",
+      "meaning": "The Lord of the Raghu dynasty praised you greatly, saying \"You are as dear to me as my brother Bharata.\"\n"
+    },
+    {
+      "id": "chaupai-13",
+      "verse_number": 13,
+      "text": "సహస బదన తుమ్హరో జస గావైం।\nఅస కహి శ్రీపతి కంఠ లగావైం।।",
+      "transliteration": "Sahas badan tumharo jas gavain\nAs kahi Shripati kanth lagavain",
+      "meaning": "\"Even the thousand-mouthed serpent (Shesha) sings your glories,\" saying thus, the Lord embraced you.\n"
+    },
+    {
+      "id": "chaupai-14",
+      "verse_number": 14,
+      "text": "సనకాదిక బ్రహ్మాది మునీసా।\nనారద సారద సహిత అహీసా।।",
+      "transliteration": "Sanakadik Brahmadi munisa\nNarad Sarad sahit ahisa",
+      "meaning": "The four Kumaras, Brahma and other gods, great sages, Narada, Saraswati, along with Shesha (all sing your praises)."
+    },
+    {
+      "id": "chaupai-15",
+      "verse_number": 15,
+      "text": "జమ కుబేర దిగపాల జహాం తే।\nకబి కోబిద కహి సకే కహాం తే।।",
+      "transliteration": "Yam Kuber digpal jahan te\nKabi kobid kahi sake kahan te",
+      "meaning": "Yama, Kubera, the guardians of directions - from where can poets and scholars even begin to describe your glory?"
+    },
+    {
+      "id": "chaupai-16",
+      "verse_number": 16,
+      "text": "తుమ ఉపకార సుగ్రీవహిం కీన్హా।\nరామ మిలాయ రాజ పద దీన్హా।।",
+      "transliteration": "Tum upkar Sugrivahin kinha\nRam milay raj pad dinha",
+      "meaning": "You did a great favor to Sugriva by uniting him with Rama and helping him obtain his kingdom."
+    },
+    {
+      "id": "chaupai-17",
+      "verse_number": 17,
+      "text": "తుమ్హరో మంత్ర బిభీషన మానా।\nలంకేశ్వర భఏ సబ జగ జానా।।",
+      "transliteration": "Tumharo mantra Vibhishan mana\nLankeshwar bhaye sab jag jana",
+      "meaning": "Vibhishana accepted your counsel and became the Lord of Lanka, as the entire world knows."
+    },
+    {
+      "id": "chaupai-18",
+      "verse_number": 18,
+      "text": "జుగ సహస్ర జోజన పర భానూ।\nలీల్యో తాహి మధుర ఫల జానూ।।",
+      "transliteration": "Jug sahastra jojan par bhanu\nLeelyo tahi madhur phal janu",
+      "meaning": "The sun, located thousands of yojanas away, you leaped toward it, thinking it was a sweet fruit.\n"
+    },
+    {
+      "id": "chaupai-19",
+      "verse_number": 19,
+      "text": "ప్రభు ముద్రికా మేలి ముఖ మాహీం।\nజలధి లాంఘి గయే అచరజ నాహీం।।",
+      "transliteration": "Prabhu mudrika meli mukh mahin\nJaladhi langhi gaye acharaj nahin",
+      "meaning": "Placing the Lord's ring in your mouth, you crossed the ocean - this is no surprise.\n"
+    },
+    {
+      "id": "chaupai-20",
+      "verse_number": 20,
+      "text": "దుర్గమ కాజ జగత కే జేతే।\nసుగమ అనుగ్రహ తుమ్హరే తేతే।।",
+      "transliteration": "Durgam kaaj jagat ke jete\nSugam anugrah tumhare tete",
+      "meaning": "Whatever difficult tasks exist in the world, they become easy with your grace.\n"
+    },
+    {
+      "id": "chaupai-21",
+      "verse_number": 21,
+      "text": "రామ దుఆరే తుమ రఖవారే।\nహోత న ఆజ్ఞా బిను పైసారే।।",
+      "transliteration": "Ram duare tum rakhavare\nHot na agya binu paisare",
+      "meaning": "You are the guardian at Rama's door; no one can enter without your permission."
+    },
+    {
+      "id": "chaupai-22",
+      "verse_number": 22,
+      "text": "సబ సుఖ లహై తుమ్హారీ సరనా।\nతుమ రక్షక కాహూ కో డర నా।।",
+      "transliteration": "Sab sukh lahai tumhari sarna\nTum rakshak kahu ko dar na",
+      "meaning": "Taking refuge in you, one obtains all happiness; when you are the protector, there is no fear.\n"
+    },
+    {
+      "id": "chaupai-23",
+      "verse_number": 23,
+      "text": "ఆపన తేజ సమ్హారో ఆపై।\nతీనోం లోక హాంక తేం కాంపై।।",
+      "transliteration": "Aapan tej samharo aapai\nTeenon lok hank ten kanpai",
+      "meaning": "You alone can control your own power; the three worlds tremble at your roar."
+    },
+    {
+      "id": "chaupai-24",
+      "verse_number": 24,
+      "text": "భూత పిసాచ నికట నహిం ఆవై।\nమహాబీర జబ నామ సునావై।।",
+      "transliteration": "Bhoot pisach nikat nahin avai\nMahavir jab nam sunavai",
+      "meaning": "Ghosts and demons do not come near when the name of Mahavir (Hanuman) is uttered."
+    },
+    {
+      "id": "chaupai-25",
+      "verse_number": 25,
+      "text": "నాసై రోగ హరై సబ పీరా।\nజపత నిరంతర హనుమత బీరా।।",
+      "transliteration": "Nasai rog harai sab peera\nJapat nirantar Hanumat beera",
+      "meaning": "Diseases are destroyed and all pain is removed by continuously chanting the name of the heroic Hanuman.\n"
+    },
+    {
+      "id": "chaupai-26",
+      "verse_number": 26,
+      "text": "సంకట తేం హనుమాన ఛుड़ావై।\nమన క్రమ బచన ధ్యాన జో లావై।।",
+      "transliteration": "Sankat ten Hanuman chhudavai\nMan kram bachan dhyan jo lavai",
+      "meaning": "Hanuman liberates from crises those who meditate on him with mind, action, and speech.\n"
+    },
+    {
+      "id": "chaupai-27",
+      "verse_number": 27,
+      "text": "సబ పర రామ తపస్వీ రాజా।\nతిన కే కాజ సకల తుమ సాజా।।",
+      "transliteration": "Sab par Ram tapasvi raja\nTin ke kaaj sakal tum saja",
+      "meaning": "Ram is the supreme king among ascetics, and you have accomplished all his tasks.\n"
+    },
+    {
+      "id": "chaupai-28",
+      "verse_number": 28,
+      "text": "ఔర మనోరథ జో కోఈ లావై।\nసోఈ అమిత జీవన ఫల పావై।।",
+      "transliteration": "Aur manorath jo koi lavai\nSoi amit jivan phal pavai",
+      "meaning": "And whatever desire anyone harbors, that person obtains unlimited fruits of life.\n"
+    },
+    {
+      "id": "chaupai-29",
+      "verse_number": 29,
+      "text": "చారోం జుగ పరతాప తుమ్హారా।\nహై పరసిద్ధ జగత ఉజియారా।।",
+      "transliteration": "Charon jug partap tumhara\nHai parsiddh jagat ujiyara",
+      "meaning": "Your glory is renowned throughout the four ages and illuminates the world.\n"
+    },
+    {
+      "id": "chaupai-30",
+      "verse_number": 30,
+      "text": "సాధు సంత కే తుమ రఖవారే।\nఅసుర నికందన రామ దులారే।।",
+      "transliteration": "Sadhu sant ke tum rakhavare\nAsur nikandan Ram dulare",
+      "meaning": "You are the protector of saints and sages, destroyer of demons, and Rama's beloved.\n"
+    },
+    {
+      "id": "chaupai-31",
+      "verse_number": 31,
+      "text": "అష్ట సిద్ధి నౌ నిధి కే దాతా।\nఅస బర దీన జానకీ మాతా।।",
+      "transliteration": "Ashta siddhi nau nidhi ke data\nAs bar deen Janaki mata",
+      "meaning": "Mother Sita gave you the boon of being the giver of the eight siddhis and nine nidhis."
+    },
+    {
+      "id": "chaupai-32",
+      "verse_number": 32,
+      "text": "రామ రసాయన తుమ్హరే పాసా।\nసదా రహో రఘుపతి కే దాసా।।",
+      "transliteration": "Ram rasayan tumhare pasa\nSada raho Raghupati ke dasa",
+      "meaning": "The elixir of devotion to Rama is with you; may you always remain Rama's servant.\n"
+    },
+    {
+      "id": "chaupai-33",
+      "verse_number": 33,
+      "text": "తుమ్హరే భజన రామ కో పావై।\nజనమ జనమ కే దుఖ బిసరావై।।",
+      "transliteration": "Tumhare bhajan Ram ko pavai\nJanam janam ke dukh bisaravai",
+      "meaning": "Through devotion to you, one attains Rama and forgets the sorrows of countless births.\n"
+    },
+    {
+      "id": "chaupai-34",
+      "verse_number": 34,
+      "text": "అంత కాల రఘుబర పుర జాఈ।\nజహాం జన్మ హరిభక్త కహాఈ।।",
+      "transliteration": "Ant kaal Raghubar pur jai\nJahan janam Haribhakt kahai",
+      "meaning": "At the end time, one goes to Rama's abode, where one is born and known as a devotee of Hari.\n"
+    },
+    {
+      "id": "chaupai-35",
+      "verse_number": 35,
+      "text": "ఔర దేవతా చిత్త న ధరఈ।\nహనుమత సేఇ సర్వ సుఖ కరఈ।।",
+      "transliteration": "Aur devata chitt na dharai\nHanumat sei sarva sukh karai",
+      "meaning": "One need not keep other deities in mind; serving Hanuman alone creates all happiness.\n"
+    },
+    {
+      "id": "chaupai-36",
+      "verse_number": 36,
+      "text": "సంకట కటై మిటై సబ పీరా।\nజో సుమిరై హనుమత బలబీరా।।",
+      "transliteration": "Sankat katai mitai sab peera\nJo sumirai Hanumat balbeera",
+      "meaning": "Crises are removed and all suffering is destroyed for one who remembers the mighty hero Hanuman.\n"
+    },
+    {
+      "id": "chaupai-37",
+      "verse_number": 37,
+      "text": "జై జై జై హనుమాన గోసాఈం।\nకృపా కరహు గురుదేవ కీ నాఈం।।",
+      "transliteration": "Jai jai jai Hanuman Gosain\nKripa karahu gurudev ki nain",
+      "meaning": "Hail, hail, hail Lord Hanuman! Please bestow your grace like a divine guru.\n"
+    },
+    {
+      "id": "chaupai-38",
+      "verse_number": 38,
+      "text": "జో సత బార పాఠ కర కోఈ।\nఛూటహి బంది మహా సుఖ హోఈ।।",
+      "transliteration": "Jo sat baar path kar koi\nChhutahi bandi maha sukh hoi",
+      "meaning": "Whoever recites this a hundred times is freed from bondage and attains great happiness.\n"
+    },
+    {
+      "id": "chaupai-39",
+      "verse_number": 39,
+      "text": "జో యహ పढ़ై హనుమాన చాలీసా।\nహోయ సిద్ధి సాఖీ గౌరీసా।।",
+      "transliteration": "Jo yah padhai Hanuman Chalisa\nHoye siddhi sakhi Gaurisa",
+      "meaning": "One who recites this Hanuman Chalisa attains accomplishment/success, with Lord Shiva as witness.\n"
+    },
+    {
+      "id": "chaupai-40",
+      "verse_number": 40,
+      "text": "తులసీదాస సదా హరి చేరా।\nకీజై నాథ హృదయ మహం డేరా।।",
+      "transliteration": "Tulsidas sada Hari chera\nKeejai nath hriday mahan dera",
+      "meaning": "Tulsidas is always a servant of Hari; O Lord, make your dwelling in my heart.\n"
+    },
+    {
+      "id": "doha-closing",
+      "verse_number": "Doha Closing",
+      "text": "పవనతనయ సంకట హరన,\nమంగల మూరతి రూప।\nరామ లఖన సీతా సహిత,\nహృదయ బసహు సుర భూప।।",
+      "transliteration": "Pavantanay sankat haran,\nMangal murti roop\nRam lakhan Sita sahit,\nHriday basahu sur bhoop",
+      "meaning": "O son of the wind, remover of crises, of auspicious form! Along with Rama, Lakshmana, and Sita, please dwell in my heart, O king of gods."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "హనుమాన్ చాలీసా ఎవరు రాశారు?",
+      "answer": "హనుమాన్ చాలీసాను 16వ శతాబ్దంలో ప్రసిద్ధ కవి గోస్వామి తులసీదాస్ రచించారు."
+    },
+    {
+      "question": "హనుమాన్ చాలీసా పఠించడం వల్ల కలిగే ప్రయోజనాలు ఏమిటి?",
+      "answer": "ఇది మనశ్శాంతిని ఇస్తుంది, భయాలను తొలగిస్తుంది మరియు కష్టాలను అధిగమించడానికి ధైర్యాన్ని ఇస్తుంది."
+    }
+  ]
+}
