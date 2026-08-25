@@ -15,7 +15,7 @@ const {
 } = Astro.props;
 
 const currentYear = new Date().getFullYear();
-const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_GA_ID;
+const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_GA_ID || "G-VBBLMPSKY2";
 ---
 
 <!doctype html>
