@@ -103,6 +103,7 @@ interface SyncedAudioPlayerProps {
 export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: SyncedAudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const playerRef = useRef<HTMLDivElement | null>(null);
   
   const [tracks, setTracks] = useState<AudioTrack[]>(DEFAULT_TRACKS);
   const [activeTrackId, setActiveTrackId] = useState<string>(defaultTrackId);
@@ -112,6 +113,9 @@ export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: Synced
   const [volume, setVolume] = useState<number>(0.8);
   const [speed, setSpeed] = useState<number>(1);
   const [autoScroll, setAutoScroll] = useState<boolean>(true);
+
+  const [showMiniPlayer, setShowMiniPlayer] = useState<boolean>(false);
+  const [isDismissed, setIsDismissed] = useState<boolean>(false);
 
   const activeTrack = tracks.find((t) => t.id === activeTrackId) || tracks[0];
 
@@ -137,6 +141,7 @@ export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: Synced
     setTimestamps(generated);
     setCurrentTime(0);
     setActiveVerseId("");
+    setIsDismissed(false); // Reset dismissal on track switch
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       if (isPlaying) {
@@ -301,9 +306,48 @@ export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: Synced
     }
   };
 
+  useEffect(() => {
+    if (isDismissed) {
+      setShowMiniPlayer(false);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Show mini-player if main player is out of view AND audio is playing/started
+        setShowMiniPlayer(!entry.isIntersecting && (isPlaying || currentTime > 0));
+      },
+      { threshold: 0.05 }
+    );
+
+    const currentRef = playerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [isPlaying, currentTime, isDismissed]);
+
+  const handleCloseMiniPlayer = () => {
+    setIsDismissed(true);
+    setShowMiniPlayer(false);
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      setIsPlaying(false);
+    }
+  };
+
   const handlePlayPause = () => {
     const audio = audioRef.current;
     if (!audio) return;
+    if (isDismissed) {
+      setIsDismissed(false); // Reset dismissal on manual play toggle
+    }
     if (isPlaying) {
       audio.pause();
       setIsPlaying(false);
@@ -367,7 +411,8 @@ export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: Synced
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 border-2 border-brass-gold/30 bg-stone-ivory p-4 sm:p-6 rounded-lg shadow-sm">
+    <>
+      <div ref={playerRef} className="flex flex-col md:flex-row gap-6 border-2 border-brass-gold/30 bg-stone-ivory p-4 sm:p-6 rounded-lg shadow-sm">
       
       {/* 1. Synced Lyrics Sidebar / Display */}
       <div className="flex-1 flex flex-col h-[550px] border border-brass-gold/20 rounded bg-stone-ivory/50">
@@ -554,5 +599,53 @@ export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: Synced
       </div>
 
     </div>
+
+    {/* Floating Hover Mini-Player */}
+    {showMiniPlayer && (
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-maroon-deep text-stone-ivory border-t-2 border-brass-gold px-4 py-3 shadow-lg no-print flex items-center justify-between gap-4 max-w-lg mx-auto sm:bottom-4 sm:right-6 sm:left-auto sm:max-w-sm sm:rounded-lg sm:border-2">
+        {/* Play/Pause Button */}
+        <button
+          onClick={handlePlayPause}
+          className="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep p-2 rounded-full border border-brass-gold shadow-sm transition-colors duration-200 flex items-center justify-center w-10 h-10 shrink-0 select-none cursor-pointer"
+        >
+          <span className="text-sm font-bold">{isPlaying ? "⏸️" : "▶️"}</span>
+        </button>
+
+        {/* Track info / Seek Slider */}
+        <div className="flex-grow min-w-0 flex flex-col gap-1">
+          <div className="flex justify-between items-center text-[10px] tracking-wider text-marigold font-bold truncate">
+            <span className="truncate uppercase font-serif-display">{activeTrack.name}</span>
+            <span className="font-mono text-stone-ivory/60 shrink-0 ml-2">
+              {formatTime(currentTime)} / {formatTime(activeTrack.duration)}
+            </span>
+          </div>
+          
+          {/* Mini progress slider */}
+          <input
+            type="range"
+            min="0"
+            max={activeTrack.duration}
+            value={currentTime}
+            onChange={(e) => {
+              const time = parseFloat(e.target.value);
+              setCurrentTime(time);
+              if (audioRef.current) audioRef.current.currentTime = time;
+            }}
+            className="w-full h-1 bg-stone-ivory/20 rounded-lg appearance-none cursor-pointer accent-marigold"
+          />
+        </div>
+
+        {/* Close Button */}
+        <button
+          onClick={handleCloseMiniPlayer}
+          className="text-stone-ivory/60 hover:text-stone-ivory font-bold text-lg px-2 py-1 shrink-0 transition-all duration-200 hover:scale-110 cursor-pointer"
+          title="Stop and Close Player"
+          aria-label="Close player"
+        >
+          &times;
+        </button>
+      </div>
+    )}
+  </>
   );
 }
