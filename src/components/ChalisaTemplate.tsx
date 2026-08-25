@@ -32,7 +32,7 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
     <div className="space-y-12">
       
       {/* 1. Garbhagriha Hero Section (Sanctum) */}
-      <section className="relative overflow-hidden w-full -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 bg-gradient-to-b from-marigold/5 to-transparent border-b border-brass-gold/10">
+      <section className="relative overflow-hidden w-full bg-gradient-to-b from-marigold/5 to-transparent border border-brass-gold/20 rounded-lg shadow-sm max-w-4xl mx-auto">
 
         {/* Content Wrapper */}
         <div className="relative z-10 max-w-4xl mx-auto py-8 space-y-6 text-center">
