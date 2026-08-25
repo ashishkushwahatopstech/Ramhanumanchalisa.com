@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import CarvedDivider from "@/components/CarvedDivider";
 import SyncedAudioPlayer from "@/components/SyncedAudioPlayer";
 import { ScriptureVerse } from "@/types/scripture";
@@ -186,7 +185,7 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
             <li><strong>Dissolve Business Obstacles</strong>: Clears blockages in career progression or stalled financial works.</li>
           </ul>
           <p className="text-xs pt-2">
-            For a more comprehensive look at ritual benefits, visit our dedicated <Link href="/hanuman-chalisa-benefits" className="text-vermilion hover:underline font-bold">Hanuman Chalisa Benefits Guide</Link>.
+            For a more comprehensive look at ritual benefits, visit our dedicated <a href="/hanuman-chalisa-benefits" className="text-vermilion hover:underline font-bold">Hanuman Chalisa Benefits Guide</a>.
           </p>
         </section>
 
@@ -199,12 +198,12 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
             The legendary playback singer **Hariharan** has recorded one of the most spiritually stirring renditions of the Sankat Mochan Hanuman Ashtak. His calm vocal delivery combined with classical raagas creates a deep meditative experience.
           </p>
           <div className="pt-2">
-            <Link
+            <a
               href="/hanuman-chalisa-audio-mp3#hariharan-ashtak"
               className="inline-block bg-marigold hover:bg-vermilion text-maroon-deep hover:text-stone-ivory px-4 py-2 rounded text-xs font-bold uppercase transition-colors"
             >
               Listen to Hariharan&apos;s Rendition &rarr;
-            </Link>
+            </a>
           </div>
         </section>
 
@@ -253,21 +252,21 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
             Related Devotional Chants (संबंधित पाठ)
           </h4>
           <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold">
-            <Link href="/" className="text-vermilion hover:text-marigold underline">
+            <a href="/" className="text-vermilion hover:text-marigold underline">
               Shree Hanuman Chalisa
-            </Link>
+            </a>
             <span className="text-brass-gold/40">•</span>
-            <Link href="/hanuman-chalisa-meaning" className="text-vermilion hover:text-marigold underline">
+            <a href="/hanuman-chalisa-meaning" className="text-vermilion hover:text-marigold underline">
               Bilingual Meaning
-            </Link>
+            </a>
             <span className="text-brass-gold/40">•</span>
-            <Link href="/hanuman-aarti" className="text-vermilion hover:text-marigold underline">
+            <a href="/hanuman-aarti" className="text-vermilion hover:text-marigold underline">
               Hanuman Aarti
-            </Link>
+            </a>
             <span className="text-brass-gold/40">•</span>
-            <Link href="/bajrang-baan" className="text-vermilion hover:text-marigold underline">
+            <a href="/bajrang-baan" className="text-vermilion hover:text-marigold underline">
               Bajrang Baan
-            </Link>
+            </a>
           </div>
         </section>
 

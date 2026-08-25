@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import CarvedDivider from "@/components/CarvedDivider";
 import SyncedAudioPlayer from "@/components/SyncedAudioPlayer";
 
@@ -15,7 +14,7 @@ export default function AartiClient() {
         "name": "What is Hanuman Aarti?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Hanuman Aarti (Aarti Kije Hanuman Lala Ki) is a traditional devotional prayer sung at the end of worship rituals to express deep gratitude and seek the blessings of Lord Hanuman."
+          "text": "Hanuman Aarti (Aarti Kije Hanuman Lala Ki) is a traditional devotional prayer sung at the end of worship rituals to express gratitude and seek the blessings of Lord Hanuman."
         }
       },
       {
@@ -23,7 +22,7 @@ export default function AartiClient() {
         "name": "Who wrote Hanuman Aarti?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The Hanuman Aarti is traditionally attributed to the great 16th-century sage and poet Goswami Tulsidas, written alongside his other devotional masterpieces."
+          "text": "The Hanuman Aarti is traditionally composed by saint Goswami Tulsidas, the revered 16th-century poet who also compiled the Shree Hanuman Chalisa."
         }
       },
       {
@@ -31,7 +30,7 @@ export default function AartiClient() {
         "name": "When should Hanuman Aarti be performed?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "It should be performed at the conclusion of any puja or recitation of the Hanuman Chalisa, Bajrang Baan, or Hanumanashtak. It is typically performed daily during morning and evening sandhya timings."
+          "text": "It is traditionally sung at the conclusion of daily pujas, Hanuman Chalisa chantings, or weekly Tuesday and Saturday worship sessions."
         }
       },
       {
@@ -39,7 +38,7 @@ export default function AartiClient() {
         "name": "What are the benefits of performing Hanuman Aarti?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Singing the Aarti brings mental peace, purifies the surrounding environment, dispels negative energy, and completes the worship ritual, invoking the grace of Hanumanji."
+          "text": "Chanting it cleanses negative vibrations from the environment, clears fear and anxiety, and builds a powerful shield of spiritual energy around the family."
         }
       }
     ]
@@ -59,72 +58,47 @@ export default function AartiClient() {
         {/* Header */}
         <div className="text-center space-y-3">
           <span className="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
-            Devotional Closing (आरती पूजा)
+            Devotional Worship (आरती पूजा)
           </span>
           <h1 className="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
             Shree Hanuman Aarti
           </h1>
           <p className="text-xs text-charcoal-brown/70 max-w-xl mx-auto leading-relaxed">
-            Read and listen to the synced audio of Hanuman Aarti lyrics (*Aarti Kije Hanuman Lala Ki*). Perfect your recitation with Devanagari text, Romanized transliteration, and English translations.
+            Sing along to the traditional Aarti composed by Goswami Tulsidas. Wave the diya, ring the bell, and immerse yourself in praise of Hanuman Lala.
           </p>
         </div>
 
-        <CarvedDivider icon="🔔" />
-
-        {/* Quick Facts Table */}
-        <section className="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-6 shadow-sm space-y-4">
-          <h3 className="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep text-center">
-            Shree Hanuman Aarti Quick Facts
-          </h3>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-xs text-charcoal-brown">
-              <tbody>
-                <tr className="border-b border-brass-gold/25">
-                  <td className="py-2.5 font-bold uppercase tracking-wider w-1/3">Deity (देवता)</td>
-                  <td className="py-2.5">Lord Hanuman (श्री हनुमान)</td>
-                </tr>
-                <tr className="border-b border-brass-gold/25">
-                  <td className="py-2.5 font-bold uppercase tracking-wider">Aarti Title</td>
-                  <td className="py-2.5">Aarti Kije Hanuman Lala Ki (आरती कीजै हनुमान लला की)</td>
-                </tr>
-                <tr className="border-b border-brass-gold/25">
-                  <td className="py-2.5 font-bold uppercase tracking-wider">Composer</td>
-                  <td className="py-2.5">Goswami Tulsidas (गोस्वामी तुलसीदास)</td>
-                </tr>
-                <tr className="border-b border-brass-gold/25">
-                  <td className="py-2.5 font-bold uppercase tracking-wider">Best Times to Perform</td>
-                  <td className="py-2.5">Daily during Morning & Evening sandhya (सुबह और शाम)</td>
-                </tr>
-                <tr className="border-b border-brass-gold/25">
-                  <td className="py-2.5 font-bold uppercase tracking-wider">Purpose</td>
-                  <td className="py-2.5">Devotional conclusion of prayers, expressing deep gratitude</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+        <CarvedDivider icon="🕉️" />
 
         {/* Synced Audio Player */}
         <section className="space-y-4">
           <h3 className="font-serif-display text-base font-bold uppercase tracking-wider text-maroon-deep text-center">
-            Listen & Chant Hanuman Aarti
+            Listen with Synced Lyrics
           </h3>
           <div className="border border-brass-gold/30 rounded-lg p-4 bg-stone-ivory shadow-sm">
             <SyncedAudioPlayer defaultTrackId="track-3" />
           </div>
         </section>
 
-        {/* Meaning & Importance */}
-        <section className="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
-          <h3 className="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
-            Meaning & Importance
-          </h3>
-          <p className="text-xs sm:text-sm leading-relaxed text-charcoal-brown/90">
-            The **Hanuman Aarti** serves as the concluding offering of love, surrender, and respect to Bajrangbali. The hymn, starting with <em>&quot;Aarti Kije Hanuman Lala Ki&quot;</em>, lists the glorious tasks performed by Hanumanji in service to Lord Rama: crossing the ocean to search for Mother Sita, setting fire to Ravana&apos;s golden fortress, vanquishing demonic forces, and saving Lakshmana&apos;s life with the Sanjeevani herb. Performing the Aarti completes worship, rectifies any inadvertent pronunciation mistakes during Chalisa chanting, and leaves the home filled with peace.
-          </p>
-        </section>
+        {/* PDF Download Action Banner */}
+        <div className="bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-1 text-center md:text-left">
+            <h3 className="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
+              Print Hanuman Aarti Lyrics
+            </h3>
+            <p className="text-xs text-stone-ivory/80 max-w-lg leading-relaxed">
+              Generate a vector-clear print format of the Aarti lyrics for offline worship.
+            </p>
+          </div>
+          <button
+            onClick={() => window.print()}
+            className="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-5 py-2.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300 whitespace-nowrap"
+          >
+            🖨️ Print / Save PDF
+          </button>
+        </div>
 
-        {/* Recitation Guide (Gayan Vidhi) */}
+        {/* Recitation Guide */}
         <section className="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
           <h3 className="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
             Recitation Guide (गायन विधि)
@@ -142,7 +116,7 @@ export default function AartiClient() {
             Benefits of Hanuman Aarti
           </h3>
           <p className="text-xs sm:text-sm leading-relaxed text-charcoal-brown/90">
-            Chanting the Aarti releases positive devotional frequencies in the mind, dissolving negativity, stress, and anxiety. To explore the wider spiritual benefits of Hanuman devotion in detail, view our shared <Link href="/hanuman-chalisa-benefits" className="text-vermilion hover:underline font-bold">Hanuman Chalisa Benefits page</Link>.
+            Chanting the Aarti releases positive devotional frequencies in the mind, dissolving negativity, stress, and anxiety. To explore the wider spiritual benefits of Hanuman devotion in detail, view our shared <a href="/hanuman-chalisa-benefits" className="text-vermilion hover:underline font-bold">Hanuman Chalisa Benefits page</a>.
           </p>
         </section>
 
@@ -185,21 +159,21 @@ export default function AartiClient() {
             Related Devotional Chants (संबंधित पाठ)
           </h4>
           <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold">
-            <Link href="/" className="text-vermilion hover:text-marigold underline">
+            <a href="/" className="text-vermilion hover:text-marigold underline">
               Shree Hanuman Chalisa
-            </Link>
+            </a>
             <span className="text-brass-gold/40">•</span>
-            <Link href="/hanuman-chalisa-meaning" className="text-vermilion hover:text-marigold underline">
+            <a href="/hanuman-chalisa-meaning" className="text-vermilion hover:text-marigold underline">
               Bilingual Meaning
-            </Link>
+            </a>
             <span className="text-brass-gold/40">•</span>
-            <Link href="/sankat-mochan-hanumanashtak" className="text-vermilion hover:text-marigold underline">
+            <a href="/sankat-mochan-hanumanashtak" className="text-vermilion hover:text-marigold underline">
               Hanumanashtak
-            </Link>
+            </a>
             <span className="text-brass-gold/40">•</span>
-            <Link href="/bajrang-baan" className="text-vermilion hover:text-marigold underline">
+            <a href="/bajrang-baan" className="text-vermilion hover:text-marigold underline">
               Bajrang Baan
-            </Link>
+            </a>
           </div>
         </section>
 

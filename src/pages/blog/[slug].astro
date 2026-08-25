@@ -1,0 +1,169 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getPrisma } from "../../lib/prisma";
+import CarvedDivider from "../../components/CarvedDivider";
+import { FALLBACK_BLOG_POSTS, type BlogPost } from "../../data/blog";
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/404");
+}
+
+const db = Astro.locals.runtime?.env?.DB;
+const prisma = getPrisma(db);
+
+let post: BlogPost | undefined;
+
+try {
+  const dbPost = await prisma.post.findUnique({ where: { slug } });
+  if (dbPost && dbPost.published) {
+    post = {
+      slug: dbPost.slug,
+      title: dbPost.title,
+      excerpt: dbPost.excerpt,
+      content: dbPost.content,
+      createdAt: dbPost.createdAt.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+      author: "Admin",
+      readTime: "5 min read",
+    };
+  }
+} catch (error) {
+  console.error("Error reading blog post from DB:", error);
+}
+
+if (!post) {
+  post = FALLBACK_BLOG_POSTS.find((p) => p.slug === slug);
+}
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+// Simple parser for standard markdown elements without third party packages
+function parseMarkdown(content: string) {
+  const sections = content.split("\n\n").map((section) => section.trim()).filter(Boolean);
+
+  return sections.map((sec) => {
+    if (sec.startsWith("### ")) {
+      return {
+        type: "h4",
+        text: sec.replace("### ", "")
+      };
+    }
+    if (sec.startsWith("## ")) {
+      return {
+        type: "h3",
+        text: sec.replace("## ", "")
+      };
+    }
+    if (sec.startsWith("*") && sec.endsWith("*")) {
+      return {
+        type: "italic",
+        text: sec.replace(/\*/g, "")
+      };
+    }
+    if (sec.startsWith("- ")) {
+      const items = sec.split("\n").map(item => item.replace("- ", "").trim());
+      return {
+        type: "list",
+        items
+      };
+    }
+    return {
+      type: "p",
+      text: sec
+    };
+  });
+}
+
+const parsedContent = parseMarkdown(post.content);
+---
+
+<Layout title={`${post.title} — Hanuman Bhakti Blog`} description={post.excerpt}>
+  <div class="space-y-8 max-w-3xl mx-auto">
+    
+    <!-- Breadcrumbs -->
+    <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
+      <ol class="list-none p-0 inline-flex gap-2">
+        <li class="flex items-center">
+          <a href="/" class="hover:text-maroon-deep">Home</a>
+          <span class="mx-2">/</span>
+        </li>
+        <li class="flex items-center">
+          <a href="/blog" class="hover:text-maroon-deep">Blog</a>
+          <span class="mx-2">/</span>
+        </li>
+        <li class="text-maroon-deep truncate max-w-[200px]" aria-current="page">
+          {post.title}
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Post Header -->
+    <div class="space-y-4 text-center sm:text-left">
+      <h2 class="font-serif-display text-2xl sm:text-3xl font-bold text-maroon-deep uppercase leading-tight">
+        {post.title}
+      </h2>
+      
+      <div class="flex flex-wrap justify-center sm:justify-start items-center gap-3 text-xs text-brass-gold font-bold">
+        <span>{post.createdAt}</span>
+        <span>•</span>
+        <span>By {post.author}</span>
+        <span>•</span>
+        <span>{post.readTime}</span>
+      </div>
+    </div>
+
+    <CarvedDivider icon="🕉️" />
+
+    <!-- Ad Slot -->
+    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-6">
+      Ad Slot — Article Top (Layout Stable)
+    </div>
+
+    <!-- Main Post Content -->
+    <article class="bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm">
+      {parsedContent.map((item) => {
+        if (item.type === "h4") {
+          return <h4 class="font-serif-display text-lg font-bold text-maroon-deep mt-6 mb-2">{item.text}</h4>;
+        }
+        if (item.type === "h3") {
+          return <h3 class="font-serif-display text-xl font-bold text-maroon-deep mt-8 mb-3">{item.text}</h3>;
+        }
+        if (item.type === "italic") {
+          return <p class="text-xs sm:text-sm text-charcoal-brown/70 italic my-3 text-center">{item.text}</p>;
+        }
+        if (item.type === "list") {
+          return (
+            <ul class="list-disc list-inside space-y-2 text-xs sm:text-sm text-charcoal-brown/85 my-4 pl-4">
+              {item.items?.map((li) => (
+                <li>{li}</li>
+              ))}
+            </ul>
+          );
+        }
+        return <p class="text-xs sm:text-sm text-charcoal-brown/95 leading-relaxed my-3">{item.text}</p>;
+      })}
+    </article>
+
+    <div class="text-center pt-4">
+      <a
+        href="/blog"
+        class="text-xs uppercase font-bold text-maroon-deep hover:text-marigold transition-colors border-b-2 border-maroon-deep/30 hover:border-marigold"
+      >
+        &larr; Back to all articles
+      </a>
+    </div>
+
+    <!-- Ad Slot -->
+    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
+      Ad Slot — Article Bottom (Layout Stable)
+    </div>
+
+  </div>
+</Layout>

@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 import hiData from "@/data/chalisa/hi.json";
 import enData from "@/data/chalisa/en.json";
 import teData from "@/data/chalisa/te.json";
@@ -37,11 +37,12 @@ export interface LocalizedChalisa {
   faqs: LocalizedFAQ[];
 }
 
-export async function getChalisaData(lang: string): Promise<LocalizedChalisa> {
+export async function getChalisaData(lang: string, db?: any): Promise<LocalizedChalisa> {
   const fallback = localFallbacks[lang] || hiData;
+  const client = getPrisma(db);
 
   try {
-    const dbRecord = await prisma.languageContent.findUnique({
+    const dbRecord = await client.languageContent.findUnique({
       where: { lang },
     });
 

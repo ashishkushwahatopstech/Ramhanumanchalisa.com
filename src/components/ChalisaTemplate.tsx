@@ -1,28 +1,31 @@
+"use client";
+
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import DiyaCounter from "@/components/DiyaCounter";
 import CarvedDivider from "@/components/CarvedDivider";
-import { LocalizedChalisa } from "@/lib/getChalisaData";
+import DiyaCounter from "@/components/DiyaCounter";
+import type { LocalizedChalisa } from "@/lib/getChalisaData";
 
 interface ChalisaTemplateProps {
   data: LocalizedChalisa;
 }
 
 export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
-  const openingDohas = data.verses.filter((v) => v.id.startsWith("doha-"));
+  // Extract Dohas and Chaupais from Localized verses list
+  const doha1 = data.verses.find((v) => v.id === "doha-01");
+  const doha2 = data.verses.find((v) => v.id === "doha-02");
+  const dohaClosing = data.verses.find((v) => v.id === "doha-closing");
   const chaupais = data.verses.filter((v) => v.id.startsWith("chaupai-"));
 
-  const doha1 = openingDohas.find((v) => v.id === "doha-01");
-  const doha2 = openingDohas.find((v) => v.id === "doha-02");
-  const dohaClosing = openingDohas.find((v) => v.id === "doha-closing");
-
-  // Dynamic typography script class for readability
   const getScriptClass = (lang: string) => {
-    if (lang === "hi") {
-      return "font-hindi-display text-xl sm:text-2xl text-charcoal-brown leading-loose text-center font-bold";
+    switch (lang) {
+      case "hi":
+      case "te":
+      case "bn":
+      case "kn":
+        return "font-hindi-display text-2xl sm:text-3xl text-charcoal-brown leading-loose text-center font-bold tracking-wide";
+      default:
+        return "font-serif-display text-lg sm:text-xl text-charcoal-brown leading-loose text-center font-bold tracking-wide";
     }
-    return "font-sans text-lg sm:text-xl md:text-2xl text-charcoal-brown leading-relaxed text-center font-bold tracking-wide";
   };
 
   return (
@@ -39,14 +42,13 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
             WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%)"
           }}
         >
-          <Image
+          <img
             src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rama-Varuna.jpg"
             alt="Lord Rama standing majestically with Bow - traditional artwork by Raja Ravi Varma"
             title="Lord Rama - Ram Hanuman Chalisa Background"
-            fill
             sizes="(max-width: 640px) 33vw, 20vw"
-            className="object-cover object-top"
-            priority
+            className="absolute inset-0 w-full h-full object-cover object-top"
+            loading="eager"
           />
         </div>
 
@@ -58,14 +60,13 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
             WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%)"
           }}
         >
-          <Image
+          <img
             src="https://upload.wikimedia.org/wikipedia/commons/3/38/Hanuman_showing_Rama_in_His_heart.jpg"
             alt="Lord Hanuman revealing Lord Rama and Mother Sita in His heart - traditional artwork by Raja Ravi Varma"
             title="Lord Hanuman - Ram Hanuman Chalisa Background"
-            fill
             sizes="(max-width: 640px) 33vw, 20vw"
-            className="object-cover object-top"
-            priority
+            className="absolute inset-0 w-full h-full object-cover object-top"
+            loading="eager"
           />
         </div>
 
@@ -132,41 +133,41 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
         </h3>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link
+          <a
             href="/hanuman-chalisa-meaning"
             className="flex flex-col items-center p-4 bg-maroon-deep border border-brass-gold hover:border-marigold text-stone-ivory hover:text-marigold rounded text-center transition-all duration-300 hover:-translate-y-1 shadow-md"
           >
             <span className="text-2xl mb-2">📖</span>
             <span className="font-serif-display font-bold uppercase tracking-wider text-xs sm:text-sm">Bilingual Meaning</span>
             <span className="text-[10px] text-stone-ivory/60 mt-1">Line-by-line translations</span>
-          </Link>
+          </a>
 
-          <Link
+          <a
             href="/hanuman-chalisa-audio-mp3"
             className="flex flex-col items-center p-4 bg-maroon-deep border border-brass-gold hover:border-marigold text-stone-ivory hover:text-marigold rounded text-center transition-all duration-300 hover:-translate-y-1 shadow-md"
           >
             <span className="text-2xl mb-2">🎵</span>
             <span className="font-serif-display font-bold uppercase tracking-wider text-xs sm:text-sm">Audio & Highlights</span>
             <span className="text-[10px] text-stone-ivory/60 mt-1">Play synced recitation</span>
-          </Link>
+          </a>
 
-          <Link
+          <a
             href="/shri-hanuman-chalisa-path-vidhi"
             className="flex flex-col items-center p-4 bg-maroon-deep border border-brass-gold hover:border-marigold text-stone-ivory hover:text-marigold rounded text-center transition-all duration-300 hover:-translate-y-1 shadow-md"
           >
             <span className="text-2xl mb-2">✨</span>
             <span className="font-serif-display font-bold uppercase tracking-wider text-xs sm:text-sm">Path Vidhi</span>
             <span className="text-[10px] text-stone-ivory/60 mt-1">How and when to recite</span>
-          </Link>
+          </a>
 
-          <Link
+          <a
             href="/hanuman-chalisa-pdf"
             className="flex flex-col items-center p-4 bg-maroon-deep border border-brass-gold hover:border-marigold text-stone-ivory hover:text-marigold rounded text-center transition-all duration-300 hover:-translate-y-1 shadow-md"
           >
             <span className="text-2xl mb-2">📄</span>
             <span className="font-serif-display font-bold uppercase tracking-wider text-xs sm:text-sm">PDF & Statuses</span>
             <span className="text-[10px] text-stone-ivory/60 mt-1">Download and share</span>
-          </Link>
+          </a>
         </div>
       </section>
 
@@ -197,12 +198,12 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
               {/* Verse Header */}
               <div className="flex justify-between items-center text-xs font-bold text-brass-gold tracking-widest uppercase">
                 <span>Chaupai {verse.verse_number}</span>
-                <Link
+                <a
                   href={`/hanuman-chalisa-meaning#verse-${verse.verse_number}`}
                   className="text-vermilion hover:text-marigold transition-colors flex items-center gap-1 font-semibold"
                 >
                   View Meaning &rarr;
-                </Link>
+                </a>
               </div>
 
               {/* Localized Verse Text */}
@@ -230,7 +231,7 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
         {/* Doha Closing */}
         {dohaClosing && (
           <div className="p-8 bg-maroon-deep border-2 border-brass-gold text-stone-ivory rounded shadow-md text-center space-y-4 max-w-2xl mx-auto">
-            <span className="text-xs uppercase font-bold tracking-widest text-marigold">
+            <span class="text-xs uppercase font-bold tracking-widest text-marigold">
               Concluding Doha (दोहा)
             </span>
             <p className={getScriptClass(data.lang) + " !text-stone-ivory"}>
@@ -281,12 +282,12 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
           </div>
 
           <div className="pt-2 border-t border-brass-gold/20">
-            <Link
+            <a
               href="/hanuman-chalisa-benefits"
               className="text-xs uppercase font-bold text-marigold hover:text-stone-ivory underline transition-colors"
             >
               Read full benefits list &rarr;
-            </Link>
+            </a>
           </div>
         </div>
 

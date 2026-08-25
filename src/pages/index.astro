@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getChalisaData } from "../lib/getChalisaData";
+import ChalisaTemplate from "../components/ChalisaTemplate";
+import LanguageBanner from "../components/LanguageBanner";
+import CookieRedirect from "../components/CookieRedirect";
+import DiyaCounter from "../components/DiyaCounter";
+
+const db = Astro.locals.runtime?.env?.DB;
+const data = await getChalisaData("hi", db);
+---
+
+<Layout title={data.title} description={data.metaDescription}>
+  <CookieRedirect client:load />
+  <LanguageBanner client:load />
+  <div class="space-y-12">
+    <ChalisaTemplate data={data} client:load />
+    <div class="py-6 border-t border-brass-gold/20">
+      <DiyaCounter client:load />
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,164 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CarvedDivider from "../components/CarvedDivider";
+import bajrangBaanData from "../data/scriptures/bajrang-baan.json";
+import type { ScriptureVerse } from "../types/scripture";
+
+const verses = bajrangBaanData as ScriptureVerse[];
+
+const openingDohas = verses.filter((v) => v.id.startsWith("doha-") && v.id !== "doha-closing");
+const closingDoha = verses.find((v) => v.id === "doha-closing");
+const chaupais = verses.filter((v) => v.id.startsWith("chaupai-"));
+
+const title = "Shree Bajrang Baan — Lyrics in English, Hindi & Full Translation";
+const description = "Read the powerful Bajrang Baan with original Devanagari verses, English transliteration, line-by-line Hindi/English meanings, and protection rules.";
+---
+
+<Layout title={title} description={description}>
+  <div class="space-y-10 max-w-4xl mx-auto">
+    
+    <!-- Header -->
+    <div class="text-center space-y-3">
+      <span class="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+        Protection Shield (सुरक्षा कवच)
+      </span>
+      <h2 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+        Shree Bajrang Baan
+      </h2>
+      <p class="text-xs text-charcoal-brown/70 max-w-xl mx-auto leading-relaxed">
+        The Bajrang Baan is an arrow (baan) of protection dedicated to Lord Hanuman. Devotees chant it to dispel fear, remove negative influences, and overcome severe obstacles.
+      </p>
+    </div>
+
+    <CarvedDivider icon="🏹" />
+
+    <!-- AdSense Top Slot -->
+    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
+      Ad Slot — Page Top (Layout Stable)
+    </div>
+
+    <!-- 1. Opening Dohas -->
+    {openingDohas.length > 0 && (
+      <section class="p-6 bg-stone-ivory border-2 border-brass-gold text-charcoal-brown rounded shadow-sm text-center space-y-4 max-w-2xl mx-auto">
+        <span class="text-xs uppercase font-bold tracking-widest text-brass-gold">
+          Opening Couplets (दोहा)
+        </span>
+        {openingDohas.map((doha) => (
+          <div class="space-y-2">
+            <p class="font-hindi-display text-lg sm:text-xl leading-loose font-bold">
+              {doha.devanagari}
+            </p>
+            <p class="text-xs text-charcoal-brown/60 italic">
+              {doha.transliteration}
+            </p>
+            <p class="text-xs sm:text-sm font-semibold text-maroon-deep">
+              {doha.literal_translation.en}
+            </p>
+          </div>
+        ))}
+      </section>
+    )}
+
+    <!-- 2. Main Verses (Chaupais) -->
+    <section class="space-y-6">
+      <h3 class="font-serif-display text-xl uppercase tracking-wider font-bold text-center text-maroon-deep">
+        The Bajrang Baan Verses
+      </h3>
+
+      <div class="space-y-6">
+        {chaupais.map((verse) => (
+          <div
+            class="p-6 bg-stone-ivory border-l-4 border-brass-gold border-r border-t border-b border-brass-gold/20 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200"
+          >
+            <div class="text-[10px] font-bold text-brass-gold tracking-widest uppercase">
+              Verse {verse.verse_number}
+            </div>
+
+            <!-- Devanagari -->
+            <p class="font-hindi-display text-lg sm:text-xl text-charcoal-brown tracking-wide leading-loose text-center font-bold">
+              {verse.devanagari}
+            </p>
+
+            <!-- Transliteration -->
+            <p class="text-xs text-center text-charcoal-brown/70 italic max-w-lg mx-auto">
+              {verse.transliteration}
+            </p>
+
+            <!-- English Translation -->
+            <div class="border-t border-brass-gold/25 pt-3">
+              <p class="text-xs sm:text-sm text-charcoal-brown leading-relaxed text-center font-semibold">
+                {verse.literal_translation.en}
+              </p>
+              {verse.interpretive_meaning && verse.interpretive_meaning.en && (
+                <p class="text-[11px] text-charcoal-brown/60 mt-1.5 text-center leading-relaxed max-w-2xl mx-auto">
+                  {verse.interpretive_meaning.en}
+                </p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 3. Closing Doha -->
+    {closingDoha && (
+      <section class="p-6 bg-maroon-deep border-2 border-brass-gold text-stone-ivory rounded shadow-md text-center space-y-3 max-w-2xl mx-auto">
+        <span class="text-xs uppercase font-bold tracking-widest text-marigold">
+          Concluding Couplet (दोहा)
+        </span>
+        <p class="font-hindi-display text-lg sm:text-xl leading-loose font-bold">
+          {closingDoha.devanagari}
+        </p>
+        <p class="text-xs text-stone-ivory/70 italic">
+          {closingDoha.transliteration}
+        </p>
+        <p class="text-xs sm:text-sm font-semibold text-marigold">
+          {closingDoha.literal_translation.en}
+        </p>
+      </section>
+    )}
+
+    <!-- 4. Caution Guideline -->
+    <section class="bg-vermilion/5 border-l-4 border-vermilion p-6 rounded-r space-y-3 text-sm leading-relaxed">
+      <h4 class="font-serif-display font-bold uppercase tracking-wider text-vermilion flex items-center gap-1.5">
+        ⚠️ Important Recitation Warning (सावधानी निर्देश)
+      </h4>
+      <p class="text-charcoal-brown/95">
+        Unlike the Hanuman Chalisa, which is gentle and can be chanted casually at any time, the **Bajrang Baan** contains seed mantras (bij mantras like <i>hrim, klim, shrim</i>) and involves making a vow (shapath) in the name of Lord Rama to compel Hanuman to act.
+      </p>
+      <p class="text-charcoal-brown/85">
+        Therefore, traditional pandits advise that the Bajrang Baan should **only** be recited when facing severe crisis, extreme fear, or insurmountable difficulties. It should not be chanted for trivial desires or material greed, and the chanter must maintain high physical and moral cleanliness (such as avoiding non-vegetarian food).
+      </p>
+    </section>
+
+    <!-- Related Content Links -->
+    <section class="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
+      <h4 class="font-serif-display text-sm font-bold uppercase text-maroon-deep">
+        Related Devotional Chants (संबंधित पाठ)
+      </h4>
+      <div class="flex flex-wrap justify-center gap-4 text-xs font-semibold">
+        <a href="/" class="text-vermilion hover:text-marigold underline">
+          Shree Hanuman Chalisa
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/hanuman-chalisa-meaning" class="text-vermilion hover:text-marigold underline">
+          Bilingual Meaning
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/sankat-mochan-hanumanashtak" class="text-vermilion hover:text-marigold underline">
+          Hanumanashtak
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/hanuman-aarti" class="text-vermilion hover:text-marigold underline">
+          Hanuman Aarti
+        </a>
+      </div>
+    </section>
+
+    <!-- AdSense Footer Slot -->
+    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
+      Ad Slot — Page Bottom (Layout Stable)
+    </div>
+
+  </div>
+</Layout>

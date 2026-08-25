@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CarvedDivider from "../components/CarvedDivider";
+
+const title = "Access Denied — Unauthorized Admin Attempt";
+const description = "Unauthorized access attempt to the admin panel. Access is limited to the system administrator.";
+---
+
+<Layout title={title} description={description}>
+  <div class="max-w-md mx-auto text-center space-y-6 py-12">
+    <span class="text-5xl block select-none">🛑</span>
+    <h2 class="font-serif-display text-2xl font-bold text-maroon-deep uppercase">
+      Access Denied (403)
+    </h2>
+    <p class="text-sm text-charcoal-brown/85 leading-relaxed">
+      Your account is not authorized to access the Admin Panel. Only the primary administrator email (<code>ashishkushwaha88643@gmail.com</code>) is allowed access.
+    </p>
+    
+    <CarvedDivider icon="🕉️" />
+
+    <div class="pt-2">
+      <a
+        href="/"
+        class="bg-maroon-deep hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-6 py-2 rounded text-xs font-bold uppercase border border-brass-gold shadow"
+      >
+        Return to Mandir Homepage
+      </a>
+    </div>
+  </div>
+</Layout>

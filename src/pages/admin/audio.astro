@@ -1,0 +1,49 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CarvedDivider from "../../components/CarvedDivider";
+import AudioManagerForm from "../../components/AudioManagerForm";
+import { getPrisma } from "../../lib/prisma";
+
+const db = Astro.locals.runtime?.env?.DB;
+const prisma = getPrisma(db);
+
+let initialTracks: any[] = [];
+try {
+  initialTracks = await prisma.audioTrack.findMany({
+    orderBy: { createdAt: "desc" }
+  });
+} catch (error) {
+  console.error("Error pre-loading audio tracks for admin:", error);
+}
+
+const title = "Audio & Verse Sync Manager";
+---
+
+<Layout title={title}>
+  <div class="space-y-8 max-w-4xl mx-auto">
+    
+    <!-- Header -->
+    <div class="flex justify-between items-center bg-maroon-deep border-2 border-brass-gold p-4 sm:p-6 rounded-lg text-stone-ivory">
+      <div class="space-y-1">
+        <h2 class="font-serif-display text-xl sm:text-2xl font-bold text-marigold uppercase">
+          Audio & Verse Sync Manager
+        </h2>
+        <p class="text-xs text-stone-ivory/70">
+          Configure reciters, audio track URLs, and define timestamps ranges to highlight lyrics in sync with playback.
+        </p>
+      </div>
+      <a
+        href="/admin"
+        class="bg-stone-ivory/10 hover:bg-stone-ivory/20 px-3 py-1.5 rounded text-xs font-bold uppercase border border-stone-ivory/30 shadow transition-colors"
+      >
+        &larr; Dashboard
+      </a>
+    </div>
+
+    <CarvedDivider icon="🕉️" />
+
+    <!-- AudioManager Client Form -->
+    <AudioManagerForm initialTracks={initialTracks} client:load />
+
+  </div>
+</Layout>

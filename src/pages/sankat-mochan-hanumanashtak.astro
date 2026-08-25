@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HanumanashtakClient from "../components/HanumanashtakClient";
+import hanumanashtakData from "../data/scriptures/sankat-mochan-hanumanashtak.json";
+import type { ScriptureVerse } from "../types/scripture";
+
+const verses = hanumanashtakData as ScriptureVerse[];
+
+const title = "Sankat Mochan Hanuman Ashtak — English Lyrics, Hindi & Full Translation";
+const description = "Read and listen to Sankat Mochan Hanuman Ashtak lyrics in Devanagari Unicode. Includes word meanings, path vidhi, composition context, and printable PDF.";
+---
+
+<Layout title={title} description={description}>
+  <HanumanashtakClient verses={verses} client:load />
+</Layout>

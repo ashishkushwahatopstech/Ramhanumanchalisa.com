@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-
 export default function LanguageSwitcher() {
   const setLangCookie = (lang: string) => {
     document.cookie = `user-selected-lang=${lang}; path=/; max-age=31536000; SameSite=Lax`;
@@ -10,25 +8,25 @@ export default function LanguageSwitcher() {
 
   return (
     <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-brass-gold font-bold bg-stone-ivory/5 border border-brass-gold/20 rounded px-2.5 py-1">
-      <Link href="/" onClick={() => setLangCookie("hi")} className="hover:text-marigold transition-colors">
+      <a href="/" onClick={() => setLangCookie("hi")} className="hover:text-marigold transition-colors">
         हिं
-      </Link>
+      </a>
       <span className="text-brass-gold/30">|</span>
-      <Link href="/hanuman-chalisa/en" onClick={() => setLangCookie("en")} className="hover:text-marigold transition-colors">
+      <a href="/hanuman-chalisa/en" onClick={() => setLangCookie("en")} className="hover:text-marigold transition-colors">
         EN
-      </Link>
+      </a>
       <span className="text-brass-gold/30">|</span>
-      <Link href="/hanuman-chalisa/te" onClick={() => setLangCookie("te")} className="hover:text-marigold transition-colors">
+      <a href="/hanuman-chalisa/te" onClick={() => setLangCookie("te")} className="hover:text-marigold transition-colors">
         తె
-      </Link>
+      </a>
       <span className="text-brass-gold/30">|</span>
-      <Link href="/hanuman-chalisa/bn" onClick={() => setLangCookie("bn")} className="hover:text-marigold transition-colors">
+      <a href="/hanuman-chalisa/bn" onClick={() => setLangCookie("bn")} className="hover:text-marigold transition-colors">
         বাং
-      </Link>
+      </a>
       <span className="text-brass-gold/30">|</span>
-      <Link href="/hanuman-chalisa/kn" onClick={() => setLangCookie("kn")} className="hover:text-marigold transition-colors">
+      <a href="/hanuman-chalisa/kn" onClick={() => setLangCookie("kn")} className="hover:text-marigold transition-colors">
         ಕನ್ನಡ
-      </Link>
+      </a>
     </div>
   );
 }

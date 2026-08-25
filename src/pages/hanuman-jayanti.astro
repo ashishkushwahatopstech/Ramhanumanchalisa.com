@@ -1,0 +1,134 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CarvedDivider from "../components/CarvedDivider";
+import { getPrisma } from "../lib/prisma";
+
+const db = Astro.locals.runtime?.env?.DB;
+const prisma = getPrisma(db);
+
+let config = null;
+try {
+  config = await prisma.jayantiConfig.findFirst({
+    orderBy: { year: "desc" }
+  });
+} catch (e) {
+  console.warn("Prisma failed to load JayantiConfig, falling back to static content.", e);
+}
+
+const jayantiDate = config?.date || "Thursday, April 2, 2026";
+const purnimaTithiStart = "April 1, 2026, 06:12 PM";
+const purnimaTithiEnd = "April 2, 2026, 08:35 PM";
+const recommendedPujaTime = config?.pujaMuhurat || "06:05 AM to 08:32 AM (Brahma Muhurat & Sunrise)";
+const descriptionText = config?.description || "Hanuman Jayanti celebrates the divine birth of Lord Hanuman to Mother Anjana and King Kesari, under the influence of the Wind God (Vayu Dev).";
+
+const title = "Hanuman Jayanti 2026 — Date, Puja Muhurat & Significance";
+const description = "Find the exact date, puja muhurat times, and spiritual significance of Hanuman Jayanti. Learn how to fast and perform puja at home.";
+---
+
+<Layout title={title} description={description}>
+  <div class="space-y-10 max-w-4xl mx-auto">
+    
+    <!-- Header -->
+    <div class="text-center space-y-3">
+      <span class="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+        Hanuman Birth Anniversary (जन्मोत्सव)
+      </span>
+      <h2 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+        Hanuman Jayanti Date & Muhurat
+      </h2>
+      <p class="text-xs text-charcoal-brown/70 max-w-xl mx-auto leading-relaxed">
+        {descriptionText}
+      </p>
+    </div>
+
+    <CarvedDivider icon="🎂" />
+
+    <!-- Date & Muhurat details -->
+    <section class="bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 sm:p-8 rounded-lg shadow-md space-y-6">
+      <div class="text-center">
+        <span class="text-xs text-marigold font-bold uppercase tracking-widest block">
+          Upcoming Festival Date
+        </span>
+        <h3 class="font-serif-display text-2xl sm:text-3xl font-bold mt-1">
+          {jayantiDate}
+        </h3>
+        <p class="text-xs text-stone-ivory/60 mt-1">
+          Celebrated on Chaitra Purnima (Full Moon Day in the Hindu month of Chaitra)
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-brass-gold/30 pt-6 text-xs sm:text-sm">
+        <div class="bg-stone-ivory/5 p-4 rounded border border-brass-gold/20 space-y-2">
+          <h4 class="font-bold text-marigold uppercase tracking-wider">
+            Tithi Timings
+          </h4>
+          <p class="text-xs text-stone-ivory/80">
+            <b>Purnima Tithi Begins:</b> {purnimaTithiStart}
+          </p>
+          <p class="text-xs text-stone-ivory/80">
+            <b>Purnima Tithi Ends:</b> {purnimaTithiEnd}
+          </p>
+        </div>
+
+        <div class="bg-stone-ivory/5 p-4 rounded border border-brass-gold/20 space-y-2">
+          <h4 class="font-bold text-marigold uppercase tracking-wider">
+            Recommended Puja Muhurat
+          </h4>
+          <p class="text-xs text-stone-ivory/80">
+            <b>Sunrise Puja:</b> {recommendedPujaTime}
+          </p>
+          <p class="text-xs text-stone-ivory/80 leading-relaxed">
+            Hanuman was born at sunrise, making the early morning puja period highly auspicious.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <CarvedDivider icon="🕉️" />
+
+    <!-- Puja Vidhi and Fasting details -->
+    <section class="bg-stone-ivory border class-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
+      <h3 class="font-serif-display text-lg text-maroon-deep uppercase tracking-wider font-bold border-b border-brass-gold/20 pb-2">
+        How to Celebrate Hanuman Jayanti at Home
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm leading-relaxed text-charcoal-brown/85">
+        <div class="space-y-3">
+          <h4 class="font-bold text-brass-gold uppercase tracking-wide">
+            1. Fasting (Vrata) Rules
+          </h4>
+          <p>
+            Many devotees observe a complete or partial fast (Vrat) on Hanuman Jayanti. The fast begins at sunrise and is broken in the evening after offering prayers to Lord Hanuman. During the fast, take only fruits, milk, and water. Maintain complete celibacy (Brahmacharya).
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="font-bold text-brass-gold uppercase tracking-wide">
+            2. Puja Setup & Offering
+          </h4>
+          <p>
+            Decorate Lord Hanuman's photo with red flowers and marigold garlands. Apply orange sindoor mixed with sesame oil to the idol or photo. Offer red Boondi, Besan Ladoo, bananas, and sweet leaves (Paan) as prasadam.
+          </p>
+          <p>
+            Recite the **Hanuman Chalisa** 11 times or chant the **Bajrang Baan** to seek protection and blessing.
+          </p>
+        </div>
+      </div>
+
+      <div class="border-t border-brass-gold/20 pt-4 text-center">
+        <a
+          href="/"
+          class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-5 py-2.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300"
+        >
+          Chant Hanuman Chalisa Now &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- AdSense Slot -->
+    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
+      Ad Slot — Page Bottom (Layout Stable)
+    </div>
+
+  </div>
+</Layout>

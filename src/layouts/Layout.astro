@@ -1,0 +1,214 @@
+---
+import LanguageSwitcher from "../components/LanguageSwitcher";
+import "../app/globals.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+}
+
+const { 
+  title = "Shree Hanuman Chalisa — Audio, Meaning, PDF & Recitation Guide", 
+  description = "Step into our digital mandir. Read the authentic Hanuman Chalisa in Devanagari, English, and Gujarati, with line-by-line Hindi/English meanings, synced audio, PDF, and path vidhi.",
+  canonicalUrl = "https://ramhanumanchalisa.com"
+} = Astro.props;
+
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en" class="h-full antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title === "Shree Hanuman Chalisa — Audio, Meaning, PDF & Recitation Guide" ? title : `${title} | Ram Hanuman Chalisa`}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Google Fonts Preconnect and Link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Marcellus&family=Mukta:wght@200;300;400;500;600;700;800&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+  </head>
+  <body class="min-h-full flex flex-col font-body bg-stone-ivory text-charcoal-brown selection:bg-marigold selection:text-maroon-deep">
+    
+    <!-- Top Header / Mandir Entrance -->
+    <header class="no-print w-full bg-maroon-deep border-b-4 border-brass-gold text-stone-ivory sticky top-0 z-50 shadow-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          
+          <!-- Logo / Title -->
+          <a href="/" class="flex items-center gap-2 group">
+            <span class="text-2xl sm:text-3xl filter drop-shadow group-hover:scale-110 transition-transform duration-300">🔔</span>
+            <div>
+              <h1 class="font-serif-display text-lg sm:text-xl font-bold tracking-wider text-marigold uppercase leading-none">
+                Ram Hanuman Chalisa
+              </h1>
+              <p class="text-[10px] sm:text-xs text-brass-gold tracking-widest leading-none mt-1">
+                श्री राम जय राम जय जय राम
+              </p>
+            </div>
+          </a>
+          
+          <!-- Desktop Pillars Nav -->
+          <nav class="hidden lg:flex space-x-5 text-xs font-semibold tracking-wide">
+            <a href="/" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
+              Hanuman Chalisa
+            </a>
+            <a href="/hanuman-chalisa-meaning" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
+              Meaning
+            </a>
+            <a href="/hanuman-chalisa-audio-mp3" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
+              Synced Audio
+            </a>
+            <a href="/sankat-mochan-hanumanashtak" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
+              Hanumanashtak
+            </a>
+            <a href="/hanuman-aarti" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
+              Aarti
+            </a>
+            <a href="/hanuman-chalisa-benefits" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
+              Benefits
+            </a>
+            <a href="/hanuman-chalisa-pdf" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
+              PDF Print
+            </a>
+          </nav>
+
+          <!-- Extra Right Button & Language Switcher -->
+          <div class="flex items-center gap-3">
+            <LanguageSwitcher client:load />
+
+            <a
+              href="/shri-hanuman-chalisa-path-vidhi"
+              class="hidden md:inline-block bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-3 py-1.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300"
+            >
+              How to Recite
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 pb-24 md:pb-12">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="no-print bg-charcoal-brown text-stone-ivory border-t-8 border-maroon-deep py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          
+          <!-- Branding Column -->
+          <div class="md:col-span-2">
+            <h3 class="font-serif-display text-xl text-marigold uppercase tracking-wider mb-3">
+              Ram Hanuman Chalisa
+            </h3>
+            <p class="text-sm text-stone-ivory/80 max-w-sm leading-relaxed">
+              A digital sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and digest the glorious verses composed by Goswami Tulsidas. Reviewed by traditional scholars to ensure absolute accuracy of translation and context.
+            </p>
+            <p class="mt-4 text-xs text-brass-gold">
+              © {currentYear} RamHanumanChalisa.com. All Rights Reserved.
+            </p>
+          </div>
+
+          <!-- Quick Links Column -->
+          <div>
+            <h4 className="font-serif-display text-sm uppercase tracking-widest text-marigold mb-4">
+              Pillars
+            </h4>
+            <ul class="space-y-2 text-sm text-stone-ivory/80">
+              <li><a href="/" class="hover:text-marigold transition-colors">Hanuman Chalisa Text</a></li>
+              <li><a href="/hanuman-chalisa-meaning" class="hover:text-marigold transition-colors">Bilingual Meanings</a></li>
+              <li><a href="/hanuman-chalisa-audio-mp3" class="hover:text-marigold transition-colors">Audio Synced Player</a></li>
+              <li><a href="/shri-hanuman-chalisa-path-vidhi" class="hover:text-marigold transition-colors">Recitation Rules</a></li>
+              <li><a href="/hanuman-chalisa-pdf" class="hover:text-marigold transition-colors">PDF & Image Downloads</a></li>
+            </ul>
+          </div>
+
+          <!-- Supporting Texts & Admin -->
+          <div>
+            <h4 class="font-serif-display text-sm uppercase tracking-widest text-marigold mb-4">
+              Devotional Texts
+            </h4>
+            <ul class="space-y-2 text-sm text-stone-ivory/80">
+              <li><a href="/bajrang-baan" class="hover:text-marigold transition-colors">Bajrang Baan</a></li>
+              <li><a href="/sankat-mochan-hanumanashtak" class="hover:text-marigold transition-colors">Hanumanashtak</a></li>
+              <li><a href="/hanuman-aarti" class="hover:text-marigold transition-colors">Hanuman Aarti</a></li>
+              <li><a href="/ram-hanuman-chalisa" class="hover:text-marigold transition-colors">Shree Ram & Hanuman</a></li>
+              <li><a href="/blog" class="hover:text-marigold transition-colors">Bhakti Blog</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <hr class="my-8 border-stone-ivory/20" />
+
+        <!-- Compliance & Footer Links -->
+        <div class="flex flex-wrap justify-between items-center gap-4 text-xs text-stone-ivory/60">
+          <div class="flex gap-4">
+            <a href="/about" class="hover:text-marigold">About Us</a>
+            <a href="/contact" class="hover:text-marigold">Contact</a>
+            <a href="/privacy-policy" class="hover:text-marigold">Privacy Policy</a>
+            <a href="/disclaimer" class="hover:text-marigold">Disclaimer</a>
+            <a href="/faq" class="hover:text-marigold">FAQ</a>
+            <a href="/admin" class="hover:text-marigold font-bold text-brass-gold">Admin Portal</a>
+          </div>
+          <p class="max-w-md text-right text-[10px] md:text-xs">
+            Disclaimer: The materials provided are for devotional, cultural, and educational purposes. AdSense slots are integrated layout-stable.
+          </p>
+        </div>
+
+      </div>
+    </footer>
+
+    <!-- Sticky Bottom Nav (Mobile Shortcuts) -->
+    <nav class="no-print md:hidden fixed bottom-0 left-0 right-0 bg-maroon-deep border-t-2 border-brass-gold text-stone-ivory z-40 flex justify-around items-center h-16 shadow-2xl">
+      <a href="/" class="flex flex-col items-center justify-center w-full h-full hover:text-marigold transition-colors text-xs gap-0.5">
+        <span class="text-lg">🕉️</span>
+        <span>Text</span>
+      </a>
+      <a href="/hanuman-chalisa-meaning" class="flex flex-col items-center justify-center w-full h-full hover:text-marigold transition-colors text-xs gap-0.5">
+        <span class="text-lg">📖</span>
+        <span>Meaning</span>
+      </a>
+      <a href="/hanuman-chalisa-audio-mp3" class="flex flex-col items-center justify-center w-full h-full hover:text-marigold transition-colors text-xs gap-0.5">
+        <span class="text-lg">🎵</span>
+        <span>Audio</span>
+      </a>
+      <a href="/hanuman-chalisa-pdf" class="flex flex-col items-center justify-center w-full h-full hover:text-marigold transition-colors text-xs gap-0.5">
+        <span class="text-lg">📄</span>
+        <span>PDF</span>
+      </a>
+      <a href="/hanuman-chalisa-benefits" class="flex flex-col items-center justify-center w-full h-full hover:text-marigold transition-colors text-xs gap-0.5">
+        <span class="text-lg">✨</span>
+        <span>Benefits</span>
+      </a>
+    </nav>
+
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --font-marcellus: 'Marcellus', serif;
+    --font-tiro-devanagari: 'Tiro Devanagari Hindi', serif;
+    --font-mukta: 'Mukta', sans-serif;
+    --font-inter: 'Inter', sans-serif;
+  }
+</style>
