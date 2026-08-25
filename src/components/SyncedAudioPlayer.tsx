@@ -22,7 +22,7 @@ const DEFAULT_TRACKS: AudioTrack[] = [
     id: "track-1",
     name: "Shri Hanuman Chalisa",
     reciter: "Hari Om Sharan",
-    url: "https://archive.org/download/a_20220426_202204/Hari%20Om%20Sharan%20%E2%80%8E%E2%80%93%20Shri%20Hanuman%20Chalisa.mp3",
+    url: "/audio/hanuman-chalisa.mp3",
     duration: 524, // 8m 44s
     description: "The classic, legendary 1975 recitation of the Hanuman Chalisa. Peaceful, traditional, and highly meditative.",
   },
@@ -30,7 +30,7 @@ const DEFAULT_TRACKS: AudioTrack[] = [
     id: "track-2",
     name: "Sankat Mochan Hanumanashtak",
     reciter: "Hari Om Sharan",
-    url: "https://archive.org/download/a_20220426_202204/Hari%20Om%20Sharan%20%E2%80%8E%E2%80%93%20Sankat%20Mochan%20Hanumanashtak.mp3",
+    url: "/audio/hanumanashtak.mp3",
     duration: 313, // 5m 13s
     description: "The 8-verse Ashtak reciting the heroic deeds of Lord Hanuman, sung by Hari Om Sharan. Deep and protective.",
   },
@@ -38,7 +38,7 @@ const DEFAULT_TRACKS: AudioTrack[] = [
     id: "track-3",
     name: "Hanumanji Ki Aarti",
     reciter: "Hari Om Sharan",
-    url: "https://archive.org/download/a_20220426_202204/Hari%20Om%20Sharan%20%E2%80%8E%E2%80%93%20Hanumanji%20Ki%20Aarti.mp3",
+    url: "/audio/hanuman-aarti.mp3",
     duration: 263, // 4m 23s
     description: "Traditional Aarti Kije Hanuman Lala Ki, sung at the end of prayers with camphor and temple bells.",
   }
