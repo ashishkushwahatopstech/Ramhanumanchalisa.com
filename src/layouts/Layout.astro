@@ -15,11 +15,24 @@ const {
 } = Astro.props;
 
 const currentYear = new Date().getFullYear();
+const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_GA_ID;
 ---
 
 <!doctype html>
 <html lang="en" class="h-full antialiased">
   <head>
+    {gaId && (
+      <>
+        <!-- Google Analytics -->
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title === "Shree Hanuman Chalisa — Audio, Meaning, PDF & Recitation Guide" ? title : `${title} | Ram Hanuman Chalisa`}</title>
