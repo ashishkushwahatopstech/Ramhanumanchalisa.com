@@ -18,7 +18,22 @@ export function getPrisma(db?: any): PrismaClient {
 
   // Local development / fallback
   if (!globalThis.prismaGlobal) {
-    globalThis.prismaGlobal = new PrismaClient();
+    try {
+      globalThis.prismaGlobal = new PrismaClient();
+    } catch (e) {
+      console.warn("Prisma local client fallback initialization failed on Edge:", e);
+      // Return a safe mock client to let the app fall back to local JSON stores cleanly
+      return new Proxy({} as any, {
+        get: () => {
+          return () => ({
+            findUnique: () => Promise.resolve(null),
+            findMany: () => Promise.resolve([]),
+            findFirst: () => Promise.resolve(null),
+            count: () => Promise.resolve(0),
+          });
+        }
+      });
+    }
   }
   return globalThis.prismaGlobal;
 }
