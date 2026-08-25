@@ -51,7 +51,7 @@ export default function LanguageBanner() {
   };
 
   return (
-    <div className="no-print w-full bg-marigold text-maroon-deep py-2.5 px-4 text-xs sm:text-sm font-semibold flex items-center justify-between border-b border-brass-gold/30 shadow-inner relative z-50">
+    <div className="no-print w-full bg-marigold text-maroon-deep py-2.5 px-4 text-xs sm:text-sm font-semibold flex items-center justify-between border-b border-brass-gold/30 shadow-inner relative z-40">
       <div className="flex-grow text-center pr-4">
         📯 Looks like you might prefer the {languageNames[suggestedLang]} version of Shree Hanuman Chalisa.{" "}
         <a
