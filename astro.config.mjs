@@ -3,6 +3,9 @@ import react from '@astrojs/react';
 import cloudflare from '@astrojs/cloudflare';
 import path from 'path';
 
+// Astro config helper: inspect command arguments directly in module scope
+const isBuild = process.argv.includes('build') || process.env.NODE_ENV === 'production';
+
 export default defineConfig({
   output: 'server',
   adapter: cloudflare({
@@ -11,14 +14,14 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     resolve: {
-      alias: {
+      alias: isBuild ? {
+        '@prisma/client$': path.resolve(process.cwd(), 'node_modules/@prisma/client/edge.js'),
         '.prisma/client/edge': path.resolve(process.cwd(), 'node_modules/.prisma/client/edge.js'),
-        '@prisma/client/edge': path.resolve(process.cwd(), 'node_modules/.prisma/client/edge.js'),
-        '.prisma/client/index-browser': path.resolve(process.cwd(), 'node_modules/.prisma/client/index-browser.js')
-      }
+        '.prisma/client/default': path.resolve(process.cwd(), 'node_modules/@prisma/client/edge.js')
+      } : {}
     },
     ssr: {
-      noExternal: [/prisma/, '@prisma/client', '.prisma/client']
+      noExternal: isBuild ? [/prisma/, '@prisma/client', '.prisma/client'] : []
     }
   }
 });
