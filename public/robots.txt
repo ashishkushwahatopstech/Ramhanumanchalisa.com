@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/auth
+Disallow: /api/admin
+Disallow: /unauthorized
+
+Sitemap: https://ramhanumanchalisa.com/sitemap.xml
