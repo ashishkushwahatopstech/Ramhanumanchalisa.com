@@ -6,6 +6,10 @@ import ChalisaTemplate from "../../components/ChalisaTemplate";
 const { lang } = Astro.params;
 const SUPPORTED_LANGS = ["en", "te", "bn", "kn"];
 
+if (lang === "hi") {
+  return Astro.redirect("/");
+}
+
 if (!lang || !SUPPORTED_LANGS.includes(lang)) {
   return Astro.redirect("/404");
 }
