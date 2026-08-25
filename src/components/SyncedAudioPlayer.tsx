@@ -415,7 +415,7 @@ export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: Synced
       <div ref={playerRef} className="flex flex-col md:flex-row gap-6 border-2 border-brass-gold/30 bg-stone-ivory p-4 sm:p-6 rounded-lg shadow-sm">
       
       {/* 1. Synced Lyrics Sidebar / Display */}
-      <div className="flex-1 flex flex-col h-[550px] border border-brass-gold/20 rounded bg-stone-ivory/50">
+      <div className="flex-1 flex flex-col h-[550px] border border-brass-gold/20 rounded bg-stone-ivory/50 order-2 md:order-1">
         
         {/* Sidebar Header */}
         <div className="p-3 bg-maroon-deep text-stone-ivory border-b border-brass-gold/30 flex justify-between items-center text-xs">
@@ -485,7 +485,7 @@ export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: Synced
       </div>
 
       {/* 2. Controls Panel */}
-      <div className="w-full md:w-80 flex flex-col gap-6 justify-between">
+      <div className="w-full md:w-80 flex flex-col gap-6 justify-between order-1 md:order-2">
         
         {/* Track Selector & Metadata */}
         <div className="space-y-4 bg-stone-ivory border border-brass-gold/20 p-4 rounded">
@@ -602,7 +602,7 @@ export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: Synced
 
     {/* Floating Hover Mini-Player */}
     {showMiniPlayer && (
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-maroon-deep text-stone-ivory border-t-2 border-brass-gold px-4 py-3 shadow-lg no-print flex items-center justify-between gap-4 max-w-lg mx-auto sm:bottom-4 sm:right-6 sm:left-auto sm:max-w-sm sm:rounded-lg sm:border-2">
+      <div className="fixed bottom-16 left-0 right-0 z-50 bg-maroon-deep text-stone-ivory border-t-2 border-brass-gold px-4 py-3 shadow-lg no-print flex items-center justify-between gap-4 max-w-lg mx-auto sm:bottom-4 sm:right-6 sm:left-auto sm:max-w-sm sm:rounded-lg sm:border-2">
         {/* Play/Pause Button */}
         <button
           onClick={handlePlayPause}
