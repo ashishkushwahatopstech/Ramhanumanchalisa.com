@@ -33,42 +33,6 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
       
       {/* 1. Garbhagriha Hero Section (Sanctum) */}
       <section className="relative overflow-hidden w-full -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 bg-gradient-to-b from-marigold/5 to-transparent border-b border-brass-gold/10">
-        
-        {/* Lord Rama Background (Left) */}
-        <div 
-          className="absolute left-0 top-0 bottom-0 w-1/3 sm:w-1/4 md:w-1/5 opacity-15 sm:opacity-20 pointer-events-none select-none"
-          style={{
-            maskImage: "linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%)",
-            WebkitMaskImage: "linear-gradient(to right, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%)"
-          }}
-        >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rama-Varuna.jpg"
-            alt="Lord Rama standing majestically with Bow - traditional artwork by Raja Ravi Varma"
-            title="Lord Rama - Ram Hanuman Chalisa Background"
-            sizes="(max-width: 640px) 33vw, 20vw"
-            className="absolute inset-0 w-full h-full object-cover object-top"
-            loading="eager"
-          />
-        </div>
-
-        {/* Lord Hanuman Background (Right) */}
-        <div 
-          className="absolute right-0 top-0 bottom-0 w-1/3 sm:w-1/4 md:w-1/5 opacity-15 sm:opacity-20 pointer-events-none select-none"
-          style={{
-            maskImage: "linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%)",
-            WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%)"
-          }}
-        >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/3/38/Hanuman_showing_Rama_in_His_heart.jpg"
-            alt="Lord Hanuman revealing Lord Rama and Mother Sita in His heart - traditional artwork by Raja Ravi Varma"
-            title="Lord Hanuman - Ram Hanuman Chalisa Background"
-            sizes="(max-width: 640px) 33vw, 20vw"
-            className="absolute inset-0 w-full h-full object-cover object-top"
-            loading="eager"
-          />
-        </div>
 
         {/* Content Wrapper */}
         <div className="relative z-10 max-w-4xl mx-auto py-8 space-y-6 text-center">
