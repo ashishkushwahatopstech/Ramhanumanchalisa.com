@@ -231,7 +231,7 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
         {/* Doha Closing */}
         {dohaClosing && (
           <div className="p-8 bg-maroon-deep border-2 border-brass-gold text-stone-ivory rounded shadow-md text-center space-y-4 max-w-2xl mx-auto">
-            <span class="text-xs uppercase font-bold tracking-widest text-marigold">
+            <span className="text-xs uppercase font-bold tracking-widest text-marigold">
               Concluding Doha (दोहा)
             </span>
             <p className={getScriptClass(data.lang) + " !text-stone-ivory"}>
