@@ -10,7 +10,7 @@ const db = Astro.locals.runtime?.env?.DB;
 const data = await getChalisaData("hi", db);
 ---
 
-<Layout title={data.title} description={data.metaDescription}>
+<Layout title={data.title} description={data.metaDescription} showHreflangs={true}>
   <CookieRedirect client:load />
   <LanguageBanner client:load />
   <div class="space-y-12">

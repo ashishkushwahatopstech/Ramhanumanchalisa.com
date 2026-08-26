@@ -6,12 +6,14 @@ interface Props {
   title?: string;
   description?: string;
   canonicalUrl?: string;
+  showHreflangs?: boolean;
 }
 
 const { 
   title = "Shree Hanuman Chalisa — Audio, Meaning, PDF & Recitation Guide", 
   description = "Step into our digital mandir. Read the authentic Hanuman Chalisa in Devanagari, English, and Gujarati, with line-by-line Hindi/English meanings, synced audio, PDF, and path vidhi.",
-  canonicalUrl = "https://ramhanumanchalisa.com"
+  canonicalUrl = "https://ramhanumanchalisa.com",
+  showHreflangs = false
 } = Astro.props;
 
 const currentYear = new Date().getFullYear();
@@ -38,6 +40,20 @@ const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_G
     <title>{title === "Shree Hanuman Chalisa — Audio, Meaning, PDF & Recitation Guide" ? title : `${title} | Ram Hanuman Chalisa`}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+
+    {showHreflangs && (
+      <>
+        <!-- Hreflang Alternate Translation Tags -->
+        <link rel="alternate" hreflang="x-default" href="https://ramhanumanchalisa.com/" />
+        <link rel="alternate" hreflang="hi" href="https://ramhanumanchalisa.com/" />
+        <link rel="alternate" hreflang="en" href="https://ramhanumanchalisa.com/hanuman-chalisa/en" />
+        <link rel="alternate" hreflang="te" href="https://ramhanumanchalisa.com/hanuman-chalisa/te" />
+        <link rel="alternate" hreflang="bn" href="https://ramhanumanchalisa.com/hanuman-chalisa/bn" />
+        <link rel="alternate" hreflang="kn" href="https://ramhanumanchalisa.com/hanuman-chalisa/kn" />
+        <link rel="alternate" hreflang="gu" href="https://ramhanumanchalisa.com/hanuman-chalisa/gu" />
+        <link rel="alternate" hreflang="mr" href="https://ramhanumanchalisa.com/hanuman-chalisa/mr" />
+      </>
+    )}
     
     <!-- Google Fonts Preconnect and Link -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

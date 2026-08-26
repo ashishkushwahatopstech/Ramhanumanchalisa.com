@@ -6,6 +6,8 @@ const languageNames: Record<string, string> = {
   te: "తెలుగు (Telugu)",
   bn: "বাংলা (Bengali)",
   kn: "ಕನ್ನಡ (Kannada)",
+  gu: "ગુજરાતી (Gujarati)",
+  mr: "मराठी (Marathi)",
   en: "English",
 };
 
@@ -38,7 +40,7 @@ export default function LanguageBanner() {
 
     const activeCode = testLang || primaryCode;
 
-    if (["te", "bn", "kn", "en"].includes(activeCode)) {
+    if (["te", "bn", "kn", "gu", "mr", "en"].includes(activeCode)) {
       setSuggestedLang(activeCode);
     }
   }, []);

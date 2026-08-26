@@ -79,7 +79,7 @@ export const GET: APIRoute = async (context) => {
   urls = urls.concat(blogUrls);
 
   // 4. Localized languages
-  const langPaths = ["en", "te", "bn", "kn"];
+  const langPaths = ["en", "te", "bn", "kn", "gu", "mr"];
   const langUrls = langPaths.map((lang) => `
   <url>
     <loc>${baseUrl}/hanuman-chalisa/${lang}</loc>

@@ -4,6 +4,8 @@ import enData from "@/data/chalisa/en.json";
 import teData from "@/data/chalisa/te.json";
 import bnData from "@/data/chalisa/bn.json";
 import knData from "@/data/chalisa/kn.json";
+import guData from "@/data/chalisa/gu.json";
+import mrData from "@/data/chalisa/mr.json";
 
 const localFallbacks: Record<string, any> = {
   hi: hiData,
@@ -11,6 +13,8 @@ const localFallbacks: Record<string, any> = {
   te: teData,
   bn: bnData,
   kn: knData,
+  gu: guData,
+  mr: mrData,
 };
 
 export interface LocalizedVerse {

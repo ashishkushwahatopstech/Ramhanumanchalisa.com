@@ -27,6 +27,14 @@ export default function LanguageSwitcher() {
       <a href="/hanuman-chalisa/kn" onClick={() => setLangCookie("kn")} className="hover:text-marigold transition-colors">
         ಕನ್ನಡ
       </a>
+      <span className="text-brass-gold/30">|</span>
+      <a href="/hanuman-chalisa/gu" onClick={() => setLangCookie("gu")} className="hover:text-marigold transition-colors">
+        ગુજ
+      </a>
+      <span className="text-brass-gold/30">|</span>
+      <a href="/hanuman-chalisa/mr" onClick={() => setLangCookie("mr")} className="hover:text-marigold transition-colors">
+        मराठी
+      </a>
     </div>
   );
 }

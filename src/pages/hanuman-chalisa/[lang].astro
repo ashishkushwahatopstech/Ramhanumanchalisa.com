@@ -4,7 +4,7 @@ import { getChalisaData } from "../../lib/getChalisaData";
 import ChalisaTemplate from "../../components/ChalisaTemplate";
 
 const { lang } = Astro.params;
-const SUPPORTED_LANGS = ["en", "te", "bn", "kn"];
+const SUPPORTED_LANGS = ["en", "te", "bn", "kn", "gu", "mr"];
 
 if (lang === "hi") {
   return Astro.redirect("/");
@@ -18,6 +18,6 @@ const db = Astro.locals.runtime?.env?.DB;
 const data = await getChalisaData(lang, db);
 ---
 
-<Layout title={data.title} description={data.metaDescription} canonicalUrl={`https://ramhanumanchalisa.com/hanuman-chalisa/${lang}`}>
+<Layout title={data.title} description={data.metaDescription} canonicalUrl={`https://ramhanumanchalisa.com/hanuman-chalisa/${lang}`} showHreflangs={true}>
   <ChalisaTemplate data={data} client:load />
 </Layout>
