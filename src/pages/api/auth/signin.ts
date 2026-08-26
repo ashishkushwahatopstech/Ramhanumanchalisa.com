@@ -5,7 +5,7 @@ export const GET: APIRoute = async (context) => {
   
   // Read Client ID from Cloudflare Bindings or Astro process env
   const rawClientId = context.locals.runtime?.env?.GOOGLE_CLIENT_ID || import.meta.env.GOOGLE_CLIENT_ID;
-  const clientId = rawClientId?.trim();
+  const clientId = rawClientId?.trim().replace(/^["']|["']$/g, "");
 
   if (!clientId) {
     console.error("GOOGLE_CLIENT_ID is not configured in the environment.");

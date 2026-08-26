@@ -12,8 +12,8 @@ export const GET: APIRoute = async (context) => {
   const rawClientId = context.locals.runtime?.env?.GOOGLE_CLIENT_ID || import.meta.env.GOOGLE_CLIENT_ID;
   const rawClientSecret = context.locals.runtime?.env?.GOOGLE_CLIENT_SECRET || import.meta.env.GOOGLE_CLIENT_SECRET;
   
-  const clientId = rawClientId?.trim();
-  const clientSecret = rawClientSecret?.trim();
+  const clientId = rawClientId?.trim().replace(/^["']|["']$/g, "");
+  const clientSecret = rawClientSecret?.trim().replace(/^["']|["']$/g, "");
 
   if (!clientId || !clientSecret) {
     console.error("Authentication environment variables are not configured.");
