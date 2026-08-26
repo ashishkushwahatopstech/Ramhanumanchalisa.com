@@ -23,7 +23,7 @@ const title = "Admin Portal Login";
 
       <div class="space-y-4">
         <a
-          href="/admin"
+          href="/api/auth/signin"
           class="w-full flex items-center justify-center gap-3 bg-white hover:bg-stone-ivory/50 text-charcoal-brown border border-brass-gold/40 px-6 py-3 rounded font-bold text-sm shadow hover:shadow-md transition-all duration-200 cursor-pointer"
         >
           <!-- Google Colored Icon -->
@@ -45,11 +45,11 @@ const title = "Admin Portal Login";
               d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.39 0 3.18 2.12 1.21 5.4l4.11 3.16c.94-2.85 3.57-4.96 6.68-4.96z"
             />
           </svg>
-          Sign in with Google (Bypassed)
+          Sign in with Google
         </a>
         
         <p class="text-[10px] text-charcoal-brown/50 italic leading-relaxed">
-          Google sign-in is bypassed in the Astro setup. Click above to proceed to the Admin Dashboard.
+          Authorization is strictly restricted to approved administrator accounts.
         </p>
       </div>
 
