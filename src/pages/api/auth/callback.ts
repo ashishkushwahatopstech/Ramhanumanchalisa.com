@@ -9,8 +9,11 @@ export const GET: APIRoute = async (context) => {
   }
 
   // Retrieve environment variables dynamically from Cloudflare bindings or fallback
-  const clientId = context.locals.runtime?.env?.GOOGLE_CLIENT_ID || import.meta.env.GOOGLE_CLIENT_ID;
-  const clientSecret = context.locals.runtime?.env?.GOOGLE_CLIENT_SECRET || import.meta.env.GOOGLE_CLIENT_SECRET;
+  const rawClientId = context.locals.runtime?.env?.GOOGLE_CLIENT_ID || import.meta.env.GOOGLE_CLIENT_ID;
+  const rawClientSecret = context.locals.runtime?.env?.GOOGLE_CLIENT_SECRET || import.meta.env.GOOGLE_CLIENT_SECRET;
+  
+  const clientId = rawClientId?.trim();
+  const clientSecret = rawClientSecret?.trim();
 
   if (!clientId || !clientSecret) {
     console.error("Authentication environment variables are not configured.");
