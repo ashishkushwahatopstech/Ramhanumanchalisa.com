@@ -18,6 +18,53 @@ const {
 
 const currentYear = new Date().getFullYear();
 const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_GA_ID || "G-VBBLMPSKY2";
+
+// Compute BreadcrumbList Schema dynamically
+const urlObj = new URL(canonicalUrl);
+const pathName = urlObj.pathname;
+const breadcrumbItems = [
+  {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://ramhanumanchalisa.com"
+  }
+];
+
+if (pathName && pathName !== "/") {
+  const parts = pathName.split("/").filter(Boolean);
+  let accumulatedPath = "";
+  parts.forEach((part, index) => {
+    accumulatedPath += `/${part}`;
+    let name = part
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+    
+    if (part === "faq") name = "FAQ";
+    else if (part === "hanuman-chalisa-meaning") name = "Meaning";
+    else if (part === "hanuman-chalisa-audio-mp3") name = "Synced Audio";
+    else if (part === "hanuman-chalisa-pdf") name = "PDF Print";
+    else if (part === "sankat-mochan-hanumanashtak") name = "Hanuman Ashtak";
+    else if (part === "hanuman-aarti") name = "Hanuman Aarti";
+    else if (part === "shri-hanuman-chalisa-path-vidhi") name = "Path Vidhi";
+    else if (part === "hanuman-chalisa-benefits") name = "Benefits";
+    else if (part === "ram-hanuman-chalisa") name = "Ram Hanuman Connection";
+    else if (part === "blog") name = "Blog";
+    
+    breadcrumbItems.push({
+      "@type": "ListItem",
+      "position": index + 2,
+      "name": name,
+      "item": `https://ramhanumanchalisa.com${accumulatedPath}`
+    });
+  });
+}
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbItems
+};
 ---
 
 <!doctype html>
@@ -65,12 +112,17 @@ const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_G
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://ramhanumanchalisa.com/icon.png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalUrl} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://ramhanumanchalisa.com/icon.png" />
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   </head>
   <body class="min-h-full flex flex-col font-body bg-stone-ivory text-charcoal-brown selection:bg-marigold selection:text-maroon-deep">
     
@@ -83,9 +135,9 @@ const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_G
           <a href="/" class="flex items-center gap-2 group">
             <span class="text-2xl sm:text-3xl filter drop-shadow group-hover:scale-110 transition-transform duration-300">🔔</span>
             <div>
-              <h1 class="font-serif-display text-lg sm:text-xl font-bold tracking-wider text-marigold uppercase leading-none">
+              <div class="font-serif-display text-lg sm:text-xl font-bold tracking-wider text-marigold uppercase leading-none">
                 Ram Hanuman Chalisa
-              </h1>
+              </div>
               <p class="text-[10px] sm:text-xs text-brass-gold tracking-widest leading-none mt-1">
                 श्री राम जय राम जय जय राम
               </p>
@@ -201,6 +253,7 @@ const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_G
           <div class="flex gap-4">
             <a href="/about" class="hover:text-marigold">About Us</a>
             <a href="/contact" class="hover:text-marigold">Contact</a>
+            <a href="/blog" class="hover:text-marigold">Bhakti Blog</a>
             <a href="/privacy-policy" class="hover:text-marigold">Privacy Policy</a>
             <a href="/disclaimer" class="hover:text-marigold">Disclaimer</a>
             <a href="/faq" class="hover:text-marigold">FAQ</a>

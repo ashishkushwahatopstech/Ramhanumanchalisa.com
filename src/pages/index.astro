@@ -8,9 +8,33 @@ import DiyaCounter from "../components/DiyaCounter";
 
 const db = Astro.locals.runtime?.env?.DB;
 const data = await getChalisaData("hi", db);
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Ram Hanuman Chalisa",
+  "url": "https://ramhanumanchalisa.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://ramhanumanchalisa.com/?s={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+};
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Ram Hanuman Chalisa",
+  "url": "https://ramhanumanchalisa.com",
+  "logo": "https://ramhanumanchalisa.com/icon.png"
+};
 ---
 
 <Layout title={data.title} description={data.metaDescription} showHreflangs={true}>
+  <!-- Brand Schemas -->
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+
   <CookieRedirect client:load />
   <LanguageBanner client:load />
   <div class="space-y-12">

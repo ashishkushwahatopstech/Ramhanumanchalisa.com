@@ -1,0 +1,15 @@
+# Ram Hanuman Chalisa
+
+> Devotional hub providing authentic Awadhi-Sanskrit scriptures, English/Hindi translations, word-by-word dictionaries, and synchronized audio recitations for Lord Hanuman and Lord Rama.
+
+## Primary Routes
+- [Hanuman Chalisa](https://ramhanumanchalisa.com/) - The core forty-verse devotional text in Hindi-Devanagari, with English translation, and live chanting counter.
+- [Line-by-Line Meaning](https://ramhanumanchalisa.com/hanuman-chalisa-meaning) - Full Awadhi verses matched with literal word-by-word dictionary breakdowns, Puranic legends, and detailed expositions.
+- [Synced Audio & MP3 Player](https://ramhanumanchalisa.com/hanuman-chalisa-audio-mp3) - Interactive synchronized audio track playback with adjustable speed and automatic highlighting of active verses.
+- [Sankat Mochan Hanumanashtak](https://ramhanumanchalisa.com/sankat-mochan-hanumanashtak) - Eight-verse couplets with word-by-word meaning, performance details, and audio recitations.
+- [Shree Hanuman Aarti](https://ramhanumanchalisa.com/hanuman-aarti) - Traditional Aarti text, translation, and audio.
+- [Path Vidhi & Rules](https://ramhanumanchalisa.com/shri-hanuman-chalisa-path-vidhi) - Guide on the correct times, preparations, and diets required for chanting the scriptures.
+- [Benefits & Blessings](https://ramhanumanchalisa.com/hanuman-chalisa-benefits) - Overview of the spiritual and physical benefits associated with regular recitation.
+- [Printable PDF](https://ramhanumanchalisa.com/hanuman-chalisa-pdf) - Beautifully typeset physical printouts and WhatsApp status card share generator.
+- [Ram Hanuman Connection](https://ramhanumanchalisa.com/ram-hanuman-chalisa) - Profound exploration of the relationship between Lord Rama and Hanuman.
+- [Bhakti Blog](https://ramhanumanchalisa.com/blog) - Articles and stories explaining the origins, practices, and history of Hanuman worship.

@@ -62,9 +62,9 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
           <div className="torana-arch py-12 px-6 sm:px-12 rounded-t-full shadow-lg border-t-4 border-brass-gold flex flex-col items-center justify-center bg-stone-ivory/95">
             <span className="text-3xl filter drop-shadow mb-4 select-none">🕉️</span>
             
-            <h2 className="font-serif-display text-xl sm:text-2xl text-maroon-deep uppercase tracking-widest font-bold border-b border-brass-gold/30 pb-2 mb-6">
+            <h1 className="font-serif-display text-xl sm:text-2xl text-maroon-deep uppercase tracking-widest font-bold border-b border-brass-gold/30 pb-2 mb-6">
               {data.h1}
-            </h2>
+            </h1>
 
             {/* Doha 1 & 2 Inside Sanctum */}
             <div className="space-y-6 max-w-2xl font-semibold">

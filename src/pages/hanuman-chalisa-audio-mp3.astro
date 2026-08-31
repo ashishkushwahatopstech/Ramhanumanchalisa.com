@@ -8,16 +8,29 @@ const description = "Listen to Hanuman Chalisa MP3 and follow line-by-line synce
 ---
 
 <Layout title={title} description={description}>
-  <div class="space-y-10 max-w-5xl mx-auto">
+  <div class="space-y-10 max-w-4xl mx-auto">
     
+    <!-- Breadcrumbs -->
+    <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
+      <ol class="list-none p-0 inline-flex gap-2">
+        <li class="flex items-center">
+          <a href="/" class="hover:text-maroon-deep">Home</a>
+          <span class="mx-2">/</span>
+        </li>
+        <li class="text-maroon-deep truncate max-w-[200px]" aria-current="page">
+          Synced Audio
+        </li>
+      </ol>
+    </nav>
+
     <!-- Page Header -->
     <div class="text-center space-y-3">
       <span class="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
         Interactive Chanting (श्रवण साधना)
       </span>
-      <h2 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+      <h1 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
         Hanuman Chalisa Synced Audio Player
-      </h2>
+      </h1>
       <p class="text-xs text-charcoal-brown/70 max-w-2xl mx-auto leading-relaxed">
         Follow along with the audio player. The active verse highlights automatically, keeping you focused on the sacred Devanagari syllables. Adjust playback speeds to learn proper chanting rhythms.
       </p>

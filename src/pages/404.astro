@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CarvedDivider from "../components/CarvedDivider";
+
+const title = "Page Not Found (404) — Ram Hanuman Chalisa";
+const description = "The page you are looking for is not found. Please return to the homepage to chant the Hanuman Chalisa, view meanings, or listen to synced audio.";
+---
+
+<Layout title={title} description={description}>
+  <div class="max-w-xl mx-auto text-center space-y-8 py-16 px-4">
+    
+    <!-- Large Symbol -->
+    <div class="relative inline-block">
+      <span class="text-7xl block animate-bounce filter drop-shadow">🔔</span>
+      <span class="text-2xl absolute -bottom-1 -right-1">🚩</span>
+    </div>
+
+    <!-- Main Message -->
+    <div class="space-y-3">
+      <span class="text-xs uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+        Divine Path Not Found (मार्ग अप्राप्त)
+      </span>
+      <h1 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+        Lost in Devotion?
+      </h1>
+      <p class="text-sm text-charcoal-brown/80 leading-relaxed max-w-md mx-auto">
+        The page you are seeking does not exist or has been moved. Let Lord Hanuman guide you back to the correct path.
+      </p>
+    </div>
+
+    <CarvedDivider icon="🕉️" />
+
+    <!-- Help Navigation Links -->
+    <div class="space-y-4">
+      <h3 class="font-serif-display text-sm font-bold uppercase tracking-widest text-brass-gold">
+        Choose a Sacred Destination:
+      </h3>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold uppercase tracking-wider">
+        <a
+          href="/"
+          class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep py-3 px-4 rounded border border-brass-gold shadow-sm transition-all duration-300 flex items-center justify-center gap-1.5"
+        >
+          <span>🕉️</span> Mandir Entrance
+        </a>
+        <a
+          href="/hanuman-chalisa-meaning"
+          class="bg-stone-ivory hover:bg-marigold/10 text-maroon-deep py-3 px-4 rounded border border-brass-gold/40 shadow-sm transition-all duration-300 flex items-center justify-center gap-1.5"
+        >
+          <span>📖</span> Full Meaning
+        </a>
+        <a
+          href="/hanuman-chalisa-audio-mp3"
+          class="bg-stone-ivory hover:bg-marigold/10 text-maroon-deep py-3 px-4 rounded border border-brass-gold/40 shadow-sm transition-all duration-300 flex items-center justify-center gap-1.5"
+        >
+          <span>🎵</span> Synced Audio
+        </a>
+        <a
+          href="/blog"
+          class="bg-stone-ivory hover:bg-marigold/10 text-maroon-deep py-3 px-4 rounded border border-brass-gold/40 shadow-sm transition-all duration-300 flex items-center justify-center gap-1.5"
+        >
+          <span>✍️</span> Bhakti Blog
+        </a>
+      </div>
+    </div>
+
+    <!-- Extra comfort/footer text -->
+    <p class="text-[10px] text-charcoal-brown/40 italic">
+      "संकट कटै मिटै सब पीरा, जो सुमिरै हनुमत बलबीरा"
+    </p>
+
+  </div>
+</Layout>

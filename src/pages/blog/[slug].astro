@@ -82,9 +82,42 @@ function parseMarkdown(content: string) {
 }
 
 const parsedContent = parseMarkdown(post.content);
+
+let isoDate = "";
+try {
+  isoDate = new Date(post.createdAt).toISOString();
+} catch (e) {
+  isoDate = new Date().toISOString();
+}
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.title,
+  "description": post.excerpt,
+  "datePublished": isoDate,
+  "author": {
+    "@type": "Person",
+    "name": post.author || "Admin"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ramhanumanchalisa.com/icon.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://ramhanumanchalisa.com/blog/${post.slug}`
+  }
+};
 ---
 
-<Layout title={`${post.title} — Hanuman Bhakti Blog`} description={post.excerpt}>
+<Layout title={`${post.title} — Hanuman Bhakti Blog`} description={post.excerpt} canonicalUrl={`https://ramhanumanchalisa.com/blog/${post.slug}`}>
+  <!-- Blog Article Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <div class="space-y-8 max-w-3xl mx-auto">
     
     <!-- Breadcrumbs -->
@@ -106,9 +139,9 @@ const parsedContent = parseMarkdown(post.content);
 
     <!-- Post Header -->
     <div class="space-y-4 text-center sm:text-left">
-      <h2 class="font-serif-display text-2xl sm:text-3xl font-bold text-maroon-deep uppercase leading-tight">
+      <h1 class="font-serif-display text-2xl sm:text-3xl font-bold text-maroon-deep uppercase leading-tight">
         {post.title}
-      </h2>
+      </h1>
       
       <div class="flex flex-wrap justify-center sm:justify-start items-center gap-3 text-xs text-brass-gold font-bold">
         <span>{post.createdAt}</span>

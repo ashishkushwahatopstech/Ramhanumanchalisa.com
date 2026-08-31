@@ -7,5 +7,20 @@ const description = "Chant Shree Hanuman Aarti (Aarti Kije Hanuman Lala Ki). Lis
 ---
 
 <Layout title={title} description={description}>
-  <AartiClient client:load />
+  <div class="space-y-10 max-w-4xl mx-auto">
+    <!-- Breadcrumbs -->
+    <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
+      <ol class="list-none p-0 inline-flex gap-2">
+        <li class="flex items-center">
+          <a href="/" class="hover:text-maroon-deep">Home</a>
+          <span class="mx-2">/</span>
+        </li>
+        <li class="text-maroon-deep truncate max-w-[200px]" aria-current="page">
+          Hanuman Aarti
+        </li>
+      </ol>
+    </nav>
+
+    <AartiClient client:load />
+  </div>
 </Layout>
