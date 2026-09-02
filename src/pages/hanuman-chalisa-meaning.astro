@@ -46,6 +46,65 @@ const description = "Study the deep meaning of Hanuman Chalisa. Detailed word-by
       Ad Slot — Page Top (Layout Stable Skeleton)
     </div>
 
+    <!-- Table of Contents / Quick Verse Navigator -->
+    <nav class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-5 shadow-sm space-y-3" aria-label="Page Table of Contents">
+      <h3 class="font-serif-display text-xs font-bold uppercase tracking-widest text-maroon-deep flex items-center gap-2">
+        <span>📜</span> Quick Directory & Navigation
+      </h3>
+      <div class="flex flex-wrap gap-2 text-xs font-semibold">
+        <a href="#story" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors">
+          The Story Behind the Chalisa
+        </a>
+        <a href="#doha-01" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Opening Dohas
+        </a>
+        <a href="#verse-1" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Chaupais 1–10
+        </a>
+        <a href="#verse-11" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Chaupais 11–20
+        </a>
+        <a href="#verse-21" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Chaupais 21–30
+        </a>
+        <a href="#verse-31" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Chaupais 31–40
+        </a>
+        <a href="#doha-closing" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Concluding Doha
+        </a>
+      </div>
+    </nav>
+
+    <!-- The Story Behind the Hanuman Chalisa Section -->
+    <section id="story" class="scroll-mt-24 bg-stone-ivory border-2 border-brass-gold/40 rounded-lg p-6 sm:p-8 shadow-sm space-y-5">
+      <div class="space-y-1.5 border-b border-brass-gold/20 pb-3">
+        <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-2.5 py-0.5 rounded border border-marigold">
+          Devotional History & Origin • रचना का इतिहास
+        </span>
+        <h2 class="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+          The Story Behind the Hanuman Chalisa
+        </h2>
+      </div>
+
+      <div class="space-y-4 text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed font-sans">
+        <p>
+          Who wrote the Hanuman Chalisa, and under what circumstances was this timeless hymn created? Tradition holds that the sacred quatrains were composed during the 16th century by the illustrious Bhakti poet-saint <strong>Goswami Tulsidas</strong> (1532–1623 CE). Revered throughout India as an incarnation of Sage Valmiki, Tulsidas was the master devotee who authored the immortal <em>Ramcharitmanas</em>, transforming the Sanskrit Ramayana into the vernacular language so that common devotees could access its divine wisdom. Composed in <strong>Awadhi</strong>—a literary Eastern Hindi dialect known for its sweet, melodious cadence—the Hanuman Chalisa was specifically crafted with rhythmic meters suited for communal singing, daily memorization, and meditative recitation.
+        </p>
+        <p>
+          According to popular devotional legend, the origin of the Chalisa arose from a historic confrontation in the imperial capital. As Tulsidas's spiritual fame and miracles of devotion spread across northern India, tales of his saintly presence reached the Mughal court of Emperor Akbar in Agra and Fatehpur Sikri. Intrigued by the saint's widespread following, the Emperor summoned Tulsidas to his court and requested that he perform a miracle to substantiate his divine favor. Tulsidas humbly refused, explaining that he possessed no supernatural powers of his own and was merely an ordinary servant of God, noting that all genuine miracles belong exclusively to Lord Rama and Sri Hanuman. Displeased by the poet's refusal to comply with an imperial command, the Emperor ordered Tulsidas imprisoned in chains within the citadel until he produced a miracle.
+        </p>
+        <p>
+          Imprisoned and held in captivity, tradition holds that Tulsidas turned his complete consciousness toward Lord Hanuman—the supreme <em>Sankat Mochan</em> (remover of distress) and guardian of all devotees who take refuge in Rama's lotus feet. Deprived of any worldly recourse, the poet-saint poured his steadfast faith into verse, writing one devotional quatrain (chaupai) each day from within his cell. Over forty consecutive days of solitary meditation and prayer, he composed the forty verses celebrating Hanuman's unmatched valor, wisdom, humility, and selfless service, framing them with opening and concluding couplets (dohas).
+        </p>
+        <p>
+          Devotional history recounts that on the fortieth day, immediately upon Tulsidas's completion and recitation of the final chaupai, an extraordinary phenomenon swept through the imperial citadel of Fatehpur Sikri. A vast legion of thousands of monkeys swarmed the royal capital, overrunning palaces, courtyards, watchtowers, and council chambers, throwing the royal guards into total disarray while harming none of the innocent populace. Recognizing this sudden visitation as unmistakable divine intervention, Emperor Akbar was overcome with remorse, immediately ordered Tulsidas released with imperial honors, and sought the saint's blessing. Popular legend holds that as soon as Tulsidas was freed and bestowed peace upon the realm, the monkey host vanished into the surrounding forests, leaving humanity with the eternal prayer of protection: the <em>Shree Hanuman Chalisa</em>.
+        </p>
+      </div>
+    </section>
+
+    <CarvedDivider icon="🕉️" />
+
     <!-- Verses Meaning List -->
     <div class="space-y-12">
       {verses.map((verse) => {
