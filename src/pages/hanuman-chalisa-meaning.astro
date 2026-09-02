@@ -126,6 +126,52 @@ const articleSchema = {
     }
   }
 };
+
+const verseGists: Record<string, string> = {
+  "doha-01": "Doha 1 Meaning: Guru Vandana (Invocation to the Guru)",
+  "doha-02": "Doha 2 Meaning: Prayer for Strength, Wisdom & Knowledge",
+  "verse-1": "Chaupai 1 Meaning: Ocean of Wisdom and Virtues",
+  "verse-2": "Chaupai 2 Meaning: Messenger of Rama and Abode of Strength",
+  "verse-3": "Chaupai 3 Meaning: Thunderbolt Form, Dispeller of Evil Thoughts",
+  "verse-4": "Chaupai 4 Meaning: Golden Complexion and Radiant Adornments",
+  "verse-5": "Chaupai 5 Meaning: Bearer of Vajra, Flag, and Munj Sacred Thread",
+  "verse-6": "Chaupai 6 Meaning: Shiva's Incarnation and Kesari's Joy",
+  "verse-7": "Chaupai 7 Meaning: Supremely Wise and Eager to Serve Rama",
+  "verse-8": "Chaupai 8 Meaning: Devoted Listener of Rama's Divine Glories",
+  "verse-9": "Chaupai 9 Meaning: Subtle Form in Ashoka Vatika, Colossal in Lanka",
+  "verse-10": "Chaupai 10 Meaning: Destroyer of Demons, Accomplisher of Rama's Mission",
+  "verse-11": "Chaupai 11 Meaning: Reviving Lakshmana with the Sanjeevani Herb",
+  "verse-12": "Chaupai 12 Meaning: Beloved to Sri Rama as Dear as Brother Bharata",
+  "verse-13": "Chaupai 13 Meaning: Praised by Thousand-Headed Cosmic Serpent Shesha",
+  "verse-14": "Chaupai 14 Meaning: Revered by Brahma, Sanaka, Narada, and Saraswati",
+  "verse-15": "Chaupai 15 Meaning: Unbounded Glory Beyond Yama, Kubera, and Poets",
+  "verse-16": "Chaupai 16 Meaning: Helping Sugriva Regain the Kingdom Through Rama",
+  "verse-17": "Chaupai 17 Meaning: Guiding Vibhishana to Become King of Lanka",
+  "verse-18": "Chaupai 18 Meaning: Childhood Leap to the Sun as a Sweet Fruit",
+  "verse-19": "Chaupai 19 Meaning: Crossing the Vast Ocean with Rama's Ring",
+  "verse-20": "Chaupai 20 Meaning: Making Impossible Tasks Easy Through Grace",
+  "verse-21": "Chaupai 21 Meaning: Guardian at the Doorway of Lord Rama's Realm",
+  "verse-22": "Chaupai 22 Meaning: Supreme Refuge and Fearlessness for Devotees",
+  "verse-23": "Chaupai 23 Meaning: Unmatched Radiance that Shakes the Three Worlds",
+  "verse-24": "Chaupai 24 Meaning: Ghosts and Evil Spirits Flee at Mahavira's Name",
+  "verse-25": "Chaupai 25 Meaning: Eradicating All Diseases and Pain Through Chanting",
+  "verse-26": "Chaupai 26 Meaning: Deliverance from All Crises by Meditating on Hanuman",
+  "verse-27": "Chaupai 27 Meaning: Ascetic King Rama's Ultimate Accomplisher",
+  "verse-28": "Chaupai 28 Meaning: Bestower of Desires and Immortal Fruits of Life",
+  "verse-29": "Chaupai 29 Meaning: Radiance and Renown Resounding Across Four Yugas",
+  "verse-30": "Chaupai 30 Meaning: Protector of Sages and Beloved Warrior of Rama",
+  "verse-31": "Chaupai 31 Meaning: Giver of Eight Siddhis and Nine Nidhis by Sita's Boon",
+  "verse-32": "Chaupai 32 Meaning: Ram Rasayan — The Elixir of Devotion",
+  "verse-33": "Chaupai 33 Meaning: Attaining Rama and Dissolving Sins of Lifetimes",
+  "verse-34": "Chaupai 34 Meaning: Reaching Raghuvar's Eternal Abode as Hari's Devotee",
+  "verse-35": "Chaupai 35 Meaning: Complete Joy Through Serving Hanuman Alone",
+  "verse-36": "Chaupai 36 Meaning: All Crisis Ends and Sorrows Vanish for the Rememberer",
+  "verse-37": "Chaupai 37 Meaning: Hail Lord Hanuman, Bestow Grace as the Supreme Guru",
+  "verse-38": "Chaupai 38 Meaning: Hundred Recitations Break All Bonds and Bring Supreme Bliss",
+  "verse-39": "Chaupai 39 Meaning: Attaining Spiritual Perfection with Shiva as Divine Witness",
+  "verse-40": "Chaupai 40 Meaning: Tulsidas's Prayer to Dwell Eternally in the Heart",
+  "doha-closing": "Concluding Doha Meaning: Dwelling in the Heart with Sita-Ram",
+};
 ---
 
 <Layout title={title} description={description}>
@@ -156,7 +202,7 @@ const articleSchema = {
         Detailed Exposition (भावार्थ)
       </span>
       <h1 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
-        Hanuman Chalisa Verses & Meaning
+        Hanuman Chalisa Meaning — Line by Line Translation & Explanation
       </h1>
 
       <!-- Editorial Byline: Reviewer & Freshness Indicator -->
@@ -185,42 +231,6 @@ const articleSchema = {
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
       Ad Slot — Page Top (Layout Stable Skeleton)
     </div>
-
-    <!-- Table of Contents / Quick Verse Navigator -->
-    <nav class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-5 shadow-sm space-y-3" aria-label="Page Table of Contents">
-      <h3 class="font-serif-display text-xs font-bold uppercase tracking-widest text-maroon-deep flex items-center gap-2">
-        <span>📜</span> Quick Directory & Navigation
-      </h3>
-      <div class="flex flex-wrap gap-2 text-xs font-semibold">
-        <a href="#story" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors">
-          The Story Behind the Chalisa
-        </a>
-        <a href="#audio-player" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors flex items-center gap-1">
-          <span>🎵</span> Synced Audio
-        </a>
-        <a href="#doha-01" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
-          Opening Dohas
-        </a>
-        <a href="#verse-1" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
-          Chaupais 1–10
-        </a>
-        <a href="#verse-11" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
-          Chaupais 11–20
-        </a>
-        <a href="#verse-21" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
-          Chaupais 21–30
-        </a>
-        <a href="#verse-31" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
-          Chaupais 31–40
-        </a>
-        <a href="#doha-closing" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
-          Concluding Doha
-        </a>
-        <a href="#faqs" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors flex items-center gap-1">
-          <span>❓</span> FAQs
-        </a>
-      </div>
-    </nav>
 
     <!-- The Story Behind the Hanuman Chalisa Section -->
     <section id="story" class="scroll-mt-24 bg-stone-ivory border-2 border-brass-gold/40 rounded-lg p-6 sm:p-8 shadow-sm space-y-5">
@@ -276,36 +286,75 @@ const articleSchema = {
       <SyncedAudioPlayer client:load />
     </section>
 
+    <!-- Jump-Link Table of Contents -->
+    <nav class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-5 sm:p-6 shadow-sm space-y-3 scroll-mt-24" id="verse-directory" aria-label="Verse Navigation Table of Contents">
+      <div class="flex items-center justify-between border-b border-brass-gold/20 pb-2">
+        <h3 class="font-serif-display text-xs font-bold uppercase tracking-widest text-maroon-deep flex items-center gap-2">
+          <span>📜</span> Verse Directory & Quick Jump Navigation
+        </h3>
+        <span class="text-[10px] text-charcoal-brown/50 hidden sm:inline">Jump directly to any section below</span>
+      </div>
+      <div class="flex flex-wrap gap-2 text-xs font-semibold">
+        <a href="#doha-01" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors">
+          Doha 1
+        </a>
+        <a href="#doha-02" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors">
+          Doha 2
+        </a>
+        <a href="#chaupais-1-10" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Chaupais 1–10
+        </a>
+        <a href="#chaupais-11-20" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Chaupais 11–20
+        </a>
+        <a href="#chaupais-21-30" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Chaupais 21–30
+        </a>
+        <a href="#chaupais-31-40" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Chaupais 31–40
+        </a>
+        <a href="#doha-closing" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
+          Concluding Doha
+        </a>
+        <a href="#faqs" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors flex items-center gap-1">
+          <span>❓</span> FAQs
+        </a>
+      </div>
+    </nav>
+
     <CarvedDivider icon="🕉️" />
 
     <!-- Verses Meaning List -->
     <div class="space-y-12">
       {verses.map((verse) => {
         const isDoha = verse.id.startsWith("doha-");
-        const verseNumberLabel = isDoha
-          ? verse.id === "doha-01"
-            ? "Introductory Doha 1"
-            : verse.id === "doha-02"
-            ? "Introductory Doha 2"
-            : "Concluding Doha"
-          : `Chaupai ${verse.verse_number}`;
-
+        const verseKey = isDoha ? verse.id : `verse-${verse.verse_number}`;
+        const verseHeading = verseGists[verseKey] || (isDoha ? verse.id : `Chaupai ${verse.verse_number} Meaning`);
         const anchorId = isDoha ? verse.id : `verse-${verse.verse_number}`;
+
+        const rangeGroup =
+          verse.verse_number === 1 ? "chaupais-1-10" :
+          verse.verse_number === 11 ? "chaupais-11-20" :
+          verse.verse_number === 21 ? "chaupais-21-30" :
+          verse.verse_number === 31 ? "chaupais-31-40" : null;
 
         return (
           <div
             id={anchorId}
-            class="scroll-mt-20 p-6 sm:p-8 bg-stone-ivory border border-brass-gold/30 rounded-lg shadow-sm space-y-6 hover:shadow-md transition-shadow duration-200"
+            class="scroll-mt-24 p-6 sm:p-8 bg-stone-ivory border border-brass-gold/30 rounded-lg shadow-sm space-y-6 hover:shadow-md transition-shadow duration-200 relative"
           >
-            {/* Verse Label */}
-            <div class="flex justify-between items-center border-b border-brass-gold/20 pb-3">
-              <span class="text-xs font-bold tracking-wider text-brass-gold uppercase">
-                {verseNumberLabel}
-              </span>
-              <span class="text-[10px] text-charcoal-brown/50">
-                {isDoha ? "Couplet Meter" : "Quatrain Meter"}
-              </span>
-            </div>
+            {rangeGroup && (
+              <span id={rangeGroup} class="scroll-mt-24 absolute -top-8 left-0"></span>
+            )}
+              {/* Verse Heading & Gist */}
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-brass-gold/20 pb-3">
+                <h3 class="font-serif-display text-base sm:text-lg font-bold text-maroon-deep">
+                  {verseHeading}
+                </h3>
+                <span class="text-[10px] uppercase font-bold tracking-wider text-brass-gold bg-marigold/10 px-2.5 py-0.5 rounded border border-brass-gold/20 self-start sm:self-auto shrink-0">
+                  {isDoha ? "Couplet Meter (दोहा)" : "Quatrain Meter (चौपाई)"}
+                </span>
+              </div>
 
             {/* Devanagari Script */}
             <div class="space-y-2">
