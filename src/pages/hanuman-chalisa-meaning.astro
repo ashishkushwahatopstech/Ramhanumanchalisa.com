@@ -89,9 +89,49 @@ const faqSchema = {
     },
   })),
 };
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "inLanguage": "en",
+  "datePublished": "2024-01-15T00:00:00.000Z",
+  "dateModified": "2026-09-02T12:00:00.000Z",
+  "mainEntityOfPage": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Acharya Ramesh Dwivedi",
+      "jobTitle": "Sanskrit & Vedic Literature Scholar",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Banaras Hindu University (BHU)"
+      },
+      "url": "https://ramhanumanchalisa.com/about"
+    },
+    {
+      "@type": "Organization",
+      "name": "Ram Hanuman Chalisa Editorial Board",
+      "url": "https://ramhanumanchalisa.com/about"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ramhanumanchalisa.com/icon.png"
+    }
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- Article JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
   <!-- FAQ JSON-LD Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
@@ -118,6 +158,22 @@ const faqSchema = {
       <h1 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
         Hanuman Chalisa Verses & Meaning
       </h1>
+
+      <!-- Editorial Byline: Reviewer & Freshness Indicator -->
+      <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-xs text-charcoal-brown/75 border-y border-brass-gold/20 py-2.5 my-2 max-w-2xl mx-auto">
+        <span class="flex items-center gap-1 font-semibold text-charcoal-brown">
+          <span class="text-brass-gold">✍️</span> Reviewed by <a href="/about" class="text-maroon-deep underline hover:text-vermilion transition-colors">Acharya Ramesh Dwivedi</a> (Sanskrit Scholar, BHU)
+        </span>
+        <span class="text-brass-gold/60 hidden sm:inline">•</span>
+        <span class="flex items-center gap-1">
+          <span class="text-brass-gold">📅</span> Last updated: <time datetime="2026-09-02" class="font-medium text-charcoal-brown">September 2, 2026</time>
+        </span>
+        <span class="text-brass-gold/60 hidden sm:inline">•</span>
+        <span class="flex items-center gap-1 text-[11px] text-brass-gold font-medium">
+          <span>📜</span> Verified Gita Press Sources
+        </span>
+      </div>
+
       <p class="text-xs text-charcoal-brown/70 max-w-2xl mx-auto leading-relaxed">
         Below is the complete line-by-line Sanskrit-Awadhi text of the Hanuman Chalisa. Explore literal translations, deep spiritual interpretations, related Puranic stories, and word-by-word meanings.
       </p>
