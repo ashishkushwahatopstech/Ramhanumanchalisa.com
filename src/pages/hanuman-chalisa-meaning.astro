@@ -124,7 +124,64 @@ const articleSchema = {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
     }
-  }
+  },
+  "hasPart": [
+    {
+      "@type": "WebPageElement",
+      "name": "The Story Behind the Hanuman Chalisa",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#story"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Listen to Hanuman Chalisa While Reading (Synced Audio)",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#audio-player"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Doha 1: Guru Vandana",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#doha-01"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Doha 2: Prayer for Strength, Wisdom & Knowledge",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#doha-02"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Chaupais 1–10",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#chaupais-1-10"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Chaupais 11–20",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#chaupais-11-20"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Chaupais 21–30",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#chaupais-21-30"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Chaupais 31–40",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#chaupais-31-40"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Concluding Doha",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#doha-closing"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Benefits of Reciting the Hanuman Chalisa",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#benefits"
+    },
+    {
+      "@type": "WebPageElement",
+      "name": "Frequently Asked Questions",
+      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#faqs"
+    }
+  ]
 };
 
 const verseGists: Record<string, string> = {
@@ -267,9 +324,9 @@ const verseGists: Record<string, string> = {
             <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-2.5 py-0.5 rounded border border-marigold inline-block">
               Interactive Audio • सस्वर पाठ
             </span>
-            <h3 class="font-serif-display text-xl sm:text-2xl font-bold uppercase tracking-wider text-maroon-deep mt-1">
-              Listen While You Read (ऑडियो सुनें)
-            </h3>
+            <h2 class="font-serif-display text-xl sm:text-2xl font-bold uppercase tracking-wider text-maroon-deep mt-1">
+              Listen to Hanuman Chalisa While Reading (सस्वर पाठ)
+            </h2>
           </div>
           <a
             href="/hanuman-chalisa-audio-mp3"
@@ -289,9 +346,9 @@ const verseGists: Record<string, string> = {
     <!-- Jump-Link Table of Contents -->
     <nav class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-5 sm:p-6 shadow-sm space-y-3 scroll-mt-24" id="verse-directory" aria-label="Verse Navigation Table of Contents">
       <div class="flex items-center justify-between border-b border-brass-gold/20 pb-2">
-        <h3 class="font-serif-display text-xs font-bold uppercase tracking-widest text-maroon-deep flex items-center gap-2">
+        <div class="font-serif-display text-xs font-bold uppercase tracking-widest text-maroon-deep flex items-center gap-2">
           <span>📜</span> Verse Directory & Quick Jump Navigation
-        </h3>
+        </div>
         <span class="text-[10px] text-charcoal-brown/50 hidden sm:inline">Jump directly to any section below</span>
       </div>
       <div class="flex flex-wrap gap-2 text-xs font-semibold">
@@ -327,6 +384,19 @@ const verseGists: Record<string, string> = {
 
     <CarvedDivider icon="🕉️" />
 
+    <!-- Verses Meaning Section Header -->
+    <div class="space-y-2 border-b border-brass-gold/20 pb-4">
+      <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-2.5 py-0.5 rounded border border-marigold inline-block">
+        Complete Scripture • संपूर्ण भावार्थ
+      </span>
+      <h2 class="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+        Hanuman Chalisa Verses — Complete Line-by-Line Meaning
+      </h2>
+      <p class="text-xs sm:text-sm text-charcoal-brown/70 leading-relaxed">
+        Explore each opening doha, 40 chaupais, and concluding doha with word-by-word Sanskrit-Awadhi vocabulary, Hindi translation, English exposition, and Puranic background.
+      </p>
+    </div>
+
     <!-- Verses Meaning List -->
     <div class="space-y-12">
       {verses.map((verse) => {
@@ -344,7 +414,7 @@ const verseGists: Record<string, string> = {
         return (
           <div
             id={anchorId}
-            class="scroll-mt-24 p-6 sm:p-8 bg-stone-ivory border border-brass-gold/30 rounded-lg shadow-sm space-y-6 hover:shadow-md transition-shadow duration-200 relative"
+            class="scroll-mt-24 p-6 sm:p-8 bg-stone-ivory border border-brass-gold/30 rounded-lg shadow-sm space-y-6 hover:shadow-md transition-shadow duration-200 relative [content-visibility:auto] [contain-intrinsic-size:0_450px]"
           >
             {rangeGroup && (
               <span id={rangeGroup} class="scroll-mt-24 absolute -top-8 left-0"></span>
