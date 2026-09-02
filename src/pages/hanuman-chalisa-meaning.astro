@@ -9,9 +9,92 @@ const verses = hanumanChalisaData as ScriptureVerse[];
 
 const title = "Hanuman Chalisa Meaning — Line by Line English & Hindi Translation";
 const description = "Study the deep meaning of Hanuman Chalisa. Detailed word-by-word translations, stories, and historical interpretations in Hindi and English.";
+
+const meaningFaqs = [
+  {
+    question: "What is the meaning of the Hanuman Chalisa?",
+    answer: "The Hanuman Chalisa is a 40-verse hymn of praise ('chalisa' meaning forty) celebrating the virtues, valor, wisdom, and selfless devotion of Lord Hanuman. The verses take the reciter on a spiritual journey from honoring Hanuman's physical strength and divine intellect to meditating on his devotion to Lord Rama and seeking his eternal protection."
+  },
+  {
+    question: "Who wrote the Hanuman Chalisa?",
+    answer: "The hymn was composed in the 16th century by the celebrated poet-saint Goswami Tulsidas (1532–1623 CE). According to popular devotional tradition, Tulsidas composed the forty verses while imprisoned by Mughal Emperor Akbar after refusing to perform a display of miracles, writing one chaupai each day of his forty-day captivity."
+  },
+  {
+    question: "What language is the Hanuman Chalisa written in?",
+    answer: "The Hanuman Chalisa is composed in Awadhi, an Eastern Hindi literary dialect with rich poetic roots in Sanskrit. Awadhi was chosen by Tulsidas so that common devotees could easily understand, sing, and memorize the sacred hymn without needing formal education in classical Sanskrit grammar."
+  },
+  {
+    question: "Is there a word-by-word translation of the Hanuman Chalisa available?",
+    answer: "Yes, right on this page each verse features a complete word-by-word Sanskrit-Awadhi dictionary (शब्दार्थ विश्लेषण) providing literal definitions, grammatical breakdowns, and IAST transliterations. This enables learners and scholars to explore the root meaning of every individual word before reading the full poetic exposition."
+  },
+  {
+    question: "What do the two opening dohas of the Hanuman Chalisa mean?",
+    answer: "The first opening doha cleanses the mirror of the devotee's mind with the sacred dust of the Guru's lotus feet to describe the pure glory of Lord Rama, which bestows the four fruits of life (Dharma, Artha, Kama, and Moksha). The second doha acknowledges one's humble lack of wisdom and asks Pavankumar (Hanuman) to grant strength, intelligence, and spiritual knowledge while eradicating bodily suffering and impurities."
+  },
+  {
+    question: "What does 'Ram Rasayan Tumhare Pasa' mean in the Hanuman Chalisa?",
+    answer: "In Chaupai 32, 'Ram Rasayan Tumhare Pasa' refers to the divine elixir ('rasayan') of devotion to Lord Rama that resides permanently within Hanuman's heart. It signifies that Lord Hanuman holds the supreme spiritual medicine—unconditional surrender and chanting of Rama's holy name—which cures all worldly afflictions and grants everlasting peace."
+  },
+  {
+    question: "Does each chaupai have a specific meaning or story behind it?",
+    answer: "Yes, every chaupai illuminates a distinct episode from the Ramayana or a theological aspect of Hanuman's divinity. From his childhood leap toward the Sun (Chaupai 18) and leaping across the ocean to burn Lanka (Chaupais 19–20) to reviving Lakshmana with the Sanjeevani herb (Chaupai 11), each verse carries profound symbolic and Puranic significance detailed in the verse sections above."
+  },
+  {
+    question: "What are the benefits of reciting the Hanuman Chalisa?",
+    answer: "Sincere recitation is revered for dispelling fear, anxiety, evil influences, and chronic illnesses while bestowing courage, mental clarity, and spiritual fortitude. Saint Tulsidas promises in the concluding verses that whoever chants this prayer with pure devotion attains freedom from sorrow. Devotees can read the full list of verse-by-verse blessings on our <a href=\"/hanuman-chalisa-benefits\" class=\"text-vermilion hover:text-marigold underline font-semibold\">Hanuman Chalisa Benefits Guide</a>."
+  },
+  {
+    question: "What is the best time to recite the Hanuman Chalisa?",
+    answer: "The most auspicious times for recitation are during Brahma Muhurta (early morning before sunrise) or in the evening during twilight sandhya. Tuesday and Saturday are considered particularly sacred days for Hanuman worship, although the prayer can be recited anytime when seeking inner calm. For comprehensive rituals, aasan guidelines, and rules, explore our <a href=\"/shri-hanuman-chalisa-path-vidhi\" class=\"text-vermilion hover:text-marigold underline font-semibold\">Path Vidhi & Ritual Guide</a>."
+  },
+  {
+    question: "Do I need to understand the meaning to benefit from reciting it?",
+    answer: "Chanting the phonetic sounds and syllables with heartfelt devotion brings immediate peace and spiritual benefit even if you do not know the exact definitions. However, studying the word-by-word meaning transforms the recitation from mechanical repetition into a deep contemplative meditation, helping you connect intimately with Hanuman's virtues."
+  },
+  {
+    question: "Is there an audio version to help with pronunciation?",
+    answer: "Yes, you can play our interactive synced audio player right at the top of this page to listen while following along with the text. We also provide a dedicated <a href=\"/hanuman-chalisa-audio-mp3\" class=\"text-vermilion hover:text-marigold underline font-semibold\">Hanuman Chalisa MP3 & Audio Studio</a> featuring playback speed controls and renditions of the Sankat Mochan Ashtak and Aarti."
+  },
+  {
+    question: "What happens if someone recites the Hanuman Chalisa 100 times (Chalisa Shatpath)?",
+    answer: "In Chaupai 38, Tulsidas explicitly states 'Jo sat bar path kar koi, chhutahi bandi maha sukh hoi'—meaning whoever recites this prayer one hundred times is freed from all worldly bondages and attains supreme joy. Practicing a hundredfold recitation (Shatpath), often performed on Hanuman Jayanti or during challenging life phases, is considered a potent sadhana for overcoming deep-rooted crises."
+  },
+  {
+    question: "Can beginners or children recite the Hanuman Chalisa?",
+    answer: "Absolutely. The Chalisa was purposely composed in simple, rhythmic Awadhi verse so that devotees of any age or background could chant it effortlessly. Children and beginners often begin by reciting 1 to 3 times daily using English transliteration or guided audio to build confidence and develop memory."
+  },
+  {
+    question: "Can women recite the Hanuman Chalisa?",
+    answer: "Yes, women can freely recite the Hanuman Chalisa with full devotion and love. Lord Hanuman is revered as a compassionate protector and spiritual elder brother ('bhai') or son to motherly figures, welcoming genuine bhakti from all devotees irrespective of gender."
+  },
+  {
+    question: "What is the difference between a Doha and a Chaupai in the Chalisa?",
+    answer: "A doha is a two-line rhyming couplet used for solemn invocation and philosophical dedication, whereas a chaupai is a four-line rhythmic quatrain ideal for narrating valorous feats. The Hanuman Chalisa begins with two opening dohas, unfolds through forty descriptive chaupais, and concludes with a final blessing doha."
+  },
+  {
+    question: "How should one prepare before chanting the Hanuman Chalisa?",
+    answer: "Devotees traditionally bathe or wash their hands, feet, and face, sit facing East or North on a clean mat (aasan), and light a diya with sesame oil or pure ghee. It is customary to begin by chanting 'Shri Ram' or remembering one's Guru, as Lord Hanuman is said to be instantly present wherever Lord Rama's name is chanted with devotion."
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": meaningFaqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer.replace(/<[^>]*>/g, ""),
+    },
+  })),
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
   <div class="space-y-10 max-w-5xl mx-auto">
     
     <!-- Breadcrumbs -->
@@ -76,6 +159,9 @@ const description = "Study the deep meaning of Hanuman Chalisa. Detailed word-by
         </a>
         <a href="#doha-closing" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
           Concluding Doha
+        </a>
+        <a href="#faqs" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors flex items-center gap-1">
+          <span>❓</span> FAQs
         </a>
       </div>
     </nav>
@@ -272,6 +358,45 @@ const description = "Study the deep meaning of Hanuman Chalisa. Detailed word-by
         );
       })}
     </div>
+
+    <!-- Frequently Asked Questions Section -->
+    <section id="faqs" class="scroll-mt-24 space-y-6">
+      <div class="text-center space-y-2">
+        <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-2.5 py-0.5 rounded border border-marigold inline-block">
+          Common Questions & Doubts • प्रश्नोत्तरी
+        </span>
+        <h2 class="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-xs sm:text-sm text-charcoal-brown/70 max-w-2xl mx-auto leading-relaxed">
+          Comprehensive, authentic answers regarding the authorship, history, meaning, pronunciation, and ritual recitation of the Shree Hanuman Chalisa.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        {meaningFaqs.map((faq, idx) => (
+          <details
+            class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-4 sm:p-5 shadow-sm group transition-all duration-200 hover:border-brass-gold"
+            open={idx === 0}
+          >
+            <summary class="font-serif-display font-bold text-maroon-deep text-sm sm:text-base cursor-pointer flex justify-between items-center select-none">
+              <span class="flex items-center gap-2">
+                <span class="text-xs text-brass-gold font-sans font-semibold">Q{idx + 1}.</span>
+                {faq.question}
+              </span>
+              <span class="text-xs text-brass-gold font-sans font-semibold group-open:rotate-180 transition-transform duration-200 shrink-0 ml-2">
+                ▼
+              </span>
+            </summary>
+            <div class="mt-3 pt-3 border-t border-brass-gold/20 text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed font-sans">
+              <p set:html={faq.answer} />
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <CarvedDivider icon="🕉️" />
 
     <!-- AdSense Footer Slot -->
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
