@@ -85,7 +85,7 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
       "name": faq.question,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": faq.answer,
+        "text": faq.answer.replace(/<[^>]*>/g, ""),
       },
     })),
   };
@@ -235,7 +235,8 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
           {chaupais.map((verse) => (
             <div
               key={verse.id}
-              className="p-6 bg-stone-ivory border-l-4 border-maroon-deep border-r border-t border-b border-brass-gold/30 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200"
+              id={`verse-${verse.verse_number}`}
+              className="p-6 bg-stone-ivory border-l-4 border-maroon-deep border-r border-t border-b border-brass-gold/30 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200 scroll-mt-24"
             >
               {/* Verse Header */}
               <div className="flex justify-between items-center text-xs font-bold text-brass-gold tracking-widest uppercase">
@@ -407,7 +408,10 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
               .map((faq, idx) => (
                 <div key={idx} className="space-y-1 text-sm">
                   <h4 className="font-bold text-charcoal-brown">{faq.question}</h4>
-                  <p className="text-xs text-charcoal-brown/80 leading-relaxed">{faq.answer}</p>
+                  <p
+                    className="text-xs text-charcoal-brown/80 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: faq.answer }}
+                  />
                 </div>
               ))}
           </div>
