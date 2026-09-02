@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
+import SyncedAudioPlayer from "../components/SyncedAudioPlayer";
 import hanumanChalisaData from "../data/scriptures/hanuman-chalisa.json";
 import type { ScriptureVerse } from "../types/scripture";
 
@@ -55,6 +56,9 @@ const description = "Study the deep meaning of Hanuman Chalisa. Detailed word-by
         <a href="#story" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors">
           The Story Behind the Chalisa
         </a>
+        <a href="#audio-player" class="bg-marigold/20 hover:bg-marigold text-maroon-deep px-3 py-1.5 rounded border border-brass-gold/30 transition-colors flex items-center gap-1">
+          <span>🎵</span> Synced Audio
+        </a>
         <a href="#doha-01" class="bg-stone-ivory hover:bg-marigold/10 text-charcoal-brown px-3 py-1.5 rounded border border-brass-gold/20 transition-colors">
           Opening Dohas
         </a>
@@ -101,6 +105,33 @@ const description = "Study the deep meaning of Hanuman Chalisa. Detailed word-by
           Devotional history recounts that on the fortieth day, immediately upon Tulsidas's completion and recitation of the final chaupai, an extraordinary phenomenon swept through the imperial citadel of Fatehpur Sikri. A vast legion of thousands of monkeys swarmed the royal capital, overrunning palaces, courtyards, watchtowers, and council chambers, throwing the royal guards into total disarray while harming none of the innocent populace. Recognizing this sudden visitation as unmistakable divine intervention, Emperor Akbar was overcome with remorse, immediately ordered Tulsidas released with imperial honors, and sought the saint's blessing. Popular legend holds that as soon as Tulsidas was freed and bestowed peace upon the realm, the monkey host vanished into the surrounding forests, leaving humanity with the eternal prayer of protection: the <em>Shree Hanuman Chalisa</em>.
         </p>
       </div>
+    </section>
+
+    <!-- Interactive Synced Audio Player Section -->
+    <section id="audio-player" class="scroll-mt-24 space-y-4">
+      <div class="bg-stone-ivory border-2 border-brass-gold/40 rounded-lg p-5 sm:p-6 shadow-sm space-y-2">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-brass-gold/20 pb-3">
+          <div>
+            <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-2.5 py-0.5 rounded border border-marigold inline-block">
+              Interactive Audio • सस्वर पाठ
+            </span>
+            <h3 class="font-serif-display text-xl sm:text-2xl font-bold uppercase tracking-wider text-maroon-deep mt-1">
+              Listen While You Read (ऑडियो सुनें)
+            </h3>
+          </div>
+          <a
+            href="/hanuman-chalisa-audio-mp3"
+            class="self-start sm:self-center shrink-0 text-xs font-bold uppercase text-vermilion hover:text-marigold transition-colors flex items-center gap-1 font-semibold"
+          >
+            <span>🎵</span> Full Audio Studio &rarr;
+          </a>
+        </div>
+        <p class="text-xs sm:text-sm text-charcoal-brown/85 font-medium leading-relaxed">
+          Listen to the Hanuman Chalisa while reading the meaning below to help with pronunciation.
+        </p>
+      </div>
+
+      <SyncedAudioPlayer client:load />
     </section>
 
     <CarvedDivider icon="🕉️" />
