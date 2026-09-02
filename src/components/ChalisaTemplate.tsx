@@ -16,6 +16,55 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
   const dohaClosing = data.verses.find((v) => v.id === "doha-closing");
   const chaupais = data.verses.filter((v) => v.id.startsWith("chaupai-"));
 
+  // Translation groups for English full translation accordion
+  const translationGroups = data.lang === "en" ? [
+    {
+      title: "Opening Dohas (Couplets 1 & 2)",
+      verses: [
+        ...(doha1 ? [{ label: "Opening Doha 1", transliteration: doha1.text.split("\n")[0], meaning: doha1.meaning }] : []),
+        ...(doha2 ? [{ label: "Opening Doha 2", transliteration: doha2.text.split("\n")[0], meaning: doha2.meaning }] : []),
+      ]
+    },
+    {
+      title: "Chaupais 1 – 10: Divine Form & Incomparable Valor",
+      verses: chaupais.slice(0, 10).map((v) => ({
+        label: `Chaupai ${v.verse_number}`,
+        transliteration: v.text.split("\n")[0],
+        meaning: v.meaning
+      }))
+    },
+    {
+      title: "Chaupais 11 – 20: Feats for Lord Rama, Sugriva & Lanka",
+      verses: chaupais.slice(10, 20).map((v) => ({
+        label: `Chaupai ${v.verse_number}`,
+        transliteration: v.text.split("\n")[0],
+        meaning: v.meaning
+      }))
+    },
+    {
+      title: "Chaupais 21 – 30: Protection, Healing & Divine Siddhis",
+      verses: chaupais.slice(20, 30).map((v) => ({
+        label: `Chaupai ${v.verse_number}`,
+        transliteration: v.text.split("\n")[0],
+        meaning: v.meaning
+      }))
+    },
+    {
+      title: "Chaupais 31 – 40: Supreme Devotion, Grace & Phalasruti",
+      verses: chaupais.slice(30, 40).map((v) => ({
+        label: `Chaupai ${v.verse_number}`,
+        transliteration: v.text.split("\n")[0],
+        meaning: v.meaning
+      }))
+    },
+    {
+      title: "Concluding Doha: Dwelling in the Devotee's Heart",
+      verses: [
+        ...(dohaClosing ? [{ label: "Concluding Doha", transliteration: dohaClosing.text.split("\n")[0], meaning: dohaClosing.meaning }] : []),
+      ]
+    }
+  ] : [];
+
   const getScriptClass = (lang: string) => {
     switch (lang) {
       case "hi":
@@ -162,6 +211,17 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
 
       {/* 4. Full 40 Verses (Chaupais) */}
       <section className="max-w-4xl mx-auto space-y-8">
+        {data.lang === "en" && (
+          <div className="bg-stone-ivory border-2 border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-3">
+            <h2 className="font-serif-display text-xl sm:text-2xl uppercase tracking-wider font-bold text-maroon-deep">
+              How to Read the English Transliteration
+            </h2>
+            <p className="text-xs sm:text-sm text-charcoal-brown/85 leading-relaxed">
+              The verses presented below feature phonetic English transliteration (Romanized Awadhi), allowing devotees to chant each sacred syllable with authentic pronunciation even without reading Devanagari script. Transliteration preserves the musical rhythm and chanting resonance of Tulsidas's poetry, whereas a translation explains its theological and spiritual meaning. To study the line-by-line meaning of each verse, explore our <a href="#full-translation" className="text-vermilion hover:text-marigold underline font-semibold">Hanuman Chalisa in English — Full Translation</a> section below.
+            </p>
+          </div>
+        )}
+
         <div className="text-center">
           <h3 className="font-serif-display text-2xl uppercase tracking-wider font-bold text-maroon-deep">
             {data.lang === "hi" ? "चालीसा चौपाई — श्लोक" : "Chalisa Chaupais — The Verses"}
@@ -238,6 +298,57 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
         Ad Slot — In-Content (Layout Stable Skeleton)
       </div>
 
+      {/* English Full Translation Section */}
+      {data.lang === "en" && (
+        <section id="full-translation" className="max-w-4xl mx-auto space-y-6">
+          <div className="text-center space-y-2">
+            <span className="text-xs uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+              Complete Verses Meaning (संपूर्ण भावार्थ)
+            </span>
+            <h2 className="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+              Hanuman Chalisa in English — Full Translation
+            </h2>
+            <p className="text-xs sm:text-sm text-charcoal-brown/70 max-w-2xl mx-auto leading-relaxed">
+              Read the complete verse-by-verse English translation of Goswami Tulsidas's sacred hymn. Click on any section below to expand and study the concise theological meaning of all 40 chaupais and dohas.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {translationGroups.map((group, gIdx) => (
+              <details
+                key={gIdx}
+                className="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-4 sm:p-5 shadow-sm group transition-all duration-200 hover:border-brass-gold"
+                open={gIdx === 0}
+              >
+                <summary className="font-serif-display font-bold text-maroon-deep text-sm sm:text-base cursor-pointer flex justify-between items-center select-none">
+                  <span>{group.title}</span>
+                  <span className="text-xs text-brass-gold font-sans font-semibold group-open:text-vermilion">
+                    Tap to Expand &darr;
+                  </span>
+                </summary>
+                <div className="mt-4 pt-4 border-t border-brass-gold/20 space-y-3">
+                  {group.verses.map((v, vIdx) => (
+                    <div key={vIdx} className="p-3 bg-stone-ivory/80 rounded border border-brass-gold/20 space-y-1">
+                      <div className="flex justify-between items-center text-xs font-bold text-maroon-deep">
+                        <span>{v.label}</span>
+                        <span className="text-[11px] text-brass-gold italic font-normal truncate max-w-[240px]">
+                          &ldquo;{v.transliteration}&rdquo;
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed font-sans">
+                        {v.meaning}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            ))}
+          </div>
+
+          <CarvedDivider icon="🕉️" />
+        </section>
+      )}
+
       {/* 6. Quick Benefits & Localized FAQs */}
       <section className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         
@@ -278,13 +389,27 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
           <h3 className="font-serif-display text-lg uppercase tracking-widest text-maroon-deep font-bold">
             Frequently Asked Questions
           </h3>
+
+          {data.lang === "en" && (
+            <div className="p-4 bg-marigold/10 border border-brass-gold/40 rounded-lg space-y-2">
+              <h2 className="font-serif-display text-sm sm:text-base uppercase tracking-wider font-bold text-maroon-deep">
+                Is 'Ram Chalisa' the Same as 'Hanuman Chalisa'?
+              </h2>
+              <p className="text-xs text-charcoal-brown/85 leading-relaxed">
+                No, the "Ram Chalisa" and "Hanuman Chalisa" are distinct devotional hymns. The Hanuman Chalisa is Goswami Tulsidas's 40-verse poem praising Lord Hanuman's valor and loyalty, while the Shri Ram Chalisa is dedicated directly to Lord Rama's life, virtues, and worship. However, because Hanuman is the supreme devotee of Lord Rama and Rama's name is chanted throughout the hymn, devotees often search for and recite both prayers together.
+              </p>
+            </div>
+          )}
+
           <div className="space-y-4">
-            {data.faqs.map((faq, idx) => (
-              <div key={idx} className="space-y-1 text-sm">
-                <h4 className="font-bold text-charcoal-brown">{faq.question}</h4>
-                <p className="text-xs text-charcoal-brown/80 leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
+            {data.faqs
+              .filter((faq) => data.lang !== "en" || faq.question !== "Is 'Ram Chalisa' the Same as 'Hanuman Chalisa'?")
+              .map((faq, idx) => (
+                <div key={idx} className="space-y-1 text-sm">
+                  <h4 className="font-bold text-charcoal-brown">{faq.question}</h4>
+                  <p className="text-xs text-charcoal-brown/80 leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
           </div>
         </div>
 
