@@ -19,6 +19,18 @@ export const GET: APIRoute = async (context) => {
     }
   }
 
+  let prismaError: any = null;
+  let prismaPostCount: number | null = null;
+  let prismaPostData: any = null;
+  try {
+    const prisma = getPrisma(db);
+    const posts = await prisma.post.findMany();
+    prismaPostCount = posts ? posts.length : 0;
+    prismaPostData = posts?.map((p) => ({ id: p.id, slug: p.slug, coverImage: p.coverImage }));
+  } catch (pe: any) {
+    prismaError = pe.message || String(pe);
+  }
+
   return new Response(
     JSON.stringify({
       hasRuntime: !!runtime,
@@ -29,6 +41,9 @@ export const GET: APIRoute = async (context) => {
       d1QuerySuccess,
       postCount,
       d1Error,
+      prismaPostCount,
+      prismaPostData,
+      prismaError,
     }),
     {
       status: 200,
