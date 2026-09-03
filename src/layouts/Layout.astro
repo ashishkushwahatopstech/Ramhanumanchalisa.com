@@ -13,9 +13,14 @@ interface Props {
 const { 
   title = "Shree Hanuman Chalisa — Audio, Meaning, PDF & Recitation Guide", 
   description = "Step into our digital mandir. Read the authentic Hanuman Chalisa in Devanagari, English, and Gujarati, with line-by-line Hindi/English meanings, synced audio, PDF, and path vidhi.",
-  canonicalUrl = "https://ramhanumanchalisa.com",
+  canonicalUrl: propCanonicalUrl,
   showHreflangs = false
 } = Astro.props;
+
+// Determine canonical URL: prefer explicitly passed prop, otherwise derive dynamically from current route
+const siteBaseUrl = "https://ramhanumanchalisa.com";
+const cleanPath = Astro.url.pathname.replace(/\/+$/, "");
+const canonicalUrl = propCanonicalUrl || (cleanPath ? `${siteBaseUrl}${cleanPath}` : siteBaseUrl);
 
 const currentYear = new Date().getFullYear();
 const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_GA_ID || "G-VBBLMPSKY2";
@@ -51,6 +56,13 @@ if (pathName && pathName !== "/") {
     else if (part === "hanuman-chalisa-benefits") name = "Benefits";
     else if (part === "ram-hanuman-chalisa") name = "Ram Hanuman Connection";
     else if (part === "blog") name = "Blog";
+    else if (part === "en") name = "English";
+    else if (part === "te") name = "Telugu";
+    else if (part === "bn") name = "Bengali";
+    else if (part === "kn") name = "Kannada";
+    else if (part === "gu") name = "Gujarati";
+    else if (part === "mr") name = "Marathi";
+    else if (part === "hi") name = "Hindi";
     
     breadcrumbItems.push({
       "@type": "ListItem",
