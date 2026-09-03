@@ -7,14 +7,16 @@ import type { LocalizedChalisa } from "@/lib/getChalisaData";
 
 interface ChalisaTemplateProps {
   data: LocalizedChalisa;
+  isHomepage?: boolean;
 }
 
-export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
+export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTemplateProps) {
   // Extract Dohas and Chaupais from Localized verses list
   const doha1 = data.verses.find((v) => v.id === "doha-01");
   const doha2 = data.verses.find((v) => v.id === "doha-02");
   const dohaClosing = data.verses.find((v) => v.id === "doha-closing");
-  const chaupais = data.verses.filter((v) => v.id.startsWith("chaupai-"));
+  const allChaupais = data.verses.filter((v) => v.id.startsWith("chaupai-"));
+  const chaupais = isHomepage ? allChaupais.slice(0, 3) : allChaupais;
 
   // Translation groups for English full translation accordion
   const translationGroups = data.lang === "en" ? [
@@ -224,10 +226,10 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
 
         <div className="text-center">
           <h3 className="font-serif-display text-2xl uppercase tracking-wider font-bold text-maroon-deep">
-            {data.lang === "hi" ? "चालीसा चौपाई — श्लोक" : "Chalisa Chaupais — The Verses"}
+            {data.lang === "hi" ? (isHomepage ? "चालीसा चौपाई (प्रारंभिक श्लोक)" : "चालीसा चौपाई — श्लोक") : "Chalisa Chaupais — The Verses"}
           </h3>
           <p className="text-xs text-charcoal-brown/70 mt-1">
-            {data.intro}
+            {isHomepage ? "श्री हनुमान चालीसा के पवित्र प्रारंभिक श्लोक। संपूर्ण ४० चौपाइयों व शब्दार्थ विश्लेषण हेतु नीचे दिए गए लिंक पर जाएं।" : data.intro}
           </p>
         </div>
 
@@ -271,8 +273,37 @@ export default function ChalisaTemplate({ data }: ChalisaTemplateProps) {
           ))}
         </div>
 
-        {/* Doha Closing */}
-        {dohaClosing && (
+        {/* Homepage CTA Callout to Meaning Page */}
+        {isHomepage && (
+          <div className="p-8 sm:p-10 bg-gradient-to-b from-stone-ivory to-marigold/15 border-2 border-brass-gold/50 rounded-xl shadow-md text-center space-y-5 my-8">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-maroon-deep text-marigold text-2xl shadow-inner border border-brass-gold/40">
+              📖
+            </div>
+            <div className="space-y-2">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-2.5 py-0.5 rounded border border-marigold inline-block">
+                Complete Scripture • संपूर्ण भावार्थ
+              </span>
+              <h3 className="font-serif-display text-xl sm:text-2xl font-bold text-maroon-deep">
+                Read All 40 Chaupais with Line-by-Line Meaning
+              </h3>
+              <p className="text-xs sm:text-sm text-charcoal-brown/80 max-w-xl mx-auto leading-relaxed">
+                Study the complete 40 verses of the Shree Hanuman Chalisa along with word-by-word Sanskrit-Awadhi vocabulary, authentic Hindi translation, English exposition, audio recitation, and Puranic background.
+              </p>
+            </div>
+            <div className="pt-2">
+              <a
+                href="/hanuman-chalisa-meaning"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-maroon-deep text-marigold hover:bg-maroon-deep/90 border-2 border-brass-gold font-bold text-sm uppercase tracking-wider rounded-lg shadow-md hover:shadow-xl transition-all group hover:scale-105"
+              >
+                <span>Read the full meaning, chaupai by chaupai</span>
+                <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Doha Closing (Rendered when not in homepage preview mode) */}
+        {!isHomepage && dohaClosing && (
           <div className="p-8 bg-maroon-deep border-2 border-brass-gold text-stone-ivory rounded shadow-md text-center space-y-4 max-w-2xl mx-auto">
             <span className="text-xs uppercase font-bold tracking-widest text-marigold">
               Concluding Doha (दोहा)
