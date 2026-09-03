@@ -13,13 +13,6 @@ export default defineConfig({
   }),
   integrations: [react()],
   vite: {
-    resolve: {
-      alias: isBuild ? {
-        '@prisma/client$': path.resolve(process.cwd(), 'node_modules/@prisma/client/edge.js'),
-        '.prisma/client/edge': path.resolve(process.cwd(), 'node_modules/.prisma/client/edge.js'),
-        '.prisma/client/default': path.resolve(process.cwd(), 'node_modules/@prisma/client/edge.js')
-      } : {}
-    },
     ssr: {
       noExternal: isBuild ? [/prisma/, '@prisma/client', '.prisma/client'] : []
     }
