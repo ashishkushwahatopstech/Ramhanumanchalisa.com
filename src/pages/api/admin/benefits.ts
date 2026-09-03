@@ -133,14 +133,19 @@ export const POST: APIRoute = async (context) => {
 
     if (prisma) {
       try {
-        benefit = await prisma.benefit.create({
-          data: benefitData,
-        });
-      } catch (dbErr: any) {
-        console.warn("Notice: Prisma create benefit failed, falling back to cache:", dbErr);
-        if (dbErr.code === "P2002") {
-          return new Response(JSON.stringify({ error: "Slug already exists" }), { status: 400 });
+        const existing = await prisma.benefit.findUnique({ where: { slug } });
+        if (existing) {
+          benefit = await prisma.benefit.update({
+            where: { id: existing.id },
+            data: benefitData,
+          });
+        } else {
+          benefit = await prisma.benefit.create({
+            data: benefitData,
+          });
         }
+      } catch (dbErr: any) {
+        console.warn("Notice: Prisma in POST failed, falling back to cache:", dbErr);
       }
     }
 

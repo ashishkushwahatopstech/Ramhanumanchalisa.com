@@ -1,0 +1,9 @@
+name = "ramhanumanchalisa"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "jaishreeram-db"
+database_id = "0143ff7e-7afc-4654-910b-21315a64940b"

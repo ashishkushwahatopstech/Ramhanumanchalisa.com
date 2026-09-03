@@ -90,31 +90,38 @@ export const POST: APIRoute = async (context) => {
     let post: any = null;
     if (prisma) {
       try {
-        post = await prisma.post.create({
-          data: {
-            title,
-            slug,
-            metaTitle: metaTitle || null,
-            metaDescription: metaDescription || null,
-            content,
-            excerpt: excerpt || "",
-            coverImage: coverImage || null,
-            imageAlt: imageAlt || null,
-            imageTitle: imageTitle || null,
-            imageCaption: imageCaption || null,
-            galleryImages: galleryImages ? (typeof galleryImages === "string" ? galleryImages : JSON.stringify(galleryImages)) : null,
-            focusKeywords: focusKeywords || null,
-            internalLinks: internalLinks ? (typeof internalLinks === "string" ? internalLinks : JSON.stringify(internalLinks)) : null,
-            sources: sources ? (typeof sources === "string" ? sources : JSON.stringify(sources)) : null,
-            faqs: faqs ? (typeof faqs === "string" ? faqs : JSON.stringify(faqs)) : null,
-            published: !!published,
-          },
-        });
-      } catch (dbErr: any) {
-        console.warn("Notice: Prisma create in POST failed, falling back to cache:", dbErr);
-        if (dbErr.code === "P2002") {
-          return new Response(JSON.stringify({ error: "Slug already exists" }), { status: 400 });
+        const postData = {
+          title,
+          slug,
+          metaTitle: metaTitle || null,
+          metaDescription: metaDescription || null,
+          content,
+          excerpt: excerpt || "",
+          coverImage: coverImage || null,
+          imageAlt: imageAlt || null,
+          imageTitle: imageTitle || null,
+          imageCaption: imageCaption || null,
+          galleryImages: galleryImages ? (typeof galleryImages === "string" ? galleryImages : JSON.stringify(galleryImages)) : null,
+          focusKeywords: focusKeywords || null,
+          internalLinks: internalLinks ? (typeof internalLinks === "string" ? internalLinks : JSON.stringify(internalLinks)) : null,
+          sources: sources ? (typeof sources === "string" ? sources : JSON.stringify(sources)) : null,
+          faqs: faqs ? (typeof faqs === "string" ? faqs : JSON.stringify(faqs)) : null,
+          published: !!published,
+        };
+
+        const existing = await prisma.post.findUnique({ where: { slug } });
+        if (existing) {
+          post = await prisma.post.update({
+            where: { id: existing.id },
+            data: postData,
+          });
+        } else {
+          post = await prisma.post.create({
+            data: postData,
+          });
         }
+      } catch (dbErr: any) {
+        console.warn("Notice: Prisma in POST failed, falling back to cache:", dbErr);
       }
     }
 
