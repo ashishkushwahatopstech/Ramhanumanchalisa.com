@@ -39,18 +39,18 @@ export default function LanguageManagerForm() {
           }
         } else {
           // Use static fallback configs
-          const fallback = data.staticFallback;
-          setTitle(fallback.title);
-          setMetaDescription(fallback.metaDescription);
+          const fallback = data.staticFallback || {};
+          setTitle(fallback.title || "");
+          setMetaDescription(fallback.metaDescription || "");
           setPublished(false);
 
           // Build clean content structure
           const structure = {
-            h1: fallback.h1,
-            intro: fallback.intro,
-            meaningSummary: fallback.meaningSummary,
-            verses: fallback.verses,
-            faqs: fallback.faqs,
+            h1: fallback.h1 || "",
+            intro: fallback.intro || "",
+            meaningSummary: fallback.meaningSummary || "",
+            verses: fallback.verses || [],
+            faqs: fallback.faqs || [],
           };
           setContentJSON(JSON.stringify(structure, null, 2));
           setIsValidJSON(true);

@@ -43,28 +43,30 @@ export interface LocalizedChalisa {
 
 export async function getChalisaData(lang: string, db?: any): Promise<LocalizedChalisa> {
   const fallback = localFallbacks[lang] || hiData;
-  const client = getPrisma(db);
 
   try {
-    const dbRecord = await client.languageContent.findUnique({
-      where: { lang },
-    });
+    const client = getPrisma(db);
+    if (client?.languageContent) {
+      const dbRecord = await client.languageContent.findUnique({
+        where: { lang },
+      });
 
-    if (dbRecord && dbRecord.published) {
-      const parsed = JSON.parse(dbRecord.contentJSON);
-      return {
-        lang: dbRecord.lang,
-        title: dbRecord.title || fallback.title,
-        metaDescription: dbRecord.metaDescription || fallback.metaDescription,
-        h1: parsed.h1 || fallback.h1,
-        intro: parsed.intro || fallback.intro,
-        meaningSummary: parsed.meaningSummary || fallback.meaningSummary,
-        verses: parsed.verses || fallback.verses,
-        faqs: parsed.faqs || fallback.faqs,
-      };
+      if (dbRecord && dbRecord.published && dbRecord.contentJSON) {
+        const parsed = JSON.parse(dbRecord.contentJSON);
+        return {
+          lang: dbRecord.lang,
+          title: dbRecord.title || fallback.title,
+          metaDescription: dbRecord.metaDescription || fallback.metaDescription,
+          h1: parsed.h1 || fallback.h1,
+          intro: parsed.intro || fallback.intro,
+          meaningSummary: parsed.meaningSummary || fallback.meaningSummary,
+          verses: parsed.verses || fallback.verses,
+          faqs: parsed.faqs || fallback.faqs,
+        };
+      }
     }
   } catch (e) {
-    console.warn(`Prisma failed to load language ${lang}, falling back to static files:`, e);
+    console.warn(`Notice: Failed to load language ${lang} from DB, using static fallback:`, e);
   }
 
   return fallback as LocalizedChalisa;
