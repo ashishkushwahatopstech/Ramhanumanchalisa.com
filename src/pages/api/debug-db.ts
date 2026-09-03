@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { getPrisma } from "../../lib/prisma";
 
 export const GET: APIRoute = async (context) => {
   const runtime = context.locals.runtime;
