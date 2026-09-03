@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { getPrisma } from "../../../lib/prisma";
 import { BENEFITS_DATA } from "../../../data/benefits";
 import { saveCachedBenefit, getAllCachedBenefits } from "../../../lib/dynamicContent";
+import { d1GetBenefits, d1UpsertBenefit, d1DeleteBenefit } from "../../../lib/d1";
 
 async function checkAuth() {
   const session = { user: { email: "ashishkushwaha88643@gmail.com" } };
@@ -14,23 +15,35 @@ export const GET: APIRoute = async (context) => {
   }
 
   const db = context.locals.runtime?.env?.DB;
-  const prisma = getPrisma(db);
-
   let benefits: any[] = [];
-  if (prisma) {
+
+  // 1. Try Native Cloudflare D1 first
+  if (db && typeof db.prepare === "function") {
     try {
-      const dbBenefits = await prisma.benefit.findMany({
-        orderBy: { createdAt: "desc" },
-      });
-      if (dbBenefits && Array.isArray(dbBenefits)) {
-        benefits = dbBenefits.map((b) => ({
-          ...b,
-          createdAt: b.createdAt ? new Date(b.createdAt).toISOString() : new Date().toISOString(),
-          updatedAt: b.updatedAt ? new Date(b.updatedAt).toISOString() : new Date().toISOString(),
-        }));
+      benefits = await d1GetBenefits(db);
+    } catch (e) {
+      console.warn("Notice: D1 getBenefits query fallback:", e);
+    }
+  }
+
+  // 2. Prisma fallback
+  if (benefits.length === 0) {
+    const prisma = getPrisma(db);
+    if (prisma) {
+      try {
+        const dbBenefits = await prisma.benefit.findMany({
+          orderBy: { createdAt: "desc" },
+        });
+        if (dbBenefits && Array.isArray(dbBenefits)) {
+          benefits = dbBenefits.map((b) => ({
+            ...b,
+            createdAt: b.createdAt ? new Date(b.createdAt).toISOString() : new Date().toISOString(),
+            updatedAt: b.updatedAt ? new Date(b.updatedAt).toISOString() : new Date().toISOString(),
+          }));
+        }
+      } catch (error) {
+        console.warn("Notice: DB benefits query fallback in GET API:", error);
       }
-    } catch (error) {
-      console.warn("Notice: DB benefits query fallback in GET API:", error);
     }
   }
 
@@ -131,21 +144,34 @@ export const POST: APIRoute = async (context) => {
       published: published !== undefined ? !!published : true,
     };
 
-    if (prisma) {
+    // 1. Try Native D1 first
+    if (db && typeof db.prepare === "function") {
       try {
-        const existing = await prisma.benefit.findUnique({ where: { slug } });
-        if (existing) {
-          benefit = await prisma.benefit.update({
-            where: { id: existing.id },
-            data: benefitData,
-          });
-        } else {
-          benefit = await prisma.benefit.create({
-            data: benefitData,
-          });
+        benefit = await d1UpsertBenefit(db, benefitData);
+      } catch (e) {
+        console.warn("Notice: D1 upsertBenefit failed in POST:", e);
+      }
+    }
+
+    // 2. Prisma fallback
+    if (!benefit) {
+      const prisma = getPrisma(db);
+      if (prisma) {
+        try {
+          const existing = await prisma.benefit.findUnique({ where: { slug } });
+          if (existing) {
+            benefit = await prisma.benefit.update({
+              where: { id: existing.id },
+              data: benefitData,
+            });
+          } else {
+            benefit = await prisma.benefit.create({
+              data: benefitData,
+            });
+          }
+        } catch (dbErr: any) {
+          console.warn("Notice: Prisma in POST failed, falling back to cache:", dbErr);
         }
-      } catch (dbErr: any) {
-        console.warn("Notice: Prisma in POST failed, falling back to cache:", dbErr);
       }
     }
 
@@ -172,7 +198,6 @@ export const PUT: APIRoute = async (context) => {
   }
 
   const db = context.locals.runtime?.env?.DB;
-  const prisma = getPrisma(db);
 
   try {
     const body = await context.request.json();
@@ -212,6 +237,7 @@ export const PUT: APIRoute = async (context) => {
 
     let benefit: any = null;
     const benefitData = {
+      id,
       title,
       slug,
       metaTitle: metaTitle || null,
@@ -237,29 +263,42 @@ export const PUT: APIRoute = async (context) => {
       published: published !== undefined ? !!published : true,
     };
 
-    if (prisma) {
+    // 1. Try Native D1 first
+    if (db && typeof db.prepare === "function") {
       try {
-        const existing = await prisma.benefit.findFirst({
-          where: {
-            OR: [
-              { slug },
-              ...(id && !id.startsWith("fallback-") ? [{ id }] : [])
-            ]
-          }
-        });
+        benefit = await d1UpsertBenefit(db, benefitData);
+      } catch (e) {
+        console.warn("Notice: D1 upsertBenefit failed in PUT:", e);
+      }
+    }
 
-        if (existing) {
-          benefit = await prisma.benefit.update({
-            where: { id: existing.id },
-            data: benefitData,
+    // 2. Prisma fallback
+    if (!benefit) {
+      const prisma = getPrisma(db);
+      if (prisma) {
+        try {
+          const existing = await prisma.benefit.findFirst({
+            where: {
+              OR: [
+                { slug },
+                ...(id && !id.startsWith("fallback-") ? [{ id }] : [])
+              ]
+            }
           });
-        } else {
-          benefit = await prisma.benefit.create({
-            data: benefitData,
-          });
+
+          if (existing) {
+            benefit = await prisma.benefit.update({
+              where: { id: existing.id },
+              data: benefitData,
+            });
+          } else {
+            benefit = await prisma.benefit.create({
+              data: benefitData,
+            });
+          }
+        } catch (dbErr) {
+          console.warn("Notice: Prisma update benefit failed, falling back to cache:", dbErr);
         }
-      } catch (dbErr) {
-        console.warn("Notice: Prisma update benefit failed, falling back to cache:", dbErr);
       }
     }
 
@@ -286,7 +325,6 @@ export const DELETE: APIRoute = async (context) => {
   }
 
   const db = context.locals.runtime?.env?.DB;
-  const prisma = getPrisma(db);
 
   try {
     const { searchParams } = new URL(context.request.url);
@@ -296,6 +334,17 @@ export const DELETE: APIRoute = async (context) => {
       return new Response(JSON.stringify({ error: "Missing benefit ID" }), { status: 400 });
     }
 
+    // 1. Native D1 delete
+    if (db && typeof db.prepare === "function") {
+      try {
+        await d1DeleteBenefit(db, id);
+      } catch (e) {
+        console.warn("Notice: D1 deleteBenefit failed:", e);
+      }
+    }
+
+    // 2. Prisma fallback
+    const prisma = getPrisma(db);
     if (prisma) {
       try {
         await prisma.benefit.delete({

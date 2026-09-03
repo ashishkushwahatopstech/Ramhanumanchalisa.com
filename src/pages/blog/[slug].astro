@@ -27,10 +27,52 @@ interface EnrichedPost extends BlogPost {
 }
 
 import { getCachedPost } from "../../lib/dynamicContent";
+import { d1GetPostBySlug } from "../../lib/d1";
 
 let post: EnrichedPost | undefined;
 
-if (prisma) {
+// 1. Native Cloudflare D1 query
+if (db && typeof db.prepare === "function") {
+  try {
+    const d1Post = await d1GetPostBySlug(db, slug);
+    if (d1Post && d1Post.published) {
+      post = {
+        slug: d1Post.slug,
+        title: d1Post.title,
+        metaTitle: d1Post.metaTitle,
+        metaDescription: d1Post.metaDescription,
+        excerpt: d1Post.excerpt,
+        content: d1Post.content,
+        coverImage: d1Post.coverImage,
+        imageAlt: d1Post.imageAlt,
+        imageTitle: d1Post.imageTitle,
+        imageCaption: d1Post.imageCaption,
+        focusKeywords: d1Post.focusKeywords,
+        internalLinks: d1Post.internalLinks,
+        sources: d1Post.sources,
+        faqs: d1Post.faqs,
+        createdAt: (() => {
+          try {
+            return new Date(d1Post.createdAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          } catch {
+            return "Recently";
+          }
+        })(),
+        author: "Admin",
+        readTime: "5 min read",
+      };
+    }
+  } catch (e) {
+    console.warn("Notice: D1 getPostBySlug fallback in blog/[slug]:", e);
+  }
+}
+
+// 2. Prisma fallback
+if (!post && prisma) {
   try {
     const dbPost = await prisma.post.findUnique({ where: { slug } });
     if (dbPost && dbPost.published) {
@@ -64,8 +106,8 @@ if (prisma) {
         readTime: "5 min read",
       };
     }
-  } catch (error) {
-    console.warn("Notice: reading blog post from DB failed:", error);
+  } catch (e) {
+    console.warn("Notice: DB post query fallback:", e);
   }
 }
 

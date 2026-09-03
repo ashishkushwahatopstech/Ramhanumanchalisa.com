@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { getPrisma } from "../../../lib/prisma";
 import { getChalisaData } from "../../../lib/getChalisaData";
+import { d1GetLanguage, d1UpsertLanguage } from "../../../lib/d1";
 
 async function checkAuth() {
   const session = { user: { email: "ashishkushwaha88643@gmail.com" } };
@@ -20,17 +21,29 @@ export const GET: APIRoute = async (context) => {
   }
 
   const db = context.locals.runtime?.env?.DB;
-  const prisma = getPrisma(db);
-
   let dbRecord: any = null;
-  try {
-    if (prisma?.languageContent) {
-      dbRecord = await prisma.languageContent.findUnique({
-        where: { lang },
-      });
+
+  // 1. Try native D1 first
+  if (db && typeof db.prepare === "function") {
+    try {
+      dbRecord = await d1GetLanguage(db, lang);
+    } catch (e) {
+      console.warn("Notice: D1 getLanguage fallback:", e);
     }
-  } catch (e) {
-    console.warn("Notice: languageContent DB query failed, falling back to static:", e);
+  }
+
+  // 2. Fallback to Prisma
+  if (!dbRecord) {
+    const prisma = getPrisma(db);
+    try {
+      if (prisma?.languageContent) {
+        dbRecord = await prisma.languageContent.findUnique({
+          where: { lang },
+        });
+      }
+    } catch (e) {
+      console.warn("Notice: languageContent DB query failed, falling back to static:", e);
+    }
   }
 
   let staticData: any = null;
@@ -63,7 +76,6 @@ export const POST: APIRoute = async (context) => {
   }
 
   const db = context.locals.runtime?.env?.DB;
-  const prisma = getPrisma(db);
 
   try {
     const body = await context.request.json();
@@ -74,35 +86,55 @@ export const POST: APIRoute = async (context) => {
     }
 
     let record: any = null;
-    if (prisma?.languageContent) {
-      try {
-        const existing = await prisma.languageContent.findUnique({
-          where: { lang },
-        });
 
-        if (existing) {
-          record = await prisma.languageContent.update({
+    // 1. Try native D1 first
+    if (db && typeof db.prepare === "function") {
+      try {
+        record = await d1UpsertLanguage(db, {
+          lang,
+          title,
+          metaDescription,
+          contentJSON,
+          published: !!published,
+        });
+      } catch (e) {
+        console.warn("Notice: D1 upsertLanguage fallback:", e);
+      }
+    }
+
+    // 2. Prisma fallback
+    if (!record) {
+      const prisma = getPrisma(db);
+      if (prisma?.languageContent) {
+        try {
+          const existing = await prisma.languageContent.findUnique({
             where: { lang },
-            data: {
-              title,
-              metaDescription,
-              contentJSON,
-              published: !!published,
-            },
           });
-        } else {
-          record = await prisma.languageContent.create({
-            data: {
-              lang,
-              title,
-              metaDescription,
-              contentJSON,
-              published: !!published,
-            },
-          });
+
+          if (existing) {
+            record = await prisma.languageContent.update({
+              where: { lang },
+              data: {
+                title,
+                metaDescription,
+                contentJSON,
+                published: !!published,
+              },
+            });
+          } else {
+            record = await prisma.languageContent.create({
+              data: {
+                lang,
+                title,
+                metaDescription,
+                contentJSON,
+                published: !!published,
+              },
+            });
+          }
+        } catch (dbErr) {
+          console.warn("Notice: languageContent save failed, using fallback:", dbErr);
         }
-      } catch (dbErr) {
-        console.warn("Notice: languageContent save failed, using fallback:", dbErr);
       }
     }
 

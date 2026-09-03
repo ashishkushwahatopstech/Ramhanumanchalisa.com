@@ -27,10 +27,46 @@ interface EnrichedBenefit extends BenefitDetails {
 }
 
 import { getCachedBenefit } from "../../lib/dynamicContent";
+import { d1GetBenefitBySlug } from "../../lib/d1";
 
 let benefit: EnrichedBenefit | undefined;
 
-if (prisma) {
+// 1. Native Cloudflare D1 query
+if (db && typeof db.prepare === "function") {
+  try {
+    const d1Benefit = await d1GetBenefitBySlug(db, slug);
+    if (d1Benefit && d1Benefit.published) {
+      benefit = {
+        slug: d1Benefit.slug,
+        title: d1Benefit.title,
+        metaTitle: d1Benefit.metaTitle,
+        metaDescription: d1Benefit.metaDescription,
+        situation: d1Benefit.situation,
+        icon: d1Benefit.icon || "🙏",
+        description: d1Benefit.description,
+        recommendedChants: d1Benefit.recommendedChants || "Read with devotion daily",
+        targetVerseNumber: d1Benefit.targetVerseNumber || 1,
+        targetVerseText: d1Benefit.targetVerseText || "",
+        targetVerseTranslation: d1Benefit.targetVerseTranslation || "",
+        detailedExposition: d1Benefit.detailedExposition,
+        actionSteps: d1Benefit.actionSteps || [],
+        coverImage: d1Benefit.coverImage,
+        imageAlt: d1Benefit.imageAlt,
+        imageTitle: d1Benefit.imageTitle,
+        imageCaption: d1Benefit.imageCaption,
+        focusKeywords: d1Benefit.focusKeywords,
+        internalLinks: d1Benefit.internalLinks,
+        sources: d1Benefit.sources,
+        faqs: d1Benefit.faqs,
+      };
+    }
+  } catch (e) {
+    console.warn("Notice: D1 getBenefitBySlug fallback:", e);
+  }
+}
+
+// 2. Prisma fallback
+if (!benefit && prisma) {
   try {
     const dbBenefit = await prisma.benefit.findUnique({ where: { slug } });
     if (dbBenefit && dbBenefit.published) {

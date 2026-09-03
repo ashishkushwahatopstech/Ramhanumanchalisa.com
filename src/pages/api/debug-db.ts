@@ -20,25 +20,12 @@ export const GET: APIRoute = async (context) => {
     }
   }
 
-  let d1AdapterError: any = null;
-  let d1AdapterWorks = false;
-  let prismaPostCount: number | null = null;
-  let prismaPostData: any = null;
+  let d1NativePosts: any[] = [];
   try {
-    const { PrismaD1 } = await import("@prisma/adapter-d1");
-    const { PrismaClient } = await import("@prisma/client");
-    const adapter = new PrismaD1(db);
-    const client = new PrismaClient({ adapter });
-    const p = await client.post.findMany();
-    d1AdapterWorks = true;
-    prismaPostCount = p ? p.length : 0;
-    prismaPostData = p?.map((x) => ({ id: x.id, slug: x.slug, coverImage: x.coverImage }));
-  } catch (err: any) {
-    d1AdapterError = {
-      message: err.message,
-      stack: err.stack,
-      name: err.name
-    };
+    const { d1GetPosts } = await import("../../lib/d1");
+    d1NativePosts = await d1GetPosts(db);
+  } catch (e: any) {
+    d1Error = e.message;
   }
 
   return new Response(
@@ -50,11 +37,9 @@ export const GET: APIRoute = async (context) => {
       isD1Instance: !!(db && typeof db.prepare === "function"),
       d1QuerySuccess,
       postCount,
+      d1NativePostCount: d1NativePosts.length,
+      d1NativePosts,
       d1Error,
-      prismaPostCount,
-      prismaPostData,
-      d1AdapterWorks,
-      d1AdapterError,
     }),
     {
       status: 200,

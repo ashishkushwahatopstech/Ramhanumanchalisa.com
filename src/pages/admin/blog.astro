@@ -5,25 +5,38 @@ import BlogEditorForm from "../../components/BlogEditorForm";
 import { getPrisma } from "../../lib/prisma";
 import { FALLBACK_BLOG_POSTS } from "../../data/blog";
 import { getAllCachedPosts } from "../../lib/dynamicContent";
+import { d1GetPosts } from "../../lib/d1";
 
 const db = Astro.locals.runtime?.env?.DB;
-const prisma = getPrisma(db);
-
 let dbPosts: any[] = [];
-if (prisma) {
+
+// 1. Native D1 query
+if (db && typeof db.prepare === "function") {
   try {
-    const result = await prisma.post.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-    if (result && Array.isArray(result)) {
-      dbPosts = result.map((p) => ({
-        ...p,
-        createdAt: p.createdAt ? new Date(p.createdAt).toISOString() : new Date().toISOString(),
-        updatedAt: p.updatedAt ? new Date(p.updatedAt).toISOString() : new Date().toISOString(),
-      }));
+    dbPosts = await d1GetPosts(db);
+  } catch (e) {
+    console.warn("Notice: D1 getPosts in admin/blog.astro:", e);
+  }
+}
+
+// 2. Prisma fallback
+if (dbPosts.length === 0) {
+  const prisma = getPrisma(db);
+  if (prisma) {
+    try {
+      const result = await prisma.post.findMany({
+        orderBy: { createdAt: "desc" },
+      });
+      if (result && Array.isArray(result)) {
+        dbPosts = result.map((p) => ({
+          ...p,
+          createdAt: p.createdAt ? new Date(p.createdAt).toISOString() : new Date().toISOString(),
+          updatedAt: p.updatedAt ? new Date(p.updatedAt).toISOString() : new Date().toISOString(),
+        }));
+      }
+    } catch (error) {
+      console.warn("Notice: DB posts query fallback to static:", error);
     }
-  } catch (error) {
-    console.warn("Notice: DB posts query fallback to static:", error);
   }
 }
 
