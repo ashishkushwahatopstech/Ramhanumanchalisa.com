@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import AartiClient from "../components/AartiClient";
+import PageFaqs from "../components/PageFaqs.astro";
 
 const title = "Shree Hanuman Aarti — Lyrics in English, Hindi & Full Translation";
 const description = "Chant Shree Hanuman Aarti (Aarti Kije Hanuman Lala Ki). Listen to the synced audio track, check composition details, benefits, and recitation guide.";
@@ -22,5 +23,12 @@ const description = "Chant Shree Hanuman Aarti (Aarti Kije Hanuman Lala Ki). Lis
     </nav>
 
     <AartiClient client:load />
+
+    <!-- Reusable Dynamic Page FAQs -->
+    <PageFaqs
+      pageSlug="aarti"
+      altSlugs={["hanuman-aarti"]}
+      title="Hanuman Aarti FAQs"
+    />
   </div>
 </Layout>

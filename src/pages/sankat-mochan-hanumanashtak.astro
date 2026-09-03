@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import HanumanashtakClient from "../components/HanumanashtakClient";
+import PageFaqs from "../components/PageFaqs.astro";
 import hanumanashtakData from "../data/scriptures/sankat-mochan-hanumanashtak.json";
 import type { ScriptureVerse } from "../types/scripture";
 
@@ -26,5 +27,12 @@ const description = "Read and listen to Sankat Mochan Hanuman Ashtak lyrics in D
     </nav>
 
     <HanumanashtakClient verses={verses} client:load />
+
+    <!-- Reusable Dynamic Page FAQs -->
+    <PageFaqs
+      pageSlug="hanumanashtak"
+      altSlugs={["sankat-mochan-hanumanashtak"]}
+      title="Hanuman Ashtak FAQs"
+    />
   </div>
 </Layout>

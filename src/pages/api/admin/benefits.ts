@@ -1,4 +1,4 @@
-﻿import type { APIRoute } from "astro";
+import type { APIRoute } from "astro";
 import { getPrisma } from "../../../lib/prisma";
 
 async function checkAuth() {
@@ -147,9 +147,33 @@ export const PUT: APIRoute = async (context) => {
       );
     }
 
-    const benefit = await prisma.benefit.update({
-      where: { id },
-      data: {
+    const benefit = await prisma.benefit.upsert({
+      where: id.startsWith("fallback-") ? { slug } : { id },
+      update: {
+        title,
+        slug,
+        metaTitle: metaTitle || null,
+        metaDescription: metaDescription || null,
+        situation: situation || "",
+        icon: icon || "🙏",
+        description,
+        recommendedChants: recommendedChants || null,
+        targetVerseNumber: targetVerseNumber ? Number(targetVerseNumber) : null,
+        targetVerseText: targetVerseText || null,
+        targetVerseTranslation: targetVerseTranslation || null,
+        detailedExposition,
+        actionSteps: actionSteps ? (typeof actionSteps === "string" ? actionSteps : JSON.stringify(actionSteps)) : null,
+        coverImage: coverImage || null,
+        imageAlt: imageAlt || null,
+        imageTitle: imageTitle || null,
+        imageCaption: imageCaption || null,
+        focusKeywords: focusKeywords || null,
+        internalLinks: internalLinks ? (typeof internalLinks === "string" ? internalLinks : JSON.stringify(internalLinks)) : null,
+        sources: sources ? (typeof sources === "string" ? sources : JSON.stringify(sources)) : null,
+        faqs: faqs ? (typeof faqs === "string" ? faqs : JSON.stringify(faqs)) : null,
+        published: published !== undefined ? !!published : true,
+      },
+      create: {
         title,
         slug,
         metaTitle: metaTitle || null,

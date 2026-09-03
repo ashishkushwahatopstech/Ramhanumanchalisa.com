@@ -5,6 +5,7 @@ import ChalisaTemplate from "../components/ChalisaTemplate";
 import LanguageBanner from "../components/LanguageBanner";
 import CookieRedirect from "../components/CookieRedirect";
 import DiyaCounter from "../components/DiyaCounter";
+import PageFaqs from "../components/PageFaqs.astro";
 
 const db = Astro.locals.runtime?.env?.DB;
 const data = await getChalisaData("hi", db);
@@ -42,5 +43,12 @@ const orgSchema = {
     <div class="py-6 border-t border-brass-gold/20">
       <DiyaCounter client:load />
     </div>
+
+    <!-- Reusable Dynamic Page FAQs -->
+    <PageFaqs
+      pageSlug="homepage"
+      altSlugs={["index", "home"]}
+      title="Hanuman Chalisa Daily Chanting FAQs"
+    />
   </div>
 </Layout>

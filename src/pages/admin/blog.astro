@@ -4,6 +4,8 @@ import AdminNavigation from "../../components/AdminNavigation.astro";
 import BlogEditorForm from "../../components/BlogEditorForm";
 import { getPrisma } from "../../lib/prisma";
 
+import { FALLBACK_BLOG_POSTS } from "../../data/blog";
+
 const db = Astro.locals.runtime?.env?.DB;
 const prisma = getPrisma(db);
 
@@ -18,6 +20,20 @@ try {
     createdAt: p.createdAt.toISOString(),
     updatedAt: p.updatedAt.toISOString(),
   }));
+
+  // Merge any fallback posts not yet in DB so admin can view/edit them too
+  const dbSlugs = new Set(initialPosts.map((p) => p.slug));
+  const fallbackList = FALLBACK_BLOG_POSTS.filter((f) => !dbSlugs.has(f.slug)).map((f) => ({
+    id: `fallback-${f.slug}`,
+    slug: f.slug,
+    title: f.title,
+    excerpt: f.excerpt,
+    content: f.content,
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }));
+  initialPosts = [...initialPosts, ...fallbackList];
 } catch (error) {
   console.error("Error fetching admin blog list:", error);
 }

@@ -120,9 +120,26 @@ export const PUT: APIRoute = async (context) => {
       return new Response(JSON.stringify({ error: "Missing required fields: id, title, slug, and content are mandatory" }), { status: 400 });
     }
 
-    const post = await prisma.post.update({
-      where: { id },
-      data: {
+    const post = await prisma.post.upsert({
+      where: id.startsWith("fallback-") ? { slug } : { id },
+      update: {
+        title,
+        slug,
+        metaTitle: metaTitle || null,
+        metaDescription: metaDescription || null,
+        content,
+        excerpt: excerpt || "",
+        coverImage: coverImage || null,
+        imageAlt: imageAlt || null,
+        imageTitle: imageTitle || null,
+        imageCaption: imageCaption || null,
+        focusKeywords: focusKeywords || null,
+        internalLinks: internalLinks ? (typeof internalLinks === "string" ? internalLinks : JSON.stringify(internalLinks)) : null,
+        sources: sources ? (typeof sources === "string" ? sources : JSON.stringify(sources)) : null,
+        faqs: faqs ? (typeof faqs === "string" ? faqs : JSON.stringify(faqs)) : null,
+        published: !!published,
+      },
+      create: {
         title,
         slug,
         metaTitle: metaTitle || null,

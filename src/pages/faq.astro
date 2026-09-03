@@ -38,7 +38,7 @@ let faqs = [...staticFaqs];
 
 try {
   const dbFaqs = await prisma.faq.findMany({
-    where: { pageSlug: "faq" },
+    where: { pageSlug: { in: ["faq", "general-faq"] } },
     orderBy: { order: "asc" }
   });
   if (dbFaqs.length > 0) {

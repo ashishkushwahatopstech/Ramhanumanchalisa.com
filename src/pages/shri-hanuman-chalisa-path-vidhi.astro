@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
+import PageFaqs from "../components/PageFaqs.astro";
 
 interface FAQItem {
   question: string;
@@ -29,19 +30,6 @@ const FAQ_ITEMS: FAQItem[] = [
     answer: "Yes, to receive the maximum spiritual benefits of the chanting, it is highly recommended to maintain a clean vegetarian diet and avoid alcohol and tobacco on the days you recite, keeping the body and mind in a pure sattvic state."
   }
 ];
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": FAQ_ITEMS.map((item) => ({
-    "@type": "Question",
-    "name": item.question,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": item.answer
-    }
-  }))
-};
 
 const howToSchema = {
   "@context": "https://schema.org",
@@ -93,10 +81,6 @@ const description = "Learn the correct rules and best times to recite Hanuman Ch
     </nav>
 
     <!-- JSON-LD Schemas injection -->
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(faqSchema)}
-    />
     <script
       type="application/ld+json"
       set:html={JSON.stringify(howToSchema)}
@@ -168,30 +152,13 @@ const description = "Learn the correct rules and best times to recite Hanuman Ch
 
     <CarvedDivider icon="🕉️" />
 
-    <!-- Accordion FAQ Area -->
-    <section class="space-y-6">
-      <h3 class="font-serif-display text-xl text-center uppercase tracking-wider font-bold text-maroon-deep">
-        Frequently Asked Questions (प्रश्न एवं समाधान)
-      </h3>
-
-      <div class="space-y-4 max-w-3xl mx-auto">
-        {FAQ_ITEMS.map((faq) => (
-          <details
-            class="group p-4 bg-stone-ivory border border-brass-gold/25 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
-            <summary class="cursor-pointer select-none font-bold text-sm text-maroon-deep flex justify-between items-center pr-2 uppercase font-serif-display tracking-wide">
-              <span>{faq.question}</span>
-              <span class="text-xs group-open:rotate-180 transition-transform duration-200">
-                ▼
-              </span>
-            </summary>
-            <p class="mt-3 text-xs sm:text-sm text-charcoal-brown/85 leading-relaxed border-t border-brass-gold/15 pt-3">
-              {faq.answer}
-            </p>
-          </details>
-        ))}
-      </div>
-    </section>
+    <!-- Reusable & Dynamic FAQ Area -->
+    <PageFaqs
+      pageSlug="path-vidhi"
+      altSlugs={["shri-hanuman-chalisa-path-vidhi"]}
+      fallbackFaqs={FAQ_ITEMS}
+      title="Frequently Asked Questions (प्रश्न एवं समाधान)"
+    />
 
     <!-- AdSense Slot -->
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">

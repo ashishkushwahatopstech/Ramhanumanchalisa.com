@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
+import PageFaqs from "../components/PageFaqs.astro";
 import ShareCardGenerator from "../components/ShareCardGenerator";
 import hanumanChalisaData from "../data/scriptures/hanuman-chalisa.json";
 import type { ScriptureVerse } from "../types/scripture";
@@ -66,6 +67,13 @@ const description = "Print a beautifully typeset, vector-perfect Hanuman Chalisa
 
       <!-- WhatsApp Status card generator -->
       <ShareCardGenerator client:load />
+
+      <!-- Reusable Dynamic Page FAQs -->
+      <PageFaqs
+        pageSlug="pdf"
+        altSlugs={["hanuman-chalisa-pdf"]}
+        title="PDF & Printing FAQs"
+      />
     </section>
 
     <!-- 2. Print-Layout (Only visible during printing or print-previews, styled in globals.css) -->

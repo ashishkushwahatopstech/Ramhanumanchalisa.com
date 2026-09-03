@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
+import PageFaqs from "../components/PageFaqs.astro";
 import SyncedAudioPlayer from "../components/SyncedAudioPlayer";
 
 const title = "Hanuman Chalisa MP3 & Audio Synced Lyrics Player";
@@ -118,6 +119,13 @@ const description = "Listen to Hanuman Chalisa MP3 and follow line-by-line synce
         </a>
       </div>
     </section>
+
+    <!-- Reusable Dynamic Page FAQs -->
+    <PageFaqs
+      pageSlug="audio"
+      altSlugs={["hanuman-chalisa-audio-mp3"]}
+      title="Audio & Chanting FAQs"
+    />
 
     <!-- AdSense Footer Slot -->
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">

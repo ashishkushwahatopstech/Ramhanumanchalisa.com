@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
+import PageFaqs from "../components/PageFaqs.astro";
 import bajrangBaanData from "../data/scriptures/bajrang-baan.json";
 import type { ScriptureVerse } from "../types/scripture";
 
@@ -167,6 +168,12 @@ const description = "Read the powerful Bajrang Baan with original Devanagari ver
         </a>
       </div>
     </section>
+
+    <!-- Reusable Dynamic Page FAQs -->
+    <PageFaqs
+      pageSlug="bajrang-baan"
+      title="Bajrang Baan FAQs & Precautions"
+    />
 
     <!-- AdSense Footer Slot -->
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
