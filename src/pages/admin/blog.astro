@@ -3,41 +3,41 @@ import Layout from "../../layouts/Layout.astro";
 import AdminNavigation from "../../components/AdminNavigation.astro";
 import BlogEditorForm from "../../components/BlogEditorForm";
 import { getPrisma } from "../../lib/prisma";
-
 import { FALLBACK_BLOG_POSTS } from "../../data/blog";
 
 const db = Astro.locals.runtime?.env?.DB;
 const prisma = getPrisma(db);
 
-let initialPosts: any[] = [];
+let dbPosts: any[] = [];
 try {
-  const dbPosts = await prisma.post.findMany({
+  const result = await prisma.post.findMany({
     orderBy: { createdAt: "desc" },
   });
-  // Serialize Dates to string for hydration-safe transfer
-  initialPosts = dbPosts.map((p) => ({
-    ...p,
-    createdAt: p.createdAt.toISOString(),
-    updatedAt: p.updatedAt.toISOString(),
-  }));
-
-  // Merge any fallback posts not yet in DB so admin can view/edit them too
-  const dbSlugs = new Set(initialPosts.map((p) => p.slug));
-  const fallbackList = FALLBACK_BLOG_POSTS.filter((f) => !dbSlugs.has(f.slug)).map((f) => ({
-    id: `fallback-${f.slug}`,
-    slug: f.slug,
-    title: f.title,
-    excerpt: f.excerpt,
-    content: f.content,
-    published: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  }));
-  initialPosts = [...initialPosts, ...fallbackList];
+  if (result && Array.isArray(result)) {
+    dbPosts = result.map((p) => ({
+      ...p,
+      createdAt: p.createdAt ? new Date(p.createdAt).toISOString() : new Date().toISOString(),
+      updatedAt: p.updatedAt ? new Date(p.updatedAt).toISOString() : new Date().toISOString(),
+    }));
+  }
 } catch (error) {
-  console.error("Error fetching admin blog list:", error);
+  console.warn("Notice: DB posts query fallback to static:", error);
 }
 
+// Ensure all published fallback blog posts are always merged and present
+const dbSlugs = new Set(dbPosts.map((p) => p.slug));
+const fallbackList = FALLBACK_BLOG_POSTS.filter((f) => !dbSlugs.has(f.slug)).map((f) => ({
+  id: `fallback-${f.slug}`,
+  slug: f.slug,
+  title: f.title,
+  excerpt: f.excerpt,
+  content: f.content,
+  published: true,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+}));
+
+const initialPosts = [...dbPosts, ...fallbackList];
 const title = "Blog Articles SEO Studio — Admin";
 ---
 

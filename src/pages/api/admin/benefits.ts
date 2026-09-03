@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getPrisma } from "../../../lib/prisma";
+import { BENEFITS_DATA } from "../../../data/benefits";
 
 async function checkAuth() {
   const session = { user: { email: "ashishkushwaha88643@gmail.com" } };
@@ -14,15 +15,38 @@ export const GET: APIRoute = async (context) => {
   const db = context.locals.runtime?.env?.DB;
   const prisma = getPrisma(db);
 
+  let benefits: any[] = [];
   try {
-    const benefits = await prisma.benefit.findMany({
+    const dbBenefits = await prisma.benefit.findMany({
       orderBy: { createdAt: "desc" },
     });
-    return new Response(JSON.stringify(benefits), { status: 200 });
+    if (dbBenefits && Array.isArray(dbBenefits)) {
+      benefits = dbBenefits;
+    }
   } catch (error) {
-    console.error("Failed to fetch benefits:", error);
-    return new Response(JSON.stringify({ error: "Failed to fetch benefits" }), { status: 500 });
+    console.warn("Notice: DB benefits query fallback in GET API:", error);
   }
+
+  const dbSlugs = new Set(benefits.map((b) => b.slug));
+  const fallbackList = Object.values(BENEFITS_DATA).filter((b) => !dbSlugs.has(b.slug)).map((b) => ({
+    id: `fallback-${b.slug}`,
+    slug: b.slug,
+    title: b.title,
+    situation: b.situation,
+    icon: b.icon || "🙏",
+    description: b.description,
+    recommendedChants: b.recommendedChants || "",
+    targetVerseNumber: b.targetVerseNumber || 1,
+    targetVerseText: b.targetVerseText || "",
+    targetVerseTranslation: b.targetVerseTranslation || "",
+    detailedExposition: b.detailedExposition || "",
+    actionSteps: b.actionSteps ? JSON.stringify(b.actionSteps) : "[]",
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }));
+
+  return new Response(JSON.stringify([...benefits, ...fallbackList]), { status: 200 });
 };
 
 export const POST: APIRoute = async (context) => {

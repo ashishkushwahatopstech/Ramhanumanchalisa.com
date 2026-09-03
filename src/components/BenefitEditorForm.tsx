@@ -299,7 +299,7 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
         });
 
         if (editingId) {
-          setBenefits(benefits.map((b) => (b.id === editingId ? data : b)));
+          setBenefits(benefits.map((b) => (b.id === editingId || b.slug === data.slug ? data : b)));
         } else {
           setBenefits([data, ...benefits]);
         }

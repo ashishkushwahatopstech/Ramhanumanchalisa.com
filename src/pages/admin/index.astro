@@ -3,18 +3,21 @@ import Layout from "../../layouts/Layout.astro";
 import AdminNavigation from "../../components/AdminNavigation.astro";
 import { getPrisma } from "../../lib/prisma";
 
+import { FALLBACK_BLOG_POSTS } from "../../data/blog";
+import { BENEFITS_DATA } from "../../data/benefits";
+
 const db = Astro.locals.runtime?.env?.DB;
 const prisma = getPrisma(db);
 
-let blogCount = 0;
-let benefitsCount = 0;
+let dbBlogCount = 0;
+let dbBenefitsCount = 0;
 let dailyRecitations = 0;
 let tracksCount = 0;
 let faqsCount = 0;
 
 try {
-  blogCount = await prisma.post.count();
-  benefitsCount = await prisma.benefit.count();
+  dbBlogCount = await prisma.post.count();
+  dbBenefitsCount = await prisma.benefit.count();
   faqsCount = await prisma.faq.count();
 
   // Today's recitations
@@ -25,8 +28,11 @@ try {
 
   tracksCount = await prisma.audioTrack.count();
 } catch (error) {
-  console.error("Dashboard DB fetch warning:", error);
+  console.warn("Dashboard DB fetch warning:", error);
 }
+
+const blogCount = Math.max(dbBlogCount, FALLBACK_BLOG_POSTS.length);
+const benefitsCount = Math.max(dbBenefitsCount, Object.keys(BENEFITS_DATA).length);
 
 const title = "Mandir Studio Admin Dashboard";
 ---

@@ -241,7 +241,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
         });
 
         if (editingId) {
-          setPosts(posts.map((p) => (p.id === editingId ? data : p)));
+          setPosts(posts.map((p) => (p.id === editingId || p.slug === data.slug ? data : p)));
         } else {
           setPosts([data, ...posts]);
         }

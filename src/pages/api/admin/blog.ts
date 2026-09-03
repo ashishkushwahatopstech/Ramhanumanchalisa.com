@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getPrisma } from "../../../lib/prisma";
+import { FALLBACK_BLOG_POSTS } from "../../../data/blog";
 
 async function checkAuth() {
   const session = { user: { email: "ashishkushwaha88643@gmail.com" } };
@@ -14,15 +15,31 @@ export const GET: APIRoute = async (context) => {
   const db = context.locals.runtime?.env?.DB;
   const prisma = getPrisma(db);
 
+  let posts: any[] = [];
   try {
-    const posts = await prisma.post.findMany({
+    const dbPosts = await prisma.post.findMany({
       orderBy: { createdAt: "desc" },
     });
-    return new Response(JSON.stringify(posts), { status: 200 });
+    if (dbPosts && Array.isArray(dbPosts)) {
+      posts = dbPosts;
+    }
   } catch (error) {
-    console.error("Failed to fetch posts:", error);
-    return new Response(JSON.stringify({ error: "Failed to fetch posts" }), { status: 500 });
+    console.warn("Notice: DB posts query fallback in GET API:", error);
   }
+
+  const dbSlugs = new Set(posts.map((p) => p.slug));
+  const fallbackList = FALLBACK_BLOG_POSTS.filter((f) => !dbSlugs.has(f.slug)).map((f) => ({
+    id: `fallback-${f.slug}`,
+    slug: f.slug,
+    title: f.title,
+    excerpt: f.excerpt,
+    content: f.content,
+    published: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }));
+
+  return new Response(JSON.stringify([...posts, ...fallbackList]), { status: 200 });
 };
 
 export const POST: APIRoute = async (context) => {
