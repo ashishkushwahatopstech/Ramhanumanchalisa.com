@@ -191,15 +191,35 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
     setSources(benefit.sources || "");
     setPublished(benefit.published);
 
+    let parsedGallery: ContentImageItem[] = [];
     try {
       if (benefit.galleryImages) {
-        setGalleryImages(JSON.parse(benefit.galleryImages));
-      } else {
-        setGalleryImages([]);
+        parsedGallery = typeof benefit.galleryImages === "string" ? JSON.parse(benefit.galleryImages) : benefit.galleryImages;
       }
     } catch {
-      setGalleryImages([]);
+      parsedGallery = [];
     }
+
+    // Auto-discover images inside detailedExposition if gallery was empty
+    if (parsedGallery.length === 0 && benefit.detailedExposition) {
+      const imgRegex = /<img\s+[^>]*src="([^"]*)"[^>]*>/gi;
+      let match;
+      let idx = 1;
+      while ((match = imgRegex.exec(benefit.detailedExposition)) !== null) {
+        const fullImgTag = match[0];
+        const src = match[1];
+        const altMatch = fullImgTag.match(/alt="([^"]*)"/i);
+        const titleMatch = fullImgTag.match(/title="([^"]*)"/i);
+        parsedGallery.push({
+          id: `extracted-${Date.now()}-${idx++}`,
+          url: src,
+          alt: altMatch ? altMatch[1] : "",
+          title: titleMatch ? titleMatch[1] : "",
+          caption: "",
+        });
+      }
+    }
+    setGalleryImages(parsedGallery);
 
     try {
       if (benefit.actionSteps) {
@@ -416,17 +436,25 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
       const data = await res.json();
 
       if (res.ok) {
+        const savedBenefit = { ...payload, ...data };
         setMessage({
-          text: editingId ? "Benefit page updated successfully!" : "Benefit page created successfully!",
+          text: editingId ? "🟢 Benefit updated & images saved successfully!" : "🟢 Benefit created successfully!",
           type: "success",
         });
 
         if (editingId) {
-          setBenefits(benefits.map((b) => (b.id === editingId || b.slug === data.slug ? data : b)));
+          setBenefits(benefits.map((b) => (b.id === editingId || b.slug === savedBenefit.slug ? savedBenefit : b)));
+          setEditingId(savedBenefit.id);
+          if (savedBenefit.coverImage) setCoverImage(savedBenefit.coverImage);
+          if (savedBenefit.galleryImages) {
+            try {
+              setGalleryImages(typeof savedBenefit.galleryImages === "string" ? JSON.parse(savedBenefit.galleryImages) : savedBenefit.galleryImages);
+            } catch {}
+          }
         } else {
-          setBenefits([data, ...benefits]);
+          setBenefits([savedBenefit, ...benefits]);
+          resetForm();
         }
-        resetForm();
       } else {
         setMessage({ text: data.error || "Failed to save benefit", type: "error" });
       }
@@ -695,6 +723,38 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
                   className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                 />
               </div>
+
+              {/* Cover Image Quick Indicator */}
+              {coverImage ? (
+                <div className="flex items-center justify-between p-3 bg-emerald-50 border border-emerald-300 rounded-lg text-xs shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <img src={coverImage} alt={imageAlt || "Cover preview"} className="w-12 h-12 object-cover rounded shadow border border-emerald-400" />
+                    <div>
+                      <p className="font-bold text-emerald-900">🖼️ Benefit Cover Image Active</p>
+                      <p className="text-[11px] text-emerald-700 truncate max-w-xs">{coverImage}</p>
+                      {imageAlt && <p className="text-[10px] text-emerald-600 italic">Alt: "{imageAlt}"</p>}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("media")}
+                    className="px-3 py-1.5 bg-white border border-emerald-400 text-emerald-900 font-bold rounded text-xs hover:bg-emerald-100 transition-colors"
+                  >
+                    Manage in Media Tab →
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between p-2.5 bg-amber-50/70 border border-amber-200 rounded-lg text-xs">
+                  <span className="text-amber-800 font-medium">💡 No cover image set for this benefit page yet.</span>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("media")}
+                    className="px-2.5 py-1 bg-white border border-amber-300 text-amber-900 font-bold rounded text-xs hover:bg-amber-100"
+                  >
+                    + Add Cover Image
+                  </button>
+                </div>
+              )}
 
               {/* 📸 Image Inserter Tool */}
               <div className="bg-marigold/10 border-2 border-brass-gold/40 rounded-xl p-4 space-y-3">

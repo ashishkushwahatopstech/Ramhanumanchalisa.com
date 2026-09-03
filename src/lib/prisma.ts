@@ -3,9 +3,10 @@ import { PrismaD1 } from "@prisma/adapter-d1";
 
 let prismaInstance: PrismaClient | null = null;
 
-export function getPrisma(db?: any): PrismaClient {
+export function getPrisma(db?: any): PrismaClient | null {
   if (db) {
     try {
+      // In Cloudflare D1 worker execution
       if (!prismaInstance) {
         const adapter = new PrismaD1(db);
         prismaInstance = new PrismaClient({ adapter });
@@ -21,21 +22,11 @@ export function getPrisma(db?: any): PrismaClient {
     try {
       globalThis.prismaGlobal = new PrismaClient();
     } catch (e) {
-      console.warn("Prisma local client fallback initialization failed on Edge:", e);
-      // Return a safe mock client to let the app fall back to local JSON stores cleanly
-      return new Proxy({} as any, {
-        get: () => {
-          return () => ({
-            findUnique: () => Promise.resolve(null),
-            findMany: () => Promise.resolve([]),
-            findFirst: () => Promise.resolve(null),
-            count: () => Promise.resolve(0),
-          });
-        }
-      });
+      console.warn("Notice: Prisma local client initialization not available in current environment:", e);
+      return null;
     }
   }
-  return globalThis.prismaGlobal;
+  return globalThis.prismaGlobal || null;
 }
 
 declare global {
@@ -44,3 +35,4 @@ declare global {
 
 const prisma = getPrisma();
 export default prisma;
+

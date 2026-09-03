@@ -26,37 +26,70 @@ interface EnrichedPost extends BlogPost {
   faqs?: string | null;
 }
 
+import { getCachedPost } from "../../lib/dynamicContent";
+
 let post: EnrichedPost | undefined;
 
-try {
-  const dbPost = await prisma.post.findUnique({ where: { slug } });
-  if (dbPost && dbPost.published) {
+if (prisma) {
+  try {
+    const dbPost = await prisma.post.findUnique({ where: { slug } });
+    if (dbPost && dbPost.published) {
+      post = {
+        slug: dbPost.slug,
+        title: dbPost.title,
+        metaTitle: dbPost.metaTitle,
+        metaDescription: dbPost.metaDescription,
+        excerpt: dbPost.excerpt,
+        content: dbPost.content,
+        coverImage: dbPost.coverImage,
+        imageAlt: dbPost.imageAlt,
+        imageTitle: dbPost.imageTitle,
+        imageCaption: dbPost.imageCaption,
+        focusKeywords: dbPost.focusKeywords,
+        internalLinks: dbPost.internalLinks,
+        sources: dbPost.sources,
+        faqs: dbPost.faqs,
+        createdAt: (() => {
+          try {
+            return new Date(dbPost.createdAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          } catch {
+            return "Recently";
+          }
+        })(),
+        author: "Admin",
+        readTime: "5 min read",
+      };
+    }
+  } catch (error) {
+    console.warn("Notice: reading blog post from DB failed:", error);
+  }
+}
+
+// Check runtime cache if DB didn't return post
+if (!post) {
+  const cached = getCachedPost(slug);
+  if (cached && cached.published) {
     post = {
-      slug: dbPost.slug,
-      title: dbPost.title,
-      metaTitle: dbPost.metaTitle,
-      metaDescription: dbPost.metaDescription,
-      excerpt: dbPost.excerpt,
-      content: dbPost.content,
-      coverImage: dbPost.coverImage,
-      imageAlt: dbPost.imageAlt,
-      imageTitle: dbPost.imageTitle,
-      imageCaption: dbPost.imageCaption,
-      focusKeywords: dbPost.focusKeywords,
-      internalLinks: dbPost.internalLinks,
-      sources: dbPost.sources,
-      faqs: dbPost.faqs,
-      createdAt: dbPost.createdAt.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
-      author: "Admin",
-      readTime: "5 min read",
+      ...cached,
+      createdAt: (() => {
+        try {
+          return new Date(cached.createdAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        } catch {
+          return "Recently";
+        }
+      })(),
+      author: cached.author || "Admin",
+      readTime: cached.readTime || "5 min read",
     };
   }
-} catch (error) {
-  console.error("Error reading blog post from DB:", error);
 }
 
 if (!post) {

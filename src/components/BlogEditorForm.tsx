@@ -160,15 +160,35 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
     setSources(post.sources || "");
     setPublished(post.published);
 
+    let parsedGallery: ContentImageItem[] = [];
     try {
       if (post.galleryImages) {
-        setGalleryImages(JSON.parse(post.galleryImages));
-      } else {
-        setGalleryImages([]);
+        parsedGallery = typeof post.galleryImages === "string" ? JSON.parse(post.galleryImages) : post.galleryImages;
       }
     } catch {
-      setGalleryImages([]);
+      parsedGallery = [];
     }
+
+    // Auto-discover images inside content if gallery was empty
+    if (parsedGallery.length === 0 && post.content) {
+      const imgRegex = /<img\s+[^>]*src="([^"]*)"[^>]*>/gi;
+      let match;
+      let idx = 1;
+      while ((match = imgRegex.exec(post.content)) !== null) {
+        const fullImgTag = match[0];
+        const src = match[1];
+        const altMatch = fullImgTag.match(/alt="([^"]*)"/i);
+        const titleMatch = fullImgTag.match(/title="([^"]*)"/i);
+        parsedGallery.push({
+          id: `extracted-${Date.now()}-${idx++}`,
+          url: src,
+          alt: altMatch ? altMatch[1] : "",
+          title: titleMatch ? titleMatch[1] : "",
+          caption: "",
+        });
+      }
+    }
+    setGalleryImages(parsedGallery);
 
     try {
       if (post.internalLinks) {
@@ -358,17 +378,25 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
       const data = await res.json();
 
       if (res.ok) {
+        const savedPost = { ...payload, ...data };
         setMessage({
-          text: editingId ? "Article updated successfully!" : "Article created successfully!",
+          text: editingId ? "🟢 Article updated & images saved successfully!" : "🟢 Article created successfully!",
           type: "success",
         });
 
         if (editingId) {
-          setPosts(posts.map((p) => (p.id === editingId || p.slug === data.slug ? data : p)));
+          setPosts(posts.map((p) => (p.id === editingId || p.slug === savedPost.slug ? savedPost : p)));
+          setEditingId(savedPost.id);
+          if (savedPost.coverImage) setCoverImage(savedPost.coverImage);
+          if (savedPost.galleryImages) {
+            try {
+              setGalleryImages(typeof savedPost.galleryImages === "string" ? JSON.parse(savedPost.galleryImages) : savedPost.galleryImages);
+            } catch {}
+          }
         } else {
-          setPosts([data, ...posts]);
+          setPosts([savedPost, ...posts]);
+          resetForm();
         }
-        resetForm();
       } else {
         setMessage({ text: data.error || "Failed to save article", type: "error" });
       }
@@ -535,6 +563,38 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                   className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs text-charcoal-brown outline-none focus:border-maroon-deep"
                 />
               </div>
+
+              {/* Cover Image Quick Indicator */}
+              {coverImage ? (
+                <div className="flex items-center justify-between p-3 bg-emerald-50 border border-emerald-300 rounded-lg text-xs shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <img src={coverImage} alt={imageAlt || "Cover preview"} className="w-12 h-12 object-cover rounded shadow border border-emerald-400" />
+                    <div>
+                      <p className="font-bold text-emerald-900">🖼️ Article Cover Image Active</p>
+                      <p className="text-[11px] text-emerald-700 truncate max-w-xs">{coverImage}</p>
+                      {imageAlt && <p className="text-[10px] text-emerald-600 italic">Alt: "{imageAlt}"</p>}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("media")}
+                    className="px-3 py-1.5 bg-white border border-emerald-400 text-emerald-900 font-bold rounded text-xs hover:bg-emerald-100 transition-colors"
+                  >
+                    Manage in Media Tab →
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between p-2.5 bg-amber-50/70 border border-amber-200 rounded-lg text-xs">
+                  <span className="text-amber-800 font-medium">💡 No cover image set for this article yet.</span>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("media")}
+                    className="px-2.5 py-1 bg-white border border-amber-300 text-amber-900 font-bold rounded text-xs hover:bg-amber-100"
+                  >
+                    + Add Cover Image
+                  </button>
+                </div>
+              )}
 
               {/* 📸 Image Inserter Tool */}
               <div className="bg-marigold/10 border-2 border-brass-gold/40 rounded-xl p-4 space-y-3">

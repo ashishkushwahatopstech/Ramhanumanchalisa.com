@@ -26,46 +26,70 @@ interface EnrichedBenefit extends BenefitDetails {
   faqs?: string | null;
 }
 
+import { getCachedBenefit } from "../../lib/dynamicContent";
+
 let benefit: EnrichedBenefit | undefined;
 
-try {
-  const dbBenefit = await prisma.benefit.findUnique({ where: { slug } });
-  if (dbBenefit && dbBenefit.published) {
+if (prisma) {
+  try {
+    const dbBenefit = await prisma.benefit.findUnique({ where: { slug } });
+    if (dbBenefit && dbBenefit.published) {
+      let parsedActionSteps: string[] = [];
+      try {
+        if (dbBenefit.actionSteps) {
+          parsedActionSteps = JSON.parse(dbBenefit.actionSteps);
+        }
+      } catch {
+        parsedActionSteps = [];
+      }
+
+      benefit = {
+        slug: dbBenefit.slug,
+        title: dbBenefit.title,
+        metaTitle: dbBenefit.metaTitle,
+        metaDescription: dbBenefit.metaDescription,
+        situation: dbBenefit.situation,
+        icon: dbBenefit.icon || "🙏",
+        description: dbBenefit.description,
+        recommendedChants: dbBenefit.recommendedChants || "Read with devotion daily",
+        targetVerseNumber: dbBenefit.targetVerseNumber || 1,
+        targetVerseText: dbBenefit.targetVerseText || "",
+        targetVerseTranslation: dbBenefit.targetVerseTranslation || "",
+        detailedExposition: dbBenefit.detailedExposition,
+        actionSteps: parsedActionSteps,
+        coverImage: dbBenefit.coverImage,
+        imageAlt: dbBenefit.imageAlt,
+        imageTitle: dbBenefit.imageTitle,
+        imageCaption: dbBenefit.imageCaption,
+        focusKeywords: dbBenefit.focusKeywords,
+        internalLinks: dbBenefit.internalLinks,
+        sources: dbBenefit.sources,
+        faqs: dbBenefit.faqs,
+      };
+    }
+  } catch (error) {
+    console.warn("Notice: reading benefit from DB failed:", error);
+  }
+}
+
+// Check runtime cache if DB didn't return benefit
+if (!benefit) {
+  const cached = getCachedBenefit(slug);
+  if (cached && cached.published) {
     let parsedActionSteps: string[] = [];
     try {
-      if (dbBenefit.actionSteps) {
-        parsedActionSteps = JSON.parse(dbBenefit.actionSteps);
+      if (cached.actionSteps) {
+        parsedActionSteps = typeof cached.actionSteps === "string" ? JSON.parse(cached.actionSteps) : cached.actionSteps;
       }
     } catch {
       parsedActionSteps = [];
     }
 
     benefit = {
-      slug: dbBenefit.slug,
-      title: dbBenefit.title,
-      metaTitle: dbBenefit.metaTitle,
-      metaDescription: dbBenefit.metaDescription,
-      situation: dbBenefit.situation,
-      icon: dbBenefit.icon || "🙏",
-      description: dbBenefit.description,
-      recommendedChants: dbBenefit.recommendedChants || "Read with devotion daily",
-      targetVerseNumber: dbBenefit.targetVerseNumber || 1,
-      targetVerseText: dbBenefit.targetVerseText || "",
-      targetVerseTranslation: dbBenefit.targetVerseTranslation || "",
-      detailedExposition: dbBenefit.detailedExposition,
+      ...cached,
       actionSteps: parsedActionSteps,
-      coverImage: dbBenefit.coverImage,
-      imageAlt: dbBenefit.imageAlt,
-      imageTitle: dbBenefit.imageTitle,
-      imageCaption: dbBenefit.imageCaption,
-      focusKeywords: dbBenefit.focusKeywords,
-      internalLinks: dbBenefit.internalLinks,
-      sources: dbBenefit.sources,
-      faqs: dbBenefit.faqs,
     };
   }
-} catch (error) {
-  console.error("Error reading benefit from DB:", error);
 }
 
 if (!benefit && BENEFITS_DATA[slug]) {

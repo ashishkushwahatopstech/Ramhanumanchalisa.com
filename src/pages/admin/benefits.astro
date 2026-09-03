@@ -4,28 +4,36 @@ import AdminNavigation from "../../components/AdminNavigation.astro";
 import BenefitEditorForm from "../../components/BenefitEditorForm";
 import { getPrisma } from "../../lib/prisma";
 import { BENEFITS_DATA } from "../../data/benefits";
+import { getAllCachedBenefits } from "../../lib/dynamicContent";
 
 const db = Astro.locals.runtime?.env?.DB;
 const prisma = getPrisma(db);
 
 let dbBenefits: any[] = [];
-try {
-  const result = await prisma.benefit.findMany({
-    orderBy: { createdAt: "desc" },
-  });
-  if (result && Array.isArray(result)) {
-    dbBenefits = result.map((b) => ({
-      ...b,
-      createdAt: b.createdAt ? new Date(b.createdAt).toISOString() : new Date().toISOString(),
-      updatedAt: b.updatedAt ? new Date(b.updatedAt).toISOString() : new Date().toISOString(),
-    }));
+if (prisma) {
+  try {
+    const result = await prisma.benefit.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    if (result && Array.isArray(result)) {
+      dbBenefits = result.map((b) => ({
+        ...b,
+        createdAt: b.createdAt ? new Date(b.createdAt).toISOString() : new Date().toISOString(),
+        updatedAt: b.updatedAt ? new Date(b.updatedAt).toISOString() : new Date().toISOString(),
+      }));
+    }
+  } catch (error) {
+    console.warn("Notice: DB benefits query fallback to static:", error);
   }
-} catch (error) {
-  console.warn("Notice: DB benefits query fallback to static:", error);
 }
 
 // Ensure all published fallback benefits are always merged and present
 const dbSlugs = new Set(dbBenefits.map((b) => b.slug));
+
+// Merge cached benefits
+const cachedBenefits = getAllCachedBenefits().filter((b) => !dbSlugs.has(b.slug));
+cachedBenefits.forEach((b) => dbSlugs.add(b.slug));
+
 const fallbackList = Object.values(BENEFITS_DATA).filter((b) => !dbSlugs.has(b.slug)).map((b) => ({
   id: `fallback-${b.slug}`,
   slug: b.slug,
@@ -44,7 +52,7 @@ const fallbackList = Object.values(BENEFITS_DATA).filter((b) => !dbSlugs.has(b.s
   updatedAt: new Date().toISOString(),
 }));
 
-const initialBenefits = [...dbBenefits, ...fallbackList];
+const initialBenefits = [...dbBenefits, ...cachedBenefits, ...fallbackList];
 const title = "Hanuman Chalisa Benefits SEO Studio — Admin";
 ---
 

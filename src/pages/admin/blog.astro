@@ -4,28 +4,36 @@ import AdminNavigation from "../../components/AdminNavigation.astro";
 import BlogEditorForm from "../../components/BlogEditorForm";
 import { getPrisma } from "../../lib/prisma";
 import { FALLBACK_BLOG_POSTS } from "../../data/blog";
+import { getAllCachedPosts } from "../../lib/dynamicContent";
 
 const db = Astro.locals.runtime?.env?.DB;
 const prisma = getPrisma(db);
 
 let dbPosts: any[] = [];
-try {
-  const result = await prisma.post.findMany({
-    orderBy: { createdAt: "desc" },
-  });
-  if (result && Array.isArray(result)) {
-    dbPosts = result.map((p) => ({
-      ...p,
-      createdAt: p.createdAt ? new Date(p.createdAt).toISOString() : new Date().toISOString(),
-      updatedAt: p.updatedAt ? new Date(p.updatedAt).toISOString() : new Date().toISOString(),
-    }));
+if (prisma) {
+  try {
+    const result = await prisma.post.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    if (result && Array.isArray(result)) {
+      dbPosts = result.map((p) => ({
+        ...p,
+        createdAt: p.createdAt ? new Date(p.createdAt).toISOString() : new Date().toISOString(),
+        updatedAt: p.updatedAt ? new Date(p.updatedAt).toISOString() : new Date().toISOString(),
+      }));
+    }
+  } catch (error) {
+    console.warn("Notice: DB posts query fallback to static:", error);
   }
-} catch (error) {
-  console.warn("Notice: DB posts query fallback to static:", error);
 }
 
 // Ensure all published fallback blog posts are always merged and present
 const dbSlugs = new Set(dbPosts.map((p) => p.slug));
+
+// Merge cached posts
+const cachedPosts = getAllCachedPosts().filter((p) => !dbSlugs.has(p.slug));
+cachedPosts.forEach((p) => dbSlugs.add(p.slug));
+
 const fallbackList = FALLBACK_BLOG_POSTS.filter((f) => !dbSlugs.has(f.slug)).map((f) => ({
   id: `fallback-${f.slug}`,
   slug: f.slug,
@@ -37,7 +45,7 @@ const fallbackList = FALLBACK_BLOG_POSTS.filter((f) => !dbSlugs.has(f.slug)).map
   updatedAt: new Date().toISOString(),
 }));
 
-const initialPosts = [...dbPosts, ...fallbackList];
+const initialPosts = [...dbPosts, ...cachedPosts, ...fallbackList];
 const title = "Blog Articles SEO Studio — Admin";
 ---
 
