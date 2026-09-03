@@ -243,9 +243,7 @@ const faqSchema =
           <h3 class="font-serif-display text-lg text-maroon-deep uppercase tracking-wider font-bold border-b border-brass-gold/20 pb-2">
             Spiritual Explanation & Significance
           </h3>
-          <p class="text-sm sm:text-base text-charcoal-brown/90 leading-relaxed whitespace-pre-line">
-            {benefit.detailedExposition}
-          </p>
+          <div class="text-sm sm:text-base text-charcoal-brown/90 leading-relaxed whitespace-pre-line space-y-4" set:html={benefit.detailedExposition} />
         </div>
 
         <!-- Step-by-Step Puja Vidhi Guide -->

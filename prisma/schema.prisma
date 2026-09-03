@@ -70,6 +70,7 @@ model Post {
   internalLinks  String?  // JSON string: Array<{ label: string, url: string }>
   sources        String?  // JSON string or text citations
   faqs           String?  // JSON string: Array<{ question: string, answer: string }>
+  galleryImages  String?  // JSON string: Array<{ id: string, url: string, alt: string, title: string, caption: string }>
   published      Boolean  @default(false)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -95,6 +96,7 @@ model Benefit {
   imageAlt               String?
   imageTitle             String?
   imageCaption           String?
+  galleryImages          String?  // JSON string: Array<{ id: string, url: string, alt: string, title: string, caption: string }>
   focusKeywords          String?
   internalLinks          String?  // JSON string: Array<{ label: string, url: string }>
   sources                String?  // JSON string or text citations

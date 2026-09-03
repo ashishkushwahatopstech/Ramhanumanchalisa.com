@@ -67,6 +67,7 @@ export const POST: APIRoute = async (context) => {
       internalLinks,
       sources,
       faqs,
+      galleryImages,
       published,
     } = body;
 
@@ -86,6 +87,7 @@ export const POST: APIRoute = async (context) => {
         imageAlt: imageAlt || null,
         imageTitle: imageTitle || null,
         imageCaption: imageCaption || null,
+        galleryImages: galleryImages ? (typeof galleryImages === "string" ? galleryImages : JSON.stringify(galleryImages)) : null,
         focusKeywords: focusKeywords || null,
         internalLinks: internalLinks ? (typeof internalLinks === "string" ? internalLinks : JSON.stringify(internalLinks)) : null,
         sources: sources ? (typeof sources === "string" ? sources : JSON.stringify(sources)) : null,
@@ -130,6 +132,7 @@ export const PUT: APIRoute = async (context) => {
       internalLinks,
       sources,
       faqs,
+      galleryImages,
       published,
     } = body;
 
@@ -150,6 +153,7 @@ export const PUT: APIRoute = async (context) => {
         imageAlt: imageAlt || null,
         imageTitle: imageTitle || null,
         imageCaption: imageCaption || null,
+        galleryImages: galleryImages ? (typeof galleryImages === "string" ? galleryImages : JSON.stringify(galleryImages)) : null,
         focusKeywords: focusKeywords || null,
         internalLinks: internalLinks ? (typeof internalLinks === "string" ? internalLinks : JSON.stringify(internalLinks)) : null,
         sources: sources ? (typeof sources === "string" ? sources : JSON.stringify(sources)) : null,
@@ -167,6 +171,7 @@ export const PUT: APIRoute = async (context) => {
         imageAlt: imageAlt || null,
         imageTitle: imageTitle || null,
         imageCaption: imageCaption || null,
+        galleryImages: galleryImages ? (typeof galleryImages === "string" ? galleryImages : JSON.stringify(galleryImages)) : null,
         focusKeywords: focusKeywords || null,
         internalLinks: internalLinks ? (typeof internalLinks === "string" ? internalLinks : JSON.stringify(internalLinks)) : null,
         sources: sources ? (typeof sources === "string" ? sources : JSON.stringify(sources)) : null,

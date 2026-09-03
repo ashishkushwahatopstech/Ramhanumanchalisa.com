@@ -24,12 +24,21 @@ export interface Post {
   imageAlt?: string | null;
   imageTitle?: string | null;
   imageCaption?: string | null;
+  galleryImages?: string | null;
   focusKeywords?: string | null;
   internalLinks?: string | null;
   sources?: string | null;
   faqs?: string | null;
   published: boolean;
   createdAt: string;
+}
+
+export interface ContentImageItem {
+  id: string;
+  url: string;
+  alt: string;
+  title: string;
+  caption: string;
 }
 
 interface BlogEditorFormProps {
@@ -51,11 +60,29 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
   const [excerpt, setExcerpt] = useState<string>("");
   const [content, setContent] = useState<string>("");
   
-  // Media States
+  // Media States (Cover)
   const [coverImage, setCoverImage] = useState<string>("");
   const [imageAlt, setImageAlt] = useState<string>("");
   const [imageTitle, setImageTitle] = useState<string>("");
   const [imageCaption, setImageCaption] = useState<string>("");
+
+  // All in-content images on this page
+  const [galleryImages, setGalleryImages] = useState<ContentImageItem[]>([]);
+
+  // Content Tab Image Inserter Tool States
+  const [showInsertModal, setShowInsertModal] = useState<boolean>(false);
+  const [insertImgUrl, setInsertImgUrl] = useState<string>("");
+  const [insertImgAlt, setInsertImgAlt] = useState<string>("");
+  const [insertImgTitle, setInsertImgTitle] = useState<string>("");
+  const [insertImgCaption, setInsertImgCaption] = useState<string>("");
+  const [insertSuccessMsg, setInsertSuccessMsg] = useState<string | null>(null);
+
+  // Media Tab Re-editing Image States
+  const [editingImageId, setEditingImageId] = useState<string | null>(null);
+  const [editImgUrl, setEditImgUrl] = useState<string>("");
+  const [editImgAlt, setEditImgAlt] = useState<string>("");
+  const [editImgTitle, setEditImgTitle] = useState<string>("");
+  const [editImgCaption, setEditImgCaption] = useState<string>("");
 
   // SEO & Links States
   const [focusKeywords, setFocusKeywords] = useState<string>("");
@@ -109,6 +136,10 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
     setFaqs([]);
     setNewFaqQuestion("");
     setNewFaqAnswer("");
+    setGalleryImages([]);
+    setShowInsertModal(false);
+    setInsertSuccessMsg(null);
+    setEditingImageId(null);
     setPublished(true);
     setActiveTab("content");
   };
@@ -128,6 +159,16 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
     setFocusKeywords(post.focusKeywords || "");
     setSources(post.sources || "");
     setPublished(post.published);
+
+    try {
+      if (post.galleryImages) {
+        setGalleryImages(JSON.parse(post.galleryImages));
+      } else {
+        setGalleryImages([]);
+      }
+    } catch {
+      setGalleryImages([]);
+    }
 
     try {
       if (post.internalLinks) {
@@ -171,6 +212,87 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
     } catch {
       setMessage({ text: "Network error occurred", type: "error" });
     }
+  };
+
+  const handleInsertImageIntoContent = () => {
+    if (!insertImgUrl.trim()) {
+      alert("Please provide the Image URL.");
+      return;
+    }
+    if (!insertImgAlt.trim()) {
+      alert("Alt text is mandatory for Google image indexing. Please describe the image.");
+      return;
+    }
+
+    const newImage: ContentImageItem = {
+      id: Date.now().toString(),
+      url: insertImgUrl.trim(),
+      alt: insertImgAlt.trim(),
+      title: insertImgTitle.trim() || insertImgAlt.trim(),
+      caption: insertImgCaption.trim(),
+    };
+
+    const figureSnippet = `\n\n<figure class="my-6 text-center">
+  <img src="${newImage.url}" alt="${newImage.alt}" title="${newImage.title}" class="rounded-lg shadow-md mx-auto max-w-full h-auto" loading="lazy" />
+  ${newImage.caption ? `<figcaption class="text-xs text-charcoal-brown/70 italic mt-2">${newImage.caption}</figcaption>` : ""}
+</figure>\n\n`;
+
+    setContent((prev) => prev + figureSnippet);
+    setGalleryImages((prev) => [...prev, newImage]);
+
+    setInsertImgUrl("");
+    setInsertImgAlt("");
+    setInsertImgTitle("");
+    setInsertImgCaption("");
+    setShowInsertModal(false);
+    setInsertSuccessMsg("✅ Image inserted into article body & saved to Media & Image SEO list!");
+    setTimeout(() => setInsertSuccessMsg(null), 4000);
+  };
+
+  const handleStartEditImage = (img: ContentImageItem) => {
+    setEditingImageId(img.id);
+    setEditImgUrl(img.url);
+    setEditImgAlt(img.alt);
+    setEditImgTitle(img.title);
+    setEditImgCaption(img.caption);
+  };
+
+  const handleSaveEditImage = (id: string) => {
+    const oldImg = galleryImages.find((g) => g.id === id);
+    if (!oldImg) return;
+
+    const updatedImg: ContentImageItem = {
+      id,
+      url: editImgUrl.trim(),
+      alt: editImgAlt.trim(),
+      title: editImgTitle.trim() || editImgAlt.trim(),
+      caption: editImgCaption.trim(),
+    };
+
+    setGalleryImages((prev) => prev.map((img) => (img.id === id ? updatedImg : img)));
+
+    if (content.includes(oldImg.url)) {
+      const oldSnippetRegex = new RegExp(
+        `<figure[\\s\\S]*?src=["']${oldImg.url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["'][\\s\\S]*?<\\/figure>`,
+        "i"
+      );
+
+      const newSnippet = `<figure class="my-6 text-center">
+  <img src="${updatedImg.url}" alt="${updatedImg.alt}" title="${updatedImg.title}" class="rounded-lg shadow-md mx-auto max-w-full h-auto" loading="lazy" />
+  ${updatedImg.caption ? `<figcaption class="text-xs text-charcoal-brown/70 italic mt-2">${updatedImg.caption}</figcaption>` : ""}
+</figure>`;
+
+      if (oldSnippetRegex.test(content)) {
+        setContent((prev) => prev.replace(oldSnippetRegex, newSnippet));
+      }
+    }
+
+    setEditingImageId(null);
+  };
+
+  const handleRemoveGalleryImage = (id: string) => {
+    if (!confirm("Remove this image from the Media & SEO list?")) return;
+    setGalleryImages((prev) => prev.filter((img) => img.id !== id));
   };
 
   const handleAddFaq = () => {
@@ -218,6 +340,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
       imageAlt: imageAlt.trim() || null,
       imageTitle: imageTitle.trim() || null,
       imageCaption: imageCaption.trim() || null,
+      galleryImages: galleryImages.length > 0 ? JSON.stringify(galleryImages) : null,
       focusKeywords: focusKeywords.trim() || null,
       internalLinks: internalLinks.length > 0 ? JSON.stringify(internalLinks) : null,
       sources: sources.trim() || null,
@@ -413,10 +536,100 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                 />
               </div>
 
+              {/* 📸 Image Inserter Tool */}
+              <div className="bg-marigold/10 border-2 border-brass-gold/40 rounded-xl p-4 space-y-3">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">📸</span>
+                    <span className="text-xs uppercase font-bold text-maroon-deep">
+                      Insert Image with Full SEO Details into Content
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowInsertModal(!showInsertModal)}
+                    className="text-xs font-bold text-maroon-deep bg-white border border-brass-gold/40 px-3 py-1 rounded shadow-sm hover:bg-marigold/30 transition-colors"
+                  >
+                    {showInsertModal ? "Hide Image Tool ▲" : "+ Add Image with SEO ▼"}
+                  </button>
+                </div>
+
+                {insertSuccessMsg && (
+                  <div className="p-2 bg-emerald-100 text-emerald-800 text-xs font-bold rounded border border-emerald-300">
+                    {insertSuccessMsg}
+                  </div>
+                )}
+
+                {showInsertModal && (
+                  <div className="pt-3 border-t border-brass-gold/20 space-y-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Image URL <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="url"
+                          value={insertImgUrl}
+                          onChange={(e) => setInsertImgUrl(e.target.value)}
+                          placeholder="https://images.unsplash.com/... or /images/..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Alt Text (Crucial for Google SEO) <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={insertImgAlt}
+                          onChange={(e) => setInsertImgAlt(e.target.value)}
+                          placeholder="Descriptive explanation for Google image search..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Image Title (Browser Tooltip)
+                        </label>
+                        <input
+                          type="text"
+                          value={insertImgTitle}
+                          onChange={(e) => setInsertImgTitle(e.target.value)}
+                          placeholder="Tooltip shown on mouse hover..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Image Caption (Displayed beneath image)
+                        </label>
+                        <input
+                          type="text"
+                          value={insertImgCaption}
+                          onChange={(e) => setInsertImgCaption(e.target.value)}
+                          placeholder="Caption text rendered on the live post..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={handleInsertImageIntoContent}
+                        className="bg-maroon-deep hover:bg-vermilion text-stone-ivory px-4 py-2 rounded text-xs font-bold uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
+                      >
+                        ➕ Insert Image into Body & Save to Media SEO
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div>
                 <div className="flex justify-between items-center mb-1">
                   <label className="block text-xs uppercase font-bold text-maroon-deep">
-                    Article Body Content (Markdown supported) <span className="text-red-500">*</span>
+                    Article Body Content (Markdown & HTML Figures supported) <span className="text-red-500">*</span>
                   </label>
                   <div className="flex gap-2 text-[11px] text-charcoal-brown/60 font-mono">
                     <span>## Heading</span>
@@ -438,91 +651,276 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
 
           {/* TAB 2: MEDIA & IMAGE SEO */}
           {activeTab === "media" && (
-            <div className="space-y-5">
+            <div className="space-y-6">
               <div className="p-4 bg-marigold/10 border border-marigold/30 rounded-lg text-xs text-maroon-deep">
-                💡 <strong>Image SEO Best Practice:</strong> Always provide descriptive Alt text (describing the image for screen readers and Google image index) and a captivating caption for reader engagement.
+                💡 <strong>Image SEO Suite:</strong> Manage the primary cover image as well as all in-content images appearing on this article. You can update their Alt text, titles, and captions anytime.
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                      Cover Image URL
-                    </label>
-                    <input
-                      type="url"
-                      value={coverImage}
-                      onChange={(e) => setCoverImage(e.target.value)}
-                      placeholder="https://images.unsplash.com/... or /images/hanuman.jpg"
-                      className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                      Image Alt Text (Crucial for SEO)
-                    </label>
-                    <input
-                      type="text"
-                      value={imageAlt}
-                      onChange={(e) => setImageAlt(e.target.value)}
-                      placeholder="e.g. Lord Hanuman holding Sanjeevani Mountain in golden aura"
-                      className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                      Image Title (Tooltip attribute)
-                    </label>
-                    <input
-                      type="text"
-                      value={imageTitle}
-                      onChange={(e) => setImageTitle(e.target.value)}
-                      placeholder="e.g. Divine depiction of Shri Hanuman"
-                      className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                      Image Caption (Displayed beneath image)
-                    </label>
-                    <input
-                      type="text"
-                      value={imageCaption}
-                      onChange={(e) => setImageCaption(e.target.value)}
-                      placeholder="e.g. Painting of Sankat Mochan Hanumanji at dusk"
-                      className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
-                    />
-                  </div>
-                </div>
-
-                {/* Preview Thumbnail */}
-                <div className="border border-brass-gold/30 rounded-lg p-4 bg-white flex flex-col justify-center items-center text-center">
-                  <span className="text-xs uppercase font-bold text-charcoal-brown/60 mb-2">Live Image Preview</span>
-                  {coverImage ? (
-                    <div className="space-y-2 max-w-xs">
-                      <img
-                        src={coverImage}
-                        alt={imageAlt || "Preview"}
-                        title={imageTitle}
-                        className="w-full h-48 object-cover rounded shadow-md border border-brass-gold/20"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = "https://placehold.co/600x400?text=Invalid+Image+URL";
-                        }}
+              {/* SECTION A: COVER IMAGE */}
+              <div className="bg-stone-ivory/50 border border-brass-gold/30 p-4 rounded-xl space-y-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-maroon-deep block border-b border-brass-gold/20 pb-2">
+                  ⭐ Featured / Cover Image SEO
+                </span>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                        Cover Image URL
+                      </label>
+                      <input
+                        type="url"
+                        value={coverImage}
+                        onChange={(e) => setCoverImage(e.target.value)}
+                        placeholder="https://images.unsplash.com/... or /images/hanuman.jpg"
+                        className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                       />
-                      {imageCaption && (
-                        <p className="text-[11px] text-charcoal-brown/70 italic">{imageCaption}</p>
-                      )}
                     </div>
-                  ) : (
-                    <div className="w-full h-48 bg-stone-ivory border-2 border-dashed border-brass-gold/40 rounded flex flex-col items-center justify-center text-charcoal-brown/40 text-xs gap-2">
-                      <span className="text-2xl">🖼️</span>
-                      <span>No cover image specified yet</span>
+
+                    <div>
+                      <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                        Cover Alt Text (Crucial for SEO)
+                      </label>
+                      <input
+                        type="text"
+                        value={imageAlt}
+                        onChange={(e) => setImageAlt(e.target.value)}
+                        placeholder="e.g. Lord Hanuman holding Sanjeevani Mountain in golden aura"
+                        className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
+                      />
                     </div>
-                  )}
+
+                    <div>
+                      <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                        Cover Title (Tooltip attribute)
+                      </label>
+                      <input
+                        type="text"
+                        value={imageTitle}
+                        onChange={(e) => setImageTitle(e.target.value)}
+                        placeholder="e.g. Divine depiction of Shri Hanuman"
+                        className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                        Cover Caption (Displayed beneath image)
+                      </label>
+                      <input
+                        type="text"
+                        value={imageCaption}
+                        onChange={(e) => setImageCaption(e.target.value)}
+                        placeholder="e.g. Painting of Sankat Mochan Hanumanji at dusk"
+                        className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Preview Thumbnail */}
+                  <div className="border border-brass-gold/30 rounded-lg p-4 bg-white flex flex-col justify-center items-center text-center">
+                    <span className="text-xs uppercase font-bold text-charcoal-brown/60 mb-2">Live Cover Preview</span>
+                    {coverImage ? (
+                      <div className="space-y-2 max-w-xs">
+                        <img
+                          src={coverImage}
+                          alt={imageAlt || "Preview"}
+                          title={imageTitle}
+                          className="w-full h-48 object-cover rounded shadow-md border border-brass-gold/20"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = "https://placehold.co/600x400?text=Invalid+Image+URL";
+                          }}
+                        />
+                        {imageCaption && (
+                          <p className="text-[11px] text-charcoal-brown/70 italic">{imageCaption}</p>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="w-full h-48 bg-stone-ivory border-2 border-dashed border-brass-gold/40 rounded flex flex-col items-center justify-center text-charcoal-brown/40 text-xs gap-2">
+                        <span className="text-2xl">🖼️</span>
+                        <span>No cover image specified yet</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
+              </div>
+
+              {/* SECTION B: ALL IMAGES ON THIS PAGE (In-Content Catalog & Re-editing) */}
+              <div className="bg-stone-ivory/50 border border-brass-gold/30 p-4 rounded-xl space-y-4">
+                <div className="border-b border-brass-gold/20 pb-2 flex justify-between items-center">
+                  <div>
+                    <h4 className="font-serif-display text-sm uppercase font-bold text-maroon-deep">
+                      🖼️ All Images on this Page & In-Content Media ({galleryImages.length + (coverImage ? 1 : 0)})
+                    </h4>
+                    <p className="text-[11px] text-charcoal-brown/70">
+                      Re-edit SEO attributes (Alt text, Title, Caption) anytime. Changes auto-sync into your article content!
+                    </p>
+                  </div>
+                </div>
+
+                {galleryImages.length === 0 && !coverImage ? (
+                  <div className="p-6 bg-white border border-brass-gold/20 rounded-lg text-center text-xs text-charcoal-brown/50 italic">
+                    No images added yet. Add a cover image above or use the &quot;Insert Image with SEO&quot; tool in the Content tab!
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {/* Cover image row if set */}
+                    {coverImage && (
+                      <div className="p-3.5 bg-white border border-brass-gold/30 rounded-lg flex flex-col sm:flex-row gap-4 items-start shadow-sm">
+                        <img
+                          src={coverImage}
+                          alt={imageAlt || "Cover"}
+                          className="w-28 h-20 object-cover rounded border border-brass-gold/30 shrink-0"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = "https://placehold.co/300x200?text=Cover";
+                          }}
+                        />
+                        <div className="flex-1 space-y-1">
+                          <span className="text-[10px] uppercase font-bold bg-marigold/30 text-maroon-deep px-2 py-0.5 rounded border border-marigold">
+                            ⭐ Primary Cover Image
+                          </span>
+                          <p className="text-xs text-charcoal-brown font-semibold mt-1">
+                            <strong>Alt Text:</strong> {imageAlt || <span className="text-red-500 italic">No Alt text set</span>}
+                          </p>
+                          <p className="text-[11px] text-charcoal-brown/70">
+                            <strong>Title:</strong> {imageTitle || "—"} | <strong>Caption:</strong> {imageCaption || "—"}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* In-content images catalog */}
+                    {galleryImages.map((img, idx) => (
+                      <div
+                        key={img.id || idx}
+                        className="p-3.5 bg-white border border-brass-gold/30 rounded-lg space-y-3 shadow-sm"
+                      >
+                        <div className="flex flex-col sm:flex-row gap-4 items-start">
+                          <img
+                            src={img.url}
+                            alt={img.alt || "In-content"}
+                            className="w-28 h-20 object-cover rounded border border-brass-gold/30 shrink-0"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = "https://placehold.co/300x200?text=Image";
+                            }}
+                          />
+                          <div className="flex-1 space-y-1">
+                            <span className="text-[10px] uppercase font-bold bg-brass-gold/20 text-maroon-deep px-2 py-0.5 rounded">
+                              In-Content Image #{idx + 1}
+                            </span>
+                            <p className="text-xs text-charcoal-brown font-semibold mt-1">
+                              <strong>Alt Text:</strong> {img.alt || <span className="text-red-500 italic">Missing Alt text</span>}
+                            </p>
+                            <p className="text-[11px] text-charcoal-brown/70">
+                              <strong>Title:</strong> {img.title || "—"} | <strong>Caption:</strong> {img.caption || "—"}
+                            </p>
+                            <p className="text-[10px] font-mono text-charcoal-brown/50 truncate max-w-md">
+                              {img.url}
+                            </p>
+                          </div>
+
+                          <div className="flex sm:flex-col gap-2 shrink-0">
+                            <button
+                              type="button"
+                              onClick={() => handleStartEditImage(img)}
+                              className="px-3 py-1 bg-marigold hover:bg-brass-gold text-maroon-deep text-xs font-bold rounded transition-colors"
+                            >
+                              ✏️ Edit SEO Details
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const snippet = `<figure class="my-6 text-center"><img src="${img.url}" alt="${img.alt}" title="${img.title}" class="rounded-lg shadow-md mx-auto max-w-full h-auto" loading="lazy" />${img.caption ? `<figcaption class="text-xs text-charcoal-brown/70 italic mt-2">${img.caption}</figcaption>` : ""}</figure>`;
+                                navigator.clipboard.writeText(snippet);
+                                alert("Copied image HTML embed code to clipboard!");
+                              }}
+                              className="px-3 py-1 bg-stone-ivory border border-brass-gold/40 text-charcoal-brown text-xs font-bold rounded hover:bg-marigold/20 transition-colors"
+                            >
+                              📋 Copy Embed
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveGalleryImage(img.id)}
+                              className="px-3 py-1 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold rounded border border-red-200 transition-colors"
+                            >
+                              🗑️ Remove
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Inline editing form when clicked */}
+                        {editingImageId === img.id && (
+                          <div className="pt-3 border-t border-brass-gold/20 bg-marigold/5 p-3 rounded space-y-3">
+                            <span className="text-xs font-bold uppercase text-maroon-deep block">
+                              Edit SEO Attributes for Image #{idx + 1}
+                            </span>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              <div>
+                                <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                                  Image URL
+                                </label>
+                                <input
+                                  type="url"
+                                  value={editImgUrl}
+                                  onChange={(e) => setEditImgUrl(e.target.value)}
+                                  className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                                  Alt Text (Google Image SEO)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={editImgAlt}
+                                  onChange={(e) => setEditImgAlt(e.target.value)}
+                                  className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                                  Image Title (Tooltip)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={editImgTitle}
+                                  onChange={(e) => setEditImgTitle(e.target.value)}
+                                  className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                                  Caption
+                                </label>
+                                <input
+                                  type="text"
+                                  value={editImgCaption}
+                                  onChange={(e) => setEditImgCaption(e.target.value)}
+                                  className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex justify-end gap-2">
+                              <button
+                                type="button"
+                                onClick={() => setEditingImageId(null)}
+                                className="px-3 py-1 bg-stone-ivory border border-brass-gold/40 text-xs font-bold rounded"
+                              >
+                                Cancel
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleSaveEditImage(img.id)}
+                                className="px-4 py-1 bg-maroon-deep text-stone-ivory text-xs font-bold rounded hover:bg-vermilion"
+                              >
+                                Save SEO Details & Sync to Content
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           )}

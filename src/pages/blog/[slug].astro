@@ -97,6 +97,21 @@ function parseMarkdown(content: string) {
         items,
       };
     }
+    if (sec.startsWith("<figure") || sec.includes("<figure") || sec.startsWith("<img")) {
+      return {
+        type: "html",
+        text: sec,
+      };
+    }
+    if (sec.startsWith("![") && sec.includes("](") && sec.endsWith(")")) {
+      const match = sec.match(/^!\[(.*?)\]\((.*?)\)$/);
+      if (match) {
+        return {
+          type: "html",
+          text: `<figure class="my-6 text-center"><img src="${match[2]}" alt="${match[1]}" class="rounded-lg shadow-md mx-auto max-w-full h-auto" loading="lazy" /></figure>`,
+        };
+      }
+    }
     return {
       type: "p",
       text: sec,
@@ -271,6 +286,9 @@ const faqSchema =
               ))}
             </ul>
           );
+        }
+        if (item.type === "html") {
+          return <div set:html={item.text} />;
         }
         return <p class="text-xs sm:text-sm text-charcoal-brown/95 leading-relaxed my-3">{item.text}</p>;
       })}
