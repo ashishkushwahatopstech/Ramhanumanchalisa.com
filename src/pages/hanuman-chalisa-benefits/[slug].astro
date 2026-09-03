@@ -1,28 +1,167 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import CarvedDivider from "../../components/CarvedDivider";
-import { BENEFITS_DATA } from "../../data/benefits";
+import { getPrisma } from "../../lib/prisma";
+import { BENEFITS_DATA, type BenefitDetails } from "../../data/benefits";
 
 const { slug } = Astro.params;
 
-if (!slug || !BENEFITS_DATA[slug]) {
+if (!slug) {
   return Astro.redirect("/404");
 }
 
-const benefit = BENEFITS_DATA[slug];
+const db = Astro.locals.runtime?.env?.DB;
+const prisma = getPrisma(db);
 
-// Get other benefits to display in the sidebar
-const otherBenefits = Object.values(BENEFITS_DATA).filter(
-  (b) => b.slug !== slug
-);
+interface EnrichedBenefit extends BenefitDetails {
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  coverImage?: string | null;
+  imageAlt?: string | null;
+  imageTitle?: string | null;
+  imageCaption?: string | null;
+  focusKeywords?: string | null;
+  internalLinks?: string | null;
+  sources?: string | null;
+  faqs?: string | null;
+}
 
-const title = `${benefit.title} — Hanuman Chalisa Chanting Guide`;
-const description = `Learn how chanting Hanuman Chalisa Chaupai ${benefit.targetVerseNumber} resolves issues with ${benefit.situation}. Recommended schedules and step-by-step guidelines.`;
+let benefit: EnrichedBenefit | undefined;
+
+try {
+  const dbBenefit = await prisma.benefit.findUnique({ where: { slug } });
+  if (dbBenefit && dbBenefit.published) {
+    let parsedActionSteps: string[] = [];
+    try {
+      if (dbBenefit.actionSteps) {
+        parsedActionSteps = JSON.parse(dbBenefit.actionSteps);
+      }
+    } catch {
+      parsedActionSteps = [];
+    }
+
+    benefit = {
+      slug: dbBenefit.slug,
+      title: dbBenefit.title,
+      metaTitle: dbBenefit.metaTitle,
+      metaDescription: dbBenefit.metaDescription,
+      situation: dbBenefit.situation,
+      icon: dbBenefit.icon || "🙏",
+      description: dbBenefit.description,
+      recommendedChants: dbBenefit.recommendedChants || "Read with devotion daily",
+      targetVerseNumber: dbBenefit.targetVerseNumber || 1,
+      targetVerseText: dbBenefit.targetVerseText || "",
+      targetVerseTranslation: dbBenefit.targetVerseTranslation || "",
+      detailedExposition: dbBenefit.detailedExposition,
+      actionSteps: parsedActionSteps,
+      coverImage: dbBenefit.coverImage,
+      imageAlt: dbBenefit.imageAlt,
+      imageTitle: dbBenefit.imageTitle,
+      imageCaption: dbBenefit.imageCaption,
+      focusKeywords: dbBenefit.focusKeywords,
+      internalLinks: dbBenefit.internalLinks,
+      sources: dbBenefit.sources,
+      faqs: dbBenefit.faqs,
+    };
+  }
+} catch (error) {
+  console.error("Error reading benefit from DB:", error);
+}
+
+if (!benefit && BENEFITS_DATA[slug]) {
+  benefit = BENEFITS_DATA[slug];
+}
+
+if (!benefit) {
+  return Astro.redirect("/404");
+}
+
+// Fetch all other benefits for sidebar (merge DB + fallback)
+let otherBenefits: Array<{ slug: string; title: string; icon: string; situation: string }> = [];
+try {
+  const dbAll = await prisma.benefit.findMany({
+    where: { published: true, NOT: { slug } },
+    select: { slug: true, title: true, icon: true, situation: true },
+  });
+  
+  const staticOthers = Object.values(BENEFITS_DATA)
+    .filter((b) => b.slug !== slug && !dbAll.some((d) => d.slug === b.slug))
+    .map((b) => ({
+      slug: b.slug,
+      title: b.title,
+      icon: b.icon,
+      situation: b.situation,
+    }));
+
+  otherBenefits = [
+    ...dbAll.map((d) => ({
+      slug: d.slug,
+      title: d.title,
+      icon: d.icon || "🙏",
+      situation: d.situation,
+    })),
+    ...staticOthers,
+  ];
+} catch {
+  otherBenefits = Object.values(BENEFITS_DATA)
+    .filter((b) => b.slug !== slug)
+    .map((b) => ({
+      slug: b.slug,
+      title: b.title,
+      icon: b.icon,
+      situation: b.situation,
+    }));
+}
+
+// Parse FAQs and Internal Links if available
+let faqList: Array<{ question: string; answer: string }> = [];
+try {
+  if (benefit.faqs) {
+    faqList = JSON.parse(benefit.faqs);
+  }
+} catch {
+  faqList = [];
+}
+
+let internalLinkList: Array<{ label: string; url: string }> = [];
+try {
+  if (benefit.internalLinks) {
+    internalLinkList = JSON.parse(benefit.internalLinks);
+  }
+} catch {
+  internalLinkList = [];
+}
+
+const pageTitle = benefit.metaTitle || `${benefit.title} — Hanuman Chalisa Chanting Guide`;
+const pageDescription =
+  benefit.metaDescription ||
+  `Learn how chanting Hanuman Chalisa Chaupai ${benefit.targetVerseNumber} resolves issues with ${benefit.situation}. Recommended schedules and step-by-step guidelines.`;
+
+// Google Search Console compliant FAQPage schema
+const faqSchema =
+  faqList.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqList.map((f) => ({
+          "@type": "Question",
+          "name": f.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": f.answer,
+          },
+        })),
+      }
+    : null;
 ---
 
-<Layout title={title} description={description}>
+<Layout title={pageTitle} description={pageDescription} canonicalUrl={`https://ramhanumanchalisa.com/hanuman-chalisa-benefits/${benefit.slug}`}>
+  <!-- FAQPage Schema for Search Console -->
+  {faqSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  )}
+
   <div class="space-y-10 max-w-5xl mx-auto">
-    
     <!-- Breadcrumbs -->
     <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
       <ol class="list-none p-0 inline-flex gap-2">
@@ -42,10 +181,8 @@ const description = `Learn how chanting Hanuman Chalisa Chaupai ${benefit.target
 
     <!-- Main Content Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      
       <!-- Detail Column -->
       <div class="lg:col-span-2 space-y-8">
-        
         <!-- Header Block -->
         <div class="space-y-4">
           <div class="flex items-center gap-3">
@@ -66,17 +203,39 @@ const description = `Learn how chanting Hanuman Chalisa Chaupai ${benefit.target
 
         <CarvedDivider icon="🕉️" />
 
-        <!-- Connected Verse Box (The core focal point) -->
+        <!-- Featured Image with SEO tags -->
+        {benefit.coverImage && (
+          <figure class="rounded-lg overflow-hidden border border-brass-gold/30 bg-stone-ivory shadow-md">
+            <img
+              src={benefit.coverImage}
+              alt={benefit.imageAlt || benefit.title}
+              title={benefit.imageTitle || benefit.title}
+              class="w-full max-h-[420px] object-cover"
+              loading="lazy"
+            />
+            {benefit.imageCaption && (
+              <figcaption class="p-3 text-center text-xs text-charcoal-brown/70 italic border-t border-brass-gold/20 bg-stone-ivory/50">
+                {benefit.imageCaption}
+              </figcaption>
+            )}
+          </figure>
+        )}
+
+        <!-- Connected Verse Box -->
         <div class="p-6 sm:p-8 bg-maroon-deep text-stone-ivory border-2 border-brass-gold rounded-lg shadow-md space-y-4 text-center">
           <span class="text-xs uppercase font-bold tracking-widest text-marigold">
-            Focal Verse for Chanting (Chaupai {benefit.targetVerseNumber})
+            Focal Verse for Chanting {benefit.targetVerseNumber ? `(Chaupai ${benefit.targetVerseNumber})` : ""}
           </span>
-          <p class="font-hindi-display text-xl sm:text-2xl md:text-3xl leading-loose font-bold tracking-wide">
-            {benefit.targetVerseText}
-          </p>
-          <p class="text-xs sm:text-sm italic text-stone-ivory/70 max-w-xl mx-auto">
-            {benefit.targetVerseTranslation}
-          </p>
+          {benefit.targetVerseText && (
+            <p class="font-hindi-display text-xl sm:text-2xl md:text-3xl leading-loose font-bold tracking-wide">
+              {benefit.targetVerseText}
+            </p>
+          )}
+          {benefit.targetVerseTranslation && (
+            <p class="text-xs sm:text-sm italic text-stone-ivory/70 max-w-xl mx-auto">
+              {benefit.targetVerseTranslation}
+            </p>
+          )}
         </div>
 
         <!-- Detailed Exposition -->
@@ -90,35 +249,87 @@ const description = `Learn how chanting Hanuman Chalisa Chaupai ${benefit.target
         </div>
 
         <!-- Step-by-Step Puja Vidhi Guide -->
-        <div class="bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
-          <div class="space-y-1">
-            <h3 class="font-serif-display text-lg text-maroon-deep uppercase tracking-wider font-bold">
-              Recitation Schedule & Rituals (अनुष्ठान विधि)
-            </h3>
-            <p class="text-xs text-brass-gold font-bold uppercase">
-              Recommended: {benefit.recommendedChants}
-            </p>
+        {benefit.actionSteps && benefit.actionSteps.length > 0 && (
+          <div class="bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
+            <div class="space-y-1">
+              <h3 class="font-serif-display text-lg text-maroon-deep uppercase tracking-wider font-bold">
+                Recitation Schedule & Rituals (अनुष्ठान विधि)
+              </h3>
+              <p class="text-xs text-brass-gold font-bold uppercase">
+                Recommended: {benefit.recommendedChants}
+              </p>
+            </div>
+
+            <ol class="relative border-l border-brass-gold/30 ml-4 space-y-6 text-sm text-charcoal-brown/90">
+              {benefit.actionSteps.map((step, idx) => (
+                <li class="mb-2 ml-6">
+                  <span class="absolute flex items-center justify-center w-6 h-6 bg-marigold text-maroon-deep rounded-full -left-3 font-bold text-xs shadow-sm select-none border border-brass-gold">
+                    {idx + 1}
+                  </span>
+                  <p class="leading-relaxed font-semibold">{step}</p>
+                </li>
+              ))}
+            </ol>
           </div>
+        )}
 
-          <ol class="relative border-l border-brass-gold/30 ml-4 space-y-6 text-sm text-charcoal-brown/90">
-            {benefit.actionSteps.map((step, idx) => (
-              <li class="mb-2 ml-6">
-                <span class="absolute flex items-center justify-center w-6 h-6 bg-marigold text-maroon-deep rounded-full -left-3 font-bold text-xs shadow-sm select-none border border-brass-gold">
-                  {idx + 1}
-                </span>
-                <p class="leading-relaxed font-semibold">
-                  {step}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <!-- Interactive Google FAQ Section -->
+        {faqList.length > 0 && (
+          <section class="bg-stone-ivory border border-brass-gold/40 rounded-xl p-6 shadow-sm space-y-4">
+            <div class="flex items-center gap-2 border-b border-brass-gold/20 pb-3">
+              <span class="text-xl">❓</span>
+              <h2 class="font-serif-display text-lg sm:text-xl font-bold text-maroon-deep uppercase">
+                Frequently Asked Questions
+              </h2>
+            </div>
+            <div class="space-y-3">
+              {faqList.map((faq) => (
+                <details class="group bg-white rounded-lg border border-brass-gold/30 p-4 transition-all open:shadow-sm">
+                  <summary class="font-bold text-sm text-maroon-deep cursor-pointer list-none flex justify-between items-center select-none">
+                    <span>{faq.question}</span>
+                    <span class="text-brass-gold transition-transform group-open:rotate-180">▼</span>
+                  </summary>
+                  <div class="mt-3 pt-3 border-t border-brass-gold/20 text-xs sm:text-sm text-charcoal-brown/85 leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
 
+        <!-- Internal Links Section -->
+        {internalLinkList.length > 0 && (
+          <section class="p-5 bg-brass-gold/10 border border-brass-gold/30 rounded-xl space-y-3">
+            <h3 class="text-xs uppercase font-bold text-maroon-deep tracking-wider flex items-center gap-1.5">
+              <span>🔗</span> Recommended Chanting Links & Vidhis
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {internalLinkList.map((link) => (
+                <a
+                  href={link.url}
+                  class="inline-flex items-center gap-1 px-3 py-1.5 bg-white border border-brass-gold/40 rounded-full text-xs font-bold text-maroon-deep hover:bg-marigold transition-colors shadow-sm"
+                >
+                  <span>🕉️</span> {link.label}
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <!-- Scriptural Citations & Sources -->
+        {benefit.sources && (
+          <footer class="p-4 bg-stone-ivory border-l-4 border-brass-gold rounded text-xs text-charcoal-brown/70 space-y-1">
+            <p class="font-bold uppercase tracking-wider text-maroon-deep text-[11px]">
+              📜 Scriptural Citations & Authentic Sources:
+            </p>
+            <p class="leading-relaxed">{benefit.sources}</p>
+          </footer>
+        )}
       </div>
 
       <!-- Sidebar -->
       <div class="space-y-6">
-        
         <!-- Ad Slot -->
         <div class="no-print w-full h-64 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
           Ad Slot — Sidebar Sticky
@@ -126,9 +337,9 @@ const description = `Learn how chanting Hanuman Chalisa Chaupai ${benefit.target
 
         <div class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
           <h4 class="font-serif-display text-sm uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
-            Other Situations
+            Other Life Situations
           </h4>
-          
+
           <div class="space-y-3">
             {otherBenefits.map((b) => (
               <a
@@ -148,15 +359,12 @@ const description = `Learn how chanting Hanuman Chalisa Chaupai ${benefit.target
             ))}
           </div>
         </div>
-
       </div>
-
     </div>
 
     <!-- AdSense Footer Slot -->
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
       Ad Slot — Detail Bottom (Layout Stable Skeleton)
     </div>
-
   </div>
 </Layout>

@@ -1,167 +1,179 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import CarvedDivider from "../../components/CarvedDivider";
+import AdminNavigation from "../../components/AdminNavigation.astro";
 import { getPrisma } from "../../lib/prisma";
-
-// Simulated admin session
-const session = { user: { email: "ashishkushwaha88643@gmail.com" } };
 
 const db = Astro.locals.runtime?.env?.DB;
 const prisma = getPrisma(db);
 
 let blogCount = 0;
+let benefitsCount = 0;
 let dailyRecitations = 0;
 let tracksCount = 0;
+let faqsCount = 0;
 
 try {
   blogCount = await prisma.post.count();
-  
-  // Get today's recitations
+  benefitsCount = await prisma.benefit.count();
+  faqsCount = await prisma.faq.count();
+
+  // Today's recitations
   const today = new Date();
   const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
   const record = await prisma.recitationCounter.findUnique({ where: { date: todayStr } });
   dailyRecitations = record ? record.count : 0;
-  
+
   tracksCount = await prisma.audioTrack.count();
 } catch (error) {
   console.error("Dashboard DB fetch warning:", error);
 }
 
-const title = "Admin Panel Dashboard";
+const title = "Mandir Studio Admin Dashboard";
 ---
 
 <Layout title={title}>
-  <div class="space-y-8 max-w-4xl mx-auto">
-    
-    <!-- Welcome header -->
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-maroon-deep border-2 border-brass-gold p-6 rounded-lg text-stone-ivory">
-      <div class="space-y-1 text-center sm:text-left">
-        <h2 class="font-serif-display text-xl sm:text-2xl font-bold text-marigold uppercase">
-          Mandir Administrator Dashboard
-        </h2>
-        <p class="text-xs text-stone-ivory/80">
-          Logged in as: <code class="text-marigold">{session.user.email}</code>
-        </p>
-      </div>
-      
-      <div>
-        <a
-          href="/api/auth/signout"
-          class="bg-stone-ivory/10 hover:bg-stone-ivory/20 px-4 py-2 rounded text-xs font-bold uppercase border border-stone-ivory/30 shadow transition-colors"
-        >
-          🚪 Sign Out
+  <div class="max-w-5xl mx-auto space-y-8">
+    <AdminNavigation activeTab="dashboard" />
+
+    <!-- Metric Stat Cards -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div class="p-5 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-3xl">📝</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-brass-gold">Articles</span>
+        </div>
+        <h3 class="text-3xl font-extrabold font-serif-display text-maroon-deep mt-3">{blogCount}</h3>
+        <p class="text-xs text-charcoal-brown/70 mt-1">Devotional Blog Posts</p>
+        <a href="/admin/blog" class="inline-block mt-3 text-xs font-bold text-vermilion hover:text-maroon-deep underline">
+          Open Studio &rarr;
         </a>
       </div>
-    </div>
 
-    <CarvedDivider icon="🕉️" />
-
-    <!-- Stats Cards Grid -->
-    <section class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-      <div class="p-6 bg-stone-ivory border border-brass-gold/30 rounded-lg shadow-sm text-center">
-        <span class="text-3xl block mb-2">📝</span>
-        <h4 class="text-2xl font-bold font-sans text-maroon-deep">{blogCount}</h4>
-        <p class="text-xs text-charcoal-brown/60 uppercase font-bold tracking-wider mt-1">Blog Articles</p>
+      <div class="p-5 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-3xl">🌟</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-brass-gold">Benefits</span>
+        </div>
+        <h3 class="text-3xl font-extrabold font-serif-display text-maroon-deep mt-3">{benefitsCount}</h3>
+        <p class="text-xs text-charcoal-brown/70 mt-1">Custom Benefit Pages</p>
+        <a href="/admin/benefits" class="inline-block mt-3 text-xs font-bold text-vermilion hover:text-maroon-deep underline">
+          Open Studio &rarr;
+        </a>
       </div>
 
-      <div class="p-6 bg-stone-ivory border border-brass-gold/30 rounded-lg shadow-sm text-center">
-        <span class="text-3xl block mb-2">🔔</span>
-        <h4 class="text-2xl font-bold font-sans text-maroon-deep">{dailyRecitations}</h4>
-        <p class="text-xs text-charcoal-brown/60 uppercase font-bold tracking-wider mt-1">Recitations Today</p>
+      <div class="p-5 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-3xl">🔔</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-brass-gold">Devotion</span>
+        </div>
+        <h3 class="text-3xl font-extrabold font-serif-display text-maroon-deep mt-3">{dailyRecitations}</h3>
+        <p class="text-xs text-charcoal-brown/70 mt-1">Recitations Logged Today</p>
+        <span class="inline-block mt-3 text-xs font-medium text-charcoal-brown/50">Live Mandir Activity</span>
       </div>
 
-      <div class="p-6 bg-stone-ivory border border-brass-gold/30 rounded-lg shadow-sm text-center">
-        <span class="text-3xl block mb-2">🎵</span>
-        <h4 class="text-2xl font-bold font-sans text-maroon-deep">{tracksCount}</h4>
-        <p class="text-xs text-charcoal-brown/60 uppercase font-bold tracking-wider mt-1">Audio Tracks</p>
+      <div class="p-5 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-3xl">🎵</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-brass-gold">Tracks</span>
+        </div>
+        <h3 class="text-3xl font-extrabold font-serif-display text-maroon-deep mt-3">{tracksCount}</h3>
+        <p class="text-xs text-charcoal-brown/70 mt-1">Synced Recitations</p>
+        <a href="/admin/audio" class="inline-block mt-3 text-xs font-bold text-vermilion hover:text-maroon-deep underline">
+          Configure Tracks &rarr;
+        </a>
       </div>
     </section>
 
-    <!-- Management Actions Pillars -->
-    <section class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
-      <h3 class="font-serif-display text-base uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
-        Management Controls
-      </h3>
+    <!-- Studios & Management Hub -->
+    <section class="bg-stone-ivory border-2 border-brass-gold/40 rounded-xl p-6 shadow-sm space-y-6">
+      <div class="border-b border-brass-gold/20 pb-3 flex justify-between items-center">
+        <div>
+          <h2 class="font-serif-display text-lg sm:text-xl font-bold text-maroon-deep uppercase">
+            Content & Search Engine Management Studios
+          </h2>
+          <p class="text-xs text-charcoal-brown/70">
+            Publish rich content with automated Google Search Console JSON-LD schema, media controls, and SERP simulation.
+          </p>
+        </div>
+      </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        
-        <div class="p-4 border border-brass-gold/15 rounded flex flex-col justify-between space-y-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Blog Studio Card -->
+        <div class="p-5 border-2 border-brass-gold/30 rounded-lg bg-white flex flex-col justify-between space-y-4 hover:border-maroon-deep transition-colors">
           <div>
-            <h4 class="font-bold text-maroon-deep uppercase text-sm">Blog content manager</h4>
-            <p class="text-xs text-charcoal-brown/70 leading-relaxed mt-1">
-              Create, edit, publish, or retract long-tail SEO devotional articles in the blog section.
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xl">📝</span>
+              <h3 class="font-bold text-maroon-deep text-base uppercase">Blog & Devotional Articles</h3>
+            </div>
+            <p class="text-xs text-charcoal-brown/80 leading-relaxed">
+              Create and optimize long-tail bhakti articles with custom slugs, 150-char meta descriptions, image SEO (alt, title, caption), internal links, and Search Console FAQ schema.
             </p>
           </div>
           <a
             href="/admin/blog"
-            class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep py-2 rounded text-center text-xs font-bold uppercase border border-brass-gold transition-colors"
+            class="bg-maroon-deep hover:bg-vermilion text-stone-ivory text-center py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-colors shadow"
           >
-            Manage Blog
+            Launch Blog Studio &rarr;
           </a>
         </div>
 
-        <div class="p-4 border border-brass-gold/15 rounded flex flex-col justify-between space-y-3">
+        <!-- Benefits Studio Card -->
+        <div class="p-5 border-2 border-brass-gold/30 rounded-lg bg-white flex flex-col justify-between space-y-4 hover:border-maroon-deep transition-colors">
           <div>
-            <h4 class="font-bold text-maroon-deep uppercase text-sm">FAQ manager</h4>
-            <p class="text-xs text-charcoal-brown/70 leading-relaxed mt-1">
-              Manage Q&A lists per page. Updates feed directly into the JSON-LD FAQPage schemas dynamically.
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xl">🌟</span>
+              <h3 class="font-bold text-maroon-deep text-base uppercase">Hanuman Chalisa Benefits Pages</h3>
+            </div>
+            <p class="text-xs text-charcoal-brown/80 leading-relaxed">
+              Build dedicated situation-based chanting guides (career, health, anxiety, exams) with chaupai exposition, step-by-step path vidhis, custom images, and FAQPage schema.
+            </p>
+          </div>
+          <a
+            href="/admin/benefits"
+            class="bg-maroon-deep hover:bg-vermilion text-stone-ivory text-center py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-colors shadow"
+          >
+            Launch Benefits Studio &rarr;
+          </a>
+        </div>
+
+        <!-- Global FAQs Card -->
+        <div class="p-5 border-2 border-brass-gold/30 rounded-lg bg-white flex flex-col justify-between space-y-4 hover:border-maroon-deep transition-colors">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xl">❓</span>
+              <h3 class="font-bold text-maroon-deep text-base uppercase">Global & Static Page FAQs</h3>
+            </div>
+            <p class="text-xs text-charcoal-brown/80 leading-relaxed">
+              Manage sitewide FAQ questions for static routes like /faq, /shri-hanuman-chalisa-path-vidhi, and audio pages with dynamic JSON-LD injection.
             </p>
           </div>
           <a
             href="/admin/faqs"
-            class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep py-2 rounded text-center text-xs font-bold uppercase border border-brass-gold transition-colors"
+            class="bg-marigold hover:bg-brass-gold text-maroon-deep text-center py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-colors shadow"
           >
-            Manage FAQs
+            Manage Global FAQs &rarr;
           </a>
         </div>
 
-        <div class="p-4 border border-brass-gold/15 rounded flex flex-col justify-between space-y-3">
+        <!-- Audio & Syncing Card -->
+        <div class="p-5 border-2 border-brass-gold/30 rounded-lg bg-white flex flex-col justify-between space-y-4 hover:border-maroon-deep transition-colors">
           <div>
-            <h4 class="font-bold text-maroon-deep uppercase text-sm">Audio & verse syncing</h4>
-            <p class="text-xs text-charcoal-brown/70 leading-relaxed mt-1">
-              Upload audio file paths, reciter metadata, and configure verse timestamp ranges for active line-sync highlighting.
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xl">🎵</span>
+              <h3 class="font-bold text-maroon-deep text-base uppercase">Audio Recitations & Line-Sync</h3>
+            </div>
+            <p class="text-xs text-charcoal-brown/80 leading-relaxed">
+              Configure MP3 recitations, reciter credits, durations, and millisecond timestamps for interactive verse karaoke highlighting.
             </p>
           </div>
           <a
             href="/admin/audio"
-            class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep py-2 rounded text-center text-xs font-bold uppercase border border-brass-gold transition-colors"
+            class="bg-marigold hover:bg-brass-gold text-maroon-deep text-center py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-colors shadow"
           >
-            Manage Audio Sync
+            Manage Audio Recitations &rarr;
           </a>
         </div>
-
-        <div class="p-4 border border-brass-gold/15 rounded flex flex-col justify-between space-y-3">
-          <div>
-            <h4 class="font-bold text-maroon-deep uppercase text-sm">jayanti festival configurations</h4>
-            <p class="text-xs text-charcoal-brown/70 leading-relaxed mt-1">
-              Configure the year, date, and puja muhurat timings block displayed on the evergreen festival page.
-            </p>
-          </div>
-          <a
-            href="/admin/jayanti"
-            class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep py-2 rounded text-center text-xs font-bold uppercase border border-brass-gold transition-colors"
-          >
-            Manage Jayanti dates
-          </a>
-        </div>
-
-        <div class="p-4 border border-brass-gold/15 rounded flex flex-col justify-between space-y-3">
-          <div>
-            <h4 class="font-bold text-maroon-deep uppercase text-sm">Multi-Language Content Manager</h4>
-            <p class="text-xs text-charcoal-brown/70 leading-relaxed mt-1">
-              Edit regional translations, titles, meta tags, and FAQ cards for Telugu, Bengali, Kannada, and English.
-            </p>
-          </div>
-          <a
-            href="/admin/languages"
-            class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep py-2 rounded text-center text-xs font-bold uppercase border border-brass-gold transition-colors"
-          >
-            Manage Languages
-          </a>
-        </div>
-
       </div>
     </section>
-
   </div>
 </Layout>

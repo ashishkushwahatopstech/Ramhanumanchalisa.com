@@ -45,7 +45,20 @@ export const GET: APIRoute = async (context) => {
   });
 
   // 2. Dynamic benefits
-  const benefitSlugs = Object.keys(BENEFITS_DATA);
+  let benefitSlugs = Object.keys(BENEFITS_DATA);
+  try {
+    const dbBenefits = await prisma.benefit.findMany({
+      where: { published: true },
+      select: { slug: true },
+    });
+    if (dbBenefits.length > 0) {
+      const dbSlugs = dbBenefits.map((b) => b.slug);
+      benefitSlugs = Array.from(new Set([...benefitSlugs, ...dbSlugs]));
+    }
+  } catch (e) {
+    console.error("Sitemap: Failed to query D1 database benefits, falling back to static benefits.", e);
+  }
+
   const benefitUrls = benefitSlugs.map((slug) => `
   <url>
     <loc>${baseUrl}/hanuman-chalisa-benefits/${slug}</loc>

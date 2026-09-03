@@ -1,0 +1,75 @@
+﻿---
+interface Props {
+  activeTab: "dashboard" | "blog" | "benefits" | "faqs" | "audio" | "jayanti" | "languages";
+}
+
+const { activeTab } = Astro.props;
+
+const navItems = [
+  { id: "dashboard", label: "Dashboard", href: "/admin", icon: "📊" },
+  { id: "blog", label: "Blog Articles", href: "/admin/blog", icon: "📝" },
+  { id: "benefits", label: "Benefits Pages", href: "/admin/benefits", icon: "🌟" },
+  { id: "faqs", label: "Global FAQs", href: "/admin/faqs", icon: "❓" },
+  { id: "audio", label: "Audio Recitations", href: "/admin/audio", icon: "🎵" },
+  { id: "jayanti", label: "Jayanti Config", href: "/admin/jayanti", icon: "🪔" },
+  { id: "languages", label: "Translations", href: "/admin/languages", icon: "🌐" },
+];
+---
+
+<header class="bg-gradient-to-r from-maroon-deep via-[#4A0E17] to-maroon-deep border-b-2 border-brass-gold/50 text-stone-ivory shadow-xl rounded-xl p-4 sm:p-5 mb-8">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-stone-ivory/15 pb-4 mb-4">
+    <div class="flex items-center gap-3">
+      <span class="text-3xl filter drop-shadow-md">🛡️</span>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-serif-display text-lg sm:text-xl font-bold tracking-wider text-marigold uppercase">
+            Mandir Admin Studio
+          </h1>
+          <span class="bg-marigold/20 text-marigold border border-marigold/40 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+            SEO & Content CMS
+          </span>
+        </div>
+        <p class="text-xs text-stone-ivory/70 mt-0.5">
+          Manage devotional content, images, rich schema, and search optimization
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3 self-end md:self-auto">
+      <a
+        href="/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 bg-stone-ivory/10 hover:bg-stone-ivory/20 text-stone-ivory px-3 py-1.5 rounded text-xs font-semibold border border-stone-ivory/20 transition-colors"
+      >
+        <span>👁️</span> View Live Site
+      </a>
+      <a
+        href="/api/auth/signout"
+        class="inline-flex items-center gap-1.5 bg-vermilion/80 hover:bg-vermilion text-white px-3 py-1.5 rounded text-xs font-bold border border-brass-gold/40 shadow-sm transition-all"
+      >
+        <span>🚪</span> Sign Out
+      </a>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="flex flex-wrap items-center gap-1 sm:gap-2">
+    {navItems.map((item) => {
+      const isActive = activeTab === item.id;
+      return (
+        <a
+          href={item.href}
+          class={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 border ${
+            isActive
+              ? "bg-marigold text-maroon-deep border-marigold shadow-md font-extrabold"
+              : "bg-black/20 hover:bg-black/40 text-stone-ivory/80 hover:text-stone-ivory border-stone-ivory/10 hover:border-brass-gold/40"
+          }`}
+        >
+          <span>{item.icon}</span>
+          <span>{item.label}</span>
+        </a>
+      );
+    })}
+  </nav>
+</header>

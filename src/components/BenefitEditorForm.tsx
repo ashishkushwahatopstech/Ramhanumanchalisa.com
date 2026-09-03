@@ -12,14 +12,21 @@ interface InternalLinkItem {
   url: string;
 }
 
-export interface Post {
+export interface BenefitItem {
   id: string;
   slug: string;
   title: string;
   metaTitle?: string | null;
   metaDescription?: string | null;
-  excerpt: string;
-  content: string;
+  situation: string;
+  icon?: string | null;
+  description: string;
+  recommendedChants?: string | null;
+  targetVerseNumber?: number | null;
+  targetVerseText?: string | null;
+  targetVerseTranslation?: string | null;
+  detailedExposition: string;
+  actionSteps?: string | null; // JSON array of string
   coverImage?: string | null;
   imageAlt?: string | null;
   imageTitle?: string | null;
@@ -32,15 +39,15 @@ export interface Post {
   createdAt: string;
 }
 
-interface BlogEditorFormProps {
-  initialPosts: Post[];
+interface BenefitEditorFormProps {
+  initialBenefits: BenefitItem[];
 }
 
-export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
-  const [posts, setPosts] = useState<Post[]>(initialPosts);
+export default function BenefitEditorForm({ initialBenefits }: BenefitEditorFormProps) {
+  const [benefits, setBenefits] = useState<BenefitItem[]>(initialBenefits);
 
   // Active Tab
-  const [activeTab, setActiveTab] = useState<"content" | "media" | "seo" | "faqs" | "links">("content");
+  const [activeTab, setActiveTab] = useState<"content" | "verse" | "media" | "seo" | "faqs" | "links">("content");
 
   // Form States
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -48,9 +55,19 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
   const [slug, setSlug] = useState<string>("");
   const [metaTitle, setMetaTitle] = useState<string>("");
   const [metaDescription, setMetaDescription] = useState<string>("");
-  const [excerpt, setExcerpt] = useState<string>("");
-  const [content, setContent] = useState<string>("");
-  
+  const [situation, setSituation] = useState<string>("");
+  const [icon, setIcon] = useState<string>("🙏");
+  const [description, setDescription] = useState<string>("");
+
+  // Verse States
+  const [recommendedChants, setRecommendedChants] = useState<string>("");
+  const [targetVerseNumber, setTargetVerseNumber] = useState<string>("1");
+  const [targetVerseText, setTargetVerseText] = useState<string>("");
+  const [targetVerseTranslation, setTargetVerseTranslation] = useState<string>("");
+  const [detailedExposition, setDetailedExposition] = useState<string>("");
+  const [actionSteps, setActionSteps] = useState<string[]>([]);
+  const [newActionStep, setNewActionStep] = useState<string>("");
+
   // Media States
   const [coverImage, setCoverImage] = useState<string>("");
   const [imageAlt, setImageAlt] = useState<string>("");
@@ -74,7 +91,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  // Auto-generate slug from title if new
+  // Auto-generate slug from title
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setTitle(val);
@@ -95,8 +112,16 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
     setSlug("");
     setMetaTitle("");
     setMetaDescription("");
-    setExcerpt("");
-    setContent("");
+    setSituation("");
+    setIcon("🙏");
+    setDescription("");
+    setRecommendedChants("");
+    setTargetVerseNumber("1");
+    setTargetVerseText("");
+    setTargetVerseTranslation("");
+    setDetailedExposition("");
+    setActionSteps([]);
+    setNewActionStep("");
     setCoverImage("");
     setImageAlt("");
     setImageTitle("");
@@ -113,25 +138,41 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
     setActiveTab("content");
   };
 
-  const handleEdit = (post: Post) => {
-    setEditingId(post.id);
-    setTitle(post.title || "");
-    setSlug(post.slug || "");
-    setMetaTitle(post.metaTitle || "");
-    setMetaDescription(post.metaDescription || "");
-    setExcerpt(post.excerpt || "");
-    setContent(post.content || "");
-    setCoverImage(post.coverImage || "");
-    setImageAlt(post.imageAlt || "");
-    setImageTitle(post.imageTitle || "");
-    setImageCaption(post.imageCaption || "");
-    setFocusKeywords(post.focusKeywords || "");
-    setSources(post.sources || "");
-    setPublished(post.published);
+  const handleEdit = (benefit: BenefitItem) => {
+    setEditingId(benefit.id);
+    setTitle(benefit.title || "");
+    setSlug(benefit.slug || "");
+    setMetaTitle(benefit.metaTitle || "");
+    setMetaDescription(benefit.metaDescription || "");
+    setSituation(benefit.situation || "");
+    setIcon(benefit.icon || "🙏");
+    setDescription(benefit.description || "");
+    setRecommendedChants(benefit.recommendedChants || "");
+    setTargetVerseNumber(benefit.targetVerseNumber ? String(benefit.targetVerseNumber) : "1");
+    setTargetVerseText(benefit.targetVerseText || "");
+    setTargetVerseTranslation(benefit.targetVerseTranslation || "");
+    setDetailedExposition(benefit.detailedExposition || "");
+    setCoverImage(benefit.coverImage || "");
+    setImageAlt(benefit.imageAlt || "");
+    setImageTitle(benefit.imageTitle || "");
+    setImageCaption(benefit.imageCaption || "");
+    setFocusKeywords(benefit.focusKeywords || "");
+    setSources(benefit.sources || "");
+    setPublished(benefit.published);
 
     try {
-      if (post.internalLinks) {
-        setInternalLinks(JSON.parse(post.internalLinks));
+      if (benefit.actionSteps) {
+        setActionSteps(JSON.parse(benefit.actionSteps));
+      } else {
+        setActionSteps([]);
+      }
+    } catch {
+      setActionSteps([]);
+    }
+
+    try {
+      if (benefit.internalLinks) {
+        setInternalLinks(JSON.parse(benefit.internalLinks));
       } else {
         setInternalLinks([]);
       }
@@ -140,8 +181,8 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
     }
 
     try {
-      if (post.faqs) {
-        setFaqs(JSON.parse(post.faqs));
+      if (benefit.faqs) {
+        setFaqs(JSON.parse(benefit.faqs));
       } else {
         setFaqs([]);
       }
@@ -153,24 +194,34 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this blog post?")) return;
+    if (!confirm("Are you sure you want to delete this benefit page?")) return;
 
     try {
-      const res = await fetch(`/api/admin/blog?id=${id}`, {
+      const res = await fetch(`/api/admin/benefits?id=${id}`, {
         method: "DELETE",
       });
 
       if (res.ok) {
-        setPosts(posts.filter((p) => p.id !== id));
-        setMessage({ text: "Post deleted successfully!", type: "success" });
+        setBenefits(benefits.filter((b) => b.id !== id));
+        setMessage({ text: "Benefit page deleted successfully!", type: "success" });
         if (editingId === id) resetForm();
       } else {
         const data = await res.json();
-        setMessage({ text: data.error || "Failed to delete post", type: "error" });
+        setMessage({ text: data.error || "Failed to delete benefit page", type: "error" });
       }
     } catch {
       setMessage({ text: "Network error occurred", type: "error" });
     }
+  };
+
+  const handleAddActionStep = () => {
+    if (!newActionStep.trim()) return;
+    setActionSteps([...actionSteps, newActionStep.trim()]);
+    setNewActionStep("");
+  };
+
+  const handleRemoveActionStep = (index: number) => {
+    setActionSteps(actionSteps.filter((_, i) => i !== index));
   };
 
   const handleAddFaq = () => {
@@ -212,8 +263,15 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
       slug: slug.trim().toLowerCase(),
       metaTitle: metaTitle.trim() || null,
       metaDescription: metaDescription.trim() || null,
-      excerpt: excerpt.trim(),
-      content,
+      situation: situation.trim(),
+      icon: icon.trim() || "🙏",
+      description: description.trim(),
+      recommendedChants: recommendedChants.trim() || null,
+      targetVerseNumber: targetVerseNumber ? parseInt(targetVerseNumber, 10) : null,
+      targetVerseText: targetVerseText.trim() || null,
+      targetVerseTranslation: targetVerseTranslation.trim() || null,
+      detailedExposition: detailedExposition.trim(),
+      actionSteps: actionSteps.length > 0 ? JSON.stringify(actionSteps) : null,
       coverImage: coverImage.trim() || null,
       imageAlt: imageAlt.trim() || null,
       imageTitle: imageTitle.trim() || null,
@@ -226,7 +284,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
     };
 
     try {
-      const res = await fetch("/api/admin/blog", {
+      const res = await fetch("/api/admin/benefits", {
         method: editingId ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -236,18 +294,18 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
 
       if (res.ok) {
         setMessage({
-          text: editingId ? "Article updated successfully!" : "Article created successfully!",
+          text: editingId ? "Benefit page updated successfully!" : "Benefit page created successfully!",
           type: "success",
         });
 
         if (editingId) {
-          setPosts(posts.map((p) => (p.id === editingId ? data : p)));
+          setBenefits(benefits.map((b) => (b.id === editingId ? data : b)));
         } else {
-          setPosts([data, ...posts]);
+          setBenefits([data, ...benefits]);
         }
         resetForm();
       } else {
-        setMessage({ text: data.error || "Failed to save article", type: "error" });
+        setMessage({ text: data.error || "Failed to save benefit", type: "error" });
       }
     } catch {
       setMessage({ text: "Network error occurred", type: "error" });
@@ -261,7 +319,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
 
   return (
     <div className="space-y-8">
-      {/* Notifications */}
+      {/* Notification */}
       {message && (
         <div
           className={`p-4 rounded-lg flex items-center justify-between shadow-md text-sm font-semibold ${
@@ -279,14 +337,14 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
 
       {/* Main Form Box */}
       <div className="bg-stone-ivory border-2 border-brass-gold/50 rounded-xl shadow-lg overflow-hidden">
-        {/* Form Header Banner */}
+        {/* Header Banner */}
         <div className="bg-maroon-deep p-4 sm:p-6 text-stone-ivory flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <span className="text-xs uppercase tracking-widest text-marigold font-bold">
-              {editingId ? "✏️ Edit Mode" : "✨ Create New Article"}
+              {editingId ? "✏️ Edit Benefit" : "✨ Create New Benefit"}
             </span>
             <h2 className="text-lg sm:text-xl font-serif-display font-bold">
-              {editingId ? `Editing: ${title || "Untitled"}` : "Devotional Blog Post Studio"}
+              {editingId ? `Editing: ${title || "Untitled"}` : "Hanuman Chalisa Benefit Page Studio"}
             </h2>
           </div>
           {editingId && (
@@ -311,7 +369,19 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                 : "border-transparent text-charcoal-brown/60 hover:text-maroon-deep"
             }`}
           >
-            📝 Content & Body
+            🌟 Benefit Overview
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("verse")}
+            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all border-t-2 border-x-2 ${
+              activeTab === "verse"
+                ? "bg-stone-ivory border-brass-gold/50 text-maroon-deep -mb-px shadow-sm"
+                : "border-transparent text-charcoal-brown/60 hover:text-maroon-deep"
+            }`}
+          >
+            📜 Target Verse & Vidhi
           </button>
 
           <button
@@ -323,7 +393,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                 : "border-transparent text-charcoal-brown/60 hover:text-maroon-deep"
             }`}
           >
-            🖼️ Media & Image SEO {coverImage ? "•" : ""}
+            🖼️ Image & Media SEO {coverImage ? "•" : ""}
           </button>
 
           <button
@@ -364,83 +434,204 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* TAB 1: CONTENT */}
+          {/* TAB 1: OVERVIEW */}
           {activeTab === "content" && (
             <div className="space-y-4">
               <div>
                 <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                  Article Title (H1) <span className="text-red-500">*</span>
+                  Benefit Title (H1) <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={title}
                   onChange={handleTitleChange}
-                  placeholder="e.g. 10 Divine Miracles of Daily Hanuman Chalisa Recitation"
+                  placeholder="e.g. Hanuman Chalisa for Mental Peace & Anxiety Relief"
                   className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-sm focus:border-maroon-deep focus:ring-1 focus:ring-maroon-deep outline-none"
                 />
               </div>
 
-              <div>
-                <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                  URL Slug (Auto-generated or custom) <span className="text-red-500">*</span>
-                </label>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-charcoal-brown/60 select-none hidden sm:inline">
-                    ramhanumanchalisa.com/blog/
-                  </span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="sm:col-span-2">
+                  <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                    URL Slug <span className="text-red-500">*</span>
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-charcoal-brown/60 select-none hidden sm:inline">
+                      /hanuman-chalisa-benefits/
+                    </span>
+                    <input
+                      type="text"
+                      required
+                      value={slug}
+                      onChange={(e) => setSlug(e.target.value)}
+                      placeholder="mental-peace-anxiety"
+                      className="flex-1 bg-white border border-brass-gold/40 rounded p-2 text-xs font-mono text-charcoal-brown outline-none focus:border-maroon-deep"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                    Emoji / Icon
+                  </label>
                   <input
                     type="text"
-                    required
-                    value={slug}
-                    onChange={(e) => setSlug(e.target.value)}
-                    placeholder="10-divine-miracles-hanuman-chalisa"
-                    className="flex-1 bg-white border border-brass-gold/40 rounded p-2 text-xs font-mono text-charcoal-brown outline-none focus:border-maroon-deep"
+                    value={icon}
+                    onChange={(e) => setIcon(e.target.value)}
+                    placeholder="🕊️ or 🌱"
+                    className="w-full bg-white border border-brass-gold/40 rounded p-2 text-sm text-center outline-none focus:border-maroon-deep"
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                  Summary / Excerpt
+                  Life Situation / Problem Solved <span className="text-red-500">*</span>
                 </label>
-                <textarea
-                  rows={2}
-                  value={excerpt}
-                  onChange={(e) => setExcerpt(e.target.value)}
-                  placeholder="Short introductory summary for cards and feeds..."
-                  className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs text-charcoal-brown outline-none focus:border-maroon-deep"
+                <input
+                  type="text"
+                  required
+                  value={situation}
+                  onChange={(e) => setSituation(e.target.value)}
+                  placeholder="e.g. Chronic restlessness, overthinking, panic attacks, or sleep disturbances"
+                  className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                 />
               </div>
 
               <div>
-                <div className="flex justify-between items-center mb-1">
-                  <label className="block text-xs uppercase font-bold text-maroon-deep">
-                    Article Body Content (Markdown supported) <span className="text-red-500">*</span>
-                  </label>
-                  <div className="flex gap-2 text-[11px] text-charcoal-brown/60 font-mono">
-                    <span>## Heading</span>
-                    <span>### Subheading</span>
-                    <span>- Bullet point</span>
-                  </div>
-                </div>
+                <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                  Spiritual Summary / Intro Description <span className="text-red-500">*</span>
+                </label>
                 <textarea
                   required
-                  rows={14}
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  placeholder={`Write your devotional article here...\n\n## Section Heading\n\nParagraph text here with deep insights.\n\n### Practical Vidhi\n- Step 1: Sit facing East\n- Step 2: Recite Doha with devotion`}
-                  className="w-full bg-white border border-brass-gold/40 rounded p-3 text-xs font-mono leading-relaxed outline-none focus:border-maroon-deep"
+                  rows={4}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Explain how Lord Hanuman's grace alleviates this particular life challenge..."
+                  className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs leading-relaxed outline-none focus:border-maroon-deep"
                 />
               </div>
             </div>
           )}
 
-          {/* TAB 2: MEDIA & IMAGE SEO */}
+          {/* TAB 2: VERSE & VIDHI */}
+          {activeTab === "verse" && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                    Target Verse Number (1 - 40)
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={40}
+                    value={targetVerseNumber}
+                    onChange={(e) => setTargetVerseNumber(e.target.value)}
+                    className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                    Recommended Chants Schedule
+                  </label>
+                  <input
+                    type="text"
+                    value={recommendedChants}
+                    onChange={(e) => setRecommendedChants(e.target.value)}
+                    placeholder="e.g. Recite 11 times daily at sunrise or 108 times on Saturdays"
+                    className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                  Target Verse Devanagari Text
+                </label>
+                <input
+                  type="text"
+                  value={targetVerseText}
+                  onChange={(e) => setTargetVerseText(e.target.value)}
+                  placeholder="e.g. संकट कटै मिटै सब पीरा। जो सुमिरै हनुमत बलबीरा।।"
+                  className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-sm font-serif outline-none focus:border-maroon-deep"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                  Verse Translation / English Meaning
+                </label>
+                <textarea
+                  rows={2}
+                  value={targetVerseTranslation}
+                  onChange={(e) => setTargetVerseTranslation(e.target.value)}
+                  placeholder="Sankat Kate Mite Sab Peera... (All distress is dispelled and all agony erased...)"
+                  className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                  Detailed Spiritual Exposition <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  required
+                  rows={6}
+                  value={detailedExposition}
+                  onChange={(e) => setDetailedExposition(e.target.value)}
+                  placeholder="In-depth theological explanation of why this chaupai generates this result..."
+                  className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs leading-relaxed outline-none focus:border-maroon-deep"
+                />
+              </div>
+
+              {/* Action Steps Repeater */}
+              <div className="bg-white border border-brass-gold/30 p-4 rounded-lg space-y-3">
+                <h4 className="text-xs uppercase font-bold text-maroon-deep">Step-by-Step Path Vidhi / Ritual Checklist</h4>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={newActionStep}
+                    onChange={(e) => setNewActionStep(e.target.value)}
+                    placeholder="e.g. Light a brass diya with pure cow ghee facing North"
+                    className="flex-1 bg-stone-ivory/50 border border-brass-gold/40 rounded p-2 text-xs outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddActionStep}
+                    className="bg-marigold hover:bg-brass-gold text-maroon-deep font-bold px-4 py-2 rounded text-xs uppercase"
+                  >
+                    + Add Step
+                  </button>
+                </div>
+
+                {actionSteps.length > 0 && (
+                  <ol className="list-decimal list-inside space-y-2 pt-2 text-xs text-charcoal-brown">
+                    {actionSteps.map((step, idx) => (
+                      <li key={idx} className="flex justify-between items-center bg-stone-ivory p-2 rounded border border-brass-gold/20">
+                        <span>{step}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveActionStep(idx)}
+                          className="text-red-600 hover:text-red-800 font-bold ml-2"
+                        >
+                          ✕
+                        </button>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: MEDIA & IMAGE SEO */}
           {activeTab === "media" && (
             <div className="space-y-5">
               <div className="p-4 bg-marigold/10 border border-marigold/30 rounded-lg text-xs text-maroon-deep">
-                💡 <strong>Image SEO Best Practice:</strong> Always provide descriptive Alt text (describing the image for screen readers and Google image index) and a captivating caption for reader engagement.
+                💡 <strong>Featured Image for Benefits:</strong> Provide high-quality artwork representing Lord Hanuman with complete Alt text, Title, and descriptive Caption.
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -453,20 +644,20 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                       type="url"
                       value={coverImage}
                       onChange={(e) => setCoverImage(e.target.value)}
-                      placeholder="https://images.unsplash.com/... or /images/hanuman.jpg"
+                      placeholder="https://... or /images/benefits/peace.jpg"
                       className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                      Image Alt Text (Crucial for SEO)
+                      Image Alt Text (SEO Alt Tag)
                     </label>
                     <input
                       type="text"
                       value={imageAlt}
                       onChange={(e) => setImageAlt(e.target.value)}
-                      placeholder="e.g. Lord Hanuman holding Sanjeevani Mountain in golden aura"
+                      placeholder="e.g. Lord Hanuman in meditating posture bringing peace and tranquility"
                       className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                     />
                   </div>
@@ -479,20 +670,20 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                       type="text"
                       value={imageTitle}
                       onChange={(e) => setImageTitle(e.target.value)}
-                      placeholder="e.g. Divine depiction of Shri Hanuman"
+                      placeholder="e.g. Shri Hanuman Meditative Energy"
                       className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                      Image Caption (Displayed beneath image)
+                      Image Caption
                     </label>
                     <input
                       type="text"
                       value={imageCaption}
                       onChange={(e) => setImageCaption(e.target.value)}
-                      placeholder="e.g. Painting of Sankat Mochan Hanumanji at dusk"
+                      placeholder="e.g. Meditation on Hanuman removes deep anxiety and fear"
                       className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                     />
                   </div>
@@ -527,7 +718,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
             </div>
           )}
 
-          {/* TAB 3: SEO SUITE & GOOGLE SERP PREVIEW */}
+          {/* TAB 4: SEO SUITE & SERP PREVIEW */}
           {activeTab === "seo" && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -540,12 +731,9 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                       type="text"
                       value={metaTitle}
                       onChange={(e) => setMetaTitle(e.target.value)}
-                      placeholder={title ? `${title} | Ram Hanuman Chalisa` : "Unique SEO Meta Title (50-60 characters)"}
+                      placeholder={title ? `${title} — Hanuman Chalisa Guide` : "Unique SEO Meta Title"}
                       className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                     />
-                    <p className="text-[11px] text-charcoal-brown/60 mt-1">
-                      If left empty, defaults to: <code>{title || "Article Title"} | Ram Hanuman Chalisa</code>
-                    </p>
                   </div>
 
                   <div>
@@ -567,14 +755,14 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                       rows={3}
                       value={metaDescription}
                       onChange={(e) => setMetaDescription(e.target.value)}
-                      placeholder="Write a compelling snippet under 150 characters to boost search click-through rate..."
+                      placeholder="Concise summary under 150 chars explaining benefits and chanting schedules..."
                       className={`w-full bg-white border rounded p-2.5 text-xs outline-none ${
                         isDescOverLimit ? "border-red-500 focus:ring-1 focus:ring-red-500" : "border-brass-gold/40 focus:border-maroon-deep"
                       }`}
                     />
                     {isDescOverLimit && (
                       <p className="text-[11px] text-red-600 font-semibold mt-1">
-                        ⚠️ Warning: Google cuts off meta descriptions over 150 characters on mobile search results.
+                        ⚠️ Warning: Google cuts off meta descriptions exceeding 150 characters on mobile.
                       </p>
                     )}
                   </div>
@@ -587,7 +775,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                       type="text"
                       value={focusKeywords}
                       onChange={(e) => setFocusKeywords(e.target.value)}
-                      placeholder="e.g. hanuman chalisa miracles, benefits of chanting chalisa daily"
+                      placeholder="e.g. hanuman chalisa for anxiety, fear removal chaupai 24"
                       className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                     />
                   </div>
@@ -606,35 +794,35 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                       <div className="flex flex-col">
                         <span className="text-[11px] text-gray-800 font-medium leading-none">Ram Hanuman Chalisa</span>
                         <span className="text-[10px] text-gray-500 leading-none truncate max-w-xs">
-                          https://ramhanumanchalisa.com &gt; blog &gt; {slug || "your-slug"}
+                          https://ramhanumanchalisa.com &gt; hanuman-chalisa-benefits &gt; {slug || "your-slug"}
                         </span>
                       </div>
                     </div>
                     <h3 className="text-base text-[#1a0dab] hover:underline font-medium cursor-pointer leading-snug pt-1">
-                      {metaTitle || (title ? `${title} | Ram Hanuman Chalisa` : "Article Title — Ram Hanuman Chalisa")}
+                      {metaTitle || (title ? `${title} — Hanuman Chalisa Chanting Guide` : "Benefit Guide — Ram Hanuman Chalisa")}
                     </h3>
                     <p className="text-xs text-gray-600 leading-normal line-clamp-2">
-                      {metaDescription || excerpt || "Your meta description snippet will appear here in Google Search results. Keep it engaging and under 150 characters."}
+                      {metaDescription || description || "Your meta description snippet will appear here in Google Search results. Keep it engaging and under 150 characters."}
                     </p>
                   </div>
                   <p className="text-[11px] text-charcoal-brown/50 mt-3 italic">
-                    Visual simulation of desktop / mobile snippet index appearance.
+                    Simulation of Google search snippet preview.
                   </p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* TAB 4: FAQS SCHEMA GENERATOR */}
+          {/* TAB 5: FAQS SCHEMA GENERATOR */}
           {activeTab === "faqs" && (
             <div className="space-y-6">
               <div className="p-4 bg-brass-gold/10 border border-brass-gold/30 rounded-lg text-xs text-charcoal-brown">
-                ✨ <strong>Google Search Console FAQPage Schema:</strong> Every Q&A entered here automatically outputs valid <code>@type: FAQPage</code> JSON-LD structured data on this article page and displays an accordion on the frontend.
+                ✨ <strong>Google Search Console FAQPage Schema:</strong> Every Q&A entered here automatically outputs valid <code>@type: FAQPage</code> JSON-LD structured data on this benefit page and renders an interactive FAQ accordion.
               </div>
 
               {/* Add New FAQ */}
               <div className="bg-white border border-brass-gold/30 p-4 rounded-lg space-y-3">
-                <h4 className="text-xs uppercase font-bold text-maroon-deep">Add New FAQ Item</h4>
+                <h4 className="text-xs uppercase font-bold text-maroon-deep">Add New FAQ for this Benefit</h4>
                 <div>
                   <label className="block text-[11px] uppercase font-bold text-charcoal-brown/70 mb-1">
                     Question
@@ -643,7 +831,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                     type="text"
                     value={newFaqQuestion}
                     onChange={(e) => setNewFaqQuestion(e.target.value)}
-                    placeholder="e.g. What is the best time to recite the Hanuman Chalisa?"
+                    placeholder="e.g. How many days should I recite this Chaupai to overcome fear?"
                     className="w-full bg-stone-ivory/50 border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
                   />
                 </div>
@@ -655,7 +843,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                     rows={3}
                     value={newFaqAnswer}
                     onChange={(e) => setNewFaqAnswer(e.target.value)}
-                    placeholder="e.g. Brahma Muhurta (early morning before sunrise) and Tuesday/Saturday evenings are considered highly auspicious..."
+                    placeholder="e.g. Devotees traditionally take a sankalp of 21 or 40 consecutive days chanting 11 or 108 times daily..."
                     className="w-full bg-stone-ivory/50 border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
                   />
                 </div>
@@ -670,9 +858,9 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
 
               {/* FAQ List */}
               <div className="space-y-3">
-                <h4 className="text-xs uppercase font-bold text-maroon-deep">Current FAQs for this Article ({faqs.length})</h4>
+                <h4 className="text-xs uppercase font-bold text-maroon-deep">Current FAQs for this Benefit ({faqs.length})</h4>
                 {faqs.length === 0 ? (
-                  <p className="text-xs text-charcoal-brown/50 italic">No FAQs added yet. Use the form above to add Q&A pairs.</p>
+                  <p className="text-xs text-charcoal-brown/50 italic">No FAQs added yet.</p>
                 ) : (
                   faqs.map((faq, idx) => (
                     <div key={idx} className="p-3 bg-white border border-brass-gold/30 rounded-lg flex justify-between items-start gap-4">
@@ -694,7 +882,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
             </div>
           )}
 
-          {/* TAB 5: INTERNAL LINKS & SOURCES */}
+          {/* TAB 6: INTERNAL LINKS & SOURCES */}
           {activeTab === "links" && (
             <div className="space-y-6">
               {/* Internal Links Repeater */}
@@ -709,7 +897,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                       type="text"
                       value={newLinkLabel}
                       onChange={(e) => setNewLinkLabel(e.target.value)}
-                      placeholder="e.g. Complete Hindi & English Meaning"
+                      placeholder="e.g. Read Shri Hanuman Chalisa Path Vidhi"
                       className="w-full bg-stone-ivory/50 border border-brass-gold/40 rounded p-2 text-xs outline-none"
                     />
                   </div>
@@ -721,7 +909,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                       type="text"
                       value={newLinkUrl}
                       onChange={(e) => setNewLinkUrl(e.target.value)}
-                      placeholder="e.g. /hanuman-chalisa-meaning"
+                      placeholder="e.g. /shri-hanuman-chalisa-path-vidhi"
                       className="w-full bg-stone-ivory/50 border border-brass-gold/40 rounded p-2 text-xs outline-none"
                     />
                   </div>
@@ -755,7 +943,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                 )}
               </div>
 
-              {/* Scripture & Sources */}
+              {/* Scriptural Citations */}
               <div>
                 <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
                   Scriptural Citations & Sources (References)
@@ -764,7 +952,7 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                   rows={4}
                   value={sources}
                   onChange={(e) => setSources(e.target.value)}
-                  placeholder="e.g. Tulsidas Ramcharitmanas, Gitapress Gorakhpur (Code 45), Valmiki Ramayana Kishkindha Kanda..."
+                  placeholder="e.g. Goswami Tulsidas Hanuman Bahuk, Sri Ramcharitmanas Ayodhya Kanda..."
                   className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                 />
               </div>
@@ -800,44 +988,45 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                 disabled={isSubmitting}
                 className="w-1/2 sm:w-auto bg-maroon-deep hover:bg-vermilion text-stone-ivory font-bold px-6 py-2.5 rounded text-xs uppercase tracking-wider shadow-md transition-all disabled:opacity-50"
               >
-                {isSubmitting ? "Saving Article..." : editingId ? "Update Article" : "Publish Article"}
+                {isSubmitting ? "Saving Benefit..." : editingId ? "Update Benefit" : "Publish Benefit"}
               </button>
             </div>
           </div>
         </form>
       </div>
 
-      {/* Article List Section */}
+      {/* Benefits List Section */}
       <div className="bg-stone-ivory border-2 border-brass-gold/40 rounded-xl p-6 shadow-sm space-y-4">
         <h3 className="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
-          Published & Draft Blog Articles ({posts.length})
+          Published & Custom Benefit Pages ({benefits.length})
         </h3>
 
-        {posts.length === 0 ? (
-          <p className="text-xs text-charcoal-brown/60 italic">No blog posts found in database.</p>
+        {benefits.length === 0 ? (
+          <p className="text-xs text-charcoal-brown/60 italic">No custom benefits in database yet. Existing static benefits will remain served until overridden.</p>
         ) : (
           <div className="divide-y divide-brass-gold/20">
-            {posts.map((post) => (
-              <div key={post.id} className="py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            {benefits.map((b) => (
+              <div key={b.id} className="py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
+                    <span className="text-xl">{b.icon || "🙏"}</span>
                     <span
                       className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                        post.published ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
+                        b.published ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
                       }`}
                     >
-                      {post.published ? "Published" : "Draft"}
+                      {b.published ? "Published" : "Draft"}
                     </span>
-                    <h4 className="font-bold text-maroon-deep text-sm">{post.title}</h4>
+                    <h4 className="font-bold text-maroon-deep text-sm">{b.title}</h4>
                   </div>
                   <p className="text-xs text-charcoal-brown/60 font-mono">
-                    /blog/{post.slug}
+                    /hanuman-chalisa-benefits/{b.slug}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2 self-end sm:self-auto">
                   <a
-                    href={`/blog/${post.slug}`}
+                    href={`/hanuman-chalisa-benefits/${b.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-3 py-1.5 text-xs font-bold border border-brass-gold/40 text-charcoal-brown rounded hover:bg-white transition-colors"
@@ -846,14 +1035,14 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                   </a>
                   <button
                     type="button"
-                    onClick={() => handleEdit(post)}
+                    onClick={() => handleEdit(b)}
                     className="px-3 py-1.5 text-xs font-bold bg-marigold text-maroon-deep rounded hover:bg-brass-gold transition-colors"
                   >
                     Edit
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleDelete(post.id)}
+                    onClick={() => handleDelete(b.id)}
                     className="px-3 py-1.5 text-xs font-bold bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
                   >
                     Delete

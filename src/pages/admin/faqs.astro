@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import CarvedDivider from "../../components/CarvedDivider";
+import AdminNavigation from "../../components/AdminNavigation.astro";
 import FaqManagerForm from "../../components/FaqManagerForm";
 import { getPrisma } from "../../lib/prisma";
 
@@ -12,41 +12,21 @@ try {
   initialFaqs = await prisma.faq.findMany({
     orderBy: [
       { pageSlug: "asc" },
-      { order: "asc" }
-    ]
+      { order: "asc" },
+    ],
   });
 } catch (error) {
   console.error("Error pre-loading FAQs for admin:", error);
 }
 
-const title = "FAQ Content Manager";
+const title = "Global FAQ Content Manager — Admin";
 ---
 
 <Layout title={title}>
-  <div class="space-y-8 max-w-4xl mx-auto">
-    
-    <!-- Header -->
-    <div class="flex justify-between items-center bg-maroon-deep border-2 border-brass-gold p-4 sm:p-6 rounded-lg text-stone-ivory">
-      <div class="space-y-1">
-        <h2 class="font-serif-display text-xl sm:text-2xl font-bold text-marigold uppercase">
-          FAQ Content Manager
-        </h2>
-        <p class="text-xs text-stone-ivory/70">
-          Add or edit frequently asked questions grouped by page. Updates automatically feed into JSON-LD FAQPage schemas.
-        </p>
-      </div>
-      <a
-        href="/admin"
-        class="bg-stone-ivory/10 hover:bg-stone-ivory/20 px-3 py-1.5 rounded text-xs font-bold uppercase border border-stone-ivory/30 shadow transition-colors"
-      >
-        &larr; Dashboard
-      </a>
-    </div>
-
-    <CarvedDivider icon="🕉️" />
+  <div class="max-w-5xl mx-auto space-y-6">
+    <AdminNavigation activeTab="faqs" />
 
     <!-- Faq Manager Client Form -->
     <FaqManagerForm initialFaqs={initialFaqs} client:load />
-
   </div>
 </Layout>

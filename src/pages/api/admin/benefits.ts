@@ -1,4 +1,4 @@
-import type { APIRoute } from "astro";
+﻿import type { APIRoute } from "astro";
 import { getPrisma } from "../../../lib/prisma";
 
 async function checkAuth() {
@@ -15,13 +15,13 @@ export const GET: APIRoute = async (context) => {
   const prisma = getPrisma(db);
 
   try {
-    const posts = await prisma.post.findMany({
+    const benefits = await prisma.benefit.findMany({
       orderBy: { createdAt: "desc" },
     });
-    return new Response(JSON.stringify(posts), { status: 200 });
+    return new Response(JSON.stringify(benefits), { status: 200 });
   } catch (error) {
-    console.error("Failed to fetch posts:", error);
-    return new Response(JSON.stringify({ error: "Failed to fetch posts" }), { status: 500 });
+    console.error("Failed to fetch benefits:", error);
+    return new Response(JSON.stringify({ error: "Failed to fetch benefits" }), { status: 500 });
   }
 };
 
@@ -40,8 +40,15 @@ export const POST: APIRoute = async (context) => {
       slug,
       metaTitle,
       metaDescription,
-      content,
-      excerpt,
+      situation,
+      icon,
+      description,
+      recommendedChants,
+      targetVerseNumber,
+      targetVerseText,
+      targetVerseTranslation,
+      detailedExposition,
+      actionSteps,
       coverImage,
       imageAlt,
       imageTitle,
@@ -53,18 +60,28 @@ export const POST: APIRoute = async (context) => {
       published,
     } = body;
 
-    if (!title || !slug || !content) {
-      return new Response(JSON.stringify({ error: "Missing required fields: title, slug, and content are mandatory" }), { status: 400 });
+    if (!title || !slug || !description || !detailedExposition) {
+      return new Response(
+        JSON.stringify({ error: "Missing required fields: title, slug, description, and detailedExposition are required" }),
+        { status: 400 }
+      );
     }
 
-    const post = await prisma.post.create({
+    const benefit = await prisma.benefit.create({
       data: {
         title,
         slug,
         metaTitle: metaTitle || null,
         metaDescription: metaDescription || null,
-        content,
-        excerpt: excerpt || "",
+        situation: situation || "",
+        icon: icon || "🙏",
+        description,
+        recommendedChants: recommendedChants || null,
+        targetVerseNumber: targetVerseNumber ? Number(targetVerseNumber) : null,
+        targetVerseText: targetVerseText || null,
+        targetVerseTranslation: targetVerseTranslation || null,
+        detailedExposition,
+        actionSteps: actionSteps ? (typeof actionSteps === "string" ? actionSteps : JSON.stringify(actionSteps)) : null,
         coverImage: coverImage || null,
         imageAlt: imageAlt || null,
         imageTitle: imageTitle || null,
@@ -73,17 +90,17 @@ export const POST: APIRoute = async (context) => {
         internalLinks: internalLinks ? (typeof internalLinks === "string" ? internalLinks : JSON.stringify(internalLinks)) : null,
         sources: sources ? (typeof sources === "string" ? sources : JSON.stringify(sources)) : null,
         faqs: faqs ? (typeof faqs === "string" ? faqs : JSON.stringify(faqs)) : null,
-        published: !!published,
+        published: published !== undefined ? !!published : true,
       },
     });
 
-    return new Response(JSON.stringify(post), { status: 200 });
+    return new Response(JSON.stringify(benefit), { status: 200 });
   } catch (error: any) {
-    console.error("Failed to create post:", error);
+    console.error("Failed to create benefit:", error);
     if (error.code === "P2002") {
-      return new Response(JSON.stringify({ error: "Slug already exists" }), { status: 400 });
+      return new Response(JSON.stringify({ error: "Benefit slug already exists" }), { status: 400 });
     }
-    return new Response(JSON.stringify({ error: "Failed to create post" }), { status: 500 });
+    return new Response(JSON.stringify({ error: "Failed to create benefit" }), { status: 500 });
   }
 };
 
@@ -103,8 +120,15 @@ export const PUT: APIRoute = async (context) => {
       slug,
       metaTitle,
       metaDescription,
-      content,
-      excerpt,
+      situation,
+      icon,
+      description,
+      recommendedChants,
+      targetVerseNumber,
+      targetVerseText,
+      targetVerseTranslation,
+      detailedExposition,
+      actionSteps,
       coverImage,
       imageAlt,
       imageTitle,
@@ -116,19 +140,29 @@ export const PUT: APIRoute = async (context) => {
       published,
     } = body;
 
-    if (!id || !title || !slug || !content) {
-      return new Response(JSON.stringify({ error: "Missing required fields: id, title, slug, and content are mandatory" }), { status: 400 });
+    if (!id || !title || !slug || !description || !detailedExposition) {
+      return new Response(
+        JSON.stringify({ error: "Missing required fields: id, title, slug, description, and detailedExposition are required" }),
+        { status: 400 }
+      );
     }
 
-    const post = await prisma.post.update({
+    const benefit = await prisma.benefit.update({
       where: { id },
       data: {
         title,
         slug,
         metaTitle: metaTitle || null,
         metaDescription: metaDescription || null,
-        content,
-        excerpt: excerpt || "",
+        situation: situation || "",
+        icon: icon || "🙏",
+        description,
+        recommendedChants: recommendedChants || null,
+        targetVerseNumber: targetVerseNumber ? Number(targetVerseNumber) : null,
+        targetVerseText: targetVerseText || null,
+        targetVerseTranslation: targetVerseTranslation || null,
+        detailedExposition,
+        actionSteps: actionSteps ? (typeof actionSteps === "string" ? actionSteps : JSON.stringify(actionSteps)) : null,
         coverImage: coverImage || null,
         imageAlt: imageAlt || null,
         imageTitle: imageTitle || null,
@@ -137,14 +171,14 @@ export const PUT: APIRoute = async (context) => {
         internalLinks: internalLinks ? (typeof internalLinks === "string" ? internalLinks : JSON.stringify(internalLinks)) : null,
         sources: sources ? (typeof sources === "string" ? sources : JSON.stringify(sources)) : null,
         faqs: faqs ? (typeof faqs === "string" ? faqs : JSON.stringify(faqs)) : null,
-        published: !!published,
+        published: published !== undefined ? !!published : true,
       },
     });
 
-    return new Response(JSON.stringify(post), { status: 200 });
+    return new Response(JSON.stringify(benefit), { status: 200 });
   } catch (error) {
-    console.error("Failed to update post:", error);
-    return new Response(JSON.stringify({ error: "Failed to update post" }), { status: 500 });
+    console.error("Failed to update benefit:", error);
+    return new Response(JSON.stringify({ error: "Failed to update benefit" }), { status: 500 });
   }
 };
 
@@ -161,16 +195,16 @@ export const DELETE: APIRoute = async (context) => {
     const id = searchParams.get("id");
 
     if (!id) {
-      return new Response(JSON.stringify({ error: "Missing post ID" }), { status: 400 });
+      return new Response(JSON.stringify({ error: "Missing benefit ID" }), { status: 400 });
     }
 
-    await prisma.post.delete({
+    await prisma.benefit.delete({
       where: { id },
     });
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {
-    console.error("Failed to delete post:", error);
-    return new Response(JSON.stringify({ error: "Failed to delete post" }), { status: 500 });
+    console.error("Failed to delete benefit:", error);
+    return new Response(JSON.stringify({ error: "Failed to delete benefit" }), { status: 500 });
   }
 };

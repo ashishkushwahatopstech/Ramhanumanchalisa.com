@@ -1,9 +1,44 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import CarvedDivider from "../../components/CarvedDivider";
-import { BENEFITS_DATA } from "../../data/benefits";
+import { getPrisma } from "../../lib/prisma";
+import { BENEFITS_DATA, type BenefitDetails } from "../../data/benefits";
 
-const benefitsList = Object.values(BENEFITS_DATA);
+const db = Astro.locals.runtime?.env?.DB;
+const prisma = getPrisma(db);
+
+let allBenefits: BenefitDetails[] = Object.values(BENEFITS_DATA);
+
+try {
+  const dbBenefits = await prisma.benefit.findMany({
+    where: { published: true },
+    orderBy: { createdAt: "desc" },
+  });
+
+  if (dbBenefits.length > 0) {
+    const dbList: BenefitDetails[] = dbBenefits.map((b) => ({
+      slug: b.slug,
+      title: b.title,
+      situation: b.situation,
+      icon: b.icon || "🙏",
+      description: b.description,
+      recommendedChants: b.recommendedChants || "Read daily",
+      targetVerseNumber: b.targetVerseNumber || 1,
+      targetVerseText: b.targetVerseText || "",
+      targetVerseTranslation: b.targetVerseTranslation || "",
+      detailedExposition: b.detailedExposition,
+      actionSteps: b.actionSteps ? JSON.parse(b.actionSteps) : [],
+    }));
+
+    // Merge: DB items take precedence, non-colliding static items remain
+    const staticFiltered = Object.values(BENEFITS_DATA).filter(
+      (s) => !dbList.some((d) => d.slug === s.slug)
+    );
+    allBenefits = [...dbList, ...staticFiltered];
+  }
+} catch (error) {
+  console.error("Error reading benefits from DB for index:", error);
+}
 
 const title = "Hanuman Chalisa Benefits — Recitation Advantages by Life Situation";
 const description = "Discover the spiritual, psychological, and physical benefits of reciting Hanuman Chalisa. Situation-based guides for career, health, studies, and protection.";
@@ -11,7 +46,6 @@ const description = "Discover the spiritual, psychological, and physical benefit
 
 <Layout title={title} description={description}>
   <div class="space-y-10 max-w-5xl mx-auto">
-    
     <!-- Breadcrumbs -->
     <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
       <ol class="list-none p-0 inline-flex gap-2">
@@ -47,7 +81,7 @@ const description = "Discover the spiritual, psychological, and physical benefit
 
     <!-- Grid of Benefit Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {benefitsList.map((benefit) => (
+      {allBenefits.map((benefit) => (
         <div
           class="p-6 bg-stone-ivory border border-brass-gold/30 hover:border-marigold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between space-y-4"
         >
@@ -99,7 +133,7 @@ const description = "Discover the spiritual, psychological, and physical benefit
             1. Overcoming Shani (Saturn) Influence
           </h4>
           <p class="text-xs text-stone-ivory/80">
-            According to scriptures, Lord Saturn (Shani Dev) promised Lord Hanuman that he would never trouble Hanuman's devotees. Chating the Chalisa on Tuesdays and Saturdays protects devotees from the harsh phases of Saturn (Sade Sati, Dhayya).
+            According to scriptures, Lord Saturn (Shani Dev) promised Lord Hanuman that he would never trouble Hanuman's devotees. Chanting the Chalisa on Tuesdays and Saturdays protects devotees from the harsh phases of Saturn (Sade Sati, Dhayya).
           </p>
         </div>
 
@@ -118,6 +152,5 @@ const description = "Discover the spiritual, psychological, and physical benefit
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
       Ad Slot — Benefits Page Bottom (Layout Stable Skeleton)
     </div>
-
   </div>
 </Layout>

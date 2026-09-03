@@ -13,7 +13,20 @@ if (!slug) {
 const db = Astro.locals.runtime?.env?.DB;
 const prisma = getPrisma(db);
 
-let post: BlogPost | undefined;
+interface EnrichedPost extends BlogPost {
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  coverImage?: string | null;
+  imageAlt?: string | null;
+  imageTitle?: string | null;
+  imageCaption?: string | null;
+  focusKeywords?: string | null;
+  internalLinks?: string | null;
+  sources?: string | null;
+  faqs?: string | null;
+}
+
+let post: EnrichedPost | undefined;
 
 try {
   const dbPost = await prisma.post.findUnique({ where: { slug } });
@@ -21,8 +34,18 @@ try {
     post = {
       slug: dbPost.slug,
       title: dbPost.title,
+      metaTitle: dbPost.metaTitle,
+      metaDescription: dbPost.metaDescription,
       excerpt: dbPost.excerpt,
       content: dbPost.content,
+      coverImage: dbPost.coverImage,
+      imageAlt: dbPost.imageAlt,
+      imageTitle: dbPost.imageTitle,
+      imageCaption: dbPost.imageCaption,
+      focusKeywords: dbPost.focusKeywords,
+      internalLinks: dbPost.internalLinks,
+      sources: dbPost.sources,
+      faqs: dbPost.faqs,
       createdAt: dbPost.createdAt.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
@@ -44,7 +67,7 @@ if (!post) {
   return Astro.redirect("/404");
 }
 
-// Simple parser for standard markdown elements without third party packages
+// Simple parser for standard markdown elements
 function parseMarkdown(content: string) {
   const sections = content.split("\n\n").map((section) => section.trim()).filter(Boolean);
 
@@ -52,31 +75,31 @@ function parseMarkdown(content: string) {
     if (sec.startsWith("### ")) {
       return {
         type: "h4",
-        text: sec.replace("### ", "")
+        text: sec.replace("### ", ""),
       };
     }
     if (sec.startsWith("## ")) {
       return {
         type: "h3",
-        text: sec.replace("## ", "")
+        text: sec.replace("## ", ""),
       };
     }
     if (sec.startsWith("*") && sec.endsWith("*")) {
       return {
         type: "italic",
-        text: sec.replace(/\*/g, "")
+        text: sec.replace(/\*/g, ""),
       };
     }
     if (sec.startsWith("- ")) {
-      const items = sec.split("\n").map(item => item.replace("- ", "").trim());
+      const items = sec.split("\n").map((item) => item.replace("- ", "").trim());
       return {
         type: "list",
-        items
+        items,
       };
     }
     return {
       type: "p",
-      text: sec
+      text: sec,
     };
   });
 }
@@ -86,40 +109,85 @@ const parsedContent = parseMarkdown(post.content);
 let isoDate = "";
 try {
   isoDate = new Date(post.createdAt).toISOString();
-} catch (e) {
+} catch {
   isoDate = new Date().toISOString();
 }
+
+// Parse FAQs and Internal Links if available
+let faqList: Array<{ question: string; answer: string }> = [];
+try {
+  if (post.faqs) {
+    faqList = JSON.parse(post.faqs);
+  }
+} catch {
+  faqList = [];
+}
+
+let internalLinkList: Array<{ label: string; url: string }> = [];
+try {
+  if (post.internalLinks) {
+    internalLinkList = JSON.parse(post.internalLinks);
+  }
+} catch {
+  internalLinkList = [];
+}
+
+const pageTitle = post.metaTitle || `${post.title} — Hanuman Bhakti Blog`;
+const pageDescription = post.metaDescription || post.excerpt;
 
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": post.title,
-  "description": post.excerpt,
+  "description": pageDescription,
   "datePublished": isoDate,
+  "image": post.coverImage ? [post.coverImage] : ["https://ramhanumanchalisa.com/icon.png"],
   "author": {
     "@type": "Person",
-    "name": post.author || "Admin"
+    "name": post.author || "Admin",
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://ramhanumanchalisa.com/icon.png"
-    }
+      "url": "https://ramhanumanchalisa.com/icon.png",
+    },
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": `https://ramhanumanchalisa.com/blog/${post.slug}`
-  }
+    "@id": `https://ramhanumanchalisa.com/blog/${post.slug}`,
+  },
 };
+
+// Search Console Compliant FAQPage Schema
+const faqSchema =
+  faqList.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqList.map((f) => ({
+          "@type": "Question",
+          "name": f.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": f.answer,
+          },
+        })),
+      }
+    : null;
 ---
 
-<Layout title={`${post.title} — Hanuman Bhakti Blog`} description={post.excerpt} canonicalUrl={`https://ramhanumanchalisa.com/blog/${post.slug}`}>
+<Layout title={pageTitle} description={pageDescription} canonicalUrl={`https://ramhanumanchalisa.com/blog/${post.slug}`}>
   <!-- Blog Article Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  
+  <!-- Search Console FAQ Schema -->
+  {faqSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  )}
+
   <div class="space-y-8 max-w-3xl mx-auto">
-    
     <!-- Breadcrumbs -->
     <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
       <ol class="list-none p-0 inline-flex gap-2">
@@ -142,17 +210,41 @@ const articleSchema = {
       <h1 class="font-serif-display text-2xl sm:text-3xl font-bold text-maroon-deep uppercase leading-tight">
         {post.title}
       </h1>
-      
+
       <div class="flex flex-wrap justify-center sm:justify-start items-center gap-3 text-xs text-brass-gold font-bold">
         <span>{post.createdAt}</span>
         <span>•</span>
         <span>By {post.author}</span>
         <span>•</span>
         <span>{post.readTime}</span>
+        {post.focusKeywords && (
+          <>
+            <span>•</span>
+            <span class="text-charcoal-brown/60">Tags: {post.focusKeywords}</span>
+          </>
+        )}
       </div>
     </div>
 
     <CarvedDivider icon="🕉️" />
+
+    <!-- Cover Image with SEO tags -->
+    {post.coverImage && (
+      <figure class="my-6 rounded-lg overflow-hidden border border-brass-gold/30 bg-stone-ivory shadow-md">
+        <img
+          src={post.coverImage}
+          alt={post.imageAlt || post.title}
+          title={post.imageTitle || post.title}
+          class="w-full max-h-[460px] object-cover"
+          loading="lazy"
+        />
+        {post.imageCaption && (
+          <figcaption class="p-3 text-center text-xs text-charcoal-brown/70 italic border-t border-brass-gold/20 bg-stone-ivory/50">
+            {post.imageCaption}
+          </figcaption>
+        )}
+      </figure>
+    )}
 
     <!-- Ad Slot -->
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-6">
@@ -160,7 +252,7 @@ const articleSchema = {
     </div>
 
     <!-- Main Post Content -->
-    <article class="bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm">
+    <article class="bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-4">
       {parsedContent.map((item) => {
         if (item.type === "h4") {
           return <h4 class="font-serif-display text-lg font-bold text-maroon-deep mt-6 mb-2">{item.text}</h4>;
@@ -184,6 +276,60 @@ const articleSchema = {
       })}
     </article>
 
+    <!-- Interactive Search Console FAQ Section -->
+    {faqList.length > 0 && (
+      <section class="bg-stone-ivory border border-brass-gold/40 rounded-xl p-6 shadow-sm space-y-4">
+        <div class="flex items-center gap-2 border-b border-brass-gold/20 pb-3">
+          <span class="text-xl">❓</span>
+          <h2 class="font-serif-display text-lg sm:text-xl font-bold text-maroon-deep uppercase">
+            Frequently Asked Questions
+          </h2>
+        </div>
+        <div class="space-y-3">
+          {faqList.map((faq) => (
+            <details class="group bg-white rounded-lg border border-brass-gold/30 p-4 transition-all open:shadow-sm">
+              <summary class="font-bold text-sm text-maroon-deep cursor-pointer list-none flex justify-between items-center select-none">
+                <span>{faq.question}</span>
+                <span class="text-brass-gold transition-transform group-open:rotate-180">▼</span>
+              </summary>
+              <div class="mt-3 pt-3 border-t border-brass-gold/20 text-xs sm:text-sm text-charcoal-brown/85 leading-relaxed">
+                {faq.answer}
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Internal Links / Recommended Readings -->
+    {internalLinkList.length > 0 && (
+      <section class="p-5 bg-brass-gold/10 border border-brass-gold/30 rounded-xl space-y-3">
+        <h3 class="text-xs uppercase font-bold text-maroon-deep tracking-wider flex items-center gap-1.5">
+          <span>🔗</span> Recommended Devotional Links
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          {internalLinkList.map((link) => (
+            <a
+              href={link.url}
+              class="inline-flex items-center gap-1 px-3 py-1.5 bg-white border border-brass-gold/40 rounded-full text-xs font-bold text-maroon-deep hover:bg-marigold transition-colors shadow-sm"
+            >
+              <span>🕉️</span> {link.label}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Scriptural Citations & Sources -->
+    {post.sources && (
+      <footer class="p-4 bg-stone-ivory border-l-4 border-brass-gold rounded text-xs text-charcoal-brown/70 space-y-1">
+        <p class="font-bold uppercase tracking-wider text-maroon-deep text-[11px]">
+          📜 Scriptural Citations & Authentic Sources:
+        </p>
+        <p class="leading-relaxed">{post.sources}</p>
+      </footer>
+    )}
+
     <div class="text-center pt-4">
       <a
         href="/blog"
@@ -197,6 +343,5 @@ const articleSchema = {
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
       Ad Slot — Article Bottom (Layout Stable)
     </div>
-
   </div>
 </Layout>
