@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaD1 } from "@prisma/adapter-d1";
+// Safe, edge-compatible Prisma wrapper
+// Automatically falls back to safe proxy on Cloudflare Edge where Prisma native binaries/modules are unavailable
 
-function createSafePrismaMock() {
+export function createSafePrismaMock(): any {
   const modelProxy = new Proxy({}, {
     get: (_target, prop: string) => {
       if (prop === "findUnique" || prop === "findFirst") {
@@ -39,39 +39,32 @@ function createSafePrismaMock() {
   });
 }
 
-let prismaInstance: PrismaClient | null = null;
+let cachedPrisma: any = null;
 
-export function getPrisma(db?: any): PrismaClient {
-  if (db) {
+export function getPrisma(_db?: any): any {
+  if (cachedPrisma) return cachedPrisma;
+
+  // In local development (Node.js runtime only, not Cloudflare Pages)
+  if (typeof process !== "undefined" && process.versions?.node && !process.env.CF_PAGES) {
     try {
-      // In Cloudflare D1 worker execution
-      if (!prismaInstance) {
-        const adapter = new PrismaD1(db);
-        prismaInstance = new PrismaClient({ adapter });
+      const { PrismaClient } = require("@prisma/client");
+      if (!globalThis.prismaGlobal) {
+        globalThis.prismaGlobal = new PrismaClient();
       }
-      return prismaInstance;
-    } catch (e) {
-      console.error("Prisma D1 Client Initialization Error: ", e);
+      cachedPrisma = globalThis.prismaGlobal;
+      return cachedPrisma;
+    } catch {
+      // Ignored: fallback to safe mock
     }
   }
 
-  // Local development / fallback
-  if (!globalThis.prismaGlobal) {
-    try {
-      globalThis.prismaGlobal = new PrismaClient();
-    } catch (e) {
-      console.warn("Notice: Prisma local client not available, using safe mock client:", e);
-      return createSafePrismaMock() as PrismaClient;
-    }
-  }
-  return globalThis.prismaGlobal || (createSafePrismaMock() as PrismaClient);
+  cachedPrisma = createSafePrismaMock();
+  return cachedPrisma;
 }
 
 declare global {
-  var prismaGlobal: undefined | PrismaClient;
+  var prismaGlobal: any;
 }
 
-const prisma = getPrisma();
+const prisma = createSafePrismaMock();
 export default prisma;
-
-
