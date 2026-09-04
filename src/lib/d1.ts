@@ -247,3 +247,76 @@ export async function d1UpsertLanguage(
 
   return await d1GetLanguage(db, langData.lang);
 }
+
+// Media Images for Zero-Git Live SEO Uploads
+export async function d1EnsureMediaTable(db: any): Promise<void> {
+  if (!db || typeof db.prepare !== "function") return;
+  try {
+    await db.prepare(`
+      CREATE TABLE IF NOT EXISTS MediaImage (
+        id TEXT NOT NULL PRIMARY KEY,
+        path TEXT NOT NULL UNIQUE,
+        fileName TEXT NOT NULL,
+        folder TEXT NOT NULL,
+        mimeType TEXT NOT NULL,
+        dataBase64 TEXT NOT NULL,
+        size INTEGER NOT NULL,
+        createdAt TEXT NOT NULL
+      )
+    `).run();
+    await db.prepare(`
+      CREATE UNIQUE INDEX IF NOT EXISTS idx_MediaImage_path ON MediaImage(path)
+    `).run();
+  } catch (e) {
+    console.warn("Notice: d1EnsureMediaTable:", e);
+  }
+}
+
+export async function d1SaveImage(
+  db: any,
+  img: { path: string; fileName: string; folder: string; mimeType: string; dataBase64: string; size: number }
+): Promise<boolean> {
+  if (!db || typeof db.prepare !== "function") return false;
+  try {
+    await d1EnsureMediaTable(db);
+    const now = new Date().toISOString();
+    const id = `img-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+
+    await db.prepare(`
+      INSERT INTO MediaImage (
+        id, path, fileName, folder, mimeType, dataBase64, size, createdAt
+      ) VALUES (
+        ?, ?, ?, ?, ?, ?, ?, ?
+      )
+      ON CONFLICT(path) DO UPDATE SET
+        dataBase64 = excluded.dataBase64,
+        size = excluded.size,
+        mimeType = excluded.mimeType,
+        createdAt = excluded.createdAt
+    `).bind(
+      id, img.path, img.fileName, img.folder, img.mimeType, img.dataBase64, img.size, now
+    ).run();
+
+    return true;
+  } catch (e) {
+    console.error("D1 saveImage error:", e);
+    return false;
+  }
+}
+
+export async function d1GetImage(
+  db: any,
+  imagePath: string
+): Promise<{ mimeType: string; dataBase64: string; size: number; createdAt: string } | null> {
+  if (!db || typeof db.prepare !== "function") return null;
+  try {
+    await d1EnsureMediaTable(db);
+    const row = await db.prepare(
+      "SELECT mimeType, dataBase64, size, createdAt FROM MediaImage WHERE path = ?"
+    ).bind(imagePath).first();
+    return row || null;
+  } catch (e) {
+    console.error("D1 getImage error:", e);
+    return null;
+  }
+}

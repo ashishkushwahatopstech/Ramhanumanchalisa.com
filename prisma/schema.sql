@@ -1,4 +1,4 @@
-﻿-- CreateTable
+-- CreateTable
 CREATE TABLE "Account" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "userId" TEXT NOT NULL,
@@ -172,4 +172,19 @@ CREATE UNIQUE INDEX "RecitationCounter_date_key" ON "RecitationCounter"("date");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "LanguageContent_lang_key" ON "LanguageContent"("lang");
+
+-- CreateTable
+CREATE TABLE "MediaImage" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "path" TEXT NOT NULL,
+    "fileName" TEXT NOT NULL,
+    "folder" TEXT NOT NULL,
+    "mimeType" TEXT NOT NULL,
+    "dataBase64" TEXT NOT NULL,
+    "size" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "MediaImage_path_key" ON "MediaImage"("path");
 

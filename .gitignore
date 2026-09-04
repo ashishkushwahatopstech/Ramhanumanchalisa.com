@@ -43,3 +43,5 @@ next-env.d.ts
 # Astro
 .astro/
 dist/
+.wrangler/
+scripts/check-pages.mjs

@@ -82,6 +82,8 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
   const [imageAlt, setImageAlt] = useState<string>("");
   const [imageTitle, setImageTitle] = useState<string>("");
   const [imageCaption, setImageCaption] = useState<string>("");
+  const [isUploadingCover, setIsUploadingCover] = useState<boolean>(false);
+  const [coverUploadMsg, setCoverUploadMsg] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
   // All in-content images on this page
   const [galleryImages, setGalleryImages] = useState<ContentImageItem[]>([]);
@@ -93,6 +95,8 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
   const [insertImgTitle, setInsertImgTitle] = useState<string>("");
   const [insertImgCaption, setInsertImgCaption] = useState<string>("");
   const [insertSuccessMsg, setInsertSuccessMsg] = useState<string | null>(null);
+  const [isUploadingInsertImg, setIsUploadingInsertImg] = useState<boolean>(false);
+  const [insertUploadMsg, setInsertUploadMsg] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
   // Media Tab Re-editing Image States
   const [editingImageId, setEditingImageId] = useState<string | null>(null);
@@ -164,9 +168,99 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
     setGalleryImages([]);
     setShowInsertModal(false);
     setInsertSuccessMsg(null);
+    setCoverUploadMsg(null);
+    setInsertUploadMsg(null);
     setEditingImageId(null);
     setPublished(true);
     setActiveTab("content");
+  };
+
+  // Dynamic Image Upload Handlers for Benefits
+  const handleUploadCoverFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingCover(true);
+    setCoverUploadMsg(null);
+
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("folder", "benefits");
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: fd,
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to upload image");
+      }
+
+      setCoverImage(data.url);
+      setCoverUploadMsg({ text: `Uploaded successfully: ${data.fileName}`, type: "success" });
+
+      // Auto-populate Alt & Title if empty
+      if (!imageAlt.trim()) {
+        const cleanName = data.fileName
+          .replace(/\.[^/.]+$/, "")
+          .replace(/[-_]/g, " ")
+          .replace(/\b\w/g, (c: string) => c.toUpperCase());
+        setImageAlt(title ? `${title} — ${cleanName}` : cleanName);
+      }
+      if (!imageTitle.trim()) {
+        setImageTitle(title || "Shri Hanuman Chalisa Divine Benefit");
+      }
+    } catch (err: any) {
+      setCoverUploadMsg({ text: err.message || "Image upload failed", type: "error" });
+    } finally {
+      setIsUploadingCover(false);
+      e.target.value = "";
+    }
+  };
+
+  const handleUploadInsertFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingInsertImg(true);
+    setInsertUploadMsg(null);
+
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("folder", "benefits");
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: fd,
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to upload image");
+      }
+
+      setInsertImgUrl(data.url);
+      setInsertUploadMsg({ text: `Uploaded: ${data.fileName}`, type: "success" });
+
+      if (!insertImgAlt.trim()) {
+        const cleanName = data.fileName
+          .replace(/\.[^/.]+$/, "")
+          .replace(/[-_]/g, " ")
+          .replace(/\b\w/g, (c: string) => c.toUpperCase());
+        setInsertImgAlt(cleanName);
+      }
+      if (!insertImgTitle.trim()) {
+        setInsertImgTitle(title || "Hanuman Grace & Healing");
+      }
+    } catch (err: any) {
+      setInsertUploadMsg({ text: err.message || "Upload failed", type: "error" });
+    } finally {
+      setIsUploadingInsertImg(false);
+      e.target.value = "";
+    }
   };
 
   const handleEdit = (benefit: BenefitItem) => {
@@ -782,6 +876,33 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
 
                 {showInsertModal && (
                   <div className="pt-3 border-t border-brass-gold/20 space-y-3">
+                    {/* Direct Upload Option for Content Image */}
+                    <div className="p-2.5 bg-white border-2 border-dashed border-brass-gold/50 rounded-lg flex items-center justify-between gap-3">
+                      <div className="space-y-0.5">
+                        <span className="text-[11px] font-bold text-maroon-deep flex items-center gap-1">
+                          <span>📁</span> Upload Image to /images/benefits/
+                        </span>
+                        <p className="text-[10px] text-charcoal-brown/60">
+                          Select local file to automatically upload & populate URL
+                        </p>
+                      </div>
+                      <label className="cursor-pointer inline-flex items-center gap-1 bg-maroon-deep hover:bg-vermilion text-stone-ivory px-2.5 py-1 rounded text-[11px] font-bold uppercase tracking-wider transition-colors shadow-sm shrink-0">
+                        <span>{isUploadingInsertImg ? "⏳ Uploading..." : "⬆️ Upload Local File"}</span>
+                        <input
+                          type="file"
+                          accept="image/webp,image/png,image/jpeg,image/avif,image/svg+xml"
+                          disabled={isUploadingInsertImg}
+                          onChange={handleUploadInsertFile}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                    {insertUploadMsg && (
+                      <p className={`text-[11px] font-semibold ${insertUploadMsg.type === "success" ? "text-emerald-700" : "text-red-600"}`}>
+                        {insertUploadMsg.type === "success" ? "✓ " : "✕ "} {insertUploadMsg.text}
+                      </p>
+                    )}
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div>
                         <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
@@ -912,6 +1033,36 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
                 <span className="text-xs font-bold uppercase tracking-wider text-maroon-deep block border-b border-brass-gold/20 pb-2">
                   ⭐ Featured / Cover Image SEO
                 </span>
+
+                {/* Direct Image Upload to /images/benefits/ */}
+                <div className="p-3 bg-white border-2 border-dashed border-brass-gold/50 rounded-lg hover:border-maroon-deep transition-colors">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="space-y-0.5">
+                      <label className="text-xs font-bold text-maroon-deep flex items-center gap-1.5 cursor-pointer">
+                        <span>📁</span> Upload Image to /images/benefits/
+                      </label>
+                      <p className="text-[11px] text-charcoal-brown/60">
+                        Select local WebP/PNG/JPG. Saves to project folder & sets URL automatically without manual copying.
+                      </p>
+                    </div>
+                    <label className="cursor-pointer inline-flex items-center justify-center gap-1.5 bg-maroon-deep hover:bg-vermilion text-stone-ivory px-3.5 py-2 rounded text-xs font-bold uppercase tracking-wider transition-colors shadow-sm shrink-0">
+                      <span>{isUploadingCover ? "⏳ Uploading..." : "⬆️ Choose Local Image"}</span>
+                      <input
+                        type="file"
+                        accept="image/webp,image/png,image/jpeg,image/avif,image/svg+xml"
+                        disabled={isUploadingCover}
+                        onChange={handleUploadCoverFile}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                  {coverUploadMsg && (
+                    <p className={`mt-2 text-[11px] font-semibold ${coverUploadMsg.type === "success" ? "text-emerald-700" : "text-red-600"}`}>
+                      {coverUploadMsg.type === "success" ? "✓ " : "✕ "} {coverUploadMsg.text}
+                    </p>
+                  )}
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-4">
                     <div>

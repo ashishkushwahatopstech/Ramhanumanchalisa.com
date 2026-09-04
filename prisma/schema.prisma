@@ -155,3 +155,15 @@ model LanguageContent {
   published       Boolean  @default(false)
   updatedAt       DateTime @updatedAt
 }
+
+// Uploaded Media Images for Edge & SEO
+model MediaImage {
+  id         String   @id @default(cuid())
+  path       String   @unique
+  fileName   String
+  folder     String
+  mimeType   String
+  dataBase64 String
+  size       Int
+  createdAt  DateTime @default(now())
+}
