@@ -231,7 +231,9 @@ const articleSchema = {
   "headline": post.title,
   "description": pageDescription,
   "datePublished": isoDate,
-  "image": post.coverImage ? [post.coverImage] : ["https://ramhanumanchalisa.com/icon.png"],
+  "image": post.coverImage
+    ? [post.coverImage.startsWith("http") ? post.coverImage : `https://ramhanumanchalisa.com${post.coverImage.startsWith("/") ? "" : "/"}${post.coverImage}`]
+    : ["https://ramhanumanchalisa.com/icon.png"],
   "author": {
     "@type": "Person",
     "name": post.author || "Admin",

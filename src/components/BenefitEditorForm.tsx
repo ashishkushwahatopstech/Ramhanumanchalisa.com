@@ -909,10 +909,10 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
                           Image URL <span className="text-red-500">*</span>
                         </label>
                         <input
-                          type="url"
+                          type="text"
                           value={insertImgUrl}
                           onChange={(e) => setInsertImgUrl(e.target.value)}
-                          placeholder="https://images.unsplash.com/... or /images/..."
+                          placeholder="/images/benefits/... or https://..."
                           className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
                         />
                       </div>
@@ -1070,10 +1070,10 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
                         Cover Image URL
                       </label>
                       <input
-                        type="url"
+                        type="text"
                         value={coverImage}
                         onChange={(e) => setCoverImage(e.target.value)}
-                        placeholder="https://... or /images/benefits/peace.jpg"
+                        placeholder="/images/benefits/... or https://..."
                         className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
                       />
                     </div>
@@ -1261,7 +1261,7 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
                                   Image URL
                                 </label>
                                 <input
-                                  type="url"
+                                  type="text"
                                   value={editImgUrl}
                                   onChange={(e) => setEditImgUrl(e.target.value)}
                                   className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none"
