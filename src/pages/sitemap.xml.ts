@@ -22,6 +22,8 @@ export const GET: APIRoute = async (context) => {
     "/bajrang-baan",
     "/sankat-mochan-hanumanashtak",
     "/hanuman-aarti",
+    "/ram-chalisa",
+    "/hanuman-stuti",
     "/blog",
     "/faq",
     "/about",

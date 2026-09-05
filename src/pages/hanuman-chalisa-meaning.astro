@@ -33,8 +33,16 @@ const meaningFaqs = [
     answer: "The first opening doha cleanses the mirror of the devotee's mind with the sacred dust of the Guru's lotus feet to describe the pure glory of Lord Rama, which bestows the four fruits of life (Dharma, Artha, Kama, and Moksha). The second doha acknowledges one's humble lack of wisdom and asks Pavankumar (Hanuman) to grant strength, intelligence, and spiritual knowledge while eradicating bodily suffering and impurities."
   },
   {
-    question: "What does 'Ram Rasayan Tumhare Pasa' mean in the Hanuman Chalisa?",
-    answer: "In Chaupai 32, 'Ram Rasayan Tumhare Pasa' refers to the divine elixir ('rasayan') of devotion to Lord Rama that resides permanently within Hanuman's heart. It signifies that Lord Hanuman holds the supreme spiritual medicine—unconditional surrender and chanting of Rama's holy name—which cures all worldly afflictions and grants everlasting peace."
+    question: "What does 'Ram Rasayan Tumhare Pasa Sada Raho Raghupati Ke Dasa' mean?",
+    answer: "In Chaupai 32, 'Ram Rasayan Tumhare Pasa, Sada Raho Raghupati Ke Dasa' means that Lord Hanuman holds the divine elixir ('rasayan') of devotion to Lord Rama. By remaining the eternal, humble servant of Raghupati (Lord Rama), Hanumanji possesses the supreme spiritual remedy that relieves devotees of all mortal pains, negative karma, and material bondages."
+  },
+  {
+    question: "What is the meaning of 'Nasai Rog Harai Sab Peera' (Chaupai 25)?",
+    answer: "Chaupai 25 ('Nasai rog harai sab peera, japat nirantar Hanumat beera') translates to: 'All diseases are eliminated and all pains vanish when one continuously chants the name of the brave Lord Hanuman.' Devotees chant this specific line for physical healing, relief from chronic ailments, and mental peace."
+  },
+  {
+    question: "What does 'Tulsidas Sada Hari Chera' mean in Chaupai 40?",
+    answer: "In Chaupai 40 ('Tulsidas sada hari chera, keejai nath hriday mah dera'), Goswami Tulsidas declares that he is an eternal disciple and servant ('chera') of Lord Rama (Hari). He pleads with Lord Hanuman: 'O Master, please establish your eternal abode inside my heart.' It signifies total surrender (Dasya Bhakti) to God."
   },
   {
     question: "Does each chaupai have a specific meaning or story behind it?",
@@ -382,6 +390,83 @@ const verseGists: Record<string, string> = {
       </p>
     </div>
 
+    <!-- Top-Searched Chaupais Spotlight (Featured Meanings & Quick Anchors) -->
+    <section class="bg-stone-ivory border-2 border-brass-gold rounded-lg p-6 shadow-sm space-y-4">
+      <div class="border-b border-brass-gold/20 pb-2">
+        <h3 class="font-serif-display text-base sm:text-lg font-bold uppercase tracking-wider text-maroon-deep flex items-center gap-2">
+          <span>🌟</span> Most Searched Chaupais & Their Sacred Meanings
+        </h3>
+        <p class="text-xs text-charcoal-brown/70">
+          Quick access to the most frequently recited healing lines and surrender verses in the Hanuman Chalisa.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Chaupai 25: Nasai Rog Harai Sab Peera */}
+        <div class="bg-sand-warm/30 border border-brass-gold/30 rounded p-4 space-y-2 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-vermilion block">
+              Chaupai 25 • Healing Verse
+            </span>
+            <h4 class="font-hindi-display text-sm font-bold text-maroon-deep mt-1">
+              नासै रोग हरै सब पीरा।<br />जपत निरंतर हनुमत बीरा।।
+            </h4>
+            <p class="text-xs text-charcoal-brown/80 italic mt-1">
+              "Nasai rog harai sab peera, japat nirantar Hanumat beera"
+            </p>
+            <p class="text-xs text-charcoal-brown/90 mt-2 leading-relaxed">
+              <strong>Meaning:</strong> All diseases are eradicated and all suffering vanishes through continuous recitation of brave Hanuman's holy name.
+            </p>
+          </div>
+          <a href="#verse-25" class="text-xs font-bold text-maroon-deep hover:text-vermilion underline pt-2 inline-block">
+            Read Full Chaupai 25 Analysis &rarr;
+          </a>
+        </div>
+
+        {/* Chaupai 32: Ram Rasayan Tumhare Pasa */}
+        <div class="bg-sand-warm/30 border border-brass-gold/30 rounded p-4 space-y-2 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-vermilion block">
+              Chaupai 32 • Divine Elixir
+            </span>
+            <h4 class="font-hindi-display text-sm font-bold text-maroon-deep mt-1">
+              राम रसायन तुम्हरे पासा।<br />सदा रहो रघुपति के दासा।।
+            </h4>
+            <p class="text-xs text-charcoal-brown/80 italic mt-1">
+              "Ram rasayan tumhare pasa, sada raho raghupati ke dasa"
+            </p>
+            <p class="text-xs text-charcoal-brown/90 mt-2 leading-relaxed">
+              <strong>Meaning:</strong> You hold the divine elixir (Rasayan) of devotion to Lord Rama, remaining forever the dedicated servant of Raghupati.
+            </p>
+          </div>
+          <a href="#verse-32" class="text-xs font-bold text-maroon-deep hover:text-vermilion underline pt-2 inline-block">
+            Read Full Chaupai 32 Analysis &rarr;
+          </a>
+        </div>
+
+        {/* Chaupai 40: Tulsidas Sada Hari Chera */}
+        <div class="bg-sand-warm/30 border border-brass-gold/30 rounded p-4 space-y-2 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-vermilion block">
+              Chaupai 40 • Surrender & Devotion
+            </span>
+            <h4 class="font-hindi-display text-sm font-bold text-maroon-deep mt-1">
+              तुलसीदास सदा हरि चेरा।<br />कीजै नाथ हृदय महं डेरा।।
+            </h4>
+            <p class="text-xs text-charcoal-brown/80 italic mt-1">
+              "Tulsidas sada hari chera, keejai nath hriday mah dera"
+            </p>
+            <p class="text-xs text-charcoal-brown/90 mt-2 leading-relaxed">
+              <strong>Meaning:</strong> Tulsidas is the eternal servant of Sri Hari. O Lord Hanuman, please dwell eternally within the inner sanctum of my heart.
+            </p>
+          </div>
+          <a href="#verse-40" class="text-xs font-bold text-maroon-deep hover:text-vermilion underline pt-2 inline-block">
+            Read Full Chaupai 40 Analysis &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- Verses Meaning List -->
     <div class="space-y-12">
       {verses.map((verse) => {
@@ -403,6 +488,18 @@ const verseGists: Record<string, string> = {
           >
             {rangeGroup && (
               <span id={rangeGroup} class="scroll-mt-24 absolute -top-8 left-0"></span>
+            )}
+            {verse.verse_number === 25 && (
+              <span id="nasai-rog-harai-sab-peera" class="scroll-mt-24 absolute -top-8 left-0"></span>
+            )}
+            {verse.verse_number === 32 && (
+              <>
+                <span id="ram-rasayan-tumhare-pasa" class="scroll-mt-24 absolute -top-8 left-0"></span>
+                <span id="ram-rasayan-tumhare-pasa-sada-raho-raghupati-ke-dasa" class="scroll-mt-24 absolute -top-8 left-0"></span>
+              </>
+            )}
+            {verse.verse_number === 40 && (
+              <span id="tulsidas-sada-hari-chera" class="scroll-mt-24 absolute -top-8 left-0"></span>
             )}
               {/* Verse Heading & Gist */}
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-brass-gold/20 pb-3">

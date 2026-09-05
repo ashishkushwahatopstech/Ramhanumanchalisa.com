@@ -54,6 +54,14 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
           "@type": "Answer",
           "text": "Chanting Hanuman Ashtak removes fear, provides relief from planetary afflictions (especially Shani Dev / Saturn), builds mental courage, and dissolves physical and spiritual obstacles."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the lyrics of Sankat Mochan Hanuman Ashtak in English?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Sankat Mochan Hanuman Ashtak consists of 8 sacred Awadhi verses starting with 'Bal samay ravi bhaksh liyo tab, teenahun lok bhayo andhiyaron...'. The complete romanized English lyrics and translations for all eight stanzas are provided line-by-line on this page."
+        }
       }
     ]
   };
@@ -148,6 +156,78 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
             🖨️ Print / Save PDF
           </button>
         </div>
+
+        {/* 8 Verses Lyrics Section — Visible on Web for SEO & Recitation */}
+        <section className="space-y-8" id="sankat-mochan-lyrics">
+          <div className="text-center space-y-2">
+            <span className="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+              सम्पूर्ण संकट मोचन हनुमानाष्टक
+            </span>
+            <h2 className="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+              Sankat Mochan Hanuman Ashtak Lyrics in Hindi & English
+            </h2>
+            <p className="text-xs text-charcoal-brown/70 max-w-2xl mx-auto leading-relaxed">
+              Read the authentic 8 verses composed by Goswami Tulsidas with original Devanagari text, Romanized English transliteration, word-by-word meanings, and full translation.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {verses.map((verse) => (
+              <article
+                key={verse.id}
+                id={verse.id}
+                className="p-6 bg-stone-ivory border-l-4 border-brass-gold border-r border-t border-b border-brass-gold/20 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="flex flex-wrap items-center justify-between border-b border-brass-gold/15 pb-2 gap-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-maroon-deep">
+                    Verse {verse.verse_number}: {verse.title_en}
+                  </span>
+                  <span className="text-xs font-hindi-display text-maroon-deep font-semibold">
+                    {verse.title_hi}
+                  </span>
+                </div>
+
+                {/* Devanagari Lyrics */}
+                <p className="font-hindi-display text-lg sm:text-xl text-charcoal-brown tracking-wide leading-loose text-center font-bold whitespace-pre-line">
+                  {verse.devanagari}
+                </p>
+
+                {/* English Transliteration */}
+                <div className="bg-sand-warm/30 p-3.5 rounded border border-brass-gold/20 text-center">
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-maroon-deep block mb-1">
+                    English Lyrics / Transliteration
+                  </span>
+                  <p className="text-xs sm:text-sm text-charcoal-brown italic leading-relaxed whitespace-pre-line">
+                    {verse.transliteration}
+                  </p>
+                </div>
+
+                {/* English Translation */}
+                <div className="space-y-2 pt-1 border-t border-brass-gold/15">
+                  <div>
+                    <span className="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+                      English Meaning:
+                    </span>
+                    <p className="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed mt-0.5">
+                      {verse.literal_translation?.en || verse.interpretive_meaning?.en}
+                    </p>
+                  </div>
+
+                  {verse.literal_translation?.hi && (
+                    <div className="pt-1">
+                      <span className="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+                        हिंदी भावार्थ:
+                      </span>
+                      <p className="text-xs sm:text-sm text-charcoal-brown/85 font-hindi-display leading-relaxed mt-0.5">
+                        {verse.literal_translation.hi}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
         {/* Meaning & Importance */}
         <section className="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">

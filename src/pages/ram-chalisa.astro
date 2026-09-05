@@ -1,0 +1,351 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CarvedDivider from "../components/CarvedDivider";
+import PageFaqs from "../components/PageFaqs.astro";
+import ramChalisaData from "../data/scriptures/ram-chalisa.json";
+import type { ScriptureVerse } from "../types/scripture";
+
+const verses = ramChalisaData as ScriptureVerse[];
+
+const openingDoha = verses.find((v) => v.id === "doha-01");
+const closingDoha = verses.find((v) => v.id === "doha-closing");
+const chaupais = verses.filter((v) => v.id.startsWith("chaupai-"));
+
+const title = "Shri Ram Chalisa in English — Lyrics, Meaning & Translation (श्री राम चालीसा)";
+const description = "Read Shri Ram Chalisa with authentic Devanagari lyrics, English transliteration, line-by-line English translation, benefits, and recitation rules.";
+
+const ramChalisaFaqs = [
+  {
+    question: "What is Shri Ram Chalisa?",
+    answer: "Shri Ram Chalisa is a sacred 40-verse devotional hymn (Chaupai) with opening and closing couplets (Dohas) dedicated to Lord Rama, celebrating his divine virtues, the events of the Ramayana, his triumph over Ravana, and the transformative spiritual power of chanting the holy name of Rama."
+  },
+  {
+    question: "What are the lyrics of Shri Ram Chalisa in English?",
+    answer: "The Shri Ram Chalisa begins with the invocation couplet: 'Shri raghubir bhakt hitkari, sun leejai prabhu araj hamari. Nishi din dhyan dharai jo koi, ta sam bhakt aur nahin hoi.' followed by 40 rhythmic verses starting with 'Dhyan dhare shivaji man maheen, brahma indra paar nahin paheen...'. The complete romanized English text and translations for every verse are provided on this page."
+  },
+  {
+    question: "Is Ram Chalisa the same as Hanuman Chalisa?",
+    answer: "No, the Shri Ram Chalisa is dedicated directly to Maryada Purushottama Lord Rama, meditating on his righteous reign (Ram Rajya) and divine protection. The Hanuman Chalisa was composed by Goswami Tulsidas specifically in praise of Lord Hanuman. However, because Hanuman is the foremost devotee of Lord Rama, devotees often recite both together for complete spiritual fulfillment."
+  },
+  {
+    question: "What are the benefits of reciting Shri Ram Chalisa daily?",
+    answer: "Daily recitation of Shri Ram Chalisa purifies the mind of negative emotions (lust, anger, ego, greed), destroys deep-seated anxieties, protects against malefic vibrations, fosters harmony in the household, and brings health, prosperity, and spiritual liberation (Moksha)."
+  },
+  {
+    question: "What is the best day and time to recite Shri Ram Chalisa?",
+    answer: "Shri Ram Chalisa can be recited every day, preferably during Brahma Muhurta (dawn) or in the evening twilight. Sundays and auspicious festive days like Rama Navami and Diwali are considered especially potent for extended recitation."
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": ramChalisaFaqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+---
+
+<Layout title={title} description={description}>
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <div class="space-y-10 max-w-4xl mx-auto">
+    <!-- Breadcrumbs -->
+    <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
+      <ol class="list-none p-0 inline-flex gap-2">
+        <li class="flex items-center">
+          <a href="/" class="hover:text-maroon-deep">Home</a>
+          <span class="mx-2">/</span>
+        </li>
+        <li class="text-maroon-deep truncate max-w-[200px]" aria-current="page">
+          Shri Ram Chalisa
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <div class="text-center space-y-3">
+      <span class="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+        मर्यादा पुरुषोत्तम • श्री राम चालीसा
+      </span>
+      <h1 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+        Shri Ram Chalisa in English & Hindi
+      </h1>
+      <p class="text-xs text-charcoal-brown/70 max-w-xl mx-auto leading-relaxed">
+        Read the complete Shri Ram Chalisa lyrics with original Devanagari verses, romanized English transliteration, word-by-word vocabulary, and line-by-line English translation.
+      </p>
+    </div>
+
+    <CarvedDivider icon="🏹" />
+
+    {/* Quick Facts Table (Snippet Optimization) */}
+    <section class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-6 shadow-sm space-y-4">
+      <h3 class="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep text-center">
+        Shri Ram Chalisa Quick Facts
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-xs text-charcoal-brown">
+          <tbody>
+            <tr class="border-b border-brass-gold/25">
+              <td class="py-2.5 font-bold uppercase tracking-wider w-1/3">Deity (देवता)</td>
+              <td class="py-2.5">Lord Sri Ram (भगवान श्री राम)</td>
+            </tr>
+            <tr class="border-b border-brass-gold/25">
+              <td class="py-2.5 font-bold uppercase tracking-wider">Verse Structure</td>
+              <td class="py-2.5">Opening Doha + 40 Chaupais + Concluding Doha</td>
+            </tr>
+            <tr class="border-b border-brass-gold/25">
+              <td class="py-2.5 font-bold uppercase tracking-wider">Language (भाषा)</td>
+              <td class="py-2.5">Awadhi / Hindi (अवधी/हिंदी)</td>
+            </tr>
+            <tr class="border-b border-brass-gold/25">
+              <td class="py-2.5 font-bold uppercase tracking-wider">Best Days to Recite</td>
+              <td class="py-2.5">Daily, especially Sundays, Rama Navami & Hanuman Jayanti</td>
+            </tr>
+            <tr class="border-b border-brass-gold/25">
+              <td class="py-2.5 font-bold uppercase tracking-wider">Primary Benefits</td>
+              <td class="py-2.5">Peace of mind, removal of sins, family harmony, fearlessness, liberation</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 font-bold uppercase tracking-wider">Formats Available</td>
+              <td class="py-2.5">Hindi Unicode, English Transliteration, English Meaning, PDF Print</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {/* PDF Download Action Banner */}
+    <div class="no-print bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-1 text-center md:text-left">
+        <h3 class="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
+          Download Shri Ram Chalisa PDF
+        </h3>
+        <p class="text-xs text-stone-ivory/80 max-w-lg leading-relaxed">
+          Generate an elegant, high-contrast printable document with lyrics and translation for daily worship.
+        </p>
+      </div>
+      <button
+        onclick="window.print()"
+        class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-5 py-2.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300 whitespace-nowrap cursor-pointer"
+      >
+        🖨️ Print / Save PDF
+      </button>
+    </div>
+
+    <!-- 1. Opening Doha -->
+    {openingDoha && (
+      <section class="p-6 bg-stone-ivory border-2 border-brass-gold text-charcoal-brown rounded-lg shadow-sm text-center space-y-4 max-w-2xl mx-auto" id="opening-doha">
+        <span class="text-xs uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+          Opening Couplet (प्रारंभिक दोहा)
+        </span>
+        <div class="space-y-2">
+          <p class="font-hindi-display text-xl sm:text-2xl leading-loose font-bold whitespace-pre-line text-charcoal-brown">
+            {openingDoha.devanagari}
+          </p>
+          <div class="bg-sand-warm/30 p-3 rounded border border-brass-gold/20">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep block mb-1">
+              English Pronunciation / Transliteration
+            </span>
+            <p class="text-xs sm:text-sm text-charcoal-brown italic leading-relaxed whitespace-pre-line">
+              {openingDoha.transliteration}
+            </p>
+          </div>
+          <div class="pt-2 text-left space-y-1.5 border-t border-brass-gold/20">
+            <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+              English Meaning:
+            </span>
+            <p class="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed">
+              {openingDoha.literal_translation.en}
+            </p>
+            <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block pt-1">
+              हिंदी भावार्थ:
+            </span>
+            <p class="text-xs sm:text-sm text-charcoal-brown/85 font-hindi-display leading-relaxed">
+              {openingDoha.literal_translation.hi}
+            </p>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- 2. Main Verses (40 Chaupais) -->
+    <section class="space-y-6" id="ram-chalisa-verses">
+      <div class="text-center space-y-2">
+        <h2 class="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+          Shri Ram Chalisa Lyrics in English & Hindi (40 Chaupais)
+        </h2>
+        <p class="text-xs text-charcoal-brown/70 max-w-xl mx-auto">
+          Recite the 40 chaupais celebrating the pastimes, courage, and unconditional mercy of Lord Rama.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {chaupais.map((verse) => (
+          <article
+            id={verse.id}
+            class="p-6 bg-stone-ivory border-l-4 border-brass-gold border-r border-t border-b border-brass-gold/20 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200"
+          >
+            <div class="flex flex-wrap items-center justify-between border-b border-brass-gold/15 pb-2 gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-maroon-deep">
+                Chaupai {verse.verse_number}: {verse.title_en}
+              </span>
+              <span class="text-xs font-hindi-display text-maroon-deep font-semibold">
+                {verse.title_hi}
+              </span>
+            </div>
+
+            <!-- Devanagari Lyrics -->
+            <p class="font-hindi-display text-xl sm:text-2xl text-charcoal-brown tracking-wide leading-loose text-center font-bold">
+              {verse.devanagari}
+            </p>
+
+            <!-- English Transliteration -->
+            <div class="bg-sand-warm/30 p-3 rounded border border-brass-gold/20 text-center">
+              <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep block mb-1">
+                English Lyrics / Transliteration
+              </span>
+              <p class="text-xs sm:text-sm text-charcoal-brown italic leading-relaxed">
+                {verse.transliteration}
+              </p>
+            </div>
+
+            <!-- English & Hindi Meaning -->
+            <div class="space-y-2 pt-1 border-t border-brass-gold/15">
+              <div>
+                <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+                  English Meaning:
+                </span>
+                <p class="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed mt-0.5">
+                  {verse.literal_translation.en}
+                </p>
+              </div>
+
+              <div>
+                <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+                  हिंदी भावार्थ:
+                </span>
+                <p class="text-xs sm:text-sm text-charcoal-brown/85 font-hindi-display leading-relaxed mt-0.5">
+                  {verse.literal_translation.hi}
+                </p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- 3. Concluding Doha -->
+    {closingDoha && (
+      <section class="p-6 bg-stone-ivory border-2 border-brass-gold text-charcoal-brown rounded-lg shadow-sm text-center space-y-4 max-w-2xl mx-auto" id="concluding-doha">
+        <span class="text-xs uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+          Concluding Couplet (समापन दोहा)
+        </span>
+        <div class="space-y-2">
+          <p class="font-hindi-display text-xl sm:text-2xl leading-loose font-bold whitespace-pre-line text-charcoal-brown">
+            {closingDoha.devanagari}
+          </p>
+          <div class="bg-sand-warm/30 p-3 rounded border border-brass-gold/20">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep block mb-1">
+              English Pronunciation / Transliteration
+            </span>
+            <p class="text-xs sm:text-sm text-charcoal-brown italic leading-relaxed whitespace-pre-line">
+              {closingDoha.transliteration}
+            </p>
+          </div>
+          <div class="pt-2 text-left space-y-1.5 border-t border-brass-gold/20">
+            <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+              English Meaning:
+            </span>
+            <p class="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed">
+              {closingDoha.literal_translation.en}
+            </p>
+            <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block pt-1">
+              हिंदी भावार्थ:
+            </span>
+            <p class="text-xs sm:text-sm text-charcoal-brown/85 font-hindi-display leading-relaxed">
+              {closingDoha.literal_translation.hi}
+            </p>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Recitation Vidhi & Benefits Guide -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-3">
+        <h3 class="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
+          Recitation Method (पाठ विधि)
+        </h3>
+        <ul class="list-disc pl-5 text-xs sm:text-sm leading-relaxed space-y-2 text-charcoal-brown/90">
+          <li><strong>Cleanliness</strong>: Bathe and wear clean, comfortable clothes. Sit facing East or North on a clean wool or kusha mat (Aasan).</li>
+          <li><strong>Altar Setup</strong>: Place an image or idol of Shri Ram, Sita, Lakshmana, and Hanuman. Light a ghee lamp (diya) and incense (agarbatti).</li>
+          <li><strong>Invocation</strong>: Begin with the chanting of "Jai Shree Ram" or "Om Shri Ramaya Namah" 11 times.</li>
+          <li><strong>Focused Reading</strong>: Recite the 40 verses calmly, absorbing the meaning of each line. Conclude with Ram Aarti or Hanuman Aarti.</li>
+        </ul>
+      </section>
+
+      <section class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-3">
+        <h3 class="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
+          Spiritual Benefits (महत्व व लाभ)
+        </h3>
+        <ul class="list-disc pl-5 text-xs sm:text-sm leading-relaxed space-y-2 text-charcoal-brown/90">
+          <li><strong>Inner Peace</strong>: Clears agitated thoughts and dissolves existential restlessness.</li>
+          <li><strong>Overcoming Difficulties</strong>: Eradicates long-standing family distress, debts, and obstacles.</li>
+          <li><strong>Protection from Evil</strong>: Creates a spiritual armor of righteousness that repels negative influences.</li>
+          <li><strong>Spiritual Elevation</strong>: Blesses the reciter with unconditional devotion, righteousness, and liberation.</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- Visible FAQs Section -->
+    <section class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4" id="faqs">
+      <h3 class="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
+        Frequently Asked Questions
+      </h3>
+      <div class="space-y-4 divide-y divide-brass-gold/15">
+        {ramChalisaFaqs.map((faq) => (
+          <div class="pt-3 space-y-1">
+            <h4 class="font-bold text-sm text-charcoal-brown">{faq.question}</h4>
+            <p class="text-xs text-charcoal-brown/80 leading-relaxed">{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Related Devotional Links -->
+    <section class="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
+      <h4 class="font-serif-display text-sm font-bold uppercase text-maroon-deep">
+        Related Devotional Chants (संबंधित पाठ)
+      </h4>
+      <div class="flex flex-wrap justify-center gap-4 text-xs font-semibold">
+        <a href="/" class="text-vermilion hover:text-marigold underline">
+          Shree Hanuman Chalisa
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/ram-hanuman-chalisa" class="text-vermilion hover:text-marigold underline">
+          Ram Hanuman Connection
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/sankat-mochan-hanumanashtak" class="text-vermilion hover:text-marigold underline">
+          Sankat Mochan Ashtak
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/bajrang-baan" class="text-vermilion hover:text-marigold underline">
+          Bajrang Baan
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/hanuman-aarti" class="text-vermilion hover:text-marigold underline">
+          Hanuman Aarti
+        </a>
+      </div>
+    </section>
+
+  </div>
+</Layout>

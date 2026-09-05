@@ -1,0 +1,283 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CarvedDivider from "../components/CarvedDivider";
+import hanumanStutiData from "../data/scriptures/hanuman-stuti.json";
+import type { ScriptureVerse } from "../types/scripture";
+
+const verses = hanumanStutiData as ScriptureVerse[];
+
+const title = "Shri Hanuman Stuti Lyrics in English & Sanskrit — Meaning & Translation (हनुमान स्तुति)";
+const description = "Read complete Shri Hanuman Stuti lyrics in English transliteration and Sanskrit (Manojavam, Atulita Bala Dhaamam), with line-by-line meanings and benefits.";
+
+const stutiFaqs = [
+  {
+    question: "What is Shri Hanuman Stuti?",
+    answer: "Shri Hanuman Stuti is a sacred collection of classical Sanskrit dhyana shlokas (including 'Atulita Bala Dhaamam' and 'Manojavam Maaruta Tulya Vegam') that invoke the divine qualities, speed, intellect, and unconditional surrender of Lord Hanuman."
+  },
+  {
+    question: "What are the lyrics of Hanuman Stuti in English?",
+    answer: "The foremost verses of the Hanuman Stuti in English transliteration are:\n1. 'Atulita-bala-dhaamam hema-shailaabha-deham, danuja-vana-krishaanum jnaaninaam-agraganyam...'\n2. 'Manojavam maaruta-tulya-vegam, jitendriyam buddhimataam varishtham...'\n3. 'Yatra yatra raghunaatha-keertanam, tatra tatra krita-mastakaanjalim...'\nThe complete 5-verse transliteration and translations are detailed verse-by-verse on this page."
+  },
+  {
+    question: "What are the benefits of chanting Manojavam Marutatulyavegam?",
+    answer: "Chanting 'Manojavam Maaruta Tulya Vegam' calms the restless mind, brings sensory self-control (Jitendriya), sharpens the intellect (Buddhi), and invokes immediate divine protection in situations of sudden panic, fear, or mental confusion."
+  },
+  {
+    question: "When should Hanuman Stuti be recited?",
+    answer: "Hanuman Stuti is traditionally chanted prior to reciting the Hanuman Chalisa, Sundarkand, or Ramayana. It is also chanted daily before undertaking important intellectual work, exams, journeys, or meditative practice."
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": stutiFaqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+---
+
+<Layout title={title} description={description}>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <div class="space-y-10 max-w-4xl mx-auto">
+    <!-- Breadcrumbs -->
+    <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
+      <ol class="list-none p-0 inline-flex gap-2">
+        <li class="flex items-center">
+          <a href="/" class="hover:text-maroon-deep">Home</a>
+          <span class="mx-2">/</span>
+        </li>
+        <li class="text-maroon-deep truncate max-w-[200px]" aria-current="page">
+          Hanuman Stuti
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <div class="text-center space-y-3">
+      <span class="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+        संस्कृत ध्यान स्तोत्र • श्री हनुमान स्तुति
+      </span>
+      <h1 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+        Shri Hanuman Stuti Lyrics in English & Sanskrit
+      </h1>
+      <p class="text-xs text-charcoal-brown/70 max-w-xl mx-auto leading-relaxed">
+        Chant the sacred Sanskrit meditation shlokas of Lord Hanuman with romanized English pronunciation, word-by-word vocabulary, and line-by-line English translation.
+      </p>
+    </div>
+
+    <CarvedDivider icon="🕉️" />
+
+    {/* Quick Facts Table (Snippet Optimization) */}
+    <section class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-6 shadow-sm space-y-4">
+      <h3 class="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep text-center">
+        Shri Hanuman Stuti Quick Facts
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-xs text-charcoal-brown">
+          <tbody>
+            <tr class="border-b border-brass-gold/25">
+              <td class="py-2.5 font-bold uppercase tracking-wider w-1/3">Deity (देवता)</td>
+              <td class="py-2.5">Lord Hanuman / Maruti / Anjaneya (श्री हनुमान)</td>
+            </tr>
+            <tr class="border-b border-brass-gold/25">
+              <td class="py-2.5 font-bold uppercase tracking-wider">Language (भाषा)</td>
+              <td class="py-2.5">Classical Vedic Sanskrit (संस्कृतम्)</td>
+            </tr>
+            <tr class="border-b border-brass-gold/25">
+              <td class="py-2.5 font-bold uppercase tracking-wider">Key Invocations</td>
+              <td class="py-2.5">Atulita Bala Dhaamam, Manojavam, Yatra Yatra Raghunatha Keertanam</td>
+            </tr>
+            <tr class="border-b border-brass-gold/25">
+              <td class="py-2.5 font-bold uppercase tracking-wider">Usage & Ritual</td>
+              <td class="py-2.5">Opening Dhyana before Hanuman Chalisa, Sundarkand, or daily Puja</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 font-bold uppercase tracking-wider">Core Blessings</td>
+              <td class="py-2.5">Buddhir-Balam (Intellect & Strength), Yasho-Dhairyam (Fame & Courage), Fearlessness</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {/* PDF Download Action Banner */}
+    <div class="no-print bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-1 text-center md:text-left">
+        <h3 class="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
+          Download Hanuman Stuti PDF
+        </h3>
+        <p class="text-xs text-stone-ivory/80 max-w-lg leading-relaxed">
+          Save or print the pristine Sanskrit text with English transliteration for daily altar chanting.
+        </p>
+      </div>
+      <button
+        onclick="window.print()"
+        class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-5 py-2.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300 whitespace-nowrap cursor-pointer"
+      >
+        🖨️ Print / Save PDF
+      </button>
+    </div>
+
+    <!-- Main Verses Section -->
+    <section class="space-y-8" id="hanuman-stuti-lyrics">
+      <div class="text-center space-y-2">
+        <h2 class="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+          Hanuman Stuti Verses in English Transliteration & Sanskrit
+        </h2>
+        <p class="text-xs text-charcoal-brown/70 max-w-xl mx-auto">
+          Recite these timeless stutis to invoke the swift, compassionate energy of Sri Hanuman.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {verses.map((verse) => (
+          <article
+            id={verse.id}
+            class="p-6 bg-stone-ivory border-l-4 border-brass-gold border-r border-t border-b border-brass-gold/20 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200"
+          >
+            <div class="flex flex-wrap items-center justify-between border-b border-brass-gold/15 pb-2 gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-maroon-deep">
+                {verse.title_en}
+              </span>
+              <span class="text-xs font-hindi-display text-maroon-deep font-semibold">
+                {verse.title_hi}
+              </span>
+            </div>
+
+            <!-- Sanskrit Devanagari -->
+            <p class="font-hindi-display text-xl sm:text-2xl text-charcoal-brown tracking-wide leading-loose text-center font-bold whitespace-pre-line">
+              {verse.devanagari}
+            </p>
+
+            <!-- English Transliteration -->
+            <div class="bg-sand-warm/30 p-3.5 rounded border border-brass-gold/20 text-center">
+              <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep block mb-1">
+                English Lyrics / Transliteration
+              </span>
+              <p className="text-xs sm:text-sm text-charcoal-brown italic leading-relaxed whitespace-pre-line">
+                {verse.transliteration}
+              </p>
+            </div>
+
+            <!-- English & Hindi Meaning -->
+            <div class="space-y-2 pt-1 border-t border-brass-gold/15">
+              <div>
+                <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+                  English Meaning:
+                </span>
+                <p class="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed mt-0.5">
+                  {verse.literal_translation.en}
+                </p>
+              </div>
+
+              <div>
+                <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+                  हिंदी भावार्थ:
+                </span>
+                <p class="text-xs sm:text-sm text-charcoal-brown/85 font-hindi-display leading-relaxed mt-0.5">
+                  {verse.literal_translation.hi}
+                </p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Significance & Phalasruti -->
+    <section class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-3">
+      <h3 class="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
+        Spiritual Significance & The 8 Blessings (अष्ट फल)
+      </h3>
+      <p class="text-xs sm:text-sm leading-relaxed text-charcoal-brown/90">
+        In the fourth shloka (<em>Buddhir Balam Yasho Dhairyam</em>), the ancient sages record the eight specific fruits granted by contemplating Lord Hanuman:
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-center text-xs">
+        <div class="bg-sand-warm/30 p-2.5 rounded border border-brass-gold/20">
+          <strong class="text-maroon-deep block">1. Buddhi</strong>
+          <span>Supreme Intellect</span>
+        </div>
+        <div class="bg-sand-warm/30 p-2.5 rounded border border-brass-gold/20">
+          <strong class="text-maroon-deep block">2. Balam</strong>
+          <span>Vital Physical Power</span>
+        </div>
+        <div class="bg-sand-warm/30 p-2.5 rounded border border-brass-gold/20">
+          <strong class="text-maroon-deep block">3. Yashas</strong>
+          <span>Virtuous Renown</span>
+        </div>
+        <div class="bg-sand-warm/30 p-2.5 rounded border border-brass-gold/20">
+          <strong class="text-maroon-deep block">4. Dhairyam</strong>
+          <span>Unshakable Courage</span>
+        </div>
+        <div class="bg-sand-warm/30 p-2.5 rounded border border-brass-gold/20">
+          <strong class="text-maroon-deep block">5. Nirbhayatvam</strong>
+          <span>Absolute Fearlessness</span>
+        </div>
+        <div class="bg-sand-warm/30 p-2.5 rounded border border-brass-gold/20">
+          <strong class="text-maroon-deep block">6. Arogata</strong>
+          <span>Freedom from Disease</span>
+        </div>
+        <div class="bg-sand-warm/30 p-2.5 rounded border border-brass-gold/20">
+          <strong class="text-maroon-deep block">7. Ajaadyam</strong>
+          <span>Mental Alertness</span>
+        </div>
+        <div class="bg-sand-warm/30 p-2.5 rounded border border-brass-gold/20">
+          <strong class="text-maroon-deep block">8. Vaak-Patutvam</strong>
+          <span>Eloquence in Speech</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visible FAQs Section -->
+    <section class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4" id="faqs">
+      <h3 class="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
+        Frequently Asked Questions
+      </h3>
+      <div class="space-y-4 divide-y divide-brass-gold/15">
+        {stutiFaqs.map((faq) => (
+          <div class="pt-3 space-y-1">
+            <h4 class="font-bold text-sm text-charcoal-brown">{faq.question}</h4>
+            <p class="text-xs text-charcoal-brown/80 leading-relaxed whitespace-pre-line">{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Related Devotional Links -->
+    <section class="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
+      <h4 class="font-serif-display text-sm font-bold uppercase text-maroon-deep">
+        Related Devotional Texts (संबंधित पाठ)
+      </h4>
+      <div class="flex flex-wrap justify-center gap-4 text-xs font-semibold">
+        <a href="/" class="text-vermilion hover:text-marigold underline">
+          Shree Hanuman Chalisa
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/ram-chalisa" class="text-vermilion hover:text-marigold underline">
+          Shri Ram Chalisa
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/sankat-mochan-hanumanashtak" class="text-vermilion hover:text-marigold underline">
+          Sankat Mochan Ashtak
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/bajrang-baan" class="text-vermilion hover:text-marigold underline">
+          Bajrang Baan
+        </a>
+        <span class="text-brass-gold/40">•</span>
+        <a href="/hanuman-aarti" class="text-vermilion hover:text-marigold underline">
+          Hanuman Aarti
+        </a>
+      </div>
+    </section>
+
+  </div>
+</Layout>
