@@ -8,13 +8,15 @@ interface Props {
   description?: string;
   canonicalUrl?: string;
   showHreflangs?: boolean;
+  ogImage?: string;
 }
 
 const { 
   title = "Shree Hanuman Chalisa — Audio, Meaning, PDF & Recitation Guide", 
   description = "Step into our digital mandir. Read the authentic Hanuman Chalisa in Devanagari, English, and Gujarati, with line-by-line Hindi/English meanings, synced audio, PDF, and path vidhi.",
   canonicalUrl: propCanonicalUrl,
-  showHreflangs = false
+  showHreflangs = false,
+  ogImage = "https://ramhanumanchalisa.com/og-image.jpg"
 } = Astro.props;
 
 // Determine canonical URL: prefer explicitly passed prop, otherwise derive dynamically from current route
@@ -130,19 +132,25 @@ const breadcrumbSchema = {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Marcellus&family=Mukta:wght@200;300;400;500;600;700;800&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://ramhanumanchalisa.com/icon.png" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="Shree Ram and Hanuman Devotional Banner - RamHanumanChalisa.com" />
 
-    <!-- Twitter -->
+    <!-- Twitter Card -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalUrl} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="https://ramhanumanchalisa.com/icon.png" />
+    <meta property="twitter:image" content={ogImage} />
+    <meta property="twitter:image:alt" content="Shree Ram and Hanuman Devotional Banner - RamHanumanChalisa.com" />
 
     <!-- Breadcrumb Schema -->
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
