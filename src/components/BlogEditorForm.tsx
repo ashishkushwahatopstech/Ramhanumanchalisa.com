@@ -2,6 +2,42 @@
 
 import React, { useState } from "react";
 
+function previewMarkdown(text: string): string {
+  if (!text || !text.trim()) return "<p class='text-charcoal-brown/50 italic py-4'>Article body is empty. Type content above to see live preview.</p>";
+  return text
+    .split("\n\n")
+    .map((chunk) => {
+      let trimmed = chunk.trim();
+      if (!trimmed) return "";
+      if (trimmed.startsWith("### ")) {
+        return `<h4 class="font-serif font-bold text-base text-maroon-deep mt-4 mb-2">${trimmed.replace("### ", "")}</h4>`;
+      }
+      if (trimmed.startsWith("## ")) {
+        return `<h3 class="font-serif font-bold text-lg text-maroon-deep mt-4 mb-2 border-b border-brass-gold/20 pb-1">${trimmed.replace("## ", "")}</h3>`;
+      }
+      if (trimmed.startsWith("- ")) {
+        const items = trimmed
+          .split("\n")
+          .map((li) => `<li>${li.replace("- ", "").trim()}</li>`)
+          .join("");
+        return `<ul class="list-disc list-inside space-y-1 my-2 text-xs text-charcoal-brown/90">${items}</ul>`;
+      }
+      // Process inline markdown links and formatting
+      let processed = trimmed
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, linkText, url) => {
+          const isExt = /^https?:\/\//i.test(url.trim());
+          const target = isExt ? ' target="_blank" rel="noopener noreferrer"' : '';
+          return `<a href="${url.trim()}" class="text-maroon-deep hover:text-vermilion underline font-bold transition-colors"${target}>${linkText}</a>`;
+        })
+        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+        .replace(/(^|[^*])\*([^*]+)\*([^*]|$)/g, "$1<em>$2</em>$3")
+        .replace(/\n/g, "<br />");
+
+      return `<p class="text-xs text-charcoal-brown/90 leading-relaxed my-2">${processed}</p>`;
+    })
+    .join("");
+}
+
 interface FaqItem {
   question: string;
   answer: string;
@@ -86,9 +122,11 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
   // Hyperlink Tool State
   const contentTextareaRef = React.useRef<HTMLTextAreaElement>(null);
   const [showLinkModal, setShowLinkModal] = useState<boolean>(false);
+  const [linkFormat, setLinkFormat] = useState<"markdown" | "html">("markdown");
   const [linkText, setLinkText] = useState<string>("");
   const [linkUrl, setLinkUrl] = useState<string>("");
   const [linkSelectionRange, setLinkSelectionRange] = useState<{ start: number; end: number } | null>(null);
+  const [isPreviewMode, setIsPreviewMode] = useState<boolean>(false);
 
   // Form States
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -495,23 +533,26 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
       return;
     }
     const textToUse = linkText.trim() || linkUrl.trim();
-    const markdownLink = `[${textToUse}](${linkUrl.trim()})`;
+    const isExt = /^https?:\/\//i.test(linkUrl.trim());
+    const formattedLink = linkFormat === "html"
+      ? `<a href="${linkUrl.trim()}"${isExt ? ' target="_blank" rel="noopener noreferrer"' : ''}>${textToUse}</a>`
+      : `[${textToUse}](${linkUrl.trim()})`;
 
     if (linkSelectionRange && contentTextareaRef.current) {
       const { start, end } = linkSelectionRange;
       const before = content.substring(0, start);
       const after = content.substring(end);
-      const newContent = before + markdownLink + after;
+      const newContent = before + formattedLink + after;
       setContent(newContent);
       setTimeout(() => {
         if (contentTextareaRef.current) {
           contentTextareaRef.current.focus();
-          const newCursor = start + markdownLink.length;
+          const newCursor = start + formattedLink.length;
           contentTextareaRef.current.setSelectionRange(newCursor, newCursor);
         }
       }, 50);
     } else {
-      setContent((prev) => prev + " " + markdownLink);
+      setContent((prev) => prev + " " + formattedLink);
     }
 
     setShowLinkModal(false);
@@ -970,6 +1011,32 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
                         ✕ Cancel
                       </button>
                     </div>
+
+                    {/* Format Selector */}
+                    <div className="flex items-center gap-4 text-xs font-semibold text-charcoal-brown">
+                      <span className="text-[11px] uppercase font-bold text-maroon-deep">Syntax:</span>
+                      <label className="flex items-center gap-1.5 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="linkFormat"
+                          checked={linkFormat === "markdown"}
+                          onChange={() => setLinkFormat("markdown")}
+                          className="accent-maroon-deep"
+                        />
+                        <span>Markdown <code>[text](url)</code></span>
+                      </label>
+                      <label className="flex items-center gap-1.5 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="linkFormat"
+                          checked={linkFormat === "html"}
+                          onChange={() => setLinkFormat("html")}
+                          className="accent-maroon-deep"
+                        />
+                        <span>HTML <code>&lt;a href="..."&gt;</code></span>
+                      </label>
+                    </div>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
@@ -996,6 +1063,11 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
                         />
                       </div>
                     </div>
+
+                    <p className="text-[11px] text-charcoal-brown/70 bg-white/70 p-2 rounded border border-brass-gold/20">
+                      💡 <strong>Note:</strong> Inside the code editor textarea, links look like <code>[link text](url)</code>. On the live website, they render as live, clickable, blue/maroon hyperlinks. Use the <strong>👁️ Live Preview</strong> button below to test them right now!
+                    </p>
+
                     <div className="flex justify-end gap-2 pt-1">
                       <button
                         type="button"
@@ -1082,24 +1154,51 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
                     </button>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setShowInsertModal(true)}
-                    className="px-2.5 py-1 text-xs font-bold bg-marigold text-maroon-deep hover:bg-brass-gold rounded shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>🖼️ Insert Image Tool</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsPreviewMode(!isPreviewMode)}
+                      className={`px-3 py-1 text-xs font-bold rounded transition-colors flex items-center gap-1.5 cursor-pointer ${
+                        isPreviewMode
+                          ? "bg-amber-700 text-white shadow-inner"
+                          : "bg-stone-ivory border border-brass-gold/60 text-maroon-deep hover:bg-white"
+                      }`}
+                    >
+                      <span>{isPreviewMode ? "✏️ Edit Raw Text" : "👁️ Live Preview"}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setShowInsertModal(true)}
+                      className="px-2.5 py-1 text-xs font-bold bg-marigold text-maroon-deep hover:bg-brass-gold rounded shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>🖼️ Insert Image Tool</span>
+                    </button>
+                  </div>
                 </div>
 
-                <textarea
-                  ref={contentTextareaRef}
-                  required
-                  rows={14}
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  placeholder={`Write your devotional article here...\n\n## Section Heading\n\nParagraph text here with deep insights.\n\n### Practical Vidhi\n- Step 1: Sit facing East\n- Step 2: Recite Doha with devotion`}
-                  className="w-full bg-white border border-brass-gold/40 rounded p-3 text-xs font-mono leading-relaxed outline-none focus:border-maroon-deep"
-                />
+                {isPreviewMode ? (
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center text-[11px] text-charcoal-brown/60 px-1">
+                      <span>Live Rendered Preview (Click links to test):</span>
+                      <span className="font-semibold text-emerald-700">✓ Clickable Hyperlinks Active</span>
+                    </div>
+                    <div
+                      className="p-5 bg-white border border-brass-gold/40 rounded-lg min-h-[300px] max-h-[500px] overflow-y-auto space-y-2 text-xs"
+                      dangerouslySetInnerHTML={{ __html: previewMarkdown(content) }}
+                    />
+                  </div>
+                ) : (
+                  <textarea
+                    ref={contentTextareaRef}
+                    required
+                    rows={14}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder={`Write your devotional article here...\n\n## Section Heading\n\nParagraph text here with deep insights.\n\n### Practical Vidhi\n- Step 1: Sit facing East\n- Step 2: Recite Doha with devotion`}
+                    className="w-full bg-white border border-brass-gold/40 rounded p-3 text-xs font-mono leading-relaxed outline-none focus:border-maroon-deep"
+                  />
+                )}
               </div>
             </div>
           )}

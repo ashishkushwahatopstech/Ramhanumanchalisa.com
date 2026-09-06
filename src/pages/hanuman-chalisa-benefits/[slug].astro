@@ -213,6 +213,21 @@ const faqSchema =
         })),
       }
     : null;
+
+function renderInlineMarkdown(text: string): string {
+  if (!text) return "";
+  return text
+    // Replace markdown links: [text](url)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, linkText, url) => {
+      const isExternal = /^https?:\/\//i.test(url.trim());
+      const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+      return `<a href="${url.trim()}" class="text-maroon-deep hover:text-vermilion underline font-bold transition-colors"${targetAttr}>${linkText}</a>`;
+    })
+    // Replace bold: **text**
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    // Replace italic: *text* (when not part of **)
+    .replace(/(^|[^*])\*([^*]+)\*([^*]|$)/g, "$1<em>$2</em>$3");
+}
 ---
 
 <Layout title={pageTitle} description={pageDescription} canonicalUrl={`https://ramhanumanchalisa.com/hanuman-chalisa-benefits/${benefit.slug}`}>
@@ -256,9 +271,7 @@ const faqSchema =
           <p class="text-sm font-bold text-brass-gold uppercase tracking-wider">
             Life Challenge: {benefit.situation}
           </p>
-          <p class="text-sm sm:text-base text-charcoal-brown/90 leading-relaxed">
-            {benefit.description}
-          </p>
+          <p class="text-sm sm:text-base text-charcoal-brown/90 leading-relaxed" set:html={renderInlineMarkdown(benefit.description)} />
         </div>
 
         <CarvedDivider icon="🕉️" />
@@ -303,7 +316,7 @@ const faqSchema =
           <h3 class="font-serif-display text-lg text-maroon-deep uppercase tracking-wider font-bold border-b border-brass-gold/20 pb-2">
             Spiritual Explanation & Significance
           </h3>
-          <div class="text-sm sm:text-base text-charcoal-brown/90 leading-relaxed whitespace-pre-line space-y-4" set:html={benefit.detailedExposition} />
+          <div class="text-sm sm:text-base text-charcoal-brown/90 leading-relaxed whitespace-pre-line space-y-4" set:html={renderInlineMarkdown(benefit.detailedExposition)} />
         </div>
 
         <!-- Step-by-Step Puja Vidhi Guide -->

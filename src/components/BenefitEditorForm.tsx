@@ -73,6 +73,7 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
   const expoTextareaRef = React.useRef<HTMLTextAreaElement>(null);
   const [showLinkModal, setShowLinkModal] = useState<boolean>(false);
   const [linkTargetField, setLinkTargetField] = useState<"description" | "detailedExposition">("description");
+  const [linkFormat, setLinkFormat] = useState<"markdown" | "html">("markdown");
   const [linkText, setLinkText] = useState<string>("");
   const [linkUrl, setLinkUrl] = useState<string>("");
   const [linkSelectionRange, setLinkSelectionRange] = useState<{ start: number; end: number } | null>(null);
@@ -96,39 +97,42 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
       return;
     }
     const textToUse = linkText.trim() || linkUrl.trim();
-    const markdownLink = `[${textToUse}](${linkUrl.trim()})`;
+    const isExt = /^https?:\/\//i.test(linkUrl.trim());
+    const formattedLink = linkFormat === "html"
+      ? `<a href="${linkUrl.trim()}"${isExt ? ' target="_blank" rel="noopener noreferrer"' : ''}>${textToUse}</a>`
+      : `[${textToUse}](${linkUrl.trim()})`;
 
     if (linkTargetField === "description") {
       if (linkSelectionRange && descTextareaRef.current) {
         const { start, end } = linkSelectionRange;
         const before = description.substring(0, start);
         const after = description.substring(end);
-        setDescription(before + markdownLink + after);
+        setDescription(before + formattedLink + after);
         setTimeout(() => {
           if (descTextareaRef.current) {
             descTextareaRef.current.focus();
-            const newCursor = start + markdownLink.length;
+            const newCursor = start + formattedLink.length;
             descTextareaRef.current.setSelectionRange(newCursor, newCursor);
           }
         }, 50);
       } else {
-        setDescription((prev) => prev + " " + markdownLink);
+        setDescription((prev) => prev + " " + formattedLink);
       }
     } else {
       if (linkSelectionRange && expoTextareaRef.current) {
         const { start, end } = linkSelectionRange;
         const before = detailedExposition.substring(0, start);
         const after = detailedExposition.substring(end);
-        setDetailedExposition(before + markdownLink + after);
+        setDetailedExposition(before + formattedLink + after);
         setTimeout(() => {
           if (expoTextareaRef.current) {
             expoTextareaRef.current.focus();
-            const newCursor = start + markdownLink.length;
+            const newCursor = start + formattedLink.length;
             expoTextareaRef.current.setSelectionRange(newCursor, newCursor);
           }
         }, 50);
       } else {
-        setDetailedExposition((prev) => prev + " " + markdownLink);
+        setDetailedExposition((prev) => prev + " " + formattedLink);
       }
     }
 
@@ -842,6 +846,32 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
                         ✕ Cancel
                       </button>
                     </div>
+
+                    {/* Format Selector */}
+                    <div className="flex items-center gap-4 text-xs font-semibold text-charcoal-brown">
+                      <span className="text-[11px] uppercase font-bold text-maroon-deep">Syntax:</span>
+                      <label className="flex items-center gap-1.5 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="linkFormatDesc"
+                          checked={linkFormat === "markdown"}
+                          onChange={() => setLinkFormat("markdown")}
+                          className="accent-maroon-deep"
+                        />
+                        <span>Markdown <code>[text](url)</code></span>
+                      </label>
+                      <label className="flex items-center gap-1.5 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="linkFormatDesc"
+                          checked={linkFormat === "html"}
+                          onChange={() => setLinkFormat("html")}
+                          className="accent-maroon-deep"
+                        />
+                        <span>HTML <code>&lt;a href="..."&gt;</code></span>
+                      </label>
+                    </div>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
@@ -868,6 +898,10 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
                         />
                       </div>
                     </div>
+
+                    <p className="text-[11px] text-charcoal-brown/70 bg-white/70 p-2 rounded border border-brass-gold/20">
+                      💡 <strong>Note:</strong> Inside the code textarea, links appear as <code>[link text](url)</code>. On the live website, they render as live, clickable hyperlinks!
+                    </p>
                     <div className="flex justify-end gap-2 pt-1">
                       <button
                         type="button"
@@ -1135,6 +1169,32 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
                         ✕ Cancel
                       </button>
                     </div>
+
+                    {/* Format Selector */}
+                    <div className="flex items-center gap-4 text-xs font-semibold text-charcoal-brown">
+                      <span className="text-[11px] uppercase font-bold text-maroon-deep">Syntax:</span>
+                      <label className="flex items-center gap-1.5 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="linkFormatExpo"
+                          checked={linkFormat === "markdown"}
+                          onChange={() => setLinkFormat("markdown")}
+                          className="accent-maroon-deep"
+                        />
+                        <span>Markdown <code>[text](url)</code></span>
+                      </label>
+                      <label className="flex items-center gap-1.5 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="linkFormatExpo"
+                          checked={linkFormat === "html"}
+                          onChange={() => setLinkFormat("html")}
+                          className="accent-maroon-deep"
+                        />
+                        <span>HTML <code>&lt;a href="..."&gt;</code></span>
+                      </label>
+                    </div>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
@@ -1161,6 +1221,10 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
                         />
                       </div>
                     </div>
+
+                    <p className="text-[11px] text-charcoal-brown/70 bg-white/70 p-2 rounded border border-brass-gold/20">
+                      💡 <strong>Note:</strong> Inside the code textarea, links appear as <code>[link text](url)</code>. On the live website, they render as live, clickable hyperlinks!
+                    </p>
                     <div className="flex justify-end gap-2 pt-1">
                       <button
                         type="button"

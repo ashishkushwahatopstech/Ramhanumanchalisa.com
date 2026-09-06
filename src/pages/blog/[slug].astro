@@ -158,6 +158,21 @@ function isHeadingCandidate(text: string) {
   return false;
 }
 
+function renderInlineMarkdown(text: string): string {
+  if (!text) return "";
+  return text
+    // Replace markdown links: [text](url)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, linkText, url) => {
+      const isExternal = /^https?:\/\//i.test(url.trim());
+      const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+      return `<a href="${url.trim()}" class="text-maroon-deep hover:text-vermilion underline font-bold transition-colors"${targetAttr}>${linkText}</a>`;
+    })
+    // Replace bold: **text**
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    // Replace italic: *text* (when not part of **)
+    .replace(/(^|[^*])\*([^*]+)\*([^*]|$)/g, "$1<em>$2</em>$3");
+}
+
 // Simple parser for standard markdown elements
 function parseMarkdown(content: string) {
   const sections = content.split("\n\n").map((section) => section.trim()).filter(Boolean);
@@ -166,23 +181,23 @@ function parseMarkdown(content: string) {
     if (sec.startsWith("### ")) {
       return {
         type: "h4",
-        text: sec.replace("### ", ""),
+        text: renderInlineMarkdown(sec.replace("### ", "")),
       };
     }
     if (sec.startsWith("## ")) {
       return {
         type: "h3",
-        text: sec.replace("## ", ""),
+        text: renderInlineMarkdown(sec.replace("## ", "")),
       };
     }
     if (sec.startsWith("*") && sec.endsWith("*")) {
       return {
         type: "italic",
-        text: sec.replace(/\*/g, ""),
+        text: renderInlineMarkdown(sec.replace(/\*/g, "")),
       };
     }
     if (sec.startsWith("- ")) {
-      const items = sec.split("\n").map((item) => item.replace("- ", "").trim());
+      const items = sec.split("\n").map((item) => renderInlineMarkdown(item.replace("- ", "").trim()));
       return {
         type: "list",
         items,
@@ -214,7 +229,7 @@ function parseMarkdown(content: string) {
     }
     return {
       type: "p",
-      text: sec,
+      text: renderInlineMarkdown(sec),
     };
   });
 }
@@ -443,22 +458,22 @@ const faqSchema =
     <article class="blog-article-content bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-4">
       {parsedContent.map((item) => {
         if (item.type === "h2") {
-          return <h2 class="font-serif-display text-xl sm:text-2xl font-bold text-maroon-deep mt-8 mb-3 pb-2 border-b border-brass-gold/20">{item.text}</h2>;
+          return <h2 class="font-serif-display text-xl sm:text-2xl font-bold text-maroon-deep mt-8 mb-3 pb-2 border-b border-brass-gold/20" set:html={item.text} />;
         }
         if (item.type === "h4") {
-          return <h4 class="font-serif-display text-lg font-bold text-maroon-deep mt-6 mb-2">{item.text}</h4>;
+          return <h4 class="font-serif-display text-lg font-bold text-maroon-deep mt-6 mb-2" set:html={item.text} />;
         }
         if (item.type === "h3") {
-          return <h3 class="font-serif-display text-xl font-bold text-maroon-deep mt-8 mb-3">{item.text}</h3>;
+          return <h3 class="font-serif-display text-xl font-bold text-maroon-deep mt-8 mb-3" set:html={item.text} />;
         }
         if (item.type === "italic") {
-          return <p class="text-xs sm:text-sm text-charcoal-brown/70 italic my-3 text-center">{item.text}</p>;
+          return <p class="text-xs sm:text-sm text-charcoal-brown/70 italic my-3 text-center" set:html={item.text} />;
         }
         if (item.type === "list") {
           return (
             <ul class="list-disc list-inside space-y-2 text-xs sm:text-sm text-charcoal-brown/85 my-4 pl-4">
               {item.items?.map((li) => (
-                <li>{li}</li>
+                <li set:html={li} />
               ))}
             </ul>
           );
