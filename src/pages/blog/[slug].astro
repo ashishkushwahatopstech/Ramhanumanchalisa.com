@@ -142,6 +142,22 @@ if (!post) {
   return Astro.redirect("/404");
 }
 
+// Helper to detect if a text chunk is a section heading
+function isHeadingCandidate(text: string) {
+  const clean = text.replace(/<[^>]+>/g, "").replace(/^[||\s*#]+|[||\s*#]+$/g, "").trim();
+  if (!clean || clean.length > 90 || clean.includes("\n") || clean.includes("<br")) return false;
+
+  if (/^Lyrics of /i.test(clean)) return true;
+  if (/^Lyrics in /i.test(clean)) return true;
+  if (/^Meaning in /i.test(clean)) return true;
+  if (/(?:in English|in Hindi|Hindi Lyrics|English Lyrics|Lyrics with Meaning|Lyrics, Meaning|English Text|Hindi Text|Lyrics)$/i.test(clean)) return true;
+  if (/^(?:Doha|Dohaa|Chaupai|Chaupaai|Aarti|Stotra|Stuti|Kavach|Ashtak|Chalisa|Sortha|Choupayi)$/i.test(clean)) return true;
+  if (/^[॥।।].*[॥।।]$/.test(clean) && clean.length < 50) return true;
+  if (/^[A-Z\s]{4,30}$/.test(clean) && !clean.includes(".") && !clean.includes(",") && !clean.includes("|")) return true;
+
+  return false;
+}
+
 // Simple parser for standard markdown elements
 function parseMarkdown(content: string) {
   const sections = content.split("\n\n").map((section) => section.trim()).filter(Boolean);
@@ -186,6 +202,15 @@ function parseMarkdown(content: string) {
           text: `<figure class="my-6 text-center"><img src="${match[2]}" alt="${match[1]}" class="rounded-lg shadow-md mx-auto max-w-full h-auto" loading="lazy" /></figure>`,
         };
       }
+    }
+    // Check if plain text chunk is an unformatted heading (e.g. "Lyrics of Deva ho Deva in English")
+    if (isHeadingCandidate(sec)) {
+      const cleanHeading = sec.replace(/<[^>]+>/g, "").replace(/^[||\s*]+|[||\s*]+$/g, "").trim();
+      const isMajor = /^Lyrics of |^Lyrics in |Hindi Lyrics|English Lyrics|Lyrics$/i.test(cleanHeading);
+      return {
+        type: isMajor ? "h2" : "h3",
+        text: cleanHeading,
+      };
     }
     return {
       type: "p",
@@ -417,6 +442,9 @@ const faqSchema =
     <!-- Main Post Content -->
     <article class="blog-article-content bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-4">
       {parsedContent.map((item) => {
+        if (item.type === "h2") {
+          return <h2 class="font-serif-display text-xl sm:text-2xl font-bold text-maroon-deep mt-8 mb-3 pb-2 border-b border-brass-gold/20">{item.text}</h2>;
+        }
         if (item.type === "h4") {
           return <h4 class="font-serif-display text-lg font-bold text-maroon-deep mt-6 mb-2">{item.text}</h4>;
         }
