@@ -172,7 +172,7 @@ function parseMarkdown(content: string) {
         items,
       };
     }
-    if (sec.startsWith("<figure") || sec.includes("<figure") || sec.startsWith("<img")) {
+    if (sec.startsWith("<") && (sec.includes(">") || sec.endsWith(">"))) {
       return {
         type: "html",
         text: sec,

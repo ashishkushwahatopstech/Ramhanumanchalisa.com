@@ -1,15 +1,18 @@
+import importedPostsData from "./imported-posts.json";
+
 export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
   content: string;
+  category?: string;
   coverImage?: string;
   createdAt: string;
   author: string;
   readTime: string;
 }
 
-export const FALLBACK_BLOG_POSTS: BlogPost[] = [
+const STATIC_BLOG_POSTS: BlogPost[] = [
   {
     slug: "significance-of-forty-verses",
     title: "Why Hanuman Chalisa Has Exactly 40 Verses",
@@ -71,4 +74,9 @@ Upon waking up, the human brain operates in the Alpha frequency range (8 to 12 H
 5. Spend 5 minutes in silent meditation, absorbing the vibration of the verses.
     `
   }
+];
+
+export const FALLBACK_BLOG_POSTS: BlogPost[] = [
+  ...STATIC_BLOG_POSTS,
+  ...(importedPostsData as BlogPost[])
 ];
