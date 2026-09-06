@@ -50,3 +50,44 @@ export function getCachedBenefit(slug: string) {
 export function getAllCachedBenefits(): any[] {
   return Object.values(globalThis.__BENEFITS_CACHE__ || {});
 }
+
+// Blog Layout & Sidebar Configuration Cache
+export interface BlogLayoutConfig {
+  postsPerPage: number;
+  sidebarEnabled: boolean;
+  aboutTitle: string;
+  aboutContent: string;
+  featuredHymnTitle: string;
+  featuredHymnUrl: string;
+  featuredHymnDesc: string;
+  customHtmlWidget: string;
+  showRecentPosts: boolean;
+  showCategories: boolean;
+}
+
+export const DEFAULT_BLOG_CONFIG: BlogLayoutConfig = {
+  postsPerPage: 15,
+  sidebarEnabled: true,
+  aboutTitle: "About Mandir Library",
+  aboutContent: "A consecrated digital sanctuary preserving sacred Awadhi, Sanskrit, and Hindi hymns, Chalisas, and Vedic stotras with word-by-word meanings.",
+  featuredHymnTitle: "Shri Hanuman Chalisa (हिंदी व English)",
+  featuredHymnUrl: "/",
+  featuredHymnDesc: "Recite the original 40 quatrains composed by Goswami Tulsidas with synced audio and Devanagari lyrics.",
+  customHtmlWidget: "",
+  showRecentPosts: true,
+  showCategories: true,
+};
+
+declare global {
+  var __BLOG_CONFIG__: BlogLayoutConfig | undefined;
+}
+
+export function getBlogConfig(): BlogLayoutConfig {
+  return globalThis.__BLOG_CONFIG__ || DEFAULT_BLOG_CONFIG;
+}
+
+export function saveBlogConfig(config: Partial<BlogLayoutConfig>): BlogLayoutConfig {
+  const current = getBlogConfig();
+  globalThis.__BLOG_CONFIG__ = { ...current, ...config };
+  return globalThis.__BLOG_CONFIG__;
+}

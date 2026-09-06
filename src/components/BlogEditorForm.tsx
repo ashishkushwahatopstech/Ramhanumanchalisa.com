@@ -41,15 +41,54 @@ export interface ContentImageItem {
   caption: string;
 }
 
-interface BlogEditorFormProps {
-  initialPosts: Post[];
+export interface BlogLayoutConfig {
+  postsPerPage: number;
+  sidebarEnabled: boolean;
+  aboutTitle: string;
+  aboutContent: string;
+  featuredHymnTitle: string;
+  featuredHymnUrl: string;
+  featuredHymnDesc: string;
+  customHtmlWidget: string;
+  showRecentPosts: boolean;
+  showCategories: boolean;
 }
 
-export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
+interface BlogEditorFormProps {
+  initialPosts: Post[];
+  initialConfig?: BlogLayoutConfig;
+}
+
+export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEditorFormProps) {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
 
   // Active Tab
-  const [activeTab, setActiveTab] = useState<"content" | "media" | "seo" | "faqs" | "links">("content");
+  const [activeTab, setActiveTab] = useState<"content" | "media" | "seo" | "faqs" | "links" | "layout">("content");
+
+  // Blog Layout & Sidebar State
+  const [layoutConfig, setLayoutConfig] = useState<BlogLayoutConfig>(
+    initialConfig || {
+      postsPerPage: 15,
+      sidebarEnabled: true,
+      aboutTitle: "About Mandir Library",
+      aboutContent: "A consecrated digital sanctuary preserving sacred Awadhi, Sanskrit, and Hindi hymns, Chalisas, and Vedic stotras with word-by-word meanings.",
+      featuredHymnTitle: "Shri Hanuman Chalisa (हिंदी व English)",
+      featuredHymnUrl: "/",
+      featuredHymnDesc: "Recite the original 40 quatrains composed by Goswami Tulsidas with synced audio and Devanagari lyrics.",
+      customHtmlWidget: "",
+      showRecentPosts: true,
+      showCategories: true,
+    }
+  );
+  const [isSavingConfig, setIsSavingConfig] = useState<boolean>(false);
+  const [configMsg, setConfigMsg] = useState<{ text: string; type: "success" | "error" } | null>(null);
+
+  // Hyperlink Tool State
+  const contentTextareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const [showLinkModal, setShowLinkModal] = useState<boolean>(false);
+  const [linkText, setLinkText] = useState<string>("");
+  const [linkUrl, setLinkUrl] = useState<string>("");
+  const [linkSelectionRange, setLinkSelectionRange] = useState<{ start: number; end: number } | null>(null);
 
   // Form States
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -437,6 +476,91 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
     setInternalLinks(internalLinks.filter((_, i) => i !== index));
   };
 
+  // Hyperlink Tool Handlers
+  const handleOpenLinkModal = () => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = textarea.value.substring(start, end);
+    setLinkSelectionRange({ start, end });
+    setLinkText(selected);
+    setLinkUrl("");
+    setShowLinkModal(true);
+  };
+
+  const handleApplyLink = () => {
+    if (!linkUrl.trim()) {
+      alert("Please provide a valid destination URL (e.g. /blog/sankat-mochan or https://...)");
+      return;
+    }
+    const textToUse = linkText.trim() || linkUrl.trim();
+    const markdownLink = `[${textToUse}](${linkUrl.trim()})`;
+
+    if (linkSelectionRange && contentTextareaRef.current) {
+      const { start, end } = linkSelectionRange;
+      const before = content.substring(0, start);
+      const after = content.substring(end);
+      const newContent = before + markdownLink + after;
+      setContent(newContent);
+      setTimeout(() => {
+        if (contentTextareaRef.current) {
+          contentTextareaRef.current.focus();
+          const newCursor = start + markdownLink.length;
+          contentTextareaRef.current.setSelectionRange(newCursor, newCursor);
+        }
+      }, 50);
+    } else {
+      setContent((prev) => prev + " " + markdownLink);
+    }
+
+    setShowLinkModal(false);
+    setLinkText("");
+    setLinkUrl("");
+    setLinkSelectionRange(null);
+  };
+
+  const handleFormatWrap = (prefix: string, suffix: string, placeholder: string) => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = textarea.value.substring(start, end) || placeholder;
+    const formatted = `${prefix}${selected}${suffix}`;
+    const before = content.substring(0, start);
+    const after = content.substring(end);
+    setContent(before + formatted + after);
+    setTimeout(() => {
+      if (contentTextareaRef.current) {
+        contentTextareaRef.current.focus();
+        contentTextareaRef.current.setSelectionRange(start + prefix.length, start + prefix.length + selected.length);
+      }
+    }, 50);
+  };
+
+  // Save Blog Layout & Sidebar Configuration
+  const handleSaveLayoutConfig = async () => {
+    setIsSavingConfig(true);
+    setConfigMsg(null);
+    try {
+      const res = await fetch("/api/admin/blog-config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(layoutConfig),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setConfigMsg({ text: "✅ Layout & Sidebar settings successfully saved to D1 & Cache!", type: "success" });
+      } else {
+        setConfigMsg({ text: data.error || "Failed to save layout settings", type: "error" });
+      }
+    } catch (err: any) {
+      setConfigMsg({ text: err.message || "Network error saving layout settings", type: "error" });
+    } finally {
+      setIsSavingConfig(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -605,6 +729,18 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
             }`}
           >
             🔗 Internal Links & Sources ({internalLinks.length})
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("layout")}
+            className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-t-lg transition-all border-t-2 border-x-2 ${
+              activeTab === "layout"
+                ? "bg-stone-ivory border-brass-gold/50 text-maroon-deep -mb-px shadow-sm"
+                : "border-transparent text-charcoal-brown/60 hover:text-maroon-deep"
+            }`}
+          >
+            ⚙️ Layout & Sidebar
           </button>
         </div>
 
@@ -818,7 +954,145 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
                     <span>- Bullet point</span>
                   </div>
                 </div>
+
+                {/* Hyperlink Inserter Modal */}
+                {showLinkModal && (
+                  <div className="mb-3 p-4 bg-marigold/15 border-2 border-maroon-deep/50 rounded-xl space-y-3 shadow-md animate-fadeIn">
+                    <div className="flex items-center justify-between border-b border-brass-gold/30 pb-2">
+                      <span className="text-xs font-bold uppercase tracking-wider text-maroon-deep flex items-center gap-1.5">
+                        <span>🔗</span> Insert Hyperlink
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setShowLinkModal(false)}
+                        className="text-xs text-charcoal-brown/60 hover:text-maroon-deep font-bold"
+                      >
+                        ✕ Cancel
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Anchor Text (Selected Text)
+                        </label>
+                        <input
+                          type="text"
+                          value={linkText}
+                          onChange={(e) => setLinkText(e.target.value)}
+                          placeholder="Text readers will click..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Destination URL / Path <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={linkUrl}
+                          onChange={(e) => setLinkUrl(e.target.value)}
+                          placeholder="e.g. /blog/sankat-mochan-lyrics or https://..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-end gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => setShowLinkModal(false)}
+                        className="px-3 py-1.5 text-xs font-semibold text-charcoal-brown border border-brass-gold/30 rounded hover:bg-white"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleApplyLink}
+                        className="px-4 py-1.5 text-xs font-bold uppercase bg-maroon-deep text-stone-ivory hover:bg-vermilion rounded shadow-2xs transition-colors"
+                      >
+                        Apply Link
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Toolbar */}
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2 p-2 bg-stone-ivory/80 border border-brass-gold/30 rounded-lg">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={handleOpenLinkModal}
+                      title="Add Hyperlink to selected text"
+                      className="px-2.5 py-1 text-xs font-bold bg-maroon-deep text-stone-ivory hover:bg-vermilion rounded shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>🔗 Add Hyperlink</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleFormatWrap("**", "**", "bold text")}
+                      title="Bold text"
+                      className="px-2 py-1 text-xs font-bold bg-white border border-brass-gold/40 text-maroon-deep hover:bg-marigold/20 rounded transition-colors"
+                    >
+                      <strong>B</strong>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleFormatWrap("*", "*", "italic text")}
+                      title="Italic text"
+                      className="px-2 py-1 text-xs italic bg-white border border-brass-gold/40 text-maroon-deep hover:bg-marigold/20 rounded transition-colors"
+                    >
+                      <em>I</em>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleFormatWrap("\n## ", "\n", "Heading 2")}
+                      title="Heading 2"
+                      className="px-2 py-1 text-xs font-bold bg-white border border-brass-gold/40 text-maroon-deep hover:bg-marigold/20 rounded transition-colors font-mono"
+                    >
+                      H2
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleFormatWrap("\n### ", "\n", "Heading 3")}
+                      title="Heading 3"
+                      className="px-2 py-1 text-xs font-bold bg-white border border-brass-gold/40 text-maroon-deep hover:bg-marigold/20 rounded transition-colors font-mono"
+                    >
+                      H3
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleFormatWrap("\n- ", "\n", "Bullet point item")}
+                      title="Bullet point"
+                      className="px-2 py-1 text-xs font-bold bg-white border border-brass-gold/40 text-maroon-deep hover:bg-marigold/20 rounded transition-colors"
+                    >
+                      • List
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleFormatWrap("\n> ", "\n", "Sacred quote or mantra")}
+                      title="Quote"
+                      className="px-2 py-1 text-xs font-bold bg-white border border-brass-gold/40 text-maroon-deep hover:bg-marigold/20 rounded transition-colors"
+                    >
+                      ❝ Quote
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setShowInsertModal(true)}
+                    className="px-2.5 py-1 text-xs font-bold bg-marigold text-maroon-deep hover:bg-brass-gold rounded shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>🖼️ Insert Image Tool</span>
+                  </button>
+                </div>
+
                 <textarea
+                  ref={contentTextareaRef}
                   required
                   rows={14}
                   value={content}
@@ -1380,39 +1654,248 @@ export default function BlogEditorForm({ initialPosts }: BlogEditorFormProps) {
             </div>
           )}
 
-          {/* Form Action Footer */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-brass-gold/30">
-            <div className="flex items-center gap-3">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={published}
-                  onChange={(e) => setPublished(e.target.checked)}
-                  className="w-4 h-4 text-maroon-deep rounded accent-maroon-deep"
-                />
-                <span className="text-xs font-bold uppercase text-charcoal-brown">
-                  {published ? "🟢 Status: Published" : "🟡 Status: Draft"}
-                </span>
-              </label>
-            </div>
+          {/* TAB 6: BLOG LAYOUT & SIDEBAR SETTINGS (BLOGGER-STYLE) */}
+          {activeTab === "layout" && (
+            <div className="space-y-6">
+              <div className="p-4 bg-marigold/15 border border-marigold/40 rounded-lg text-xs text-maroon-deep flex items-start justify-between">
+                <div>
+                  <strong>🎛️ Blogger-Style Layout & Sidebar Controls:</strong> Control how many articles appear at once (posts per page), toggle the responsive desktop/mobile sidebar on/off, manage individual sidebar widgets, and embed custom announcements or AdSense HTML.
+                </div>
+              </div>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              <button
-                type="button"
-                onClick={resetForm}
-                className="w-1/2 sm:w-auto px-4 py-2 border border-brass-gold/50 rounded text-xs font-bold uppercase text-charcoal-brown/70 hover:bg-stone-ivory/80"
-              >
-                Reset
-              </button>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-1/2 sm:w-auto bg-maroon-deep hover:bg-vermilion text-stone-ivory font-bold px-6 py-2.5 rounded text-xs uppercase tracking-wider shadow-md transition-all disabled:opacity-50"
-              >
-                {isSubmitting ? "Saving Article..." : editingId ? "Update Article" : "Publish Article"}
-              </button>
+              {configMsg && (
+                <div
+                  className={`p-3 rounded-lg text-xs font-semibold ${
+                    configMsg.type === "success"
+                      ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                      : "bg-red-100 text-red-800 border border-red-300"
+                  }`}
+                >
+                  {configMsg.text}
+                </div>
+              )}
+
+              {/* Feed & Pagination Controls */}
+              <div className="bg-white border border-brass-gold/30 p-5 rounded-xl space-y-4 shadow-2xs">
+                <h4 className="text-xs uppercase font-bold text-maroon-deep flex items-center gap-2 border-b border-brass-gold/20 pb-2">
+                  <span>📄</span> Feed & Pagination Settings
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                      Articles Per Page (Pagination Limit) <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      min={1}
+                      max={100}
+                      value={layoutConfig.postsPerPage}
+                      onChange={(e) => setLayoutConfig({ ...layoutConfig, postsPerPage: Math.max(1, parseInt(e.target.value) || 15) })}
+                      className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs outline-none focus:border-maroon-deep"
+                    />
+                    <p className="text-[11px] text-charcoal-brown/60 mt-1">
+                      Control how many devotional articles are displayed on each page (e.g. 10, 15, 20).
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
+                      Sidebar Visibility
+                    </label>
+                    <label className="flex items-center gap-2 mt-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={layoutConfig.sidebarEnabled}
+                        onChange={(e) => setLayoutConfig({ ...layoutConfig, sidebarEnabled: e.target.checked })}
+                        className="w-4 h-4 text-maroon-deep accent-maroon-deep rounded"
+                      />
+                      <span className="text-xs font-bold text-charcoal-brown">
+                        {layoutConfig.sidebarEnabled ? "✅ Sidebar Enabled (Desktop Side-by-Side & Mobile Responsive)" : "❌ Sidebar Disabled (Full Width Feed)"}
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sidebar Widgets Suite */}
+              <div className="bg-stone-ivory/50 border border-brass-gold/30 p-5 rounded-xl space-y-6 shadow-2xs">
+                <h4 className="text-xs uppercase font-bold text-maroon-deep flex items-center gap-2 border-b border-brass-gold/20 pb-2">
+                  <span>🧩</span> Sidebar Widgets Management (Blogger Style)
+                </h4>
+
+                {/* Widget 1: About Sanctuary */}
+                <div className="bg-white border border-brass-gold/30 p-4 rounded-lg space-y-3">
+                  <div className="flex items-center gap-2 font-bold text-xs text-maroon-deep">
+                    <span>🛕</span>
+                    <span>Widget 1: About Mandir Library</span>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] uppercase font-bold text-charcoal-brown/70 mb-1">Widget Title</label>
+                    <input
+                      type="text"
+                      value={layoutConfig.aboutTitle}
+                      onChange={(e) => setLayoutConfig({ ...layoutConfig, aboutTitle: e.target.value })}
+                      className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] uppercase font-bold text-charcoal-brown/70 mb-1">Description / Blurb</label>
+                    <textarea
+                      rows={2}
+                      value={layoutConfig.aboutContent}
+                      onChange={(e) => setLayoutConfig({ ...layoutConfig, aboutContent: e.target.value })}
+                      className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                    />
+                  </div>
+                </div>
+
+                {/* Widget 2: Featured Sacred Hymn */}
+                <div className="bg-white border border-brass-gold/30 p-4 rounded-lg space-y-3">
+                  <div className="flex items-center gap-2 font-bold text-xs text-maroon-deep">
+                    <span>⭐</span>
+                    <span>Widget 2: Featured Sacred Hymn Highlight</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] uppercase font-bold text-charcoal-brown/70 mb-1">Hymn Title</label>
+                      <input
+                        type="text"
+                        value={layoutConfig.featuredHymnTitle}
+                        onChange={(e) => setLayoutConfig({ ...layoutConfig, featuredHymnTitle: e.target.value })}
+                        className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] uppercase font-bold text-charcoal-brown/70 mb-1">Target URL / Route</label>
+                      <input
+                        type="text"
+                        value={layoutConfig.featuredHymnUrl}
+                        onChange={(e) => setLayoutConfig({ ...layoutConfig, featuredHymnUrl: e.target.value })}
+                        className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] uppercase font-bold text-charcoal-brown/70 mb-1">Hymn Teaser Description</label>
+                    <textarea
+                      rows={2}
+                      value={layoutConfig.featuredHymnDesc}
+                      onChange={(e) => setLayoutConfig({ ...layoutConfig, featuredHymnDesc: e.target.value })}
+                      className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                    />
+                  </div>
+                </div>
+
+                {/* Widget 3 & 4 Toggles */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="bg-white border border-brass-gold/30 p-4 rounded-lg space-y-2">
+                    <div className="flex items-center gap-2 font-bold text-xs text-maroon-deep">
+                      <span>📜</span>
+                      <span>Widget 3: Latest Sacred Hymns</span>
+                    </div>
+                    <label className="flex items-center gap-2 cursor-pointer pt-1">
+                      <input
+                        type="checkbox"
+                        checked={layoutConfig.showRecentPosts}
+                        onChange={(e) => setLayoutConfig({ ...layoutConfig, showRecentPosts: e.target.checked })}
+                        className="w-4 h-4 text-maroon-deep accent-maroon-deep rounded"
+                      />
+                      <span className="text-xs text-charcoal-brown font-semibold">
+                        Display 5 most recent articles in sidebar
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className="bg-white border border-brass-gold/30 p-4 rounded-lg space-y-2">
+                    <div className="flex items-center gap-2 font-bold text-xs text-maroon-deep">
+                      <span>🙏</span>
+                      <span>Widget 4: Deity Categories Filter</span>
+                    </div>
+                    <label className="flex items-center gap-2 cursor-pointer pt-1">
+                      <input
+                        type="checkbox"
+                        checked={layoutConfig.showCategories}
+                        onChange={(e) => setLayoutConfig({ ...layoutConfig, showCategories: e.target.checked })}
+                        className="w-4 h-4 text-maroon-deep accent-maroon-deep rounded"
+                      />
+                      <span className="text-xs text-charcoal-brown font-semibold">
+                        Display quick category pills in sidebar
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Widget 5: Custom HTML / Ads / Banner Gadget */}
+                <div className="bg-white border border-brass-gold/30 p-4 rounded-lg space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 font-bold text-xs text-maroon-deep">
+                      <span>💻</span>
+                      <span>Widget 5: Custom HTML / AdSense / Announcement Gadget</span>
+                    </div>
+                    <span className="text-[10px] text-charcoal-brown/50 uppercase">Raw HTML / Scripts</span>
+                  </div>
+                  <textarea
+                    rows={4}
+                    value={layoutConfig.customHtmlWidget}
+                    onChange={(e) => setLayoutConfig({ ...layoutConfig, customHtmlWidget: e.target.value })}
+                    placeholder="<!-- Insert custom banner HTML, Google AdSense responsive ad snippet, or temple announcement here -->"
+                    className="w-full bg-white border border-brass-gold/40 rounded p-2.5 text-xs font-mono outline-none focus:border-maroon-deep"
+                  />
+                  <p className="text-[11px] text-charcoal-brown/60">
+                    Blogger-style HTML gadget: allows direct embed of custom widgets, iframes, audio players, or promotional banners.
+                  </p>
+                </div>
+              </div>
+
+              {/* Save Layout Config Action Button */}
+              <div className="flex justify-end pt-2">
+                <button
+                  type="button"
+                  onClick={handleSaveLayoutConfig}
+                  disabled={isSavingConfig}
+                  className="bg-maroon-deep hover:bg-vermilion text-stone-ivory font-bold px-6 py-2.5 rounded text-xs uppercase tracking-wider shadow-md transition-all disabled:opacity-50 flex items-center gap-2 cursor-pointer"
+                >
+                  <span>{isSavingConfig ? "⏳ Saving Settings..." : "💾 Save Layout & Sidebar Configuration"}</span>
+                </button>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Form Action Footer (Only shown for Article Editing Tabs) */}
+          {activeTab !== "layout" && (
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-brass-gold/30">
+              <div className="flex items-center gap-3">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={published}
+                    onChange={(e) => setPublished(e.target.checked)}
+                    className="w-4 h-4 text-maroon-deep rounded accent-maroon-deep"
+                  />
+                  <span className="text-xs font-bold uppercase text-charcoal-brown">
+                    {published ? "🟢 Status: Published" : "🟡 Status: Draft"}
+                  </span>
+                </label>
+              </div>
+
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="w-1/2 sm:w-auto px-4 py-2 border border-brass-gold/50 rounded text-xs font-bold uppercase text-charcoal-brown/70 hover:bg-stone-ivory/80"
+                >
+                  Reset
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-1/2 sm:w-auto bg-maroon-deep hover:bg-vermilion text-stone-ivory font-bold px-6 py-2.5 rounded text-xs uppercase tracking-wider shadow-md transition-all disabled:opacity-50"
+                >
+                  {isSubmitting ? "Saving Article..." : editingId ? "Update Article" : "Publish Article"}
+                </button>
+              </div>
+            </div>
+          )}
         </form>
       </div>
 

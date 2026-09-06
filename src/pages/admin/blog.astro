@@ -4,19 +4,25 @@ import AdminNavigation from "../../components/AdminNavigation.astro";
 import BlogEditorForm from "../../components/BlogEditorForm";
 import { getPrisma } from "../../lib/prisma";
 import { FALLBACK_BLOG_POSTS } from "../../data/blog";
-import { getAllCachedPosts } from "../../lib/dynamicContent";
-import { d1GetPosts } from "../../lib/d1";
+import { getAllCachedPosts, getBlogConfig } from "../../lib/dynamicContent";
+import { d1GetPosts, d1GetBlogConfig } from "../../lib/d1";
 
 const db = Astro.locals.runtime?.env?.DB;
 let dbPosts: any[] = [];
+let blogConfig = null;
 
 // 1. Native D1 query
 if (db && typeof db.prepare === "function") {
   try {
     dbPosts = await d1GetPosts(db);
+    blogConfig = await d1GetBlogConfig(db);
   } catch (e) {
-    console.warn("Notice: D1 getPosts in admin/blog.astro:", e);
+    console.warn("Notice: D1 getPosts/getBlogConfig in admin/blog.astro:", e);
   }
+}
+
+if (!blogConfig) {
+  blogConfig = getBlogConfig();
 }
 
 // 2. Prisma fallback
@@ -67,6 +73,6 @@ const title = "Blog Articles SEO Studio — Admin";
     <AdminNavigation activeTab="blog" />
 
     <!-- Editor Form Component (Client Side) -->
-    <BlogEditorForm initialPosts={initialPosts} client:load />
+    <BlogEditorForm initialPosts={initialPosts} initialConfig={blogConfig} client:load />
   </div>
 </Layout>

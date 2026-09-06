@@ -88,10 +88,18 @@ function sanitizeContent(raw: string): string {
     .trim();
 }
 
-export const FALLBACK_BLOG_POSTS: BlogPost[] = [
+const ALL_FALLBACK_POSTS: BlogPost[] = [
   ...STATIC_BLOG_POSTS,
   ...(importedPostsData as BlogPost[]).map((p) => ({
     ...p,
     content: sanitizeContent(p.content),
   })),
 ];
+
+// Chronologically sort: Newest posts at top like standard professional blogs
+export const FALLBACK_BLOG_POSTS: BlogPost[] = ALL_FALLBACK_POSTS.sort((a, b) => {
+  const timeA = new Date(a.createdAt).getTime() || 0;
+  const timeB = new Date(b.createdAt).getTime() || 0;
+  return timeB - timeA;
+});
+

@@ -68,6 +68,76 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
   const [icon, setIcon] = useState<string>("🙏");
   const [description, setDescription] = useState<string>("");
 
+  // Hyperlink Tool State
+  const descTextareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const expoTextareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const [showLinkModal, setShowLinkModal] = useState<boolean>(false);
+  const [linkTargetField, setLinkTargetField] = useState<"description" | "detailedExposition">("description");
+  const [linkText, setLinkText] = useState<string>("");
+  const [linkUrl, setLinkUrl] = useState<string>("");
+  const [linkSelectionRange, setLinkSelectionRange] = useState<{ start: number; end: number } | null>(null);
+
+  const handleOpenLinkModal = (field: "description" | "detailedExposition") => {
+    setLinkTargetField(field);
+    const textarea = field === "description" ? descTextareaRef.current : expoTextareaRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = textarea.value.substring(start, end);
+    setLinkSelectionRange({ start, end });
+    setLinkText(selected);
+    setLinkUrl("");
+    setShowLinkModal(true);
+  };
+
+  const handleApplyLink = () => {
+    if (!linkUrl.trim()) {
+      alert("Please enter a valid destination URL");
+      return;
+    }
+    const textToUse = linkText.trim() || linkUrl.trim();
+    const markdownLink = `[${textToUse}](${linkUrl.trim()})`;
+
+    if (linkTargetField === "description") {
+      if (linkSelectionRange && descTextareaRef.current) {
+        const { start, end } = linkSelectionRange;
+        const before = description.substring(0, start);
+        const after = description.substring(end);
+        setDescription(before + markdownLink + after);
+        setTimeout(() => {
+          if (descTextareaRef.current) {
+            descTextareaRef.current.focus();
+            const newCursor = start + markdownLink.length;
+            descTextareaRef.current.setSelectionRange(newCursor, newCursor);
+          }
+        }, 50);
+      } else {
+        setDescription((prev) => prev + " " + markdownLink);
+      }
+    } else {
+      if (linkSelectionRange && expoTextareaRef.current) {
+        const { start, end } = linkSelectionRange;
+        const before = detailedExposition.substring(0, start);
+        const after = detailedExposition.substring(end);
+        setDetailedExposition(before + markdownLink + after);
+        setTimeout(() => {
+          if (expoTextareaRef.current) {
+            expoTextareaRef.current.focus();
+            const newCursor = start + markdownLink.length;
+            expoTextareaRef.current.setSelectionRange(newCursor, newCursor);
+          }
+        }, 50);
+      } else {
+        setDetailedExposition((prev) => prev + " " + markdownLink);
+      }
+    }
+
+    setShowLinkModal(false);
+    setLinkText("");
+    setLinkUrl("");
+    setLinkSelectionRange(null);
+  };
+
   // Verse States
   const [recommendedChants, setRecommendedChants] = useState<string>("");
   const [targetVerseNumber, setTargetVerseNumber] = useState<string>("1");
@@ -745,10 +815,80 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
               </div>
 
               <div>
-                <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                  Spiritual Summary / Intro Description <span className="text-red-500">*</span>
-                </label>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-xs uppercase font-bold text-maroon-deep">
+                    Spiritual Summary / Intro Description <span className="text-red-500">*</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => handleOpenLinkModal("description")}
+                    className="px-2.5 py-1 text-xs font-bold bg-maroon-deep text-stone-ivory hover:bg-vermilion rounded shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>🔗 Add Hyperlink</span>
+                  </button>
+                </div>
+
+                {showLinkModal && linkTargetField === "description" && (
+                  <div className="mb-3 p-4 bg-marigold/15 border-2 border-maroon-deep/50 rounded-xl space-y-3 shadow-md animate-fadeIn">
+                    <div className="flex items-center justify-between border-b border-brass-gold/30 pb-2">
+                      <span className="text-xs font-bold uppercase tracking-wider text-maroon-deep flex items-center gap-1.5">
+                        <span>🔗</span> Insert Hyperlink
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setShowLinkModal(false)}
+                        className="text-xs text-charcoal-brown/60 hover:text-maroon-deep font-bold"
+                      >
+                        ✕ Cancel
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Anchor Text (Selected Text)
+                        </label>
+                        <input
+                          type="text"
+                          value={linkText}
+                          onChange={(e) => setLinkText(e.target.value)}
+                          placeholder="Text readers will click..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Destination URL / Path <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={linkUrl}
+                          onChange={(e) => setLinkUrl(e.target.value)}
+                          placeholder="e.g. /blog/... or https://..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-end gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => setShowLinkModal(false)}
+                        className="px-3 py-1.5 text-xs font-semibold text-charcoal-brown border border-brass-gold/30 rounded hover:bg-white"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleApplyLink}
+                        className="px-4 py-1.5 text-xs font-bold uppercase bg-maroon-deep text-stone-ivory hover:bg-vermilion rounded shadow-2xs transition-colors"
+                      >
+                        Apply Link
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 <textarea
+                  ref={descTextareaRef}
                   required
                   rows={4}
                   value={description}
@@ -968,10 +1108,80 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
               </div>
 
               <div>
-                <label className="block text-xs uppercase font-bold text-maroon-deep mb-1">
-                  Detailed Spiritual Exposition <span className="text-red-500">*</span>
-                </label>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-xs uppercase font-bold text-maroon-deep">
+                    Detailed Spiritual Exposition <span className="text-red-500">*</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => handleOpenLinkModal("detailedExposition")}
+                    className="px-2.5 py-1 text-xs font-bold bg-maroon-deep text-stone-ivory hover:bg-vermilion rounded shadow-2xs transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>🔗 Add Hyperlink</span>
+                  </button>
+                </div>
+
+                {showLinkModal && linkTargetField === "detailedExposition" && (
+                  <div className="mb-3 p-4 bg-marigold/15 border-2 border-maroon-deep/50 rounded-xl space-y-3 shadow-md animate-fadeIn">
+                    <div className="flex items-center justify-between border-b border-brass-gold/30 pb-2">
+                      <span className="text-xs font-bold uppercase tracking-wider text-maroon-deep flex items-center gap-1.5">
+                        <span>🔗</span> Insert Hyperlink
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setShowLinkModal(false)}
+                        className="text-xs text-charcoal-brown/60 hover:text-maroon-deep font-bold"
+                      >
+                        ✕ Cancel
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Anchor Text (Selected Text)
+                        </label>
+                        <input
+                          type="text"
+                          value={linkText}
+                          onChange={(e) => setLinkText(e.target.value)}
+                          placeholder="Text readers will click..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] uppercase font-bold text-maroon-deep mb-1">
+                          Destination URL / Path <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={linkUrl}
+                          onChange={(e) => setLinkUrl(e.target.value)}
+                          placeholder="e.g. /blog/... or https://..."
+                          className="w-full bg-white border border-brass-gold/40 rounded p-2 text-xs outline-none focus:border-maroon-deep"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-end gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => setShowLinkModal(false)}
+                        className="px-3 py-1.5 text-xs font-semibold text-charcoal-brown border border-brass-gold/30 rounded hover:bg-white"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleApplyLink}
+                        className="px-4 py-1.5 text-xs font-bold uppercase bg-maroon-deep text-stone-ivory hover:bg-vermilion rounded shadow-2xs transition-colors"
+                      >
+                        Apply Link
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 <textarea
+                  ref={expoTextareaRef}
                   required
                   rows={6}
                   value={detailedExposition}

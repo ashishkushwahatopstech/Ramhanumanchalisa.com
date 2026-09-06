@@ -320,3 +320,53 @@ export async function d1GetImage(
     return null;
   }
 }
+
+// Blog Layout & Sidebar Configuration in D1
+export async function d1EnsureBlogConfigTable(db: any): Promise<void> {
+  if (!db || typeof db.prepare !== "function") return;
+  try {
+    await db.prepare(`
+      CREATE TABLE IF NOT EXISTS BlogConfig (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL,
+        updatedAt TEXT NOT NULL
+      )
+    `).run();
+  } catch (e) {
+    console.warn("Notice: d1EnsureBlogConfigTable:", e);
+  }
+}
+
+export async function d1GetBlogConfig(db: any): Promise<any> {
+  if (!db || typeof db.prepare !== "function") return null;
+  try {
+    await d1EnsureBlogConfigTable(db);
+    const row = await db.prepare("SELECT value FROM BlogConfig WHERE key = 'main'").first();
+    if (row && row.value) {
+      return JSON.parse(row.value);
+    }
+    return null;
+  } catch (e) {
+    console.error("D1 getBlogConfig error:", e);
+    return null;
+  }
+}
+
+export async function d1SaveBlogConfig(db: any, config: any): Promise<boolean> {
+  if (!db || typeof db.prepare !== "function") return false;
+  try {
+    await d1EnsureBlogConfigTable(db);
+    const now = new Date().toISOString();
+    await db.prepare(`
+      INSERT INTO BlogConfig (key, value, updatedAt)
+      VALUES ('main', ?, ?)
+      ON CONFLICT(key) DO UPDATE SET
+        value = excluded.value,
+        updatedAt = excluded.updatedAt
+    `).bind(JSON.stringify(config), now).run();
+    return true;
+  } catch (e) {
+    console.error("D1 saveBlogConfig error:", e);
+    return false;
+  }
+}
