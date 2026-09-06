@@ -344,7 +344,7 @@ const faqSchema =
     </div>
 
     <!-- Main Post Content -->
-    <article class="bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-4">
+    <article class="blog-article-content bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-4">
       {parsedContent.map((item) => {
         if (item.type === "h4") {
           return <h4 class="font-serif-display text-lg font-bold text-maroon-deep mt-6 mb-2">{item.text}</h4>;
@@ -440,3 +440,64 @@ const faqSchema =
     </div>
   </div>
 </Layout>
+
+<style is:global>
+  .blog-article-content h2 {
+    font-family: var(--font-serif, serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #5c1d11;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .blog-article-content h3 {
+    font-family: var(--font-serif, serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #5c1d11;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .blog-article-content img {
+    border-radius: 0.5rem;
+    max-width: 100%;
+    height: auto;
+    margin: 1.25rem auto;
+    display: block;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  }
+  .blog-article-content a {
+    color: #b33927;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.15s;
+  }
+  .blog-article-content a:hover {
+    color: #e5a93b;
+  }
+  .blog-article-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+  }
+  .blog-article-content th,
+  .blog-article-content td {
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 0.5rem 0.75rem;
+  }
+  .blog-article-content th {
+    background-color: rgba(197, 160, 89, 0.15);
+    color: #5c1d11;
+    font-weight: 700;
+  }
+  .blog-article-content blockquote {
+    border-left: 3px solid #c5a059;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: rgba(44, 30, 24, 0.85);
+  }
+</style>

@@ -76,7 +76,22 @@ Upon waking up, the human brain operates in the Alpha frequency range (8 to 12 H
   }
 ];
 
+function sanitizeContent(raw: string): string {
+  if (!raw) return "";
+  return raw
+    .replace(/\s*on[a-z]+="[^"]*"/gi, "")
+    .replace(/\s*on[a-z]+='[^']*'/gi, "")
+    .replace(/Updated on\s*:\s*[A-Za-z]+\s*\d{1,2},\s*\d{4}\s*(?:<br\s*\/?>)?\s*/gi, "")
+    .replace(/<p[^>]*>\s*<\/p>/gi, "")
+    .replace(/\s*data-(?:start|end|section-id)="[^"]*"/gi, "")
+    .replace(/\s*border="0"/gi, "")
+    .trim();
+}
+
 export const FALLBACK_BLOG_POSTS: BlogPost[] = [
   ...STATIC_BLOG_POSTS,
-  ...(importedPostsData as BlogPost[])
+  ...(importedPostsData as BlogPost[]).map((p) => ({
+    ...p,
+    content: sanitizeContent(p.content),
+  })),
 ];
