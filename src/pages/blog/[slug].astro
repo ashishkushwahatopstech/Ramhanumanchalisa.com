@@ -367,7 +367,7 @@ const faqSchema =
         if (item.type === "html") {
           return <div set:html={item.text} />;
         }
-        return <p class="text-xs sm:text-sm text-charcoal-brown/95 leading-relaxed my-3">{item.text}</p>;
+        return <p class="text-xs sm:text-sm text-charcoal-brown/95 leading-relaxed my-3" set:html={item.text} />;
       })}
     </article>
 
