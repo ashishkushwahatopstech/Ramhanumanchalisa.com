@@ -22,11 +22,34 @@ const purnimaTithiEnd = "April 2, 2026, 08:35 PM";
 const recommendedPujaTime = config?.pujaMuhurat || "06:05 AM to 08:32 AM (Brahma Muhurat & Sunrise)";
 const descriptionText = config?.description || "Hanuman Jayanti celebrates the divine birth of Lord Hanuman to Mother Anjana and King Kesari, under the influence of the Wind God (Vayu Dev).";
 
-const title = "Hanuman Jayanti 2026 — Date, Puja Muhurat & Significance";
-const description = "Find the exact date, puja muhurat times, and spiritual significance of Hanuman Jayanti. Learn how to fast and perform puja at home.";
+const title = "Hanuman Jayanti 2026 — Date, Shubh Muhurat & Puja Vidhi";
+const description = "Find exact Hanuman Jayanti 2026 date, auspicious puja muhurat timings, fasting vidhi, and rituals. Learn how to worship Lord Hanuman at home for blessings.";
+
+const eventSchema = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Hanuman Jayanti 2026",
+  "startDate": "2026-04-02T06:05:00+05:30",
+  "endDate": "2026-04-02T20:35:00+05:30",
+  "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "location": {
+    "@type": "VirtualLocation",
+    "url": "https://ramhanumanchalisa.com/hanuman-jayanti"
+  },
+  "description": description,
+  "organizer": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com"
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- Event Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(eventSchema)} />
+
   <div class="space-y-10 max-w-4xl mx-auto">
     
     <!-- Breadcrumbs -->
@@ -63,9 +86,9 @@ const description = "Find the exact date, puja muhurat times, and spiritual sign
         <span class="text-xs text-marigold font-bold uppercase tracking-widest block">
           Upcoming Festival Date
         </span>
-        <h3 class="font-serif-display text-2xl sm:text-3xl font-bold mt-1">
+        <h2 class="font-serif-display text-2xl sm:text-3xl font-bold mt-1">
           {jayantiDate}
-        </h3>
+        </h2>
         <p class="text-xs text-stone-ivory/60 mt-1">
           Celebrated on Chaitra Purnima (Full Moon Day in the Hindu month of Chaitra)
         </p>
@@ -102,9 +125,9 @@ const description = "Find the exact date, puja muhurat times, and spiritual sign
 
     <!-- Puja Vidhi and Fasting details -->
     <section class="bg-stone-ivory border class-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
-      <h3 class="font-serif-display text-lg text-maroon-deep uppercase tracking-wider font-bold border-b border-brass-gold/20 pb-2">
+      <h2 class="font-serif-display text-lg text-maroon-deep uppercase tracking-wider font-bold border-b border-brass-gold/20 pb-2">
         How to Celebrate Hanuman Jayanti at Home
-      </h3>
+      </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm leading-relaxed text-charcoal-brown/85">
         <div class="space-y-3">

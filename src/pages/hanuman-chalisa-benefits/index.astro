@@ -40,11 +40,27 @@ try {
   console.error("Error reading benefits from DB for index:", error);
 }
 
-const title = "Hanuman Chalisa Benefits — Recitation Advantages by Life Situation";
-const description = "Discover the spiritual, psychological, and physical benefits of reciting Hanuman Chalisa. Situation-based guides for career, health, studies, and protection.";
+const title = "Hanuman Chalisa Benefits — Miraculous Powers of 40 Verses";
+const description = "Discover spiritual, mental, and health benefits of reciting Hanuman Chalisa daily. Proven guides for career success, healing, studies, fear, and marriage.";
+
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Hanuman Chalisa Benefits by Life Situation",
+  "description": description,
+  "itemListElement": allBenefits.map((b, idx) => ({
+    "@type": "ListItem",
+    "position": idx + 1,
+    "name": b.title,
+    "url": `https://ramhanumanchalisa.com/hanuman-chalisa-benefits/${b.slug}`
+  }))
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- ItemList Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
+
   <div class="space-y-10 max-w-5xl mx-auto">
     <!-- Breadcrumbs -->
     <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
@@ -77,6 +93,14 @@ const description = "Discover the spiritual, psychological, and physical benefit
     <!-- AdSense Top Slot -->
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
       Ad Slot — Page Top (Layout Stable Skeleton)
+    </div>
+
+    <!-- Section Heading for Benefits -->
+    <div class="text-center">
+      <h2 class="font-serif-display text-xl sm:text-2xl font-bold text-maroon-deep uppercase tracking-wider">
+        Situation-Based Hanuman Chalisa Recitation Guides
+      </h2>
+      <p class="text-xs text-charcoal-brown/60 mt-1">Select your focus area to view specific chaupais, counts, and rituals</p>
     </div>
 
     <!-- Grid of Benefit Cards -->

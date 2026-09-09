@@ -29,9 +29,11 @@ const orgSchema = {
   "url": "https://ramhanumanchalisa.com",
   "logo": "https://ramhanumanchalisa.com/icon.png"
 };
+const pageTitle = "Shree Hanuman Chalisa — Lyrics, Meaning, Audio & PDF";
+const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and English with line-by-line meaning, synced MP3 audio, printable PDF, and complete path vidhi guidelines.";
 ---
 
-<Layout title={data.title} description={data.metaDescription} showHreflangs={true}>
+<Layout title={pageTitle} description={pageDescription} showHreflangs={true}>
   <!-- Brand Schemas -->
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />

@@ -6,11 +6,37 @@ import type { ScriptureVerse } from "../types/scripture";
 
 const verses = hanumanChalisaData as ScriptureVerse[];
 
-const title = "Hanuman Chalisa Lyrics in English — Transliteration & Translation";
-const description = "Read the complete Hanuman Chalisa in English transliteration (romanized text) alongside clear English translations of all 40 verses.";
+const title = "Hanuman Chalisa Lyrics in English — Transliteration Guide";
+const description = "Read full Hanuman Chalisa lyrics in English transliteration with romanized phonetic syllables, line-by-line translation, and easy English chanting guide.";
+
+const scriptureSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://ramhanumanchalisa.com/hanuman-chalisa-english",
+  "author": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ramhanumanchalisa.com/icon.png"
+    }
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- Scripture Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(scriptureSchema)} />
+
   <div class="space-y-10 max-w-5xl mx-auto">
     
     <!-- Breadcrumbs -->
@@ -39,11 +65,33 @@ const description = "Read the complete Hanuman Chalisa in English transliteratio
       </p>
     </div>
 
+    <!-- Cannibalization Resolution Cross-Link Banner -->
+    <div class="p-4 bg-maroon-deep/5 border border-brass-gold/30 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-charcoal-brown">
+      <div>
+        <strong class="text-maroon-deep">Looking for full bilingual edition with audio player?</strong>
+        <p class="text-charcoal-brown/75">Explore the comprehensive Hanuman Chalisa with Devanagari script, audio synchronization, and PDF download.</p>
+      </div>
+      <a
+        href="/hanuman-chalisa/en"
+        class="shrink-0 px-4 py-2 bg-maroon-deep hover:bg-marigold text-stone-ivory hover:text-maroon-deep font-bold rounded uppercase tracking-wider border border-brass-gold shadow-sm transition-colors text-[11px]"
+      >
+        Complete English Edition &rarr;
+      </a>
+    </div>
+
     <CarvedDivider icon="🕉️" />
 
     <!-- AdSense Slot -->
     <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
       Ad Slot — Lyrics Page Top (Layout Stable Skeleton)
+    </div>
+
+    <!-- Section Heading -->
+    <div class="text-center">
+      <h2 class="font-serif-display text-xl sm:text-2xl font-bold text-maroon-deep uppercase tracking-wider">
+        All 43 Verses in Romanized English
+      </h2>
+      <p class="text-xs text-charcoal-brown/60 mt-1">2 Opening Dohas, 40 Chaupais & 1 Concluding Couplet</p>
     </div>
 
     <!-- Verses Layout -->

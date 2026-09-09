@@ -1,6 +1,8 @@
 export interface BenefitDetails {
   slug: string;
   title: string;
+  metaTitle?: string;
+  metaDescription?: string;
   situation: string;
   icon: string;
   description: string;
@@ -16,6 +18,8 @@ export const BENEFITS_DATA: Record<string, BenefitDetails> = {
   career: {
     slug: "career",
     title: "Hanuman Chalisa for Career Growth & Job Success",
+    metaTitle: "Hanuman Chalisa for Career Growth, Promotion & Job Success",
+    metaDescription: "Chant Hanuman Chalisa Chaupai 7 for career growth, job promotions, and interview success. Step-by-step Tuesday ritual, vidhi, and spiritual significance.",
     situation: "Stuck in career, seeking promotion, job insecurity, or starting a business.",
     icon: "💼",
     description: "Reciting the Hanuman Chalisa instills unwavering confidence and courage, which are key for professional growth. Hanuman represents the ultimate service (seva) and dedication, traits that lead to recognition and success in modern workplaces.",
@@ -35,6 +39,8 @@ export const BENEFITS_DATA: Record<string, BenefitDetails> = {
   health: {
     slug: "health",
     title: "Hanuman Chalisa for Health, Healing & Disease Removal",
+    metaTitle: "Hanuman Chalisa for Health, Healing & Disease Protection",
+    metaDescription: "Learn how chanting Hanuman Chalisa Chaupai 25 destroys physical ailments and chronic illnesses. Authentic Saturday healing vidhi, benefits, and rules.",
     situation: "Recovering from chronic illness, suffering physical pain, or facing low energy.",
     icon: "🌱",
     description: "Lord Hanuman is also referred to as 'Sankat Mochan' (remover of distress) and is traditionally invoked for physical strength. Sound vibrations from chanting particular syllables have been observed to calm the nervous system and aid in physiological healing.",
@@ -54,6 +60,8 @@ export const BENEFITS_DATA: Record<string, BenefitDetails> = {
   exams: {
     slug: "exams",
     title: "Hanuman Chalisa for Students, Focus & Exam Success",
+    metaTitle: "Hanuman Chalisa for Students, Focus & Exam Concentration",
+    metaDescription: "Overcome exam fear and sharpen memory with Hanuman Chalisa Chaupai 1 chanting. Proven study vidhi, daily ritual rules, and wisdom blessings for students.",
     situation: "Students facing exam anxiety, lack of concentration, or memory lapses.",
     icon: "🎓",
     description: "Hanuman is a master of grammar and all shastras (scriptures). He holds absolute control over his senses (Jitendriya). Chanting his praise helps students stabilize their minds, improve cognitive recall, and overcome stress during exams.",
@@ -73,6 +81,8 @@ export const BENEFITS_DATA: Record<string, BenefitDetails> = {
   protection: {
     slug: "protection",
     title: "Hanuman Chalisa for Protection & Removing Negative Energies",
+    metaTitle: "Hanuman Chalisa for Protection & Removing Negative Energy",
+    metaDescription: "Invoke Lord Hanuman's supreme protection with Chaupai 24 to banish fear, night terrors, and negative energies. Authentic bedtime chanting rules and vidhi.",
     situation: "Experiencing fear, anxiety, nightmares, bad dreams, or feeling negative vibes.",
     icon: "🛡️",
     description: "Lord Hanuman holds immense power to dispel negative cosmic influences, evil eyes, and fears. His name alone is a shield that acts as a fortress around the devotee, keeping negative entities and malicious forces at bay.",
@@ -92,6 +102,8 @@ export const BENEFITS_DATA: Record<string, BenefitDetails> = {
   "marriage-delays": {
     slug: "marriage-delays",
     title: "Hanuman Chalisa for Delayed Marriages & Family Conflicts",
+    metaTitle: "Hanuman Chalisa for Marriage Delays & Relationship Peace",
+    metaDescription: "Chant Hanuman Chalisa Chaupai 11 to resolve marriage delays and family relationship discord. 21 Saturday anushthan rules, puja vidhi, and sankalpa guide.",
     situation: "Unreasonable delays in marriage, finding a life partner, or household discord.",
     icon: "🤝",
     description: "Hanuman is the ultimate messenger of union. He was the one who located Mother Sita, crossed the ocean, and brought the ring of union from Lord Rama, resolving their separation. Chanting his praise helps resolve relationship blockages and brings harmony.",

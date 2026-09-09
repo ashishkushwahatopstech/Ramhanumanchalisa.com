@@ -61,8 +61,8 @@ posts.sort((a, b) => {
 
 const recentPosts = posts.slice(0, 5);
 
-const title = "Bhakti Blog & Devotional Library — Hanuman Chalisa, Stotras, Aartis & Bhajans";
-const description = "Read complete lyrics, word-by-word meanings, PDFs, and scholarly guides for Hanuman Chalisa, Sankat Mochan, Shiv Chalisa, Ram Bhajans, and Vedic Stotras.";
+const title = "Bhakti Blog & Scripture Library — Chalisas, Aartis & Stotras";
+const description = "Explore our Bhakti blog and devotional library with complete lyrics, word-by-word meanings, PDFs, and scholarly guides for Chalisas, Aartis, and Stotras.";
 
 // Collect unique categories
 const allCategories = [
@@ -188,210 +188,108 @@ const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
       Ad Slot — Blog Top (Layout Stable)
     </div>
 
-    <!-- Main Content Area with Responsive Sidebar -->
-    <div class={isSidebarActive ? "grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" : "space-y-6"}>
-      
-      <!-- Primary Articles Column -->
-      <div class={isSidebarActive ? "lg:col-span-8 space-y-6" : "space-y-6"}>
-        <!-- Results Counter -->
-        <div class="flex justify-between items-center text-xs text-charcoal-brown/60 px-1 font-semibold">
-          <span>Showing {filteredPosts.length > 0 ? (page - 1) * pageSize + 1 : 0} – {Math.min(page * pageSize, filteredPosts.length)} of {filteredPosts.length} devotional articles</span>
-          {totalPages > 1 && (
-            <span>Page {page} of {totalPages}</span>
-          )}
-        </div>
-
-        <!-- Articles List -->
-        {paginatedPosts.length === 0 ? (
-          <div class="p-12 text-center bg-stone-ivory border border-brass-gold/25 rounded-lg space-y-3">
-            <p class="text-base text-charcoal-brown/80">No articles found matching your search.</p>
-            <a href="/blog" class="inline-block text-xs font-bold text-maroon-deep underline">View All Articles</a>
-          </div>
-        ) : (
-          <div class="space-y-6">
-            {paginatedPosts.map((post) => (
-              <article
-                class="p-6 bg-stone-ivory border border-brass-gold/25 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 space-y-3"
-              >
-                <div class="flex flex-wrap items-center gap-2 text-xs text-brass-gold font-bold">
-                  {post.category && (
-                    <span class="bg-marigold/20 text-maroon-deep px-2 py-0.5 rounded text-[10px] uppercase tracking-wider border border-marigold/40">
-                      {post.category}
-                    </span>
-                  )}
-                  <span>{post.createdAt}</span>
-                  <span class="text-charcoal-brown/30">•</span>
-                  <span>By {post.author}</span>
-                  <span class="text-charcoal-brown/30">•</span>
-                  <span>{post.readTime}</span>
-                </div>
-
-                <h2 class="font-serif-display text-xl font-bold text-maroon-deep hover:text-marigold transition-colors leading-snug">
-                  <a href={`/blog/${post.slug}`}>{post.title}</a>
-                </h2>
-
-                <p class="text-xs sm:text-sm text-charcoal-brown/80 leading-relaxed line-clamp-3">
-                  {post.excerpt}
-                </p>
-
-                <div class="pt-2 flex items-center justify-between">
-                  <a
-                    href={`/blog/${post.slug}`}
-                    class="text-xs uppercase font-bold text-vermilion hover:text-marigold transition-colors inline-flex items-center gap-1"
-                  >
-                    Read Full Hymn & Lyrics &rarr;
-                  </a>
-                  <span class="text-[11px] text-charcoal-brown/40">Free Lyrics & Meaning</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        )}
-
-        <!-- Pagination Controls -->
+    <!-- Main Articles Content -->
+    <div class="space-y-6">
+      <!-- Results Counter -->
+      <div class="flex justify-between items-center text-xs text-charcoal-brown/60 px-1 font-semibold">
+        <span>Showing {filteredPosts.length > 0 ? (page - 1) * pageSize + 1 : 0} – {Math.min(page * pageSize, filteredPosts.length)} of {filteredPosts.length} devotional articles</span>
         {totalPages > 1 && (
-          <nav class="flex justify-center items-center gap-2 pt-6" aria-label="Pagination">
-            {page > 1 && (
-              <a
-                href={`/blog?page=${page - 1}${currentCategory !== "All" ? `&category=${encodeURIComponent(currentCategory)}` : ""}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`}
-                class="px-4 py-2 text-xs font-bold text-maroon-deep border border-brass-gold/30 rounded bg-stone-ivory hover:bg-maroon-deep hover:text-stone-ivory transition-colors"
-              >
-                &larr; Previous
-              </a>
-            )}
-
-            <div class="flex items-center gap-1">
-              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                let pageNum = i + 1;
-                if (totalPages > 5 && page > 3) {
-                  pageNum = page - 2 + i;
-                  if (pageNum > totalPages) pageNum = totalPages - (4 - i);
-                }
-                const isCurr = pageNum === page;
-                return (
-                  <a
-                    href={`/blog?page=${pageNum}${currentCategory !== "All" ? `&category=${encodeURIComponent(currentCategory)}` : ""}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`}
-                    class={`w-8 h-8 flex items-center justify-center text-xs font-bold rounded border transition-colors ${
-                      isCurr
-                        ? "bg-maroon-deep text-stone-ivory border-maroon-deep"
-                        : "bg-stone-ivory text-charcoal-brown/70 border-brass-gold/30 hover:border-maroon-deep hover:text-maroon-deep"
-                    }`}
-                  >
-                    {pageNum}
-                  </a>
-                );
-              })}
-            </div>
-
-            {page < totalPages && (
-              <a
-                href={`/blog?page=${page + 1}${currentCategory !== "All" ? `&category=${encodeURIComponent(currentCategory)}` : ""}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`}
-                class="px-4 py-2 text-xs font-bold text-maroon-deep border border-brass-gold/30 rounded bg-stone-ivory hover:bg-maroon-deep hover:text-stone-ivory transition-colors"
-              >
-                Next &rarr;
-              </a>
-            )}
-          </nav>
+          <span>Page {page} of {totalPages}</span>
         )}
       </div>
 
-      <!-- Responsive Sidebar (Desktop: Right 4 cols, Mobile: Stacked below articles) -->
-      {isSidebarActive && (
-        <aside class="lg:col-span-4 space-y-6 lg:sticky lg:top-24 mt-6 lg:mt-0">
-          
-          <!-- Widget 1: About Mandir Library -->
-          {blogConfig?.aboutTitle && (
-            <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-5 shadow-xs space-y-2.5">
-              <div class="flex items-center gap-2 border-b border-brass-gold/20 pb-2">
-                <span class="text-xl">🛕</span>
-                <h3 class="font-serif-display font-bold text-maroon-deep text-base uppercase tracking-wider">
-                  {blogConfig.aboutTitle}
-                </h3>
+      <!-- Articles List -->
+      {paginatedPosts.length === 0 ? (
+        <div class="p-12 text-center bg-stone-ivory border border-brass-gold/25 rounded-lg space-y-3">
+          <p class="text-base text-charcoal-brown/80">No articles found matching your search.</p>
+          <a href="/blog" class="inline-block text-xs font-bold text-maroon-deep underline">View All Articles</a>
+        </div>
+      ) : (
+        <div class="space-y-6">
+          {paginatedPosts.map((post) => (
+            <article
+              class="p-6 bg-stone-ivory border border-brass-gold/25 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 space-y-3"
+            >
+              <div class="flex flex-wrap items-center gap-2 text-xs text-brass-gold font-bold">
+                {post.category && (
+                  <span class="bg-marigold/20 text-maroon-deep px-2 py-0.5 rounded text-[10px] uppercase tracking-wider border border-marigold/40">
+                    {post.category}
+                  </span>
+                )}
+                <span>{post.createdAt}</span>
+                <span class="text-charcoal-brown/30">•</span>
+                <span>By {post.author}</span>
+                <span class="text-charcoal-brown/30">•</span>
+                <span>{post.readTime}</span>
               </div>
-              <p class="text-xs text-charcoal-brown/80 leading-relaxed">
-                {blogConfig.aboutContent}
+
+              <h2 class="font-serif-display text-xl font-bold text-maroon-deep hover:text-marigold transition-colors leading-snug">
+                <a href={`/blog/${post.slug}`}>{post.title}</a>
+              </h2>
+
+              <p class="text-xs sm:text-sm text-charcoal-brown/80 leading-relaxed line-clamp-3">
+                {post.excerpt}
               </p>
-            </div>
-          )}
 
-          <!-- Widget 2: Featured Sacred Hymn -->
-          {blogConfig?.featuredHymnTitle && (
-            <div class="bg-radial from-marigold/20 via-stone-ivory to-stone-ivory border-2 border-marigold/60 rounded-xl p-5 shadow-sm space-y-3 relative overflow-hidden">
-              <div class="absolute -top-3 -right-3 text-4xl opacity-10 font-serif">ॐ</div>
-              <span class="text-[10px] font-bold uppercase tracking-widest text-maroon-deep bg-marigold/40 px-2 py-0.5 rounded border border-marigold">
-                ⭐ Featured Hymn
-              </span>
-              <h4 class="font-serif-display text-base font-bold text-maroon-deep leading-snug">
-                {blogConfig.featuredHymnTitle}
-              </h4>
-              <p class="text-xs text-charcoal-brown/75 leading-relaxed">
-                {blogConfig.featuredHymnDesc}
-              </p>
-              <a
-                href={blogConfig.featuredHymnUrl || "/"}
-                class="inline-flex items-center gap-1.5 px-4 py-2 bg-maroon-deep hover:bg-vermilion text-stone-ivory text-xs font-bold uppercase tracking-wider rounded transition-colors shadow-xs"
-              >
-                <span>Recite Now</span>
-                <span>&rarr;</span>
-              </a>
-            </div>
-          )}
-
-          <!-- Widget 3: Recent Hymns (Top 5) -->
-          {blogConfig?.showRecentPosts && recentPosts.length > 0 && (
-            <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-5 shadow-xs space-y-3">
-              <h3 class="font-serif-display font-bold text-maroon-deep text-sm uppercase tracking-wider border-b border-brass-gold/20 pb-2 flex items-center gap-2">
-                <span>📜</span> Latest Sacred Hymns
-              </h3>
-              <ul class="divide-y divide-brass-gold/15 space-y-2">
-                {recentPosts.map((rPost) => (
-                  <li class="pt-2 first:pt-0">
-                    <a
-                      href={`/blog/${rPost.slug}`}
-                      class="group block space-y-1"
-                    >
-                      <span class="text-xs font-bold text-maroon-deep group-hover:text-vermilion transition-colors line-clamp-2 leading-snug">
-                        {rPost.title}
-                      </span>
-                      <span class="text-[10px] text-charcoal-brown/50 block font-mono">
-                        {rPost.createdAt}
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <!-- Widget 4: Quick Deity Categories -->
-          {blogConfig?.showCategories && (
-            <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-5 shadow-xs space-y-3">
-              <h3 class="font-serif-display font-bold text-maroon-deep text-sm uppercase tracking-wider border-b border-brass-gold/20 pb-2 flex items-center gap-2">
-                <span>🙏</span> Sacred Deity Collections
-              </h3>
-              <div class="flex flex-wrap gap-1.5">
-                {allCategories.filter(c => c !== "All").map((cat) => (
-                  <a
-                    href={`/blog?category=${encodeURIComponent(cat)}`}
-                    class="px-2.5 py-1 text-[11px] font-semibold bg-white border border-brass-gold/30 rounded-full text-charcoal-brown hover:border-maroon-deep hover:text-maroon-deep transition-all"
-                  >
-                    {cat}
-                  </a>
-                ))}
+              <div class="pt-2 flex items-center justify-between">
+                <a
+                  href={`/blog/${post.slug}`}
+                  class="text-xs uppercase font-bold text-vermilion hover:text-marigold transition-colors inline-flex items-center gap-1"
+                >
+                  Read Full Hymn & Lyrics &rarr;
+                </a>
+                <span class="text-[11px] text-charcoal-brown/40">Free Lyrics & Meaning</span>
               </div>
-            </div>
-          )}
-
-          <!-- Widget 5: Custom HTML / Banner / Ads Gadget -->
-          {blogConfig?.customHtmlWidget && (
-            <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-4 shadow-xs overflow-hidden">
-              <div set:html={blogConfig.customHtmlWidget} />
-            </div>
-          )}
-
-        </aside>
+            </article>
+          ))}
+        </div>
       )}
 
+      <!-- Pagination Controls -->
+      {totalPages > 1 && (
+        <nav class="flex justify-center items-center gap-2 pt-6" aria-label="Pagination">
+          {page > 1 && (
+            <a
+              href={`/blog?page=${page - 1}${currentCategory !== "All" ? `&category=${encodeURIComponent(currentCategory)}` : ""}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`}
+              class="px-4 py-2 text-xs font-bold text-maroon-deep border border-brass-gold/30 rounded bg-stone-ivory hover:bg-maroon-deep hover:text-stone-ivory transition-colors"
+            >
+              &larr; Previous
+            </a>
+          )}
+
+          <div class="flex items-center gap-1">
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              let pageNum = i + 1;
+              if (totalPages > 5 && page > 3) {
+                pageNum = page - 2 + i;
+                if (pageNum > totalPages) pageNum = totalPages - (4 - i);
+              }
+              const isCurr = pageNum === page;
+              return (
+                <a
+                  href={`/blog?page=${pageNum}${currentCategory !== "All" ? `&category=${encodeURIComponent(currentCategory)}` : ""}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`}
+                  class={`w-8 h-8 flex items-center justify-center text-xs font-bold rounded border transition-colors ${
+                    isCurr
+                      ? "bg-maroon-deep text-stone-ivory border-maroon-deep"
+                      : "bg-stone-ivory text-charcoal-brown/70 border-brass-gold/30 hover:border-maroon-deep hover:text-maroon-deep"
+                  }`}
+                >
+                  {pageNum}
+                </a>
+              );
+            })}
+          </div>
+
+          {page < totalPages && (
+            <a
+              href={`/blog?page=${page + 1}${currentCategory !== "All" ? `&category=${encodeURIComponent(currentCategory)}` : ""}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`}
+              class="px-4 py-2 text-xs font-bold text-maroon-deep border border-brass-gold/30 rounded bg-stone-ivory hover:bg-maroon-deep hover:text-stone-ivory transition-colors"
+            >
+              Next &rarr;
+            </a>
+          )}
+        </nav>
+      )}
     </div>
 
     <!-- AdSense Footer Slot -->

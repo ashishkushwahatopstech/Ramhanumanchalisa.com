@@ -1,6 +1,9 @@
 ---
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import ScrollToTop from "../components/ScrollToTop.astro";
+import Sidebar from "../components/Sidebar.astro";
+import { d1GetBlogConfig } from "../lib/d1";
+import { getBlogConfig } from "../lib/dynamicContent";
 import "../styles/globals.css";
 
 interface Props {
@@ -9,6 +12,7 @@ interface Props {
   canonicalUrl?: string;
   showHreflangs?: boolean;
   ogImage?: string;
+  hideSidebar?: boolean;
 }
 
 const { 
@@ -16,13 +20,55 @@ const {
   description = "Step into our digital mandir. Read the authentic Hanuman Chalisa in Devanagari, English, and Gujarati, with line-by-line Hindi/English meanings, synced audio, PDF, and path vidhi.",
   canonicalUrl: propCanonicalUrl,
   showHreflangs = false,
-  ogImage = "https://ramhanumanchalisa.com/og-image.jpg"
+  ogImage = "https://ramhanumanchalisa.com/og-image.jpg",
+  hideSidebar = false,
 } = Astro.props;
+
+// Determine whether sidebar should appear across the site
+const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+const isExcludedPage = 
+  hideSidebar ||
+  currentPath === "/" ||
+  currentPath === "/about" ||
+  currentPath === "/contact" ||
+  currentPath === "/privacy-policy" ||
+  currentPath === "/disclaimer" ||
+  currentPath.startsWith("/admin") ||
+  currentPath.startsWith("/api") ||
+  currentPath.startsWith("/login") ||
+  currentPath === "/404" ||
+  currentPath === "/unauthorized";
+
+const db = Astro.locals.runtime?.env?.DB;
+let blogConfig = null;
+if (db && typeof db.prepare === "function") {
+  try {
+    blogConfig = await d1GetBlogConfig(db);
+  } catch (e) {
+    // ignore
+  }
+}
+if (!blogConfig) {
+  blogConfig = getBlogConfig();
+}
+
+const shouldShowSidebar = !isExcludedPage && (blogConfig?.sidebarEnabled ?? true);
 
 // Determine canonical URL: prefer explicitly passed prop, otherwise derive dynamically from current route
 const siteBaseUrl = "https://ramhanumanchalisa.com";
 const cleanPath = Astro.url.pathname.replace(/\/+$/, "");
-const canonicalUrl = propCanonicalUrl || (cleanPath ? `${siteBaseUrl}${cleanPath}` : siteBaseUrl);
+const canonicalUrl = propCanonicalUrl || (cleanPath ? `${siteBaseUrl}${cleanPath}` : `${siteBaseUrl}/`);
+
+// Compute optimal SEO title tag (strictly targeting 50-60 characters)
+let renderedTitle = title.trim();
+if (renderedTitle.includes("Ram Hanuman Chalisa") || renderedTitle.includes("RamHanumanChalisa")) {
+  // Brand already present in title
+} else if (renderedTitle.length <= 37) {
+  renderedTitle = `${renderedTitle} | Ram Hanuman Chalisa`;
+} else if (renderedTitle.length <= 44) {
+  renderedTitle = `${renderedTitle} | RHC`;
+}
 
 const currentYear = new Date().getFullYear();
 const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_GA_ID || "G-VBBLMPSKY2";
@@ -112,7 +158,7 @@ const breadcrumbSchema = {
     )}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title === "Shree Hanuman Chalisa — Audio, Meaning, PDF & Recitation Guide" ? title : `${title} | Ram Hanuman Chalisa`}</title>
+    <title>{renderedTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
 
@@ -138,7 +184,7 @@ const breadcrumbSchema = {
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={renderedTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:secure_url" content={ogImage} />
@@ -150,7 +196,7 @@ const breadcrumbSchema = {
     <!-- Twitter Card -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalUrl} />
-    <meta property="twitter:title" content={title} />
+    <meta property="twitter:title" content={renderedTitle} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImage} />
     <meta property="twitter:image:alt" content="Shree Ram and Hanuman Devotional Banner - RamHanumanChalisa.com" />
@@ -230,7 +276,18 @@ const breadcrumbSchema = {
 
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 pb-24 md:pb-12">
-      <slot />
+      {shouldShowSidebar ? (
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-8 min-w-0 space-y-6">
+            <slot />
+          </div>
+          <aside class="lg:col-span-4 min-w-0 mt-8 lg:mt-0 lg:sticky lg:top-24">
+            <Sidebar />
+          </aside>
+        </div>
+      ) : (
+        <slot />
+      )}
     </main>
 
     <!-- Footer -->

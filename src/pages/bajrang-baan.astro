@@ -11,11 +11,37 @@ const openingDohas = verses.filter((v) => v.id.startsWith("doha-") && v.id !== "
 const closingDoha = verses.find((v) => v.id === "doha-closing");
 const chaupais = verses.filter((v) => v.id.startsWith("chaupai-"));
 
-const title = "Shree Bajrang Baan — Lyrics in English, Hindi & Full Translation";
-const description = "Read the powerful Bajrang Baan with original Devanagari verses, English transliteration, line-by-line Hindi/English meanings, and protection rules.";
+const title = "Shree Bajrang Baan Lyrics — Hindi, English & Path Vidhi";
+const description = "Read complete Shree Bajrang Baan with original Devanagari verses, English transliteration, line-by-line meaning, path vidhi, and protection benefits.";
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://ramhanumanchalisa.com/bajrang-baan",
+  "author": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ramhanumanchalisa.com/icon.png"
+    }
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- Article JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
   <div class="space-y-10 max-w-4xl mx-auto">
     
     <!-- Breadcrumbs -->
@@ -36,9 +62,9 @@ const description = "Read the powerful Bajrang Baan with original Devanagari ver
       <span class="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
         Protection Shield (सुरक्षा कवच)
       </span>
-      <h2 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+      <h1 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
         Shree Bajrang Baan
-      </h2>
+      </h1>
       <p class="text-xs text-charcoal-brown/70 max-w-xl mx-auto leading-relaxed">
         The Bajrang Baan is an arrow (baan) of protection dedicated to Lord Hanuman. Devotees chant it to dispel fear, remove negative influences, and overcome severe obstacles.
       </p>
@@ -75,9 +101,9 @@ const description = "Read the powerful Bajrang Baan with original Devanagari ver
 
     <!-- 2. Main Verses (Chaupais) -->
     <section class="space-y-6">
-      <h3 class="font-serif-display text-xl uppercase tracking-wider font-bold text-center text-maroon-deep">
+      <h2 class="font-serif-display text-xl uppercase tracking-wider font-bold text-center text-maroon-deep">
         The Bajrang Baan Verses
-      </h3>
+      </h2>
 
       <div class="space-y-6">
         {chaupais.map((verse) => (

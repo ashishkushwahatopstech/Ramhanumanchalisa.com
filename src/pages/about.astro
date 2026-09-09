@@ -2,11 +2,28 @@
 import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
 
-const title = "About Us — Sourcing, Scholars & Devotional Authenticity";
-const description = "Learn about the mission behind RamHanumanChalisa.com, our sources of Awadhi/Sanskrit texts, and our scholarly review panel.";
+const title = "About Ram Hanuman Chalisa — Vedic Mission & Authenticity";
+const description = "Learn about the spiritual mission of RamHanumanChalisa.com, our authenticated Gita Press sources, Vedic scholars panel, and strict editorial standards.";
+
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": title,
+  "description": description,
+  "url": "https://ramhanumanchalisa.com/about",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": "https://ramhanumanchalisa.com/icon.png"
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- AboutPage Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
+
   <div class="space-y-10 max-w-4xl mx-auto text-sm sm:text-base text-charcoal-brown/90 leading-relaxed">
     
     <!-- Breadcrumbs -->
@@ -39,9 +56,9 @@ const description = "Learn about the mission behind RamHanumanChalisa.com, our s
 
     <!-- Sourcing & Mission -->
     <section class="space-y-4">
-      <h3 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
+      <h2 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
         Our Spiritual Mission
-      </h3>
+      </h2>
       <p>
         RamHanumanChalisa.com was born out of a desire to create a clean, ad-stable, and deeply informative portal for Hanuman bhakti. Most online sources are cluttered with intrusive ads, layout shifts, and inaccurate translations. We aim to respect the devotee's attention by offering a calm, temple-like environment.
       </p>
@@ -52,9 +69,9 @@ const description = "Learn about the mission behind RamHanumanChalisa.com, our s
 
     <!-- Scholarly Panel -->
     <section class="bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-4">
-      <h3 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2 flex items-center gap-2">
+      <h2 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2 flex items-center gap-2">
         🎓 Scholarly Review & Authenticity
-      </h3>
+      </h2>
       <p class="text-xs sm:text-sm">
         To maintain the highest level of trust (E-E-A-T) and avoid &ldquo;low-value content&rdquo; flags, we do not scrape generic translations. The Devanagari texts, English transliterations, and bilingual interpretations on this site have been cross-verified with traditional publications (Gita Press, Gorakhpur) and reviewed by our panel of scholars:
       </p>
@@ -76,9 +93,9 @@ const description = "Learn about the mission behind RamHanumanChalisa.com, our s
 
     <!-- Source publications -->
     <section class="space-y-4">
-      <h3 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
+      <h2 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
         Source Publications
-      </h3>
+      </h2>
       <p class="text-xs sm:text-sm">
         Our canonical texts are referenced from:
       </p>

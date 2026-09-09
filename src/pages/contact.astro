@@ -2,11 +2,22 @@
 import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
 
-const title = "Contact Us — Feedback & Devotional Queries";
-const description = "Get in touch with the team at RamHanumanChalisa.com for feedback, text corrections, or scholarly submissions.";
+const title = "Contact Us — Devotional Queries & Text Corrections Support";
+const description = "Contact the editorial and scholarly team at RamHanumanChalisa.com for text inquiries, scriptural feedback, pronunciation corrections, and submissions.";
+
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": title,
+  "description": description,
+  "url": "https://ramhanumanchalisa.com/contact"
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- ContactPage Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(contactSchema)} />
+
   <div class="space-y-10 max-w-2xl mx-auto">
     
     <!-- Breadcrumbs -->

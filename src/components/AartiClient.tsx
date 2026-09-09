@@ -72,9 +72,9 @@ export default function AartiClient() {
 
         {/* Synced Audio Player */}
         <section className="space-y-4">
-          <h3 className="font-serif-display text-base font-bold uppercase tracking-wider text-maroon-deep text-center">
+          <h2 className="font-serif-display text-base font-bold uppercase tracking-wider text-maroon-deep text-center">
             Listen with Synced Lyrics
-          </h3>
+          </h2>
           <div className="border border-brass-gold/30 rounded-lg p-4 bg-stone-ivory shadow-sm">
             <SyncedAudioPlayer defaultTrackId="track-3" />
           </div>
@@ -83,9 +83,9 @@ export default function AartiClient() {
         {/* PDF Download Action Banner */}
         <div className="bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
-            <h3 className="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
+            <h2 className="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
               Print Hanuman Aarti Lyrics
-            </h3>
+            </h2>
             <p className="text-xs text-stone-ivory/80 max-w-lg leading-relaxed">
               Generate a vector-clear print format of the Aarti lyrics for offline worship.
             </p>

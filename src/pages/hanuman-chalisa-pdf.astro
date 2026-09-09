@@ -13,11 +13,37 @@ const openingDohas = verses.filter((v) => v.id.startsWith("doha-"));
 const chaupais = verses.filter((v) => v.id.startsWith("chaupai-"));
 const dohaClosing = openingDohas.find((v) => v.id === "doha-closing");
 
-const title = "Download & Save Hanuman Chalisa PDF — Print Verses, Dohas & Shlokas";
-const description = "Download and save the complete Hanuman Chalisa PDF, print prayer sheets, or save and share individual verses, dohas, chaupais, and aarti.";
+const title = "Hanuman Chalisa PDF Download — Free Printable Clean Sheet";
+const description = "Download free Hanuman Chalisa PDF printable booklet in clear Hindi and English. High-quality prayer sheets with opening dohas, 40 chaupais, and aarti.";
+
+const pdfSchema = {
+  "@context": "https://schema.org",
+  "@type": "DigitalDocument",
+  "name": "Shree Hanuman Chalisa Printable PDF",
+  "description": description,
+  "encodingFormat": "application/pdf",
+  "url": "https://ramhanumanchalisa.com/hanuman-chalisa-pdf",
+  "author": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ramhanumanchalisa.com/icon.png"
+    }
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- Digital Document Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(pdfSchema)} />
+
   <div class="space-y-12">
     
     <!-- 1. Public Facing Section (no-print) -->
@@ -52,9 +78,9 @@ const description = "Download and save the complete Hanuman Chalisa PDF, print p
       <!-- Print Action Box -->
       <div class="bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="space-y-2">
-          <h3 class="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
+          <h2 class="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
             Download Print-Ready PDF
-          </h3>
+          </h2>
           <p class="text-xs text-stone-ivory/80 max-w-lg leading-relaxed">
             We do not use cheap scans or blurry images. Clicking the button compiles the vector characters directly using Google Fonts into a beautiful physical double-column layout. Adjust paper to &ldquo;Save to PDF&rdquo; or print.
           </p>
@@ -81,9 +107,9 @@ const description = "Download and save the complete Hanuman Chalisa PDF, print p
       
       <!-- Print Header -->
       <div class="text-center border-b-2 border-black pb-4">
-        <h1 class="font-serif-display text-2xl font-bold uppercase tracking-wider">
+        <h2 class="font-serif-display text-2xl font-bold uppercase tracking-wider">
           SHREE HANUMAN CHALISA
-        </h1>
+        </h2>
         <p class="text-xs uppercase tracking-widest font-semibold mt-1">
           जय श्री राम • जय हनुमान
         </p>

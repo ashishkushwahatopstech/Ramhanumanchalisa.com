@@ -3,11 +3,37 @@ import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
 import PageFaqs from "../components/PageFaqs.astro";
 
-const title = "Ram Hanuman Connection — The Union of Master and Servant";
-const description = "Explore the profound relationship between Lord Rama and Hanuman. Understand how Hanuman's devotion represents the pinnacle of Bhakti Yoga and selflessness.";
+const title = "Ram Hanuman Connection — Bond of Supreme Bhakti & Seva";
+const description = "Explore the divine bond between Lord Rama and Hanuman. Understand how selfless devotion, surrender, and seva power the spiritual essence of Ramayana.";
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://ramhanumanchalisa.com/ram-hanuman-chalisa",
+  "author": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ramhanumanchalisa.com/icon.png"
+    }
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- Article JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
   <div class="space-y-10 max-w-4xl mx-auto">
     
     <!-- Breadcrumbs -->
@@ -45,9 +71,9 @@ const description = "Explore the profound relationship between Lord Rama and Han
       <div class="md:col-span-2 space-y-6 text-sm sm:text-base text-charcoal-brown/90 leading-relaxed">
         
         <div class="space-y-2">
-          <h3 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
+          <h2 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
             The Essence of Dasya Bhakti (दास्य भक्ति)
-          </h3>
+          </h2>
           <p>
             In spiritual paths, there are various ways to connect with the Divine. Hanuman represents <i>Dasya Bhakti</i>—the devotion of a loving servant towards their master. This is not a relationship of subordination, but one of complete freedom and pure love.
           </p>
@@ -57,9 +83,9 @@ const description = "Explore the profound relationship between Lord Rama and Han
         </div>
 
         <div class="space-y-2">
-          <h3 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
+          <h2 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
             Why Hanuman Chants Rama's Name
-          </h3>
+          </h2>
           <p>
             It is said that Lord Hanuman is constantly immersed in the chanting of Rama's name (<i>Ram Naam Chanting</i>). For Hanuman, the name of Rama is more sweet and powerful than Rama himself.
           </p>
@@ -69,9 +95,9 @@ const description = "Explore the profound relationship between Lord Rama and Han
         </div>
 
         <div class="space-y-2">
-          <h3 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
+          <h2 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
             Chanting Rule: Rama First
-          </h3>
+          </h2>
           <p>
             Lord Hanuman is known as <i>Ram Doot</i> (the messenger of Rama). Devotees seeking the protection of Hanuman should always start by remembering Lord Rama. Chanting &ldquo;Jai Shree Ram&rdquo; before reading the Hanuman Chalisa immediately pleases Hanuman and invokes his protective presence.
           </p>

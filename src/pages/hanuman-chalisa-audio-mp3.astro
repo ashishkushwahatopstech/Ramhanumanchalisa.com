@@ -4,11 +4,28 @@ import CarvedDivider from "../components/CarvedDivider";
 import PageFaqs from "../components/PageFaqs.astro";
 import SyncedAudioPlayer from "../components/SyncedAudioPlayer";
 
-const title = "Hanuman Chalisa MP3 & Audio Synced Lyrics Player";
-const description = "Listen to Hanuman Chalisa MP3 and follow line-by-line synced lyrics. Click on any verse to skip audio, control speed (0.75x to 1.5x) and learn correct pronunciation.";
+const title = "Hanuman Chalisa Audio MP3 — Synced Lyrics & Chanting Player";
+const description = "Listen to Hanuman Chalisa MP3 audio with line-by-line synchronized lyrics, speed control, clear pronunciation guide, and sacred recitations by Hariharan.";
+
+const audioSchema = {
+  "@context": "https://schema.org",
+  "@type": "AudioObject",
+  "name": "Shree Hanuman Chalisa Audio Recitation",
+  "description": description,
+  "contentUrl": "https://ramhanumanchalisa.com/hanuman-chalisa-audio-mp3",
+  "encodingFormat": "audio/mp3",
+  "author": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com"
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- AudioObject Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(audioSchema)} />
+
   <div class="space-y-10 max-w-4xl mx-auto">
     
     <!-- Breadcrumbs -->
@@ -54,9 +71,9 @@ const description = "Listen to Hanuman Chalisa MP3 and follow line-by-line synce
           <span class="text-[10px] font-bold uppercase tracking-widest text-marigold bg-white/10 px-2 py-0.5 rounded border border-white/20">
             Famous Chants (प्रसिद्ध पाठ)
           </span>
-          <h3 class="font-serif-display text-xl sm:text-2xl text-marigold font-bold uppercase">
+          <h2 class="font-serif-display text-xl sm:text-2xl text-marigold font-bold uppercase">
             Hariharan — Sankat Mochan Hanuman Ashtak
-          </h3>
+          </h2>
           <p class="text-xs sm:text-sm text-stone-ivory/80 leading-relaxed">
             Hariharan's recording of the <em>Sankat Mochan Hanumanashtak</em> is celebrated by devotees worldwide for its classical Awadhi pacing, traditional raagas, and soul-stirring energy. Listening to this rendition is known to dissolve stress, nightmares, and negative planetary configurations.
           </p>
@@ -80,9 +97,9 @@ const description = "Listen to Hanuman Chalisa MP3 and follow line-by-line synce
 
     <!-- SEO Background Section - Pronunciation Guidelines -->
     <section class="bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
-      <h3 class="font-serif-display text-lg text-maroon-deep uppercase tracking-wider font-bold border-b border-brass-gold/20 pb-2">
+      <h2 class="font-serif-display text-lg text-maroon-deep uppercase tracking-wider font-bold border-b border-brass-gold/20 pb-2">
         Chanting & Pronunciation Guidelines (उच्चारण निर्देश)
-      </h3>
+      </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm leading-relaxed">
         <div class="space-y-3">

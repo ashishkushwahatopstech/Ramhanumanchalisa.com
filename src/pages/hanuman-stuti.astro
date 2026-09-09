@@ -6,8 +6,31 @@ import type { ScriptureVerse } from "../types/scripture";
 
 const verses = hanumanStutiData as ScriptureVerse[];
 
-const title = "Shri Hanuman Stuti Lyrics in English & Sanskrit — Meaning & Translation (हनुमान स्तुति)";
-const description = "Read complete Shri Hanuman Stuti lyrics in English transliteration and Sanskrit (Manojavam, Atulita Bala Dhaamam), with line-by-line meanings and benefits.";
+const title = "Shri Hanuman Stuti Lyrics — Sanskrit, English & Meaning";
+const description = "Read sacred Shri Hanuman Stuti (Manojavam Maruta Tulya Vegam) in Sanskrit and English with word-by-word meaning, spiritual significance, and audio guide.";
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://ramhanumanchalisa.com/hanuman-stuti",
+  "author": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ramhanumanchalisa.com/icon.png"
+    }
+  }
+};
 
 const stutiFaqs = [
   {
@@ -43,7 +66,8 @@ const faqSchema = {
 ---
 
 <Layout title={title} description={description}>
-  <!-- FAQ Schema -->
+  <!-- Article & FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <div class="space-y-10 max-w-4xl mx-auto">
@@ -77,9 +101,9 @@ const faqSchema = {
 
     {/* Quick Facts Table (Snippet Optimization) */}
     <section class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-6 shadow-sm space-y-4">
-      <h3 class="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep text-center">
+      <h2 class="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep text-center">
         Shri Hanuman Stuti Quick Facts
-      </h3>
+      </h2>
       <div class="overflow-x-auto">
         <table class="min-w-full text-xs text-charcoal-brown">
           <tbody>
@@ -111,9 +135,9 @@ const faqSchema = {
     {/* PDF Download Action Banner */}
     <div class="no-print bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="space-y-1 text-center md:text-left">
-        <h3 class="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
+        <h2 class="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
           Download Hanuman Stuti PDF
-        </h3>
+        </h2>
         <p class="text-xs text-stone-ivory/80 max-w-lg leading-relaxed">
           Save or print the pristine Sanskrit text with English transliteration for daily altar chanting.
         </p>

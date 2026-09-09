@@ -11,8 +11,31 @@ const openingDoha = verses.find((v) => v.id === "doha-01");
 const closingDoha = verses.find((v) => v.id === "doha-closing");
 const chaupais = verses.filter((v) => v.id.startsWith("chaupai-"));
 
-const title = "Shri Ram Chalisa in English — Lyrics, Meaning & Translation (श्री राम चालीसा)";
-const description = "Read Shri Ram Chalisa with authentic Devanagari lyrics, English transliteration, line-by-line English translation, benefits, and recitation rules.";
+const title = "Shri Ram Chalisa Lyrics in English & Hindi with Meaning";
+const description = "Read Shri Ram Chalisa in English and Hindi with line-by-line meaning, word definitions, path vidhi, spiritual benefits, and free printable PDF sheet.";
+
+const scriptureSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://ramhanumanchalisa.com/ram-chalisa",
+  "author": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ramhanumanchalisa.com/icon.png"
+    }
+  }
+};
 
 const ramChalisaFaqs = [
   {
@@ -52,7 +75,8 @@ const faqSchema = {
 ---
 
 <Layout title={title} description={description}>
-  <!-- FAQ JSON-LD Schema -->
+  <!-- Scripture & FAQ JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(scriptureSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <div class="space-y-10 max-w-4xl mx-auto">
@@ -86,9 +110,9 @@ const faqSchema = {
 
     {/* Quick Facts Table (Snippet Optimization) */}
     <section class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-6 shadow-sm space-y-4">
-      <h3 class="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep text-center">
+      <h2 class="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep text-center">
         Shri Ram Chalisa Quick Facts
-      </h3>
+      </h2>
       <div class="overflow-x-auto">
         <table class="min-w-full text-xs text-charcoal-brown">
           <tbody>
@@ -124,9 +148,9 @@ const faqSchema = {
     {/* PDF Download Action Banner */}
     <div class="no-print bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="space-y-1 text-center md:text-left">
-        <h3 class="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
+        <h2 class="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
           Download Shri Ram Chalisa PDF
-        </h3>
+        </h2>
         <p class="text-xs text-stone-ivory/80 max-w-lg leading-relaxed">
           Generate an elegant, high-contrast printable document with lyrics and translation for daily worship.
         </p>
