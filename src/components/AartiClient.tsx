@@ -5,53 +5,8 @@ import CarvedDivider from "@/components/CarvedDivider";
 import SyncedAudioPlayer from "@/components/SyncedAudioPlayer";
 
 export default function AartiClient() {
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is Hanuman Aarti?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Hanuman Aarti (Aarti Kije Hanuman Lala Ki) is a traditional devotional prayer sung at the end of worship rituals to express gratitude and seek the blessings of Lord Hanuman."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Who wrote Hanuman Aarti?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The Hanuman Aarti is traditionally composed by saint Goswami Tulsidas, the revered 16th-century poet who also compiled the Shree Hanuman Chalisa."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "When should Hanuman Aarti be performed?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "It is traditionally sung at the conclusion of daily pujas, Hanuman Chalisa chantings, or weekly Tuesday and Saturday worship sessions."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What are the benefits of performing Hanuman Aarti?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Chanting it cleanses negative vibrations from the environment, clears fear and anxiety, and builds a powerful shield of spiritual energy around the family."
-        }
-      }
-    ]
-  };
-
   return (
     <div className="space-y-12 max-w-4xl mx-auto">
-      {/* Schema Injection */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
       {/* 1. Public Layout (no-print) */}
       <div className="no-print space-y-10">
         

@@ -9,9 +9,70 @@ const verses = hanumanashtakData as ScriptureVerse[];
 
 const title = "Sankat Mochan Hanuman Ashtak — Lyrics, Meaning & Audio";
 const description = "Read complete Sankat Mochan Hanuman Ashtak lyrics in Hindi and English with line-by-line meaning, synchronized audio by Hariharan, and printable PDF.";
+
+const compositionSchema = {
+  "@context": "https://schema.org",
+  "@type": "MusicComposition",
+  "@id": "https://ramhanumanchalisa.com/sankat-mochan-hanumanashtak#composition",
+  "name": "Sankat Mochan Hanuman Ashtak",
+  "alternativeHeadline": "संकट मोचन हनुमानाष्टक",
+  "description": description,
+  "inLanguage": "hi",
+  "genre": "Devotional / Ashtak / Stotra",
+  "composer": {
+    "@type": "Person",
+    "name": "Goswami Tulsidas",
+    "sameAs": "https://en.wikipedia.org/wiki/Tulsidas"
+  },
+  "lyricist": {
+    "@type": "Person",
+    "name": "Goswami Tulsidas"
+  },
+  "lyrics": {
+    "@type": "MusicLyric",
+    "text": verses.map((v) => `${v.title_en || v.id}:\n${v.devanagari}\n${v.transliteration}`).join("\n\n"),
+    "inLanguage": "hi"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": "https://ramhanumanchalisa.com/icon.png"
+  }
+};
+
+const hanumanashtakFaqs = [
+  {
+    question: "What is Hanuman Ashtak?",
+    answer: "Hanuman Ashtak is a devotional hymn consisting of eight verses (Ashtak) composed by Goswami Tulsidas in praise of Lord Hanuman, highlighting his legendary strengths and exploits."
+  },
+  {
+    question: "What is Sankat Mochan Hanuman Ashtak?",
+    answer: "Sankat Mochan Hanuman Ashtak is the specific, most widely recited version of Hanuman Ashtak. Composed in the Awadhi language, it is traditionally chanted to seek protection from severe difficulties, distress, and obstacles."
+  },
+  {
+    question: "Who wrote Hanuman Ashtak?",
+    answer: "Hanuman Ashtak was composed by the 16th-century saint and poet Goswami Tulsidas, who also composed the Shree Hanuman Chalisa and Ramcharitmanas."
+  },
+  {
+    question: "When to read Hanuman Ashtak?",
+    answer: "Hanuman Ashtak can be recited at any time, but it is traditionally chanted during morning or evening prayers on Tuesdays and Saturdays. It is especially recommended to recite it during times of deep crisis, anxiety, or fear."
+  },
+  {
+    question: "What are the benefits of Hanuman Ashtak?",
+    answer: "Chanting Hanuman Ashtak removes fear, provides relief from planetary afflictions (especially Shani Dev / Saturn), builds mental courage, and dissolves physical and spiritual obstacles."
+  },
+  {
+    question: "What are the lyrics of Sankat Mochan Hanuman Ashtak in English?",
+    answer: "The Sankat Mochan Hanuman Ashtak consists of 8 sacred Awadhi verses starting with 'Bal samay ravi bhaksh liyo tab, teenahun lok bhayo andhiyaron...'. The complete romanized English lyrics and translations for all eight stanzas are provided line-by-line on this page."
+  }
+];
 ---
 
 <Layout title={title} description={description}>
+  <!-- MusicComposition Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
+
   <div class="space-y-10 max-w-4xl mx-auto">
     <!-- Breadcrumbs -->
     <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
@@ -28,10 +89,11 @@ const description = "Read complete Sankat Mochan Hanuman Ashtak lyrics in Hindi 
 
     <HanumanashtakClient verses={verses} client:load />
 
-    <!-- Reusable Dynamic Page FAQs -->
+    <!-- Reusable Dynamic Page FAQs with Compliant Schema -->
     <PageFaqs
       pageSlug="hanumanashtak"
       altSlugs={["sankat-mochan-hanumanashtak"]}
+      fallbackFaqs={hanumanashtakFaqs}
       title="Hanuman Ashtak FAQs"
     />
   </div>

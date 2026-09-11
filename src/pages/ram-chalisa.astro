@@ -20,6 +20,8 @@ const scriptureSchema = {
   "headline": title,
   "description": description,
   "inLanguage": "en",
+  "datePublished": "2024-01-15T00:00:00.000Z",
+  "dateModified": "2026-09-02T12:00:00.000Z",
   "mainEntityOfPage": "https://ramhanumanchalisa.com/ram-chalisa",
   "author": {
     "@type": "Organization",
@@ -34,6 +36,32 @@ const scriptureSchema = {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
     }
+  }
+};
+
+const compositionSchema = {
+  "@context": "https://schema.org",
+  "@type": "MusicComposition",
+  "@id": "https://ramhanumanchalisa.com/ram-chalisa#composition",
+  "name": "Shri Ram Chalisa (श्री राम चालीसा)",
+  "alternativeHeadline": "श्री राम चालीसा",
+  "description": description,
+  "inLanguage": "hi",
+  "genre": "Devotional / Hindu Hymn / Stotra",
+  "composer": {
+    "@type": "Person",
+    "name": "Traditional Devotional Composer"
+  },
+  "lyrics": {
+    "@type": "MusicLyric",
+    "text": verses.map((v) => `${v.title || v.id}:\n${v.devanagari}\n${v.transliteration}`).join("\n\n"),
+    "inLanguage": "hi"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": "https://ramhanumanchalisa.com/icon.png"
   }
 };
 
@@ -75,8 +103,9 @@ const faqSchema = {
 ---
 
 <Layout title={title} description={description}>
-  <!-- Scripture & FAQ JSON-LD Schema -->
+  <!-- Scripture, Composition & FAQ JSON-LD Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(scriptureSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <div class="space-y-10 max-w-4xl mx-auto">

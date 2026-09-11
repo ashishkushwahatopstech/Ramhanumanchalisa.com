@@ -20,6 +20,8 @@ const articleSchema = {
   "headline": title,
   "description": description,
   "inLanguage": "en",
+  "datePublished": "2024-01-15T00:00:00.000Z",
+  "dateModified": "2026-09-02T12:00:00.000Z",
   "mainEntityOfPage": "https://ramhanumanchalisa.com/bajrang-baan",
   "author": {
     "@type": "Organization",
@@ -36,11 +38,43 @@ const articleSchema = {
     }
   }
 };
+
+const compositionSchema = {
+  "@context": "https://schema.org",
+  "@type": "MusicComposition",
+  "@id": "https://ramhanumanchalisa.com/bajrang-baan#composition",
+  "name": "Shree Bajrang Baan (श्री बजरंग बाण)",
+  "alternativeHeadline": "श्री बजरंग बाण",
+  "description": description,
+  "inLanguage": "hi",
+  "genre": "Devotional / Hindu Hymn / Stotra",
+  "composer": {
+    "@type": "Person",
+    "name": "Goswami Tulsidas",
+    "sameAs": "https://en.wikipedia.org/wiki/Tulsidas"
+  },
+  "lyricist": {
+    "@type": "Person",
+    "name": "Goswami Tulsidas"
+  },
+  "lyrics": {
+    "@type": "MusicLyric",
+    "text": verses.map((v) => `${v.title || v.id}:\n${v.devanagari}\n${v.transliteration}`).join("\n\n"),
+    "inLanguage": "hi"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": "https://ramhanumanchalisa.com/icon.png"
+  }
+};
 ---
 
 <Layout title={title} description={description}>
-  <!-- Article JSON-LD Schema -->
+  <!-- Article & Composition JSON-LD Schemas -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
 
   <div class="space-y-10 max-w-4xl mx-auto">
     

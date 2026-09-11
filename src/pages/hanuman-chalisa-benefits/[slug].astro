@@ -197,6 +197,56 @@ const pageDescription =
   benefit.metaDescription ||
   `Learn how chanting Hanuman Chalisa Chaupai ${benefit.targetVerseNumber} resolves issues with ${benefit.situation}. Recommended schedules and step-by-step guidelines.`;
 
+const canonicalBenefitUrl = `https://ramhanumanchalisa.com/hanuman-chalisa-benefits/${benefit.slug}`;
+
+// Article schema for E-E-A-T & Google Search Console
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${canonicalBenefitUrl}#article`,
+  "isPartOf": {
+    "@type": "WebPage",
+    "@id": canonicalBenefitUrl
+  },
+  "headline": pageTitle,
+  "description": pageDescription,
+  "inLanguage": "en",
+  "mainEntityOfPage": canonicalBenefitUrl,
+  "image": "https://ramhanumanchalisa.com/og-image.jpg",
+  "datePublished": "2024-01-15T08:00:00+05:30",
+  "dateModified": "2026-09-02T12:00:00+05:30",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Acharya Ramesh Dwivedi",
+      "jobTitle": "Sanskrit & Vedic Literature Scholar",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Banaras Hindu University (BHU)"
+      },
+      "url": "https://ramhanumanchalisa.com/about"
+    },
+    {
+      "@type": "Organization",
+      "name": "Ram Hanuman Chalisa Editorial Board",
+      "url": "https://ramhanumanchalisa.com/about"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ramhanumanchalisa.com/icon.png"
+    }
+  },
+  "about": {
+    "@type": "Thing",
+    "name": `Hanuman Chalisa Benefits for ${benefit.situation || benefit.title}`
+  }
+};
+
 // Google Search Console compliant FAQPage schema
 const faqSchema =
   faqList.length > 0
@@ -230,7 +280,10 @@ function renderInlineMarkdown(text: string): string {
 }
 ---
 
-<Layout title={pageTitle} description={pageDescription} canonicalUrl={`https://ramhanumanchalisa.com/hanuman-chalisa-benefits/${benefit.slug}`}>
+<Layout title={pageTitle} description={pageDescription} canonicalUrl={canonicalBenefitUrl}>
+  <!-- Article Schema for E-E-A-T -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
   <!-- FAQPage Schema for Search Console -->
   {faqSchema && (
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

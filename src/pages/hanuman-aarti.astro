@@ -5,9 +5,62 @@ import PageFaqs from "../components/PageFaqs.astro";
 
 const title = "Shree Hanuman Aarti Lyrics — Aarti Kije Hanuman Lala Ki";
 const description = "Chant Shree Hanuman Aarti (Aarti Kije Hanuman Lala Ki) in Hindi and English with synced audio player, complete word meaning, puja vidhi, and printable PDF.";
+
+const aartiFaqs = [
+  {
+    question: "What is Hanuman Aarti?",
+    answer: "Hanuman Aarti (Aarti Kije Hanuman Lala Ki) is a traditional devotional prayer sung at the end of worship rituals to express gratitude and seek the blessings of Lord Hanuman."
+  },
+  {
+    question: "Who wrote Hanuman Aarti?",
+    answer: "The Hanuman Aarti is traditionally composed by saint Goswami Tulsidas, the revered 16th-century poet who also compiled the Shree Hanuman Chalisa."
+  },
+  {
+    question: "When should Hanuman Aarti be performed?",
+    answer: "It is traditionally sung at the conclusion of daily pujas, Hanuman Chalisa chantings, or weekly Tuesday and Saturday worship sessions."
+  },
+  {
+    question: "What are the benefits of performing Hanuman Aarti?",
+    answer: "Chanting it cleanses negative vibrations from the environment, clears fear and anxiety, and builds a powerful shield of spiritual energy around the family."
+  }
+];
+
+const compositionSchema = {
+  "@context": "https://schema.org",
+  "@type": "MusicComposition",
+  "@id": "https://ramhanumanchalisa.com/hanuman-aarti#composition",
+  "name": "Shree Hanuman Aarti — Aarti Kije Hanuman Lala Ki",
+  "alternativeHeadline": "आरती कीजै हनुमान लला की",
+  "description": description,
+  "inLanguage": "hi",
+  "genre": "Devotional / Hindu Aarti / Bhajan",
+  "composer": {
+    "@type": "Person",
+    "name": "Goswami Tulsidas",
+    "sameAs": "https://en.wikipedia.org/wiki/Tulsidas"
+  },
+  "lyricist": {
+    "@type": "Person",
+    "name": "Goswami Tulsidas"
+  },
+  "lyrics": {
+    "@type": "MusicLyric",
+    "text": "आरती कीजै हनुमान लला की। दुष्ट दलन रघुनाथ कला की।। जाके बल से गिरिवर कांपै। रोग दोष जाके निकट न झांपै।। अंजनि पुत्र महा बलदाई। सन्तन के प्रभु सदा सहाई।।",
+    "inLanguage": "hi"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": "https://ramhanumanchalisa.com/icon.png"
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <!-- MusicComposition Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
+
   <div class="space-y-10 max-w-4xl mx-auto">
     <!-- Breadcrumbs -->
     <nav class="text-xs text-charcoal-brown/50 font-semibold" aria-label="Breadcrumb">
@@ -28,6 +81,7 @@ const description = "Chant Shree Hanuman Aarti (Aarti Kije Hanuman Lala Ki) in H
     <PageFaqs
       pageSlug="aarti"
       altSlugs={["hanuman-aarti"]}
+      fallbackFaqs={aartiFaqs}
       title="Hanuman Aarti FAQs"
     />
   </div>

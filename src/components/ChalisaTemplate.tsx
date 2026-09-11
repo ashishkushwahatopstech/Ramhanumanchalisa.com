@@ -79,7 +79,46 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
     }
   };
 
-  const faqSchema = {
+  const compositionSchema = {
+    "@context": "https://schema.org",
+    "@type": "MusicComposition",
+    "@id": isHomepage
+      ? "https://ramhanumanchalisa.com/#composition"
+      : `https://ramhanumanchalisa.com/hanuman-chalisa/${data.lang}#composition`,
+    "name": isHomepage
+      ? "Shree Hanuman Chalisa (श्री हनुमान चालीसा)"
+      : `${data.h1} (${data.lang ? data.lang.toUpperCase() : "EN"})`,
+    "alternativeHeadline": "श्री हनुमान चालीसा",
+    "description": data.metaDescription || data.intro,
+    "inLanguage": data.lang || "hi",
+    "genre": "Devotional / Hindu Hymn / Stotra",
+    "composer": {
+      "@type": "Person",
+      "name": "Goswami Tulsidas",
+      "sameAs": "https://en.wikipedia.org/wiki/Tulsidas"
+    },
+    "lyricist": {
+      "@type": "Person",
+      "name": "Goswami Tulsidas"
+    },
+    "lyrics": {
+      "@type": "MusicLyric",
+      "text": data.verses
+        ? data.verses
+            .map((v) => `${v.verse_number}: ${v.text.replace(/\n/g, " ")}`)
+            .join("\n")
+        : "",
+      "inLanguage": data.lang || "hi"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ram Hanuman Chalisa",
+      "url": "https://ramhanumanchalisa.com",
+      "logo": "https://ramhanumanchalisa.com/icon.png"
+    }
+  };
+
+  const faqSchema = data.faqs && data.faqs.length > 0 && !isHomepage ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": data.faqs.map((faq) => ({
@@ -90,15 +129,22 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
         "text": faq.answer.replace(/<[^>]*>/g, ""),
       },
     })),
-  };
+  } : null;
 
   return (
     <div className="space-y-12">
-      {/* FAQ Schema Insertion */}
+      {/* MusicComposition Schema */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(compositionSchema) }}
       />
+      {/* Localized FAQ Schema Insertion for Language Pages */}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       
       {/* 1. Garbhagriha Hero Section (Sanctum) */}
       <section className="relative overflow-hidden w-full bg-gradient-to-b from-marigold/5 to-transparent border border-brass-gold/20 rounded-lg shadow-sm max-w-4xl mx-auto">

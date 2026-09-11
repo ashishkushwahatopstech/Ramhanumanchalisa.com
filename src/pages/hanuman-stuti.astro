@@ -15,6 +15,8 @@ const articleSchema = {
   "headline": title,
   "description": description,
   "inLanguage": "en",
+  "datePublished": "2024-01-15T00:00:00.000Z",
+  "dateModified": "2026-09-02T12:00:00.000Z",
   "mainEntityOfPage": "https://ramhanumanchalisa.com/hanuman-stuti",
   "author": {
     "@type": "Organization",
@@ -29,6 +31,32 @@ const articleSchema = {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
     }
+  }
+};
+
+const compositionSchema = {
+  "@context": "https://schema.org",
+  "@type": "MusicComposition",
+  "@id": "https://ramhanumanchalisa.com/hanuman-stuti#composition",
+  "name": "Shri Hanuman Stuti (श्री हनुमान स्तुति)",
+  "alternativeHeadline": "श्री हनुमान स्तुति",
+  "description": description,
+  "inLanguage": "sa",
+  "genre": "Devotional / Sanskrit Stuti / Shloka",
+  "composer": {
+    "@type": "Person",
+    "name": "Traditional Vedic / Puranic Sages"
+  },
+  "lyrics": {
+    "@type": "MusicLyric",
+    "text": verses.map((v) => `${v.title || v.id}:\n${v.devanagari}\n${v.transliteration}`).join("\n\n"),
+    "inLanguage": "sa"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": "https://ramhanumanchalisa.com/icon.png"
   }
 };
 
@@ -66,8 +94,9 @@ const faqSchema = {
 ---
 
 <Layout title={title} description={description}>
-  <!-- Article & FAQ Schema -->
+  <!-- Article, Composition & FAQ Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <div class="space-y-10 max-w-4xl mx-auto">

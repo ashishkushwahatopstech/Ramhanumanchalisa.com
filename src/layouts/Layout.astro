@@ -123,11 +123,11 @@ if (pathName && pathName !== "/") {
   });
 }
 
-const breadcrumbSchema = {
+const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": breadcrumbItems
-};
+} : null;
 ---
 
 <!doctype html>
@@ -202,7 +202,12 @@ const breadcrumbSchema = {
     <meta property="twitter:image:alt" content="Shree Ram and Hanuman Devotional Banner - RamHanumanChalisa.com" />
 
     <!-- Breadcrumb Schema -->
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    {breadcrumbSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
+
+    <!-- Slot for Page Specific Head Elements & Schemas -->
+    <slot name="head" />
   </head>
   <body class="min-h-full flex flex-col font-body bg-stone-ivory text-charcoal-brown selection:bg-marigold selection:text-maroon-deep">
     <!-- Google Tag Manager (noscript) -->

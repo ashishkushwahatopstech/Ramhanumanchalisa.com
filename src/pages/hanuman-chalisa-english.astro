@@ -31,11 +31,43 @@ const scriptureSchema = {
     }
   }
 };
+
+const compositionSchema = {
+  "@context": "https://schema.org",
+  "@type": "MusicComposition",
+  "@id": "https://ramhanumanchalisa.com/hanuman-chalisa-english#composition",
+  "name": "Hanuman Chalisa in English",
+  "alternativeHeadline": "श्री हनुमान चालीसा",
+  "description": description,
+  "inLanguage": "en",
+  "genre": "Devotional / Hindu Hymn / Stotra",
+  "composer": {
+    "@type": "Person",
+    "name": "Goswami Tulsidas",
+    "sameAs": "https://en.wikipedia.org/wiki/Tulsidas"
+  },
+  "lyricist": {
+    "@type": "Person",
+    "name": "Goswami Tulsidas"
+  },
+  "lyrics": {
+    "@type": "MusicLyric",
+    "text": verses.map((v) => `${v.title || v.id}: ${v.transliteration || v.devanagari}`).join("\n"),
+    "inLanguage": "en"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com",
+    "logo": "https://ramhanumanchalisa.com/icon.png"
+  }
+};
 ---
 
 <Layout title={title} description={description}>
-  <!-- Scripture Schema -->
+  <!-- Scripture & Composition Schemas -->
   <script type="application/ld+json" set:html={JSON.stringify(scriptureSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
 
   <div class="space-y-10 max-w-5xl mx-auto">
     

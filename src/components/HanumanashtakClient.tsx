@@ -10,70 +10,8 @@ interface HanumanashtakClientProps {
 }
 
 export default function HanumanashtakClient({ verses }: HanumanashtakClientProps) {
-  // FAQ Schema JSON-LD
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is Hanuman Ashtak?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Hanuman Ashtak is a devotional hymn consisting of eight verses (Ashtak) composed by Goswami Tulsidas in praise of Lord Hanuman, highlighting his legendary strengths and exploits."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is Sankat Mochan Hanuman Ashtak?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Sankat Mochan Hanuman Ashtak is the specific, most widely recited version of Hanuman Ashtak. Composed in the Awadhi language, it is traditionally chanted to seek protection from severe difficulties, distress, and obstacles."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Who wrote Hanuman Ashtak?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Hanuman Ashtak was composed by the 16th-century saint and poet Goswami Tulsidas, who also composed the Shree Hanuman Chalisa and Ramcharitmanas."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "When to read Hanuman Ashtak?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Hanuman Ashtak can be recited at any time, but it is traditionally chanted during morning or evening prayers on Tuesdays and Saturdays. It is especially recommended to recite it during times of deep crisis, anxiety, or fear."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What are the benefits of Hanuman Ashtak?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Chanting Hanuman Ashtak removes fear, provides relief from planetary afflictions (especially Shani Dev / Saturn), builds mental courage, and dissolves physical and spiritual obstacles."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What are the lyrics of Sankat Mochan Hanuman Ashtak in English?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The Sankat Mochan Hanuman Ashtak consists of 8 sacred Awadhi verses starting with 'Bal samay ravi bhaksh liyo tab, teenahun lok bhayo andhiyaron...'. The complete romanized English lyrics and translations for all eight stanzas are provided line-by-line on this page."
-        }
-      }
-    ]
-  };
-
   return (
     <div className="space-y-12 max-w-4xl mx-auto">
-      {/* Schema Injection */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
       {/* 1. Public Layout (no-print) */}
       <div className="no-print space-y-10">
         
