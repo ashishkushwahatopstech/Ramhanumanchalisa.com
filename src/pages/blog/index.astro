@@ -22,39 +22,45 @@ if (!blogConfig) {
   blogConfig = getBlogConfig();
 }
 
-let posts: BlogPost[] = [];
+// Initialize post map with all static & imported scripture posts
+const postMap = new Map<string, BlogPost>();
+for (const p of FALLBACK_BLOG_POSTS) {
+  postMap.set(p.slug, { ...p });
+}
 
-// 1. Primary: Native Cloudflare D1 query (Edge database)
+// 1. Overlay Cloudflare D1 posts (admin edits, custom cover images, new posts)
 if (db && typeof db.prepare === "function") {
   try {
     const d1Posts = await d1GetPosts(db);
-    const publishedD1 = d1Posts.filter((p) => p.published);
-    if (publishedD1.length > 0) {
-      posts = publishedD1.map((p) => {
-        const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
-        const postImg = p.coverImage || imgMatch?.[1] || undefined;
-        return {
-          slug: p.slug,
-          title: p.title,
-          excerpt: p.excerpt,
-          content: p.content,
-          coverImage: p.coverImage || undefined,
-          featuredImage: postImg,
-          category: (p as any).category || undefined,
-          createdAt: (() => {
-            try {
-              return new Date(p.createdAt).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              });
-            } catch {
-              return p.createdAt;
-            }
-          })(),
-          author: "Admin",
-          readTime: "5 min read",
-        };
+    for (const p of d1Posts) {
+      if (!p.published) {
+        postMap.delete(p.slug);
+        continue;
+      }
+      const existing = postMap.get(p.slug);
+      const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
+      const postImg = p.coverImage || existing?.featuredImage || existing?.coverImage || imgMatch?.[1] || undefined;
+      postMap.set(p.slug, {
+        slug: p.slug,
+        title: p.title,
+        excerpt: p.excerpt || existing?.excerpt || "",
+        content: p.content || existing?.content || "",
+        coverImage: p.coverImage || existing?.coverImage || undefined,
+        featuredImage: postImg,
+        category: (p as any).category || existing?.category,
+        createdAt: (() => {
+          try {
+            return new Date(p.createdAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          } catch {
+            return p.createdAt || existing?.createdAt || "Recently";
+          }
+        })(),
+        author: existing?.author || "Admin",
+        readTime: existing?.readTime || "5 min read",
       });
     }
   } catch (e) {
@@ -62,44 +68,39 @@ if (db && typeof db.prepare === "function") {
   }
 }
 
-// 2. Secondary: Prisma query (Local SQLite / Node runtime)
-if (posts.length === 0 && prisma) {
+// 2. Overlay Prisma posts (for local SQLite / Node dev environment)
+if (prisma) {
   try {
     const dbPosts = await prisma.post.findMany({
       where: { published: true },
-      orderBy: { createdAt: "desc" },
     });
-
-    if (dbPosts.length > 0) {
-      posts = dbPosts.map((p) => {
-        const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
-        const postImg = p.coverImage || imgMatch?.[1] || undefined;
-        return {
-          slug: p.slug,
-          title: p.title,
-          excerpt: p.excerpt,
-          content: p.content,
-          coverImage: p.coverImage || undefined,
-          featuredImage: postImg,
-          createdAt: p.createdAt.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-          author: "Admin",
-          readTime: "5 min read",
-        };
+    for (const p of dbPosts) {
+      const existing = postMap.get(p.slug);
+      const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
+      const postImg = p.coverImage || existing?.featuredImage || existing?.coverImage || imgMatch?.[1] || undefined;
+      postMap.set(p.slug, {
+        slug: p.slug,
+        title: p.title,
+        excerpt: p.excerpt || existing?.excerpt || "",
+        content: p.content || existing?.content || "",
+        coverImage: p.coverImage || existing?.coverImage || undefined,
+        featuredImage: postImg,
+        category: existing?.category,
+        createdAt: p.createdAt.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        author: existing?.author || "Admin",
+        readTime: existing?.readTime || "5 min read",
       });
     }
   } catch (error) {
-    console.error("Failed to query DB posts, falling back to static posts:", error);
+    // Ignore local Prisma errors when running on Cloudflare Edge
   }
 }
 
-// 3. Fallback to static posts
-if (posts.length === 0) {
-  posts = FALLBACK_BLOG_POSTS;
-}
+let posts: BlogPost[] = Array.from(postMap.values());
 
 // Guarantee chronologically newest posts at the top
 posts.sort((a, b) => {
