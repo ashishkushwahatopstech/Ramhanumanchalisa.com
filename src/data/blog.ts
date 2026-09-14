@@ -50,6 +50,8 @@ Whether you recite it forty times in a single sitting on a special festival day,
     createdAt: "August 15, 2026",
     author: "Pandit Krishna Kant Shastri",
     readTime: "5 min read",
+    coverImage: "/images/blog/chanting-hanuman-chalisa-brahma-muhurat.webp",
+    featuredImage: "/images/blog/chanting-hanuman-chalisa-brahma-muhurat.webp",
     content: `
 Many scripture guidelines recommend that the Hanuman Chalisa should be recited during **Brahma Muhurat**. But what exactly is Brahma Muhurat, and why does chanting during these hours hold so much power?
 

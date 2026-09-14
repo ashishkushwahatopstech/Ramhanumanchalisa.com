@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import { getPrisma } from "../../lib/prisma";
 import CarvedDivider from "../../components/CarvedDivider";
 import { FALLBACK_BLOG_POSTS, type BlogPost } from "../../data/blog";
-import { d1GetBlogConfig } from "../../lib/d1";
+import { d1GetBlogConfig, d1GetPosts } from "../../lib/d1";
 import { getBlogConfig, type BlogLayoutConfig } from "../../lib/dynamicContent";
 
 const db = Astro.locals.runtime?.env?.DB;
@@ -24,36 +24,80 @@ if (!blogConfig) {
 
 let posts: BlogPost[] = [];
 
-try {
-  const dbPosts = await prisma.post.findMany({
-    where: { published: true },
-    orderBy: { createdAt: "desc" },
-  });
-
-  if (dbPosts.length > 0) {
-    posts = dbPosts.map((p) => {
-      const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
-      return {
-        slug: p.slug,
-        title: p.title,
-        excerpt: p.excerpt,
-        content: p.content,
-        coverImage: p.coverImage || undefined,
-        featuredImage: p.coverImage || imgMatch?.[1] || undefined,
-        createdAt: p.createdAt.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-        author: "Admin",
-        readTime: "5 min read",
-      };
-    });
-  } else {
-    posts = FALLBACK_BLOG_POSTS;
+// 1. Primary: Native Cloudflare D1 query (Edge database)
+if (db && typeof db.prepare === "function") {
+  try {
+    const d1Posts = await d1GetPosts(db);
+    const publishedD1 = d1Posts.filter((p) => p.published);
+    if (publishedD1.length > 0) {
+      posts = publishedD1.map((p) => {
+        const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
+        const postImg = p.coverImage || imgMatch?.[1] || undefined;
+        return {
+          slug: p.slug,
+          title: p.title,
+          excerpt: p.excerpt,
+          content: p.content,
+          coverImage: p.coverImage || undefined,
+          featuredImage: postImg,
+          category: (p as any).category || undefined,
+          createdAt: (() => {
+            try {
+              return new Date(p.createdAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              });
+            } catch {
+              return p.createdAt;
+            }
+          })(),
+          author: "Admin",
+          readTime: "5 min read",
+        };
+      });
+    }
+  } catch (e) {
+    console.warn("Notice: D1 getPosts in blog/index.astro:", e);
   }
-} catch (error) {
-  console.error("Failed to query DB posts, falling back to static posts:", error);
+}
+
+// 2. Secondary: Prisma query (Local SQLite / Node runtime)
+if (posts.length === 0 && prisma) {
+  try {
+    const dbPosts = await prisma.post.findMany({
+      where: { published: true },
+      orderBy: { createdAt: "desc" },
+    });
+
+    if (dbPosts.length > 0) {
+      posts = dbPosts.map((p) => {
+        const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
+        const postImg = p.coverImage || imgMatch?.[1] || undefined;
+        return {
+          slug: p.slug,
+          title: p.title,
+          excerpt: p.excerpt,
+          content: p.content,
+          coverImage: p.coverImage || undefined,
+          featuredImage: postImg,
+          createdAt: p.createdAt.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }),
+          author: "Admin",
+          readTime: "5 min read",
+        };
+      });
+    }
+  } catch (error) {
+    console.error("Failed to query DB posts, falling back to static posts:", error);
+  }
+}
+
+// 3. Fallback to static posts
+if (posts.length === 0) {
   posts = FALLBACK_BLOG_POSTS;
 }
 
@@ -212,7 +256,7 @@ const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
       ) : (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {paginatedPosts.map((post, index) => {
-            const image = post.featuredImage || "/images/default-blog-cover.webp";
+            const image = post.featuredImage || post.coverImage || "/images/default-blog-cover.webp";
             return (
               <article class="group flex flex-col h-full overflow-hidden rounded-[16px] bg-[#F8F2E6] border border-[#E8D7B7] shadow-[0_3px_10px_rgba(80,45,20,0.08)] transition-all duration-[250ms] ease-out hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(80,45,20,0.14)]">
                 <!-- Featured Image (Aspect Ratio 5:4) -->
