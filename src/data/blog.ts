@@ -7,6 +7,7 @@ export interface BlogPost {
   content: string;
   category?: string;
   coverImage?: string;
+  featuredImage?: string;
   createdAt: string;
   author: string;
   readTime: string;
@@ -90,10 +91,14 @@ function sanitizeContent(raw: string): string {
 
 const ALL_FALLBACK_POSTS: BlogPost[] = [
   ...STATIC_BLOG_POSTS,
-  ...(importedPostsData as BlogPost[]).map((p) => ({
-    ...p,
-    content: sanitizeContent(p.content),
-  })),
+  ...(importedPostsData as BlogPost[]).map((p) => {
+    const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
+    return {
+      ...p,
+      featuredImage: p.featuredImage || p.coverImage || imgMatch?.[1] || undefined,
+      content: sanitizeContent(p.content),
+    };
+  }),
 ];
 
 // Chronologically sort: Newest posts at top like standard professional blogs

@@ -31,19 +31,24 @@ try {
   });
 
   if (dbPosts.length > 0) {
-    posts = dbPosts.map((p) => ({
-      slug: p.slug,
-      title: p.title,
-      excerpt: p.excerpt,
-      content: p.content,
-      createdAt: p.createdAt.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
-      author: "Admin",
-      readTime: "5 min read",
-    }));
+    posts = dbPosts.map((p) => {
+      const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
+      return {
+        slug: p.slug,
+        title: p.title,
+        excerpt: p.excerpt,
+        content: p.content,
+        coverImage: p.coverImage || undefined,
+        featuredImage: p.coverImage || imgMatch?.[1] || undefined,
+        createdAt: p.createdAt.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        author: "Admin",
+        readTime: "5 min read",
+      };
+    });
   } else {
     posts = FALLBACK_BLOG_POSTS;
   }
@@ -198,66 +203,92 @@ const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
         )}
       </div>
 
-      <!-- Articles List -->
+      <!-- Articles Grid -->
       {paginatedPosts.length === 0 ? (
-        <div class="p-12 text-center bg-stone-ivory border border-brass-gold/25 rounded-lg space-y-3">
+        <div class="p-12 text-center bg-[#F8F2E6] border border-[#E8D7B7] rounded-[16px] space-y-3">
           <p class="text-base text-charcoal-brown/80">No articles found matching your search.</p>
           <a href="/blog" class="inline-block text-xs font-bold text-maroon-deep underline">View All Articles</a>
         </div>
       ) : (
-        <div class="space-y-6">
-          {paginatedPosts.map((post) => (
-            <article
-              class="p-6 bg-stone-ivory border border-brass-gold/25 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 space-y-3"
-            >
-              <div class="flex flex-wrap items-center gap-2 text-xs text-brass-gold font-bold">
-                {post.category && (
-                  <span class="bg-marigold/20 text-maroon-deep px-2 py-0.5 rounded text-[10px] uppercase tracking-wider border border-marigold/40">
-                    {post.category}
-                  </span>
-                )}
-                <span>{post.createdAt}</span>
-                <span class="text-charcoal-brown/30">•</span>
-                <span>By {post.author}</span>
-                <span class="text-charcoal-brown/30">•</span>
-                <span>{post.readTime}</span>
-              </div>
-
-              <h2 class="font-serif-display text-xl font-bold text-maroon-deep hover:text-marigold transition-colors leading-snug">
-                <a href={`/blog/${post.slug}`}>{post.title}</a>
-              </h2>
-
-              <p class="text-xs sm:text-sm text-charcoal-brown/80 leading-relaxed line-clamp-3">
-                {post.excerpt}
-              </p>
-
-              <div class="pt-2 flex items-center justify-between">
-                <a
-                  href={`/blog/${post.slug}`}
-                  class="text-xs uppercase font-bold text-vermilion hover:text-marigold transition-colors inline-flex items-center gap-1"
-                >
-                  Read Full Hymn & Lyrics &rarr;
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {paginatedPosts.map((post, index) => {
+            const image = post.featuredImage || "/images/default-blog-cover.webp";
+            return (
+              <article class="group flex flex-col h-full overflow-hidden rounded-[16px] bg-[#F8F2E6] border border-[#E8D7B7] shadow-[0_3px_10px_rgba(80,45,20,0.08)] transition-all duration-[250ms] ease-out hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(80,45,20,0.14)]">
+                <!-- Featured Image (Aspect Ratio 5:4) -->
+                <a href={`/blog/${post.slug}`} class="block relative w-full aspect-[5/4] overflow-hidden rounded-t-[16px] bg-stone-ivory/60">
+                  <img
+                    src={image}
+                    alt={post.title}
+                    loading={index < 3 ? "eager" : "lazy"}
+                    decoding="async"
+                    class="w-full h-full object-cover rounded-t-[16px] transition-transform duration-[250ms] ease-out group-hover:scale-[1.04]"
+                  />
                 </a>
-                <span class="text-[11px] text-charcoal-brown/40">Free Lyrics & Meaning</span>
-              </div>
-            </article>
-          ))}
+
+                <!-- Card Body -->
+                <div class="p-5 flex flex-col flex-grow justify-between gap-4">
+                  <div class="space-y-3">
+                    <!-- Category Pill -->
+                    {post.category && (
+                      <div>
+                        <span class="inline-flex items-center px-2.5 py-0.5 text-[11px] font-semibold tracking-wide rounded-[999px] bg-[#F4E4B8] text-[#7A1F1F]">
+                          {post.category}
+                        </span>
+                      </div>
+                    )}
+
+                    <!-- Meta Row -->
+                    <div class="flex items-center gap-1.5 text-[13px] text-[#B8892E] font-medium truncate">
+                      <span>{post.createdAt}</span>
+                      <span>•</span>
+                      <span class="truncate">By {post.author}</span>
+                      <span>•</span>
+                      <span class="whitespace-nowrap">{post.readTime}</span>
+                    </div>
+
+                    <!-- Title -->
+                    <h2 class="font-serif-display text-[26px] sm:text-[31px] font-[700] text-[#6E1E1E] leading-[1.25] line-clamp-2">
+                      <a href={`/blog/${post.slug}`} class="hover:text-vermilion transition-colors">
+                        {post.title}
+                      </a>
+                    </h2>
+
+                    <!-- Excerpt -->
+                    <p class="text-[15px] text-[#5B5248] leading-relaxed line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                  </div>
+
+                  <!-- CTA Button -->
+                  <div class="pt-2 border-t border-[#E8D7B7]/40">
+                    <a
+                      href={`/blog/${post.slug}`}
+                      class="inline-flex items-center gap-1 text-[13px] font-bold uppercase text-[#B75A14] hover:text-[#6E1E1E] tracking-wider transition-colors"
+                    >
+                      READ FULL HYMN &amp; LYRICS &rarr;
+                    </a>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       )}
 
       <!-- Pagination Controls -->
       {totalPages > 1 && (
-        <nav class="flex justify-center items-center gap-2 pt-6" aria-label="Pagination">
+        <nav class="flex justify-center items-center gap-2 pt-8" aria-label="Pagination">
           {page > 1 && (
             <a
               href={`/blog?page=${page - 1}${currentCategory !== "All" ? `&category=${encodeURIComponent(currentCategory)}` : ""}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`}
-              class="px-4 py-2 text-xs font-bold text-maroon-deep border border-brass-gold/30 rounded bg-stone-ivory hover:bg-maroon-deep hover:text-stone-ivory transition-colors"
+              class="px-4 py-2 text-xs font-bold rounded-full border border-[#B8892E] text-[#6E1E1E] bg-[#F8F2E6] hover:bg-[#6E1E1E] hover:text-[#F8F2E6] transition-colors shadow-xs"
             >
               &larr; Previous
             </a>
           )}
 
-          <div class="flex items-center gap-1">
+          <div class="flex items-center gap-1.5">
             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
               let pageNum = i + 1;
               if (totalPages > 5 && page > 3) {
@@ -268,10 +299,10 @@ const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
               return (
                 <a
                   href={`/blog?page=${pageNum}${currentCategory !== "All" ? `&category=${encodeURIComponent(currentCategory)}` : ""}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`}
-                  class={`w-8 h-8 flex items-center justify-center text-xs font-bold rounded border transition-colors ${
+                  class={`w-9 h-9 flex items-center justify-center text-xs font-bold rounded-full border transition-all ${
                     isCurr
-                      ? "bg-maroon-deep text-stone-ivory border-maroon-deep"
-                      : "bg-stone-ivory text-charcoal-brown/70 border-brass-gold/30 hover:border-maroon-deep hover:text-maroon-deep"
+                      ? "bg-[#6E1E1E] text-[#F8F2E6] border-[#B8892E] shadow-sm ring-1 ring-[#B8892E]"
+                      : "bg-[#F8F2E6] text-[#6E1E1E] border border-[#B8892E] hover:bg-[#6E1E1E] hover:text-[#F8F2E6]"
                   }`}
                 >
                   {pageNum}
@@ -283,7 +314,7 @@ const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
           {page < totalPages && (
             <a
               href={`/blog?page=${page + 1}${currentCategory !== "All" ? `&category=${encodeURIComponent(currentCategory)}` : ""}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ""}`}
-              class="px-4 py-2 text-xs font-bold text-maroon-deep border border-brass-gold/30 rounded bg-stone-ivory hover:bg-maroon-deep hover:text-stone-ivory transition-colors"
+              class="px-4 py-2 text-xs font-bold rounded-full border border-[#B8892E] text-[#6E1E1E] bg-[#F8F2E6] hover:bg-[#6E1E1E] hover:text-[#F8F2E6] transition-colors shadow-xs"
             >
               Next &rarr;
             </a>
