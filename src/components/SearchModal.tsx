@@ -18,8 +18,30 @@ export default function SearchModal() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLUListElement>(null);
+
+  // Dynamic scroll listener: collapses to icon when scrolling, expands to pill when stopped
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolling(true);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      scrollTimeoutRef.current = setTimeout(() => {
+        setIsScrolling(false);
+      }, 350);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, []);
 
   // Listen for Ctrl+K or Cmd+K or / keyboard shortcut
   useEffect(() => {
@@ -107,32 +129,46 @@ export default function SearchModal() {
 
   return (
     <>
-      {/* Header Search Trigger Buttons */}
-      <div className="flex items-center">
-        {/* Desktop trigger */}
-        <button
-          onClick={() => setIsOpen(true)}
-          type="button"
-          aria-label="Search site"
-          className="hidden sm:flex items-center gap-2 bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-3 py-1.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300 cursor-pointer group"
+      {/* Floating Pill Search Button (Stacked directly above ScrollToTop) */}
+      <button
+        onClick={() => setIsOpen(true)}
+        type="button"
+        aria-label="Search scriptures and hymns"
+        title="Search scriptures (Ctrl+K / ⌘K)"
+        className={`no-print fixed z-40 right-4 sm:right-8 bottom-33 sm:bottom-22 bg-maroon-deep/95 hover:bg-maroon-deep text-stone-ivory border-2 border-brass-gold/80 hover:border-marigold shadow-xl hover:shadow-2xl rounded-full h-11 sm:h-12 flex items-center justify-center cursor-pointer transition-all duration-300 backdrop-blur-sm group active:scale-95 focus:outline-none focus:ring-2 focus:ring-marigold ${
+          isScrolling ? "w-11 sm:w-12 px-0 shadow-md" : "px-3.5 sm:px-4 shadow-[0_4px_20px_rgba(80,16,20,0.4)]"
+        }`}
+      >
+        {/* Search Icon (Always visible) */}
+        <svg
+          className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-marigold group-hover:scale-110 transition-transform shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span className="text-sm group-hover:scale-110 transition-transform">🔍</span>
-          <span>Search</span>
-          <kbd className="hidden md:inline-flex items-center bg-black/25 border border-brass-gold/30 rounded px-1.5 py-0.5 text-[10px] text-yellow-200 font-mono">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2.5"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+
+        {/* Pill Label: smoothly collapses to 0 width when scrolling, expands when stopped */}
+        <span
+          className={`flex items-center gap-1.5 transition-all duration-300 overflow-hidden ${
+            isScrolling ? "max-w-0 opacity-0 -ml-1" : "max-w-xs opacity-100 ml-2"
+          }`}
+        >
+          <span className="font-bold text-xs sm:text-sm tracking-wider uppercase text-stone-ivory group-hover:text-marigold whitespace-nowrap">
+            Search
+          </span>
+          <kbd className="hidden lg:inline-flex items-center bg-black/30 border border-brass-gold/40 rounded px-1.5 py-0.5 text-[10px] text-marigold font-mono">
             ⌘K
           </kbd>
-        </button>
-
-        {/* Mobile icon trigger */}
-        <button
-          onClick={() => setIsOpen(true)}
-          type="button"
-          aria-label="Search site"
-          className="sm:hidden p-2 rounded text-marigold hover:bg-stone-ivory/10 border border-brass-gold/40 transition-colors cursor-pointer flex items-center justify-center"
-        >
-          <span className="text-base">🔍</span>
-        </button>
-      </div>
+        </span>
+      </button>
 
       {/* Search Modal Backdrop */}
       {isOpen && (

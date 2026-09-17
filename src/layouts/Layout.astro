@@ -259,7 +259,13 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
           <!-- Extra Right Button & Language Switcher -->
           <div class="flex items-center gap-2 sm:gap-3">
             <LanguageSwitcher client:load />
-            <SearchModal client:load />
+
+            <a
+              href="/shri-hanuman-chalisa-path-vidhi"
+              class="hidden md:inline-block bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-3 py-1.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300"
+            >
+              How to Recite
+            </a>
           </div>
 
         </div>
@@ -389,6 +395,9 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
 
     <!-- Global Scroll To Top Button -->
     <ScrollToTop />
+
+    <!-- Global Floating Pill Search Button & Modal -->
+    <SearchModal client:load />
 
   </body>
 </html>
