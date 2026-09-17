@@ -25,10 +25,14 @@ export default function DiyaCounter() {
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [lastMilestone, setLastMilestone] = useState<string | null>(null);
 
+  const [remoteActivityToast, setRemoteActivityToast] = useState<string | null>(null);
+
   const pendingBatchRef = useRef<number>(0);
   const syncTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const particleIdRef = useRef<number>(0);
+  const latestServerCountRef = useRef<number>(0);
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const getStorageKey = () => {
     const d = new Date();
@@ -36,7 +40,48 @@ export default function DiyaCounter() {
     return `rhc_sadhana_count_${dateKey}`;
   };
 
-  // 1. Initial load: fetch global count and load personal local storage
+  // Helper to fetch latest global count (AJAX)
+  const fetchGlobalCount = async (isBackgroundPoll = false) => {
+    if (typeof document !== "undefined" && document.visibilityState !== "visible") return;
+    if (typeof navigator !== "undefined" && !navigator.onLine) return;
+
+    try {
+      const res = await fetch("/api/recitations");
+      if (!res.ok) return;
+      const data = await res.json();
+
+      if (typeof data.count === "number") {
+        const serverCount = data.count;
+        const prevServer = latestServerCountRef.current;
+
+        // Detect if someone from a remote area chanted
+        if (isBackgroundPoll && prevServer > 0 && serverCount > prevServer) {
+          const delta = serverCount - prevServer;
+          setRemoteActivityToast(
+            delta === 1
+              ? "✨ A devotee just offered a recitation!"
+              : `✨ ${delta} recitations offered by devotees live!`
+          );
+
+          if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+          toastTimeoutRef.current = setTimeout(() => {
+            setRemoteActivityToast(null);
+          }, 3000);
+
+          // Subtle diya sparkle
+          setIsFlaring(true);
+          setTimeout(() => setIsFlaring(false), 250);
+        }
+
+        latestServerCountRef.current = serverCount;
+        setGlobalCount((prev) => Math.max(prev, serverCount + pendingBatchRef.current));
+      }
+    } catch {
+      // Quietly ignore network blips during polling
+    }
+  };
+
+  // 1. Initial load & live AJAX synchronization loop
   useEffect(() => {
     // Load personal count for today
     try {
@@ -49,18 +94,34 @@ export default function DiyaCounter() {
       console.warn("Could not read personal sadhana count:", e);
     }
 
-    // Fetch live global count
-    fetch("/api/recitations")
-      .then((res) => res.json())
-      .then((data) => {
-        if (typeof data.count === "number") {
-          setGlobalCount(data.count);
-        }
-      })
-      .catch((err) => console.error("Error loading global recitation counter:", err));
+    // Initial fetch
+    fetchGlobalCount(false);
+
+    // Live AJAX polling every 3.5 seconds across active devotees
+    const pollInterval = setInterval(() => {
+      fetchGlobalCount(true);
+    }, 3500);
+
+    // Immediate sync when tab becomes visible or browser comes online
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        fetchGlobalCount(true);
+      }
+    };
+
+    const handleOnline = () => {
+      fetchGlobalCount(true);
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("online", handleOnline);
 
     return () => {
+      clearInterval(pollInterval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("online", handleOnline);
       if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
+      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
     };
   }, []);
 
@@ -126,8 +187,9 @@ export default function DiyaCounter() {
       .then((res) => res.json())
       .then((data) => {
         if (typeof data.count === "number") {
-          // Sync server count smoothly
-          setGlobalCount((prev) => Math.max(prev, data.count));
+          latestServerCountRef.current = data.count;
+          // Sync server count smoothly with any concurrent clicks
+          setGlobalCount((prev) => Math.max(prev, data.count + pendingBatchRef.current));
         }
       })
       .catch((err) => {
@@ -197,11 +259,20 @@ export default function DiyaCounter() {
       <div className="absolute bottom-2 left-2 text-brass-gold/30 text-xs font-serif">❖</div>
       <div className="absolute bottom-2 right-2 text-brass-gold/30 text-xs font-serif">❖</div>
 
-      {/* Header & Bell Audio Toggle */}
+      {/* Header with Live Syncing Indicator & Bell Audio Toggle */}
       <div className="flex items-center justify-between w-full mb-3 border-b border-brass-gold/20 pb-2">
-        <span className="text-[10px] uppercase font-bold tracking-widest text-brass-gold">
-          Daily Mandir Sadhana
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] uppercase font-bold tracking-widest text-brass-gold">
+            Daily Mandir Sadhana
+          </span>
+          <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium bg-black/30 px-2 py-0.5 rounded-full border border-emerald-500/30">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+            </span>
+            <span>Live Sync</span>
+          </div>
+        </div>
         <button
           onClick={() => setSoundEnabled((prev) => !prev)}
           className="text-xs text-brass-gold/80 hover:text-marigold transition-colors flex items-center gap-1 cursor-pointer"
@@ -210,6 +281,13 @@ export default function DiyaCounter() {
           {soundEnabled ? "🔔 Chime On" : "🔕 Muted"}
         </button>
       </div>
+
+      {/* Remote Live Chanting Notification Toast */}
+      {remoteActivityToast && (
+        <div className="mb-2 text-center text-[11px] text-yellow-200 font-semibold bg-marigold/20 border border-marigold/40 py-1 px-3 rounded-full shadow animate-pulse">
+          {remoteActivityToast}
+        </div>
+      )}
 
       {/* Floating Particles Stage */}
       <div className="relative flex flex-col items-center justify-center">

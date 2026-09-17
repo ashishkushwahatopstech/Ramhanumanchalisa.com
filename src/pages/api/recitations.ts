@@ -65,8 +65,8 @@ export const GET: APIRoute = async (context) => {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        // Edge cache for 10 seconds so 100k users don't exhaust DB
-        "Cache-Control": "public, max-age=5, s-maxage=10, stale-while-revalidate=30",
+        // Edge cache for 2 seconds for near-instant multi-user live synchronization while protecting DB
+        "Cache-Control": "public, max-age=1, s-maxage=2, stale-while-revalidate=4",
       },
     });
   } catch (error) {
