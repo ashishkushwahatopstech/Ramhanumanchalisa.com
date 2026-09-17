@@ -1,4 +1,5 @@
 import importedPostsData from "./imported-posts.json";
+import { CONSOLIDATED_MASTER_POSTS, MERGED_GALLERY_SLUGS, MERGED_AARTI_SLUGS } from "./consolidatedPosts";
 
 export interface BlogPost {
   slug: string;
@@ -91,16 +92,21 @@ function sanitizeContent(raw: string): string {
     .trim();
 }
 
+const MERGED_SLUG_SET = new Set([...MERGED_GALLERY_SLUGS, ...MERGED_AARTI_SLUGS]);
+
 const ALL_FALLBACK_POSTS: BlogPost[] = [
   ...STATIC_BLOG_POSTS,
-  ...(importedPostsData as BlogPost[]).map((p) => {
-    const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
-    return {
-      ...p,
-      featuredImage: p.featuredImage || p.coverImage || imgMatch?.[1] || undefined,
-      content: sanitizeContent(p.content),
-    };
-  }),
+  ...CONSOLIDATED_MASTER_POSTS,
+  ...(importedPostsData as BlogPost[])
+    .filter((p) => !MERGED_SLUG_SET.has(p.slug))
+    .map((p) => {
+      const imgMatch = p.content?.match(/<img[^>]+src=["']([^"']+)["']/i);
+      return {
+        ...p,
+        featuredImage: p.featuredImage || p.coverImage || imgMatch?.[1] || undefined,
+        content: sanitizeContent(p.content),
+      };
+    }),
 ];
 
 // Chronologically sort: Newest posts at top like standard professional blogs

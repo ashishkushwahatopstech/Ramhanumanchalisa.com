@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { getPrisma } from "../lib/prisma";
 import { BENEFITS_DATA } from "../data/benefits";
 import { FALLBACK_BLOG_POSTS } from "../data/blog";
+import { CONSOLIDATED_REDIRECTS } from "../data/consolidatedPosts";
 
 export const GET: APIRoute = async (context) => {
   const baseUrl = "https://ramhanumanchalisa.com";
@@ -72,18 +73,11 @@ export const GET: APIRoute = async (context) => {
 
   // 3. Dynamic blog
   const LEGACY_SLUG_MAP: Record<string, string> = {
+    ...CONSOLIDATED_REDIRECTS,
     "surya-dev-aarti-bhajan-lyrics-in": "surya-dev-aarti-bhajan-lyrics-in-english-and-hindi",
-    "shri-ram-aarti-lord-ram-prayer-in": "shri-ram-aarti-lord-ram-prayer-in-marathi",
     "shri-kaal-bhairav-chalisa-lyrics-in": "shri-kaal-bhairav-chalisa-lyrics-in-hindi",
     "shri-kaal-bhairav-chalisa-lyrics-in_24": "shri-kaal-bhairav-chalisa-lyrics-in-english",
-    "durga-aarti-goddess-durga-prayer-in": "durga-aarti-goddess-durga-prayer-in-marathi",
     "shri-vindheshwari-chalisa-lyrics-in": "shri-vindheshwari-chalisa-lyrics-in-english-hindi",
-    "shri-datta-chi-aarti-lord-dattatreya": "shri-datta-chi-aarti-lord-dattatreya-prayer-in-marathi",
-    "shri-sadguru-aarti-lord-sadguru-prayer": "shri-sadguru-aarti-lord-sadguru-prayer-in-marathi",
-    "shri-krishna-aarti-lord-krishna-prayer": "shri-krishna-aarti-lord-krishna-prayer-in-marathi",
-    "shri-vishnu-aarti-lord-vishnu-prayer-in": "shri-vishnu-aarti-lord-vishnu-prayer-in-marathi",
-    "shri-shankar-aarti-lord-shiva-prayer-in": "shri-shankar-aarti-lord-shiva-prayer-in-marathi",
-    "shri-ganpati-aarti-lord-ganesh-prayer": "shri-ganpati-aarti-lord-ganesh-prayer-in-marathi",
     "shri-ramchandra-kripalu-lyrics-in": "shri-ramchandra-kripalu-lyrics-in-english",
     "shri-rani-sati-chalisa-lyrics-in": "shri-rani-sati-chalisa-lyrics-in-english",
     "shri-annapurna-chalisa-lyrics-in": "shri-annapurna-chalisa-lyrics-in-english",
@@ -96,14 +90,22 @@ export const GET: APIRoute = async (context) => {
     "chamunda-chalisa-lyrics-in-hindi-and": "chamunda-chalisa-lyrics-in-hindi-and-english",
   };
 
-  let blogSlugs: string[] = FALLBACK_BLOG_POSTS.map((p) => LEGACY_SLUG_MAP[p.slug] || p.slug);
+  const redirectSourceSlugs = new Set(Object.keys(LEGACY_SLUG_MAP));
+
+  let blogSlugs: string[] = FALLBACK_BLOG_POSTS
+    .map((p) => LEGACY_SLUG_MAP[p.slug] || p.slug)
+    .filter((slug) => !redirectSourceSlugs.has(slug));
+
   try {
     const dbPosts = await prisma.post.findMany({
       where: { published: true },
       select: { slug: true },
     });
     if (dbPosts.length > 0) {
-      blogSlugs = dbPosts.map((p) => LEGACY_SLUG_MAP[p.slug] || p.slug);
+      const dbMapped = dbPosts
+        .map((p) => LEGACY_SLUG_MAP[p.slug] || p.slug)
+        .filter((slug) => !redirectSourceSlugs.has(slug));
+      blogSlugs = Array.from(new Set([...blogSlugs, ...dbMapped]));
     }
   } catch (e) {
     console.error("Sitemap: Failed to query D1 database posts, falling back to static posts.", e);

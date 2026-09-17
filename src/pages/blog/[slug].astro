@@ -3,22 +3,16 @@ import Layout from "../../layouts/Layout.astro";
 import { getPrisma } from "../../lib/prisma";
 import CarvedDivider from "../../components/CarvedDivider";
 import { FALLBACK_BLOG_POSTS, type BlogPost } from "../../data/blog";
+import { CONSOLIDATED_REDIRECTS } from "../../data/consolidatedPosts";
 
 const { slug } = Astro.params;
 
 const LEGACY_SLUG_REDIRECTS: Record<string, string> = {
+  ...CONSOLIDATED_REDIRECTS,
   "surya-dev-aarti-bhajan-lyrics-in": "surya-dev-aarti-bhajan-lyrics-in-english-and-hindi",
-  "shri-ram-aarti-lord-ram-prayer-in": "shri-ram-aarti-lord-ram-prayer-in-marathi",
   "shri-kaal-bhairav-chalisa-lyrics-in": "shri-kaal-bhairav-chalisa-lyrics-in-hindi",
   "shri-kaal-bhairav-chalisa-lyrics-in_24": "shri-kaal-bhairav-chalisa-lyrics-in-english",
-  "durga-aarti-goddess-durga-prayer-in": "durga-aarti-goddess-durga-prayer-in-marathi",
   "shri-vindheshwari-chalisa-lyrics-in": "shri-vindheshwari-chalisa-lyrics-in-english-hindi",
-  "shri-datta-chi-aarti-lord-dattatreya": "shri-datta-chi-aarti-lord-dattatreya-prayer-in-marathi",
-  "shri-sadguru-aarti-lord-sadguru-prayer": "shri-sadguru-aarti-lord-sadguru-prayer-in-marathi",
-  "shri-krishna-aarti-lord-krishna-prayer": "shri-krishna-aarti-lord-krishna-prayer-in-marathi",
-  "shri-vishnu-aarti-lord-vishnu-prayer-in": "shri-vishnu-aarti-lord-vishnu-prayer-in-marathi",
-  "shri-shankar-aarti-lord-shiva-prayer-in": "shri-shankar-aarti-lord-shiva-prayer-in-marathi",
-  "shri-ganpati-aarti-lord-ganesh-prayer": "shri-ganpati-aarti-lord-ganesh-prayer-in-marathi",
   "shri-ramchandra-kripalu-lyrics-in": "shri-ramchandra-kripalu-lyrics-in-english",
   "shri-rani-sati-chalisa-lyrics-in": "shri-rani-sati-chalisa-lyrics-in-english",
   "shri-annapurna-chalisa-lyrics-in": "shri-annapurna-chalisa-lyrics-in-english",
