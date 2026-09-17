@@ -18,28 +18,56 @@ export default function SearchModal() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const [isScrolling, setIsScrolling] = useState(false);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const lastScrollYRef = useRef(0);
+  const scrollDeltaRef = useRef(0);
+  const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLUListElement>(null);
 
-  // Dynamic scroll listener: collapses to icon when scrolling, expands to pill when stopped
+  // Professional Damped Scroll Handling (like Material Extended FAB / Apple iOS)
   useEffect(() => {
+    lastScrollYRef.current = window.scrollY || 0;
+
     const handleScroll = () => {
-      setIsScrolling(true);
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
+      const currentScrollY = window.scrollY || 0;
+      const delta = currentScrollY - lastScrollYRef.current;
+      lastScrollYRef.current = currentScrollY;
+
+      // Always show expanded pill near top of page
+      if (currentScrollY < 120) {
+        setIsCollapsed(false);
+        scrollDeltaRef.current = 0;
+        return;
       }
-      scrollTimeoutRef.current = setTimeout(() => {
-        setIsScrolling(false);
-      }, 350);
+
+      // Directional accumulation with threshold to prevent twitchy jitter
+      if (delta > 0) {
+        // Scrolling DOWN
+        scrollDeltaRef.current = Math.max(0, scrollDeltaRef.current + delta);
+        if (scrollDeltaRef.current > 45) {
+          setIsCollapsed(true);
+        }
+      } else if (delta < -15) {
+        // Scrolling UP (user wants to search/navigate)
+        scrollDeltaRef.current = 0;
+        setIsCollapsed(false);
+      }
+
+      // Calm, slow idle expansion when user stops scrolling for 1.2s
+      if (idleTimeoutRef.current) {
+        clearTimeout(idleTimeoutRef.current);
+      }
+      idleTimeoutRef.current = setTimeout(() => {
+        setIsCollapsed(false);
+      }, 1200);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
     };
   }, []);
 
@@ -135,13 +163,15 @@ export default function SearchModal() {
         type="button"
         aria-label="Search scriptures and hymns"
         title="Search scriptures (Ctrl+K / ⌘K)"
-        className={`no-print fixed z-40 right-4 sm:right-8 bottom-33 sm:bottom-22 bg-maroon-deep/95 hover:bg-maroon-deep text-stone-ivory border-2 border-brass-gold/80 hover:border-marigold shadow-xl hover:shadow-2xl rounded-full h-11 sm:h-12 flex items-center justify-center cursor-pointer transition-all duration-300 backdrop-blur-sm group active:scale-95 focus:outline-none focus:ring-2 focus:ring-marigold ${
-          isScrolling ? "w-11 sm:w-12 px-0 shadow-md" : "px-3.5 sm:px-4 shadow-[0_4px_20px_rgba(80,16,20,0.4)]"
+        className={`no-print fixed z-40 right-4 sm:right-8 bottom-33 sm:bottom-22 bg-maroon-deep/95 hover:bg-maroon-deep text-stone-ivory border-2 border-brass-gold/80 hover:border-marigold shadow-xl hover:shadow-2xl rounded-full h-11 sm:h-12 flex items-center justify-center cursor-pointer backdrop-blur-sm group active:scale-95 focus:outline-none focus:ring-2 focus:ring-marigold overflow-hidden transition-[max-width,padding,box-shadow,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isCollapsed
+            ? "max-w-[44px] sm:max-w-[48px] px-2.5 sm:px-3 shadow-md"
+            : "max-w-[170px] px-3.5 sm:px-4 shadow-[0_4px_20px_rgba(80,16,20,0.4)]"
         }`}
       >
-        {/* Search Icon (Always visible) */}
+        {/* Search Icon (Always visible and anchored) */}
         <svg
-          className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-marigold group-hover:scale-110 transition-transform shrink-0"
+          className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-marigold group-hover:scale-110 transition-transform duration-300 shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -155,10 +185,12 @@ export default function SearchModal() {
           />
         </svg>
 
-        {/* Pill Label: smoothly collapses to 0 width when scrolling, expands when stopped */}
-        <span
-          className={`flex items-center gap-1.5 transition-all duration-300 overflow-hidden ${
-            isScrolling ? "max-w-0 opacity-0 -ml-1" : "max-w-xs opacity-100 ml-2"
+        {/* Pill Label: smoothly slides & fades in/out with gentle cubic-bezier curve */}
+        <div
+          className={`flex items-center gap-1.5 overflow-hidden transition-[max-width,opacity,margin,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isCollapsed
+              ? "max-w-0 opacity-0 ml-0 translate-x-2 pointer-events-none"
+              : "max-w-[110px] opacity-100 ml-2 translate-x-0"
           }`}
         >
           <span className="font-bold text-xs sm:text-sm tracking-wider uppercase text-stone-ivory group-hover:text-marigold whitespace-nowrap">
@@ -167,7 +199,7 @@ export default function SearchModal() {
           <kbd className="hidden lg:inline-flex items-center bg-black/30 border border-brass-gold/40 rounded px-1.5 py-0.5 text-[10px] text-marigold font-mono">
             ⌘K
           </kbd>
-        </span>
+        </div>
       </button>
 
       {/* Search Modal Backdrop */}
