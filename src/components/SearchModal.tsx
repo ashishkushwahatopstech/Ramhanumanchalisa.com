@@ -114,11 +114,11 @@ export default function SearchModal() {
           onClick={() => setIsOpen(true)}
           type="button"
           aria-label="Search site"
-          className="hidden sm:flex items-center gap-2 bg-stone-ivory/10 hover:bg-stone-ivory/20 text-stone-ivory border border-brass-gold/40 hover:border-marigold px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 group shadow-sm"
+          className="hidden sm:flex items-center gap-2 bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-3 py-1.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300 cursor-pointer group"
         >
-          <span className="text-marigold group-hover:scale-110 transition-transform">🔍</span>
-          <span className="text-stone-ivory/80 group-hover:text-stone-ivory">Search scriptures...</span>
-          <kbd className="hidden md:inline-flex items-center gap-0.5 bg-black/30 border border-brass-gold/30 rounded px-1.5 py-0.5 text-[10px] text-marigold font-mono">
+          <span className="text-sm group-hover:scale-110 transition-transform">🔍</span>
+          <span>Search</span>
+          <kbd className="hidden md:inline-flex items-center bg-black/25 border border-brass-gold/30 rounded px-1.5 py-0.5 text-[10px] text-yellow-200 font-mono">
             ⌘K
           </kbd>
         </button>
@@ -128,7 +128,7 @@ export default function SearchModal() {
           onClick={() => setIsOpen(true)}
           type="button"
           aria-label="Search site"
-          className="sm:hidden p-2 rounded-lg text-marigold hover:bg-stone-ivory/10 border border-brass-gold/30 transition-colors"
+          className="sm:hidden p-2 rounded text-marigold hover:bg-stone-ivory/10 border border-brass-gold/40 transition-colors cursor-pointer flex items-center justify-center"
         >
           <span className="text-base">🔍</span>
         </button>
