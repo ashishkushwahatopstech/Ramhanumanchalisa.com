@@ -225,45 +225,6 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
           </div>
         </section>
 
-        {/* Visible Q&A FAQs */}
-        <section className="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
-          <h3 className="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
-            Frequently Asked Questions
-          </h3>
-          <div className="space-y-4 divide-y divide-brass-gold/15">
-            <div className="pt-2 space-y-1">
-              <h4 className="font-bold text-sm text-charcoal-brown">हनुमान अष्टक क्या है? / What is Hanuman Ashtak?</h4>
-              <p className="text-xs text-charcoal-brown/80 leading-relaxed">
-                Hanuman Ashtak is a traditional devotional prayer composed of eight stanzas (Ashtak) that praise the divine qualities, childhood adventures, and heroic works of Lord Hanuman.
-              </p>
-            </div>
-            <div className="pt-4 space-y-1">
-              <h4 className="font-bold text-sm text-charcoal-brown">संकट मोचन हनुमानाष्टक क्या है? / What is Sankat Mochan Hanuman Ashtak?</h4>
-              <p className="text-xs text-charcoal-brown/80 leading-relaxed">
-                Sankat Mochan Hanuman Ashtak is the specific, popular variation of Hanuman Ashtak written in the Awadhi dialect by Goswami Tulsidas. It is chanted specifically to secure immediate relief from crises.
-              </p>
-            </div>
-            <div className="pt-4 space-y-1">
-              <h4 className="font-bold text-sm text-charcoal-brown">हनुमान अष्टक किसने लिखा? / Who wrote Hanuman Ashtak?</h4>
-              <p className="text-xs text-charcoal-brown/80 leading-relaxed">
-                The Sankat Mochan Hanumanashtak was composed by saint Goswami Tulsidas, the revered 16th-century poet who also compiled the Shree Hanuman Chalisa and Ramcharitmanas.
-              </p>
-            </div>
-            <div className="pt-4 space-y-1">
-              <h4 className="font-bold text-sm text-charcoal-brown">हनुमान अष्टक कब पढ़ें? / When to read Hanuman Ashtak?</h4>
-              <p className="text-xs text-charcoal-brown/80 leading-relaxed">
-                While it can be chanted daily, the most auspicious days are Tuesday and Saturday mornings or evenings. Devotees also recite it whenever they face distress, fear, or a severe crisis.
-              </p>
-            </div>
-            <div className="pt-4 space-y-1">
-              <h4 className="font-bold text-sm text-charcoal-brown">हनुमान अष्टक के लाभ क्या हैं? / What are the benefits of Hanuman Ashtak?</h4>
-              <p className="text-xs text-charcoal-brown/80 leading-relaxed">
-                It removes mental blockages, dispels all fear, helps resolve conflicts, pacifies planetary configurations, and delivers protection from critical emergencies.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* Related Content Links */}
         <section className="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
           <h4 className="font-serif-display text-sm font-bold uppercase text-maroon-deep">

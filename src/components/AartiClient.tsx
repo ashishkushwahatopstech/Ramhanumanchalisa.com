@@ -75,39 +75,6 @@ export default function AartiClient() {
           </p>
         </section>
 
-        {/* Q&A FAQs */}
-        <section className="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
-          <h3 className="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
-            Frequently Asked Questions
-          </h3>
-          <div className="space-y-4 divide-y divide-brass-gold/15">
-            <div className="pt-2 space-y-1">
-              <h4 className="font-bold text-sm text-charcoal-brown">हनुमान आरती क्या है? / What is Hanuman Aarti?</h4>
-              <p className="text-xs text-charcoal-brown/80 leading-relaxed">
-                Hanuman Aarti is a devotional hymn starting with *Aarti Kije Hanuman Lala Ki*, sung with temple bells and camphor fire at the end of worship rituals to seek Hanumanji&apos;s blessings.
-              </p>
-            </div>
-            <div className="pt-4 space-y-1">
-              <h4 className="font-bold text-sm text-charcoal-brown">हनुमान आरती किसने लिखी? / Who wrote Hanuman Aarti?</h4>
-              <p className="text-xs text-charcoal-brown/80 leading-relaxed">
-                The Aarti is traditionally attributed to saint Goswami Tulsidas, the compiler of the Hanuman Chalisa.
-              </p>
-            </div>
-            <div className="pt-4 space-y-1">
-              <h4 className="font-bold text-sm text-charcoal-brown">हनुमान आरती कब करनी चाहिए? / When should Hanuman Aarti be performed?</h4>
-              <p className="text-xs text-charcoal-brown/80 leading-relaxed">
-                It is sung at the conclusion of all prayers (prarthana) or Hanuman Chalisa recitations. Devotees perform it daily during morning or evening temple hours.
-              </p>
-            </div>
-            <div className="pt-4 space-y-1">
-              <h4 className="font-bold text-sm text-charcoal-brown">हनुमान आरती करने के क्या लाभ हैं? / What are the benefits of performing Hanuman Aarti?</h4>
-              <p className="text-xs text-charcoal-brown/80 leading-relaxed">
-                It clears negative energies, builds inner harmony, purifies the home environment, and ensures the completion of your spiritual worship.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* Related Content Links */}
         <section className="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
           <h4 className="font-serif-display text-sm font-bold uppercase text-maroon-deep">
