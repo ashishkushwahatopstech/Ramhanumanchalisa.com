@@ -1,5 +1,6 @@
 ---
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import SearchModal from "../components/SearchModal";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import Sidebar from "../components/Sidebar.astro";
 import { d1GetBlogConfig } from "../lib/d1";
@@ -256,7 +257,8 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
           </nav>
 
           <!-- Extra Right Button & Language Switcher -->
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <SearchModal client:load />
             <LanguageSwitcher client:load />
 
             <a

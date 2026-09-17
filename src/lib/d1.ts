@@ -370,3 +370,52 @@ export async function d1SaveBlogConfig(db: any, config: any): Promise<boolean> {
     return false;
   }
 }
+
+// Recitation Counter in D1 (Atomic & Edge-Optimized)
+export async function d1EnsureRecitationTable(db: any): Promise<void> {
+  if (!db || typeof db.prepare !== "function") return;
+  try {
+    await db.prepare(`
+      CREATE TABLE IF NOT EXISTS RecitationCounter (
+        id TEXT PRIMARY KEY,
+        date TEXT UNIQUE NOT NULL,
+        count INTEGER NOT NULL DEFAULT 0
+      )
+    `).run();
+  } catch (e) {
+    console.warn("Notice: d1EnsureRecitationTable:", e);
+  }
+}
+
+export async function d1GetRecitations(db: any, date: string): Promise<number> {
+  if (!db || typeof db.prepare !== "function") return 0;
+  try {
+    await d1EnsureRecitationTable(db);
+    const row = await db.prepare("SELECT count FROM RecitationCounter WHERE date = ?").bind(date).first();
+    return row ? Number(row.count) : 0;
+  } catch (e) {
+    console.error("D1 getRecitations error:", e);
+    return 0;
+  }
+}
+
+export async function d1IncrementRecitations(db: any, date: string, incrementBy: number = 1): Promise<number> {
+  if (!db || typeof db.prepare !== "function") return 0;
+  try {
+    await d1EnsureRecitationTable(db);
+    const id = "rc_" + date;
+    const countVal = Math.max(1, Math.min(incrementBy, 50)); // Safety boundary
+    await db.prepare(`
+      INSERT INTO RecitationCounter (id, date, count)
+      VALUES (?, ?, ?)
+      ON CONFLICT(date) DO UPDATE SET count = count + ?
+    `).bind(id, date, countVal, countVal).run();
+
+    const row = await db.prepare("SELECT count FROM RecitationCounter WHERE date = ?").bind(date).first();
+    return row ? Number(row.count) : countVal;
+  } catch (e) {
+    console.error("D1 incrementRecitations error:", e);
+    return 0;
+  }
+}
+

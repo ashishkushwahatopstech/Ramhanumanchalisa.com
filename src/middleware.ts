@@ -43,5 +43,27 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
   }
 
-  return next();
+  const response = await next();
+
+  // Apply Security Headers
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "SAMEORIGIN");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+
+  // High Concurrency Resilience: Edge Caching on Cloudflare Global CDN
+  if (context.request.method === "GET") {
+    if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api/admin")) {
+      response.headers.set("Cache-Control", "private, no-cache, no-store, must-revalidate");
+    } else if (!url.pathname.startsWith("/api/")) {
+      // Public scripture & blog pages: cache at Cloudflare edge for 1 hour with 24-hr SWR
+      if (!response.headers.has("Cache-Control") || response.headers.get("Cache-Control")?.includes("max-age=0")) {
+        response.headers.set(
+          "Cache-Control",
+          "public, max-age=120, s-maxage=3600, stale-while-revalidate=86400"
+        );
+      }
+    }
+  }
+
+  return response;
 });
