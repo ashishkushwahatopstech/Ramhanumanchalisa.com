@@ -1,18 +1,20 @@
 import { defineMiddleware } from "astro:middleware";
+import { CONSOLIDATED_REDIRECTS } from "./data/consolidatedPosts";
+
+const CONSOLIDATED_MIDDLEWARE_REDIRECTS: Record<string, string> = Object.entries(CONSOLIDATED_REDIRECTS).reduce(
+  (acc, [source, target]) => {
+    acc[`/blog/${source}`] = `/blog/${target}`;
+    return acc;
+  },
+  {} as Record<string, string>
+);
 
 const LEGACY_SLUG_REDIRECTS: Record<string, string> = {
+  ...CONSOLIDATED_MIDDLEWARE_REDIRECTS,
   "/blog/surya-dev-aarti-bhajan-lyrics-in": "/blog/surya-dev-aarti-bhajan-lyrics-in-english-and-hindi",
-  "/blog/shri-ram-aarti-lord-ram-prayer-in": "/blog/shri-ram-aarti-lord-ram-prayer-in-marathi",
   "/blog/shri-kaal-bhairav-chalisa-lyrics-in": "/blog/shri-kaal-bhairav-chalisa-lyrics-in-hindi",
   "/blog/shri-kaal-bhairav-chalisa-lyrics-in_24": "/blog/shri-kaal-bhairav-chalisa-lyrics-in-english",
-  "/blog/durga-aarti-goddess-durga-prayer-in": "/blog/durga-aarti-goddess-durga-prayer-in-marathi",
   "/blog/shri-vindheshwari-chalisa-lyrics-in": "/blog/shri-vindheshwari-chalisa-lyrics-in-english-hindi",
-  "/blog/shri-datta-chi-aarti-lord-dattatreya": "/blog/shri-datta-chi-aarti-lord-dattatreya-prayer-in-marathi",
-  "/blog/shri-sadguru-aarti-lord-sadguru-prayer": "/blog/shri-sadguru-aarti-lord-sadguru-prayer-in-marathi",
-  "/blog/shri-krishna-aarti-lord-krishna-prayer": "/blog/shri-krishna-aarti-lord-krishna-prayer-in-marathi",
-  "/blog/shri-vishnu-aarti-lord-vishnu-prayer-in": "/blog/shri-vishnu-aarti-lord-vishnu-prayer-in-marathi",
-  "/blog/shri-shankar-aarti-lord-shiva-prayer-in": "/blog/shri-shankar-aarti-lord-shiva-prayer-in-marathi",
-  "/blog/shri-ganpati-aarti-lord-ganesh-prayer": "/blog/shri-ganpati-aarti-lord-ganesh-prayer-in-marathi",
   "/blog/shri-ramchandra-kripalu-lyrics-in": "/blog/shri-ramchandra-kripalu-lyrics-in-english",
   "/blog/shri-rani-sati-chalisa-lyrics-in": "/blog/shri-rani-sati-chalisa-lyrics-in-english",
   "/blog/shri-annapurna-chalisa-lyrics-in": "/blog/shri-annapurna-chalisa-lyrics-in-english",
