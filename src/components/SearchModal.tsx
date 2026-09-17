@@ -217,38 +217,57 @@ export default function SearchModal() {
             aria-label="Search Scriptures & Aartis"
           >
             {/* Header / Input Bar */}
-            <div className="p-4 bg-maroon-deep border-b-2 border-brass-gold text-stone-ivory">
-              <div className="flex items-center gap-3 bg-black/25 border border-brass-gold/50 rounded-xl px-3.5 py-2.5 shadow-inner">
-                <span className="text-lg text-marigold select-none">🕉️</span>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                    setSelectedIndex(0);
-                  }}
-                  onKeyDown={handleInputKeyDown}
-                  placeholder="Search Chalisa, Aarti, Telugu, Audio, Meaning..."
-                  className="w-full bg-transparent text-sm sm:text-base text-stone-ivory placeholder-stone-ivory/50 focus:outline-none"
-                />
-                {query && (
-                  <button
-                    onClick={() => {
-                      setQuery("");
-                      inputRef.current?.focus();
+            <div className="p-3 sm:p-4 bg-maroon-deep border-b-2 border-brass-gold text-stone-ivory">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex-1 flex items-center gap-2.5 sm:gap-3 bg-black/25 border border-brass-gold/50 rounded-xl px-3 sm:px-3.5 py-2 sm:py-2.5 shadow-inner">
+                  <span className="text-lg text-marigold select-none">🕉️</span>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={query}
+                    onChange={(e) => {
+                      setQuery(e.target.value);
+                      setSelectedIndex(0);
                     }}
-                    className="text-stone-ivory/60 hover:text-marigold p-1 text-sm transition-colors"
-                    aria-label="Clear query"
-                  >
-                    ✕
-                  </button>
-                )}
+                    onKeyDown={handleInputKeyDown}
+                    placeholder="Search Chalisa, Aarti, Telugu, Audio, Meaning..."
+                    className="w-full bg-transparent text-sm sm:text-base text-stone-ivory placeholder-stone-ivory/50 focus:outline-none"
+                  />
+                  {query && (
+                    <button
+                      onClick={() => {
+                        setQuery("");
+                        inputRef.current?.focus();
+                      }}
+                      className="text-stone-ivory/60 hover:text-marigold p-1 text-sm transition-colors rounded-full hover:bg-white/10"
+                      aria-label="Clear query text"
+                      title="Clear text"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+
+                {/* Prominent Cross Button to close search screen */}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-xs bg-stone-ivory/15 hover:bg-vermilion text-stone-ivory px-2 py-1 rounded border border-brass-gold/40 transition-colors"
+                  type="button"
+                  className="h-10 sm:h-11 px-2.5 sm:px-3.5 flex items-center justify-center gap-1.5 rounded-xl bg-black/30 hover:bg-vermilion text-stone-ivory border border-brass-gold/50 hover:border-marigold shadow-md transition-all duration-200 shrink-0 cursor-pointer active:scale-95 group"
+                  aria-label="Close search screen"
+                  title="Close search (Esc)"
                 >
-                  ESC
+                  <svg
+                    className="w-5 h-5 text-stone-ivory group-hover:text-white transition-transform group-hover:rotate-90 duration-200"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2.5"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <span className="hidden sm:inline text-xs font-semibold text-stone-ivory/90 group-hover:text-white">
+                    Close
+                  </span>
                 </button>
               </div>
 
