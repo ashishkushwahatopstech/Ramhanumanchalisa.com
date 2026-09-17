@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { generateSlug } from "../lib/slugify";
 
 function previewMarkdown(text: string): string {
   if (!text || !text.trim()) return "<p class='text-charcoal-brown/50 italic py-4'>Article body is empty. Type content above to see live preview.</p>";
@@ -187,12 +188,8 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
     const val = e.target.value;
     setTitle(val);
     if (!editingId && !slug) {
-      const generatedSlug = val
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
-        .trim();
+      const existingSlugs = posts.map((p) => p.slug);
+      const generatedSlug = generateSlug(val, existingSlugs);
       setSlug(generatedSlug);
     }
   };

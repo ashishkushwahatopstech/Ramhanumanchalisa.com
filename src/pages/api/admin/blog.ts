@@ -3,6 +3,7 @@ import { getPrisma } from "../../../lib/prisma";
 import { FALLBACK_BLOG_POSTS } from "../../../data/blog";
 import { saveCachedPost, getAllCachedPosts } from "../../../lib/dynamicContent";
 import { d1GetPosts, d1UpsertPost, d1DeletePost } from "../../../lib/d1";
+import { generateSlug } from "../../../lib/slugify";
 
 async function checkAuth() {
   const session = { user: { email: "ashishkushwaha88643@gmail.com" } };
@@ -100,9 +101,11 @@ export const POST: APIRoute = async (context) => {
       return new Response(JSON.stringify({ error: "Missing required fields: title, slug, and content are mandatory" }), { status: 400 });
     }
 
+    const cleanSlug = generateSlug(slug || title);
+
     const postData = {
       title,
-      slug,
+      slug: cleanSlug,
       metaTitle: metaTitle || null,
       metaDescription: metaDescription || null,
       content,
@@ -202,10 +205,12 @@ export const PUT: APIRoute = async (context) => {
       return new Response(JSON.stringify({ error: "Missing required fields: id, title, slug, and content are mandatory" }), { status: 400 });
     }
 
+    const cleanSlug = generateSlug(slug || title);
+
     const postData = {
       id,
       title,
-      slug,
+      slug: cleanSlug,
       metaTitle: metaTitle || null,
       metaDescription: metaDescription || null,
       content,

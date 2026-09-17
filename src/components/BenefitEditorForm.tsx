@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { generateSlug } from "../lib/slugify";
 
 interface FaqItem {
   question: string;
@@ -201,12 +202,8 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
     const val = e.target.value;
     setTitle(val);
     if (!editingId && !slug) {
-      const generatedSlug = val
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
-        .trim();
+      const existingSlugs = benefits.map((b) => b.slug);
+      const generatedSlug = generateSlug(val, existingSlugs);
       setSlug(generatedSlug);
     }
   };
