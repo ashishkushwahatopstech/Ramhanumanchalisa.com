@@ -262,10 +262,10 @@ export default function DiyaCounter() {
       {/* Header with Live Syncing Indicator & Bell Audio Toggle */}
       <div className="flex items-center justify-between w-full mb-3 border-b border-brass-gold/20 pb-2">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] uppercase font-bold tracking-widest text-brass-gold">
+          <span className="text-xs font-bold tracking-wider text-brass-gold">
             Daily Mandir Sadhana
           </span>
-          <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium bg-black/30 px-2 py-0.5 rounded-full border border-emerald-500/30">
+          <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium bg-black/30 px-2 py-0.5 rounded-full border border-emerald-500/30">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
@@ -275,16 +275,18 @@ export default function DiyaCounter() {
         </div>
         <button
           onClick={() => setSoundEnabled((prev) => !prev)}
-          className="text-xs text-brass-gold/80 hover:text-marigold transition-colors flex items-center gap-1 cursor-pointer"
-          title={soundEnabled ? "Mute Bell Sound" : "Enable Bell Sound"}
+          className="text-xs text-stone-ivory/80 hover:text-marigold transition-colors flex items-center gap-1 cursor-pointer px-2 py-1 rounded bg-black/20 hover:bg-black/40 border border-brass-gold/30"
+          aria-label={soundEnabled ? "Mute bell chime" : "Enable bell chime"}
+          title={soundEnabled ? "Mute bell chime" : "Enable bell chime"}
         >
-          {soundEnabled ? "🔔 Chime On" : "🔕 Muted"}
+          <span>{soundEnabled ? "🔔" : "🔕"}</span>
+          <span className="hidden sm:inline">{soundEnabled ? "Chime On" : "Muted"}</span>
         </button>
       </div>
 
       {/* Remote Live Chanting Notification Toast */}
       {remoteActivityToast && (
-        <div className="mb-2 text-center text-[11px] text-yellow-200 font-semibold bg-marigold/20 border border-marigold/40 py-1 px-3 rounded-full shadow animate-pulse">
+        <div className="mb-2 text-center text-xs text-yellow-200 font-semibold bg-marigold/20 border border-marigold/40 py-1 px-3 rounded-full shadow animate-pulse">
           {remoteActivityToast}
         </div>
       )}
@@ -324,46 +326,36 @@ export default function DiyaCounter() {
 
         {/* Global Recitation Counter Display */}
         <div className="text-center mt-2">
-          <p className="font-serif-display text-xs tracking-widest text-brass-gold uppercase">
+          <p className="font-serif-display text-xs tracking-wide text-brass-gold font-medium">
             Global Devotee Counter Today
           </p>
           <div className="text-3xl font-extrabold font-sans text-marigold tracking-tight mt-0.5">
             {globalCount.toLocaleString("en-IN")}{" "}
             <span className="text-sm font-normal text-stone-ivory/80">Recitations</span>
           </div>
-          <p className="text-[11px] text-stone-ivory/70 mt-0.5">
+          <p className="text-xs text-stone-ivory/80 mt-0.5">
             offered globally by devotees today
           </p>
         </div>
 
         {/* Personal Sadhana / Mala Progress Section */}
-        <div className="w-full bg-black/25 border border-brass-gold/30 rounded-xl p-3 mt-4 text-center">
-          <div className="flex justify-between items-center text-xs mb-1">
-            <span className="text-stone-ivory/80 font-medium">Your Chants Today:</span>
-            <span className="font-bold text-marigold text-sm">
-              {personalCount}{" "}
-              <span className="text-[11px] text-stone-ivory/60 font-normal">
-                / {nextMilestone.target} 📿
-              </span>
-            </span>
+        <div className="w-full mt-4 space-y-1.5 text-center">
+          <div className="flex justify-between items-center text-xs">
+            <span className="text-stone-ivory/80">Your Chants: <strong className="text-marigold">{personalCount}</strong> / {nextMilestone.target}</span>
+            <span className="text-stone-ivory/70 text-xs">Goal: {nextMilestone.label}</span>
           </div>
 
           {/* Progress Bar */}
-          <div className="w-full h-2 bg-stone-ivory/10 rounded-full overflow-hidden border border-brass-gold/20">
+          <div className="w-full h-2 bg-black/40 rounded-full overflow-hidden border border-brass-gold/30">
             <div
               className="h-full bg-gradient-to-r from-vermilion via-marigold to-yellow-300 transition-all duration-300 rounded-full"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
 
-          <div className="flex justify-between items-center text-[10px] text-stone-ivory/60 mt-1">
-            <span>Goal: {nextMilestone.label}</span>
-            <span>{progressPercent}% completed</span>
-          </div>
-
           {/* Milestone Badge when achieved */}
           {lastMilestone && (
-            <div className="mt-2 text-[11px] text-yellow-300 font-bold bg-maroon-deep/90 border border-marigold/40 py-1 px-2 rounded-lg animate-pulse">
+            <div className="mt-2 text-xs text-yellow-300 font-bold bg-maroon-deep/90 border border-marigold/40 py-1 px-2 rounded-lg animate-pulse">
               {lastMilestone}
             </div>
           )}
@@ -378,12 +370,12 @@ export default function DiyaCounter() {
             🔔
           </span>
           <span>Offer Recitation (+1)</span>
-          <span className="text-xs bg-black/25 px-2 py-0.5 rounded text-yellow-100 font-mono">
+          <span className="text-xs bg-black/25 px-2 py-0.5 rounded text-stone-ivory font-semibold">
             {personalCount}
           </span>
         </button>
 
-        <p className="text-[11px] text-stone-ivory/70 mt-2.5 text-center leading-snug">
+        <p className="text-xs text-stone-ivory/80 mt-2.5 text-center leading-snug">
           Click with devotion after each Chaupai or full Chalisa recitation. Your progress is saved automatically.
         </p>
       </div>

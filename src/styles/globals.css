@@ -11,7 +11,7 @@
   --font-serif-display: var(--font-marcellus), serif;
   --font-hindi-display: var(--font-tiro-devanagari), serif;
   --font-body: var(--font-mukta), sans-serif;
-  --font-sans: var(--font-inter), sans-serif;
+  --font-sans: var(--font-mukta), sans-serif;
 }
 
 :root {
