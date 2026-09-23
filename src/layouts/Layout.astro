@@ -4,6 +4,7 @@ import SearchModal from "../components/SearchModal";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import Sidebar from "../components/Sidebar.astro";
 import AdSlot from "../components/AdSlot.astro";
+import DesktopSideDock from "../components/DesktopSideDock";
 import { d1GetBlogConfig, d1GetSiteConfig } from "../lib/d1";
 import { getBlogConfig } from "../lib/dynamicContent";
 import { getSiteLayoutConfig, type SiteLayoutConfig } from "../lib/siteConfig";
@@ -74,6 +75,7 @@ if (!blogConfig) {
 }
 
 const shouldShowSidebar = !isExcludedPage && (siteConfig?.sidebarEnabled ?? (blogConfig?.sidebarEnabled ?? true));
+const showSideDock = currentPath !== "/" && !currentPath.startsWith("/admin") && !currentPath.startsWith("/api") && currentPath !== "/login" && currentPath !== "/404";
 
 // Determine canonical URL: prefer explicitly passed prop, otherwise derive dynamically from current route
 const siteBaseUrl = "https://ramhanumanchalisa.com";
@@ -427,6 +429,9 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
 
     <!-- Global Floating Pill Search Button & Modal -->
     <SearchModal client:load />
+
+    <!-- Desktop Left Margin Quick Actions Dock -->
+    {showSideDock && <DesktopSideDock client:load />}
 
   </body>
 </html>
