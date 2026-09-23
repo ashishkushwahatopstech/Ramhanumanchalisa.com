@@ -278,9 +278,19 @@ function renderInlineMarkdown(text: string): string {
     // Replace italic: *text* (when not part of **)
     .replace(/(^|[^*])\*([^*]+)\*([^*]|$)/g, "$1<em>$2</em>$3");
 }
+
+const benefitOgImage = benefit.coverImage || "https://ramhanumanchalisa.com/og-image.jpg";
+const benefitOgImageAlt = benefit.imageAlt || `${pageTitle} - Ram Hanuman Chalisa`;
 ---
 
-<Layout title={pageTitle} description={pageDescription} canonicalUrl={canonicalBenefitUrl}>
+<Layout 
+  title={pageTitle} 
+  description={pageDescription} 
+  canonicalUrl={canonicalBenefitUrl}
+  ogImage={benefitOgImage}
+  ogImageAlt={benefitOgImageAlt}
+  ogType="article"
+>
   <!-- Article Schema for E-E-A-T -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 

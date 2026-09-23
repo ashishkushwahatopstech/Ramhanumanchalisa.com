@@ -580,9 +580,20 @@ const faqSchema =
         })),
       }
     : null;
+
+// Compute dynamic Open Graph image for the post
+const postOgImage = post.coverImage || "https://ramhanumanchalisa.com/og-image.jpg";
+const postOgImageAlt = post.imageAlt || `${cleanTitle} - Ram Hanuman Chalisa`;
 ---
 
-<Layout title={pageTitle} description={pageDescription} canonicalUrl={`https://ramhanumanchalisa.com/blog/${post.slug}`}>
+<Layout 
+  title={pageTitle} 
+  description={pageDescription} 
+  canonicalUrl={`https://ramhanumanchalisa.com/blog/${post.slug}`}
+  ogImage={postOgImage}
+  ogImageAlt={postOgImageAlt}
+  ogType="article"
+>
   <!-- Blog Article Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   

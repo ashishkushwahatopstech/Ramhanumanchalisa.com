@@ -13,6 +13,11 @@ interface Props {
   canonicalUrl?: string;
   showHreflangs?: boolean;
   ogImage?: string;
+  ogImageAlt?: string;
+  ogImageType?: string;
+  ogType?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   hideSidebar?: boolean;
 }
 
@@ -21,7 +26,12 @@ const {
   description = "Step into our digital mandir. Read the authentic Hanuman Chalisa in Devanagari, English, and Gujarati, with line-by-line Hindi/English meanings, synced audio, PDF, and path vidhi.",
   canonicalUrl: propCanonicalUrl,
   showHreflangs = false,
-  ogImage = "https://ramhanumanchalisa.com/og-image.jpg",
+  ogImage: rawOgImage = "https://ramhanumanchalisa.com/og-image.jpg",
+  ogImageAlt,
+  ogImageType,
+  ogType = "website",
+  ogImageWidth = 1200,
+  ogImageHeight = 630,
   hideSidebar = false,
 } = Astro.props;
 
@@ -60,6 +70,21 @@ const shouldShowSidebar = !isExcludedPage && (blogConfig?.sidebarEnabled ?? true
 const siteBaseUrl = "https://ramhanumanchalisa.com";
 const cleanPath = Astro.url.pathname.replace(/\/+$/, "");
 const canonicalUrl = propCanonicalUrl || (cleanPath ? `${siteBaseUrl}${cleanPath}` : `${siteBaseUrl}/`);
+
+// Resolve absolute OG image URL, MIME type, and alt text
+const resolvedOgImage = rawOgImage.startsWith("http")
+  ? rawOgImage
+  : `${siteBaseUrl}${rawOgImage.startsWith("/") ? "" : "/"}${rawOgImage}`;
+
+let resolvedOgImageType = ogImageType;
+if (!resolvedOgImageType) {
+  const lowerImg = resolvedOgImage.toLowerCase().split("?")[0];
+  if (lowerImg.endsWith(".webp")) resolvedOgImageType = "image/webp";
+  else if (lowerImg.endsWith(".png")) resolvedOgImageType = "image/png";
+  else resolvedOgImageType = "image/jpeg";
+}
+
+const resolvedOgImageAlt = ogImageAlt || `${title} - RamHanumanChalisa.com`;
 
 // Compute optimal SEO title tag (strictly targeting 50-60 characters)
 let renderedTitle = title.trim();
@@ -183,24 +208,25 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Mukta:wght@200;300;400;500;600;700;800&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet" />
 
     <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Ram Hanuman Chalisa" />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={renderedTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:secure_url" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="675" />
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:alt" content="Shree Ram and Hanuman Devotional Banner - RamHanumanChalisa.com" />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:image:secure_url" content={resolvedOgImage} />
+    <meta property="og:image:width" content={String(ogImageWidth)} />
+    <meta property="og:image:height" content={String(ogImageHeight)} />
+    <meta property="og:image:type" content={resolvedOgImageType} />
+    <meta property="og:image:alt" content={resolvedOgImageAlt} />
 
     <!-- Twitter Card -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalUrl} />
     <meta property="twitter:title" content={renderedTitle} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogImage} />
-    <meta property="twitter:image:alt" content="Shree Ram and Hanuman Devotional Banner - RamHanumanChalisa.com" />
+    <meta property="twitter:image" content={resolvedOgImage} />
+    <meta property="twitter:image:alt" content={resolvedOgImageAlt} />
 
     <!-- Breadcrumb Schema -->
     {breadcrumbSchema && (
