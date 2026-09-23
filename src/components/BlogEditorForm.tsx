@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { generateSlug } from "../lib/slugify";
+import { optimizeImageForUpload } from "../lib/clientImageOptimizer";
 
 function previewMarkdown(text: string): string {
   if (!text || !text.trim()) return "<p class='text-charcoal-brown/50 italic py-4'>Article body is empty. Type content above to see live preview.</p>";
@@ -233,9 +234,13 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
     setCoverUploadMsg(null);
 
     try {
+      // Auto-compress & optimize image (WebP, max 1200px, <250KB) before uploading
+      const { file: optimizedFile, fileName: optFileName } = await optimizeImageForUpload(file);
+
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", optimizedFile);
       fd.append("folder", "blog");
+      fd.append("customName", optFileName);
 
       const res = await fetch("/api/admin/upload", {
         method: "POST",
@@ -277,9 +282,13 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
     setInsertUploadMsg(null);
 
     try {
+      // Auto-compress & optimize image (WebP, max 1200px, <250KB) before uploading
+      const { file: optimizedFile, fileName: optFileName } = await optimizeImageForUpload(file);
+
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", optimizedFile);
       fd.append("folder", "blog");
+      fd.append("customName", optFileName);
 
       const res = await fetch("/api/admin/upload", {
         method: "POST",

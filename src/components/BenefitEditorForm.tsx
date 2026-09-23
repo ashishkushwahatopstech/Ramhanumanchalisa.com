@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { generateSlug } from "../lib/slugify";
+import { optimizeImageForUpload } from "../lib/clientImageOptimizer";
 
 interface FaqItem {
   question: string;
@@ -255,9 +256,13 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
     setCoverUploadMsg(null);
 
     try {
+      // Auto-compress & optimize image (WebP, max 1200px, <250KB) before uploading
+      const { file: optimizedFile, fileName: optFileName } = await optimizeImageForUpload(file);
+
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", optimizedFile);
       fd.append("folder", "benefits");
+      fd.append("customName", optFileName);
 
       const res = await fetch("/api/admin/upload", {
         method: "POST",
@@ -299,9 +304,13 @@ export default function BenefitEditorForm({ initialBenefits }: BenefitEditorForm
     setInsertUploadMsg(null);
 
     try {
+      // Auto-compress & optimize image (WebP, max 1200px, <250KB) before uploading
+      const { file: optimizedFile, fileName: optFileName } = await optimizeImageForUpload(file);
+
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", optimizedFile);
       fd.append("folder", "benefits");
+      fd.append("customName", optFileName);
 
       const res = await fetch("/api/admin/upload", {
         method: "POST",

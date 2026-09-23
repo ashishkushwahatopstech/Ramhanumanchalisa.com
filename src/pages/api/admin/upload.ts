@@ -87,7 +87,7 @@ export const POST: APIRoute = async (context) => {
     const db = context.locals.runtime?.env?.DB;
     if (db && typeof db.prepare === "function") {
       try {
-        await d1SaveImage(db, {
+        const saved = await d1SaveImage(db, {
           path: imagePath,
           fileName,
           folder,
@@ -95,8 +95,18 @@ export const POST: APIRoute = async (context) => {
           dataBase64: base64Data,
           size: file.size,
         });
-      } catch (dbErr) {
-        console.warn("Notice: saving image to D1 encountered notice:", dbErr);
+
+        if (!saved) {
+          throw new Error("D1 failed to persist image record.");
+        }
+      } catch (dbErr: any) {
+        console.error("Error saving image to D1:", dbErr);
+        return new Response(
+          JSON.stringify({
+            error: `Failed to save image to database: ${dbErr?.message || "Storage error. Please use an image under 1.5MB."}`,
+          }),
+          { status: 500, headers: { "Content-Type": "application/json" } }
+        );
       }
     }
 

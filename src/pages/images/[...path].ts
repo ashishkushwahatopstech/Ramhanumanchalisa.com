@@ -53,20 +53,14 @@ export const GET: APIRoute = async (context) => {
 
       if (row && row.dataBase64) {
         // Decode base64 to binary buffer
-        const binaryStr = atob(row.dataBase64);
-        const len = binaryStr.length;
-        const bytes = new Uint8Array(len);
-        for (let i = 0; i < len; i++) {
-          bytes[i] = binaryStr.charCodeAt(i);
-        }
-
+        const buffer = Buffer.from(row.dataBase64, "base64");
         const dateStr = row.createdAt ? new Date(row.createdAt).toUTCString() : new Date().toUTCString();
 
-        return new Response(bytes, {
+        return new Response(buffer, {
           status: 200,
           headers: {
             "Content-Type": row.mimeType || "image/webp",
-            "Content-Length": String(bytes.byteLength),
+            "Content-Length": String(buffer.byteLength),
             "Cache-Control": "public, max-age=31536000, immutable",
             "Last-Modified": dateStr,
             "ETag": `"${imagePath.replace(/[^a-zA-Z0-9]/g, "-")}-${dateStr}"`,
@@ -78,5 +72,12 @@ export const GET: APIRoute = async (context) => {
     }
   }
 
-  return new Response("Image not found", { status: 404 });
+  return new Response("Image not found", {
+    status: 404,
+    headers: {
+      "Content-Type": "text/plain",
+      "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+      "Pragma": "no-cache",
+    },
+  });
 };
