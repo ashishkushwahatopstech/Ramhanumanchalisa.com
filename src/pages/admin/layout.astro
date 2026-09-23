@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AdminNavigation from "../../components/AdminNavigation.astro";
+import LayoutCustomizerForm from "../../components/LayoutCustomizerForm";
+
+const title = "Site Layout, Menus & Predefined Gadgets — Admin Studio";
+---
+
+<Layout title={title} hideSidebar={true}>
+  <div class="max-w-6xl mx-auto space-y-6">
+    <AdminNavigation activeTab="layout" />
+
+    <section>
+      <LayoutCustomizerForm client:load />
+    </section>
+  </div>
+</Layout>

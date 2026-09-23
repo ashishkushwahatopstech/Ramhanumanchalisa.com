@@ -5,6 +5,8 @@ import { getPrisma } from "../../lib/prisma";
 
 import { FALLBACK_BLOG_POSTS } from "../../data/blog";
 import { BENEFITS_DATA } from "../../data/benefits";
+import { d1GetSubscribers, d1GetSiteConfig } from "../../lib/d1";
+import { getSiteLayoutConfig } from "../../lib/siteConfig";
 
 const db = Astro.locals.runtime?.env?.DB;
 const prisma = getPrisma(db);
@@ -14,6 +16,8 @@ let dbBenefitsCount = 0;
 let dailyRecitations = 0;
 let tracksCount = 0;
 let faqsCount = 0;
+let subscribersCount = 0;
+let activeGadgetsCount = 0;
 
 try {
   dbBlogCount = await prisma.post.count();
@@ -27,8 +31,26 @@ try {
   dailyRecitations = record ? record.count : 0;
 
   tracksCount = await prisma.audioTrack.count();
+
+  // Subscribers
+  if (db && typeof db.prepare === "function") {
+    const subs = await d1GetSubscribers(db);
+    subscribersCount = subs.length;
+    const sConf = await d1GetSiteConfig(db);
+    activeGadgetsCount = (sConf?.sidebarGadgets || []).filter((g: any) => g.isEnabled).length;
+  }
 } catch (error) {
   console.warn("Dashboard DB fetch warning:", error);
+}
+
+if (activeGadgetsCount === 0) {
+  const defConf = getSiteLayoutConfig();
+  activeGadgetsCount = (defConf.sidebarGadgets || []).filter((g) => g.isEnabled).length;
+}
+
+const cacheSubs = (globalThis as any).__SUBSCRIBERS_CACHE__ || [];
+if (subscribersCount === 0 && cacheSubs.length > 0) {
+  subscribersCount = cacheSubs.length;
 }
 
 const blogCount = Math.max(dbBlogCount, FALLBACK_BLOG_POSTS.length);
@@ -42,50 +64,74 @@ const title = "Mandir Studio Admin Dashboard";
     <AdminNavigation activeTab="dashboard" />
 
     <!-- Metric Stat Cards -->
-    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-      <div class="p-5 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+    <section class="grid grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4">
+      <div class="p-4 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between">
-          <span class="text-3xl">📝</span>
-          <span class="text-xs font-bold uppercase tracking-wider text-brass-gold">Articles</span>
+          <span class="text-2xl">🎨</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-brass-gold">Gadgets</span>
         </div>
-        <h3 class="text-3xl font-extrabold font-serif-display text-maroon-deep mt-3">{blogCount}</h3>
-        <p class="text-xs text-charcoal-brown/70 mt-1">Devotional Blog Posts</p>
-        <a href="/admin/blog" class="inline-block mt-3 text-xs font-bold text-vermilion hover:text-maroon-deep underline">
+        <h3 class="text-2xl font-extrabold font-serif-display text-maroon-deep mt-2">{activeGadgetsCount}</h3>
+        <p class="text-[11px] text-charcoal-brown/70 mt-0.5">Active Widgets</p>
+        <a href="/admin/layout" class="inline-block mt-2 text-[11px] font-bold text-vermilion hover:text-maroon-deep underline">
+          Customize &rarr;
+        </a>
+      </div>
+
+      <div class="p-4 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-2xl">📬</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-brass-gold">Devotees</span>
+        </div>
+        <h3 class="text-2xl font-extrabold font-serif-display text-maroon-deep mt-2">{subscribersCount}</h3>
+        <p class="text-[11px] text-charcoal-brown/70 mt-0.5">Email Subscribers</p>
+        <a href="/admin/layout" class="inline-block mt-2 text-[11px] font-bold text-vermilion hover:text-maroon-deep underline">
+          View List &rarr;
+        </a>
+      </div>
+
+      <div class="p-4 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-2xl">📝</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-brass-gold">Articles</span>
+        </div>
+        <h3 class="text-2xl font-extrabold font-serif-display text-maroon-deep mt-2">{blogCount}</h3>
+        <p class="text-[11px] text-charcoal-brown/70 mt-0.5">Devotional Posts</p>
+        <a href="/admin/blog" class="inline-block mt-2 text-[11px] font-bold text-vermilion hover:text-maroon-deep underline">
           Open Studio &rarr;
         </a>
       </div>
 
-      <div class="p-5 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+      <div class="p-4 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between">
-          <span class="text-3xl">🌟</span>
-          <span class="text-xs font-bold uppercase tracking-wider text-brass-gold">Benefits</span>
+          <span class="text-2xl">🌟</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-brass-gold">Benefits</span>
         </div>
-        <h3 class="text-3xl font-extrabold font-serif-display text-maroon-deep mt-3">{benefitsCount}</h3>
-        <p class="text-xs text-charcoal-brown/70 mt-1">Custom Benefit Pages</p>
-        <a href="/admin/benefits" class="inline-block mt-3 text-xs font-bold text-vermilion hover:text-maroon-deep underline">
+        <h3 class="text-2xl font-extrabold font-serif-display text-maroon-deep mt-2">{benefitsCount}</h3>
+        <p class="text-[11px] text-charcoal-brown/70 mt-0.5">Benefit Guides</p>
+        <a href="/admin/benefits" class="inline-block mt-2 text-[11px] font-bold text-vermilion hover:text-maroon-deep underline">
           Open Studio &rarr;
         </a>
       </div>
 
-      <div class="p-5 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+      <div class="p-4 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between">
-          <span class="text-3xl">🔔</span>
-          <span class="text-xs font-bold uppercase tracking-wider text-brass-gold">Devotion</span>
+          <span class="text-2xl">🔔</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-brass-gold">Devotion</span>
         </div>
-        <h3 class="text-3xl font-extrabold font-serif-display text-maroon-deep mt-3">{dailyRecitations}</h3>
-        <p class="text-xs text-charcoal-brown/70 mt-1">Recitations Logged Today</p>
-        <span class="inline-block mt-3 text-xs font-medium text-charcoal-brown/50">Live Mandir Activity</span>
+        <h3 class="text-2xl font-extrabold font-serif-display text-maroon-deep mt-2">{dailyRecitations}</h3>
+        <p class="text-[11px] text-charcoal-brown/70 mt-0.5">Today's Chants</p>
+        <span class="inline-block mt-2 text-[11px] font-medium text-charcoal-brown/50">Live Mandir</span>
       </div>
 
-      <div class="p-5 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+      <div class="p-4 bg-stone-ivory border-2 border-brass-gold/40 rounded-xl shadow-sm hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between">
-          <span class="text-3xl">🎵</span>
-          <span class="text-xs font-bold uppercase tracking-wider text-brass-gold">Tracks</span>
+          <span class="text-2xl">🎵</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-brass-gold">Tracks</span>
         </div>
-        <h3 class="text-3xl font-extrabold font-serif-display text-maroon-deep mt-3">{tracksCount}</h3>
-        <p class="text-xs text-charcoal-brown/70 mt-1">Synced Recitations</p>
-        <a href="/admin/audio" class="inline-block mt-3 text-xs font-bold text-vermilion hover:text-maroon-deep underline">
-          Configure Tracks &rarr;
+        <h3 class="text-2xl font-extrabold font-serif-display text-maroon-deep mt-2">{tracksCount}</h3>
+        <p class="text-[11px] text-charcoal-brown/70 mt-0.5">Synced MP3s</p>
+        <a href="/admin/audio" class="inline-block mt-2 text-[11px] font-bold text-vermilion hover:text-maroon-deep underline">
+          Configure &rarr;
         </a>
       </div>
     </section>
@@ -95,15 +141,39 @@ const title = "Mandir Studio Admin Dashboard";
       <div class="border-b border-brass-gold/20 pb-3 flex justify-between items-center">
         <div>
           <h2 class="font-serif-display text-lg sm:text-xl font-bold text-maroon-deep uppercase">
-            Content & Search Engine Management Studios
+            Content, Layout & Monetization Studios
           </h2>
           <p class="text-xs text-charcoal-brown/70">
-            Publish rich content with automated Google Search Console JSON-LD schema, media controls, and SERP simulation.
+            Publish rich content, customize header/footer menus, place predefined widgets, and optimize ads.
           </p>
         </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Site Layout & Gadgets Card -->
+        <div class="md:col-span-2 p-5 border-2 border-brass-gold/40 rounded-xl bg-gradient-to-r from-marigold/15 via-white to-marigold/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-maroon-deep transition-all shadow-sm">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-2xl">🎨</span>
+              <h3 className="font-bold font-serif-display text-maroon-deep text-lg uppercase">
+                Site Layout, Menus, Gadgets & Ads Studio
+              </h3>
+              <span className="bg-marigold text-maroon-deep text-[10px] font-extrabold px-2 py-0.5 rounded uppercase">
+                New
+              </span>
+            </div>
+            <p className="text-xs text-charcoal-brown/80 max-w-2xl leading-relaxed">
+              Rearrange header navigation, manage predefined gadgets (Subscriptions, Contact Form, Popular Posts, Featured Card, Devotional Lists, HTML/JS), configure monetization ad slots, and edit footer sanctum branding.
+            </p>
+          </div>
+          <a
+            href="/admin/layout"
+            class="shrink-0 bg-maroon-deep hover:bg-vermilion text-stone-ivory px-5 py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-colors shadow"
+          >
+            Launch Layout Studio &rarr;
+          </a>
+        </div>
+
         <!-- Blog Studio Card -->
         <div class="p-5 border-2 border-brass-gold/30 rounded-lg bg-white flex flex-col justify-between space-y-4 hover:border-maroon-deep transition-colors">
           <div>

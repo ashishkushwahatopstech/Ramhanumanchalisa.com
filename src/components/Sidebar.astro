@@ -1,11 +1,27 @@
 ---
 import { FALLBACK_BLOG_POSTS, type BlogPost } from "../data/blog";
-import { d1GetBlogConfig, d1GetPosts } from "../lib/d1";
+import { d1GetBlogConfig, d1GetPosts, d1GetSiteConfig } from "../lib/d1";
 import { getBlogConfig, type BlogLayoutConfig } from "../lib/dynamicContent";
+import { getSiteLayoutConfig, type SiteLayoutConfig } from "../lib/siteConfig";
+import GadgetRenderer from "./gadgets/GadgetRenderer.astro";
+import AdSlot from "./AdSlot.astro";
 
 const db = Astro.locals.runtime?.env?.DB;
 
-// Load Blog Layout & Sidebar Configuration
+// Load Site Layout & Gadgets Configuration
+let siteConfig: SiteLayoutConfig | null = null;
+if (db && typeof db.prepare === "function") {
+  try {
+    siteConfig = await d1GetSiteConfig(db);
+  } catch (e) {
+    console.warn("Notice: D1 getSiteConfig in Sidebar.astro:", e);
+  }
+}
+if (!siteConfig) {
+  siteConfig = getSiteLayoutConfig();
+}
+
+// Load Blog Layout Configuration
 let blogConfig: BlogLayoutConfig | null = null;
 if (db && typeof db.prepare === "function") {
   try {
@@ -18,136 +34,59 @@ if (!blogConfig) {
   blogConfig = getBlogConfig();
 }
 
-// Load Recent 5 Posts
+// Load Recent Posts for Gadgets
 let recentPosts: BlogPost[] = [];
-if (blogConfig?.showRecentPosts) {
-  try {
-    let posts: any[] = [];
-    if (db && typeof db.prepare === "function") {
-      posts = await d1GetPosts(db);
-    }
-    if (posts.length === 0) {
-      posts = FALLBACK_BLOG_POSTS;
-    }
-    // Sort newest first
-    posts.sort((a: any, b: any) => {
-      const timeA = new Date(a.createdAt).getTime() || 0;
-      const timeB = new Date(b.createdAt).getTime() || 0;
-      return timeB - timeA;
-    });
-    recentPosts = posts.slice(0, 5);
-  } catch (e) {
-    recentPosts = FALLBACK_BLOG_POSTS.slice(0, 5);
+try {
+  let posts: any[] = [];
+  if (db && typeof db.prepare === "function") {
+    posts = await d1GetPosts(db);
   }
+  if (posts.length === 0) {
+    posts = FALLBACK_BLOG_POSTS;
+  }
+  posts.sort((a: any, b: any) => {
+    const timeA = new Date(a.createdAt).getTime() || 0;
+    const timeB = new Date(b.createdAt).getTime() || 0;
+    return timeB - timeA;
+  });
+  recentPosts = posts.slice(0, 10);
+} catch (e) {
+  recentPosts = FALLBACK_BLOG_POSTS.slice(0, 10);
 }
 
-const allCategories = [
-  "Hanuman Ji",
-  "Shri Ram",
-  "Lord Shiva",
-  "Lord Ganesh",
-  "Lord Krishna",
-  "Maa Durga & Devis",
-  "Devtas & Saints",
-  "Devotional Prayers"
-];
+const isSidebarEnabled = siteConfig?.sidebarEnabled ?? (blogConfig?.sidebarEnabled ?? true);
+const activeGadgets = (siteConfig?.sidebarGadgets || []).filter((g) => g.isEnabled);
 ---
 
-{blogConfig?.sidebarEnabled && (
+{isSidebarEnabled && (
   <div class="no-print space-y-6">
-    <!-- Widget 1: About Mandir Library -->
-    {blogConfig?.aboutTitle && (
-      <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-5 shadow-xs space-y-2.5">
-        <div class="flex items-center gap-2 border-b border-brass-gold/20 pb-2">
-          <span class="text-xl">🛕</span>
-          <h3 class="font-serif-display font-bold text-maroon-deep text-base uppercase tracking-wider">
-            {blogConfig.aboutTitle}
-          </h3>
-        </div>
-        <p class="text-xs text-charcoal-brown/80 leading-relaxed">
-          {blogConfig.aboutContent}
-        </p>
-        <div class="pt-1 text-[11px]">
-          <a href="/about" class="text-vermilion hover:underline font-semibold inline-flex items-center gap-1">
-            <span>Our editorial mission</span> &rarr;
-          </a>
-        </div>
-      </div>
+    {/* Optional Sidebar Ad Slot */}
+    {siteConfig?.adSlots?.sidebar?.enabled && (
+      <AdSlot slotConfig={siteConfig.adSlots.sidebar} slotId="sidebar" />
     )}
 
-    <!-- Widget 2: Featured Sacred Hymn -->
-    {blogConfig?.featuredHymnTitle && (
-      <div class="bg-radial from-marigold/20 via-stone-ivory to-stone-ivory border-2 border-marigold/60 rounded-xl p-5 shadow-sm space-y-3 relative overflow-hidden">
-        <div class="absolute -top-3 -right-3 text-4xl opacity-10 font-serif">ॐ</div>
-        <span class="text-[10px] font-bold uppercase tracking-widest text-maroon-deep bg-marigold/40 px-2 py-0.5 rounded border border-marigold">
-          ⭐ Featured Hymn
-        </span>
-        <h4 class="font-serif-display text-base font-bold text-maroon-deep leading-snug">
-          {blogConfig.featuredHymnTitle}
-        </h4>
-        <p class="text-xs text-charcoal-brown/75 leading-relaxed">
-          {blogConfig.featuredHymnDesc}
-        </p>
-        <a
-          href={blogConfig.featuredHymnUrl || "/"}
-          class="inline-flex items-center gap-1.5 px-4 py-2 bg-maroon-deep hover:bg-vermilion text-stone-ivory text-xs font-bold uppercase tracking-wider rounded transition-colors shadow-xs"
-        >
-          <span>Recite Now</span>
-          <span>&rarr;</span>
-        </a>
-      </div>
-    )}
-
-    <!-- Widget 3: Recent Hymns (Top 5) -->
-    {blogConfig?.showRecentPosts && recentPosts.length > 0 && (
-      <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-5 shadow-xs space-y-3">
-        <h3 class="font-serif-display font-bold text-maroon-deep text-sm uppercase tracking-wider border-b border-brass-gold/20 pb-2 flex items-center gap-2">
-          <span>📜</span> Latest Sacred Hymns
-        </h3>
-        <ul class="divide-y divide-brass-gold/15 space-y-2">
-          {recentPosts.map((rPost) => (
-            <li class="pt-2 first:pt-0">
-              <a
-                href={`/blog/${rPost.slug}`}
-                class="group block space-y-1"
-              >
-                <span class="text-xs font-bold text-maroon-deep group-hover:text-vermilion transition-colors line-clamp-2 leading-snug">
-                  {rPost.title}
-                </span>
-                <span class="text-[10px] text-charcoal-brown/50 block font-mono">
-                  {rPost.createdAt}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )}
-
-    <!-- Widget 4: Quick Deity Categories -->
-    {blogConfig?.showCategories && (
-      <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-5 shadow-xs space-y-3">
-        <h3 class="font-serif-display font-bold text-maroon-deep text-sm uppercase tracking-wider border-b border-brass-gold/20 pb-2 flex items-center gap-2">
-          <span>🙏</span> Sacred Deity Collections
-        </h3>
-        <div class="flex flex-wrap gap-1.5">
-          {allCategories.map((cat) => (
-            <a
-              href={`/blog?category=${encodeURIComponent(cat)}`}
-              class="px-2.5 py-1 text-[11px] font-semibold bg-white border border-brass-gold/30 rounded-full text-charcoal-brown hover:border-maroon-deep hover:text-maroon-deep transition-all"
-            >
-              {cat}
-            </a>
-          ))}
-        </div>
-      </div>
-    )}
-
-    <!-- Widget 5: Custom HTML / Banner / Ads Gadget -->
-    {blogConfig?.customHtmlWidget && (
-      <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-4 shadow-xs overflow-hidden">
-        <div set:html={blogConfig.customHtmlWidget} />
-      </div>
+    {/* Dynamic Predefined Gadgets */}
+    {activeGadgets.length > 0 ? (
+      activeGadgets.map((gadget) => (
+        <GadgetRenderer gadget={gadget} recentPosts={recentPosts} />
+      ))
+    ) : (
+      /* Fallback if no gadgets configured */
+      <>
+        {blogConfig?.aboutTitle && (
+          <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-5 shadow-xs space-y-2.5">
+            <div class="flex items-center gap-2 border-b border-brass-gold/20 pb-2">
+              <span class="text-xl">🛕</span>
+              <h3 class="font-serif-display font-bold text-maroon-deep text-base uppercase tracking-wider">
+                {blogConfig.aboutTitle}
+              </h3>
+            </div>
+            <p class="text-xs text-charcoal-brown/80 leading-relaxed">
+              {blogConfig.aboutContent}
+            </p>
+          </div>
+        )}
+      </>
     )}
   </div>
 )}

@@ -419,3 +419,171 @@ export async function d1IncrementRecitations(db: any, date: string, incrementBy:
   }
 }
 
+// Site Layout & Gadgets Configuration in D1
+export async function d1EnsureSiteConfigTable(db: any): Promise<void> {
+  if (!db || typeof db.prepare !== "function") return;
+  try {
+    await db.prepare(`
+      CREATE TABLE IF NOT EXISTS SiteConfig (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL,
+        updatedAt TEXT NOT NULL
+      )
+    `).run();
+  } catch (e) {
+    console.warn("Notice: d1EnsureSiteConfigTable:", e);
+  }
+}
+
+export async function d1GetSiteConfig(db: any): Promise<any> {
+  if (!db || typeof db.prepare !== "function") return null;
+  try {
+    await d1EnsureSiteConfigTable(db);
+    const row = await db.prepare("SELECT value FROM SiteConfig WHERE key = 'site_layout'").first();
+    if (row && row.value) {
+      return JSON.parse(row.value);
+    }
+    return null;
+  } catch (e) {
+    console.error("D1 getSiteConfig error:", e);
+    return null;
+  }
+}
+
+export async function d1SaveSiteConfig(db: any, config: any): Promise<boolean> {
+  if (!db || typeof db.prepare !== "function") return false;
+  try {
+    await d1EnsureSiteConfigTable(db);
+    const now = new Date().toISOString();
+    await db.prepare(`
+      INSERT INTO SiteConfig (key, value, updatedAt)
+      VALUES ('site_layout', ?, ?)
+      ON CONFLICT(key) DO UPDATE SET
+        value = excluded.value,
+        updatedAt = excluded.updatedAt
+    `).bind(JSON.stringify(config), now).run();
+    return true;
+  } catch (e) {
+    console.error("D1 saveSiteConfig error:", e);
+    return false;
+  }
+}
+
+// Newsletter Subscribers in D1
+export async function d1EnsureSubscriberTable(db: any): Promise<void> {
+  if (!db || typeof db.prepare !== "function") return;
+  try {
+    await db.prepare(`
+      CREATE TABLE IF NOT EXISTS NewsletterSubscriber (
+        id TEXT PRIMARY KEY,
+        email TEXT UNIQUE NOT NULL,
+        status TEXT NOT NULL DEFAULT 'active',
+        source TEXT,
+        createdAt TEXT NOT NULL
+      )
+    `).run();
+  } catch (e) {
+    console.warn("Notice: d1EnsureSubscriberTable:", e);
+  }
+}
+
+export async function d1AddSubscriber(db: any, email: string, source: string = "morning_blessings"): Promise<{ success: boolean; isNew: boolean }> {
+  if (!db || typeof db.prepare !== "function") return { success: false, isNew: false };
+  try {
+    await d1EnsureSubscriberTable(db);
+    const now = new Date().toISOString();
+    const id = `sub-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+    
+    // Check existing
+    const existing = await db.prepare("SELECT id FROM NewsletterSubscriber WHERE email = ?").bind(email.toLowerCase().trim()).first();
+    if (existing) {
+      return { success: true, isNew: false };
+    }
+
+    await db.prepare(`
+      INSERT INTO NewsletterSubscriber (id, email, status, source, createdAt)
+      VALUES (?, ?, 'active', ?, ?)
+    `).bind(id, email.toLowerCase().trim(), source, now).run();
+
+    return { success: true, isNew: true };
+  } catch (e) {
+    console.error("D1 addSubscriber error:", e);
+    return { success: false, isNew: false };
+  }
+}
+
+export async function d1GetSubscribers(db: any): Promise<any[]> {
+  if (!db || typeof db.prepare !== "function") return [];
+  try {
+    await d1EnsureSubscriberTable(db);
+    const { results } = await db.prepare("SELECT * FROM NewsletterSubscriber ORDER BY createdAt DESC").all();
+    return results || [];
+  } catch (e) {
+    console.error("D1 getSubscribers error:", e);
+    return [];
+  }
+}
+
+export async function d1DeleteSubscriber(db: any, id: string): Promise<boolean> {
+  if (!db || typeof db.prepare !== "function") return false;
+  try {
+    await d1EnsureSubscriberTable(db);
+    await db.prepare("DELETE FROM NewsletterSubscriber WHERE id = ?").bind(id).run();
+    return true;
+  } catch (e) {
+    console.error("D1 deleteSubscriber error:", e);
+    return false;
+  }
+}
+
+// Contact Form Submissions in D1
+export async function d1EnsureContactTable(db: any): Promise<void> {
+  if (!db || typeof db.prepare !== "function") return;
+  try {
+    await db.prepare(`
+      CREATE TABLE IF NOT EXISTS ContactSubmission (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        subject TEXT,
+        message TEXT NOT NULL,
+        createdAt TEXT NOT NULL
+      )
+    `).run();
+  } catch (e) {
+    console.warn("Notice: d1EnsureContactTable:", e);
+  }
+}
+
+export async function d1SaveContactSubmission(
+  db: any,
+  data: { name: string; email: string; subject?: string; message: string }
+): Promise<boolean> {
+  if (!db || typeof db.prepare !== "function") return false;
+  try {
+    await d1EnsureContactTable(db);
+    const now = new Date().toISOString();
+    const id = `contact-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+    await db.prepare(`
+      INSERT INTO ContactSubmission (id, name, email, subject, message, createdAt)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `).bind(id, data.name.trim(), data.email.trim(), data.subject || "Devotee Inquiry", data.message.trim(), now).run();
+    return true;
+  } catch (e) {
+    console.error("D1 saveContactSubmission error:", e);
+    return false;
+  }
+}
+
+export async function d1GetContactSubmissions(db: any): Promise<any[]> {
+  if (!db || typeof db.prepare !== "function") return [];
+  try {
+    await d1EnsureContactTable(db);
+    const { results } = await db.prepare("SELECT * FROM ContactSubmission ORDER BY createdAt DESC LIMIT 50").all();
+    return results || [];
+  } catch (e) {
+    console.error("D1 getContactSubmissions error:", e);
+    return [];
+  }
+}
+

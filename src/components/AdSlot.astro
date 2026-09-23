@@ -1,0 +1,53 @@
+---
+import type { AdSlotConfig } from "../lib/siteConfig";
+
+interface Props {
+  slotConfig?: AdSlotConfig;
+  slotId: string;
+  className?: string;
+}
+
+const { slotConfig, slotId, className = "" } = Astro.props;
+
+if (!slotConfig || !slotConfig.enabled) {
+  return;
+}
+---
+
+<div class={`no-print w-full my-6 text-center ${className}`}>
+  {slotConfig.label && (
+    <div class="text-[10px] uppercase tracking-widest text-charcoal-brown/50 mb-1 font-mono">
+      {slotConfig.label}
+    </div>
+  )}
+
+  {slotConfig.mode === "banner" && slotConfig.bannerImg && (
+    <a
+      href={slotConfig.bannerUrl || "#"}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-block overflow-hidden rounded-lg border border-brass-gold/30 shadow-xs hover:opacity-95 transition-opacity"
+    >
+      <img
+        src={slotConfig.bannerImg}
+        alt={slotConfig.label || "Devotional Partner"}
+        class="max-w-full h-auto mx-auto"
+        loading="lazy"
+      />
+    </a>
+  )}
+
+  {(slotConfig.mode === "customHtml" || slotConfig.mode === "adsense") && slotConfig.code && (
+    <div
+      class="w-full flex justify-center items-center overflow-hidden min-h-[90px]"
+      set:html={slotConfig.code}
+    />
+  )}
+
+  {/* Layout-stable fallback if slot is enabled but no custom code is placed yet */}
+  {(slotConfig.mode === "customHtml" || slotConfig.mode === "adsense") && !slotConfig.code && (
+    <div class="w-full max-w-4xl mx-auto h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
+      <span>{slotConfig.label || `Advertisement Slot (${slotId})`}</span>
+    </div>
+  )}
+</div>

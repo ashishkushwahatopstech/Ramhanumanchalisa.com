@@ -3,8 +3,10 @@ import LanguageSwitcher from "../components/LanguageSwitcher";
 import SearchModal from "../components/SearchModal";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import Sidebar from "../components/Sidebar.astro";
-import { d1GetBlogConfig } from "../lib/d1";
+import AdSlot from "../components/AdSlot.astro";
+import { d1GetBlogConfig, d1GetSiteConfig } from "../lib/d1";
 import { getBlogConfig } from "../lib/dynamicContent";
+import { getSiteLayoutConfig, type SiteLayoutConfig } from "../lib/siteConfig";
 import "../styles/globals.css";
 
 interface Props {
@@ -52,19 +54,26 @@ const isExcludedPage =
   currentPath === "/unauthorized";
 
 const db = Astro.locals.runtime?.env?.DB;
+let siteConfig: SiteLayoutConfig | null = null;
 let blogConfig = null;
+
 if (db && typeof db.prepare === "function") {
   try {
+    siteConfig = await d1GetSiteConfig(db);
     blogConfig = await d1GetBlogConfig(db);
   } catch (e) {
     // ignore
   }
 }
+
+if (!siteConfig) {
+  siteConfig = getSiteLayoutConfig();
+}
 if (!blogConfig) {
   blogConfig = getBlogConfig();
 }
 
-const shouldShowSidebar = !isExcludedPage && (blogConfig?.sidebarEnabled ?? true);
+const shouldShowSidebar = !isExcludedPage && (siteConfig?.sidebarEnabled ?? (blogConfig?.sidebarEnabled ?? true));
 
 // Determine canonical URL: prefer explicitly passed prop, otherwise derive dynamically from current route
 const siteBaseUrl = "https://ramhanumanchalisa.com";
@@ -262,52 +271,51 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
           
           <!-- Desktop Pillars Nav -->
           <nav class="hidden lg:flex items-center space-x-6 text-sm lg:text-[15px] font-semibold tracking-wide">
-            <a href="/" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
-              Hanuman Chalisa
-            </a>
-            <a href="/ram-chalisa" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
-              Ram Chalisa
-            </a>
-            <a href="/hanuman-chalisa-meaning" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
-              Meaning
-            </a>
-            <a href="/hanuman-chalisa-audio-mp3" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
-              Synced Audio
-            </a>
-            <a href="/sankat-mochan-hanumanashtak" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
-              Hanumanashtak
-            </a>
-            <a href="/hanuman-aarti" class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold">
-              Aarti
-            </a>
+            {(siteConfig?.headerMenu || []).filter((item) => item.isEnabled).map((item) => (
+              <a
+                href={item.href}
+                target={item.openNewTab ? "_blank" : undefined}
+                rel={item.openNewTab ? "noopener noreferrer" : undefined}
+                class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold"
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
 
           <!-- Extra Right Button & Language Switcher -->
           <div class="flex items-center gap-2 sm:gap-3">
             <LanguageSwitcher client:load />
 
-            <a
-              href="/shri-hanuman-chalisa-path-vidhi"
-              class="hidden md:inline-block bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-3 py-1.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300"
-            >
-              How to Recite
-            </a>
+            {siteConfig?.headerCta?.isEnabled && (
+              <a
+                href={siteConfig.headerCta.href || "/shri-hanuman-chalisa-path-vidhi"}
+                class="hidden md:inline-block bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-3 py-1.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300"
+              >
+                {siteConfig.headerCta.label || "How to Recite"}
+              </a>
+            )}
           </div>
 
         </div>
       </div>
 
       <!-- Infinite Sita Ram Chanting Marquee -->
-      <div class="w-full bg-marigold text-maroon-deep font-bold py-1.5 border-t border-brass-gold/20 text-xs tracking-wide select-none overflow-hidden">
-        <div class="animate-marquee whitespace-nowrap flex">
-          <span class="font-serif-display shrink-0">&nbsp;✨ सीताराम सीताराम सीताराम सीताराम • Sita Ram Sita Ram Sita Ram Sita Ram • सीताराम सीताराम सीताराम सीताराम • Sita Ram Sita Ram Sita Ram Sita Ram •&nbsp;</span>
-          <span class="font-serif-display shrink-0">&nbsp;✨ सीताराम सीताराम सीताराम सीताराम • Sita Ram Sita Ram Sita Ram Sita Ram • सीताराम सीताराम सीताराम सीताराम • Sita Ram Sita Ram Sita Ram Sita Ram •&nbsp;</span>
+      {siteConfig?.headerNotice?.isEnabled && (
+        <div class="w-full bg-marigold text-maroon-deep font-bold py-1.5 border-t border-brass-gold/20 text-xs tracking-wide select-none overflow-hidden">
+          <div class="animate-marquee whitespace-nowrap flex">
+            <span class="font-serif-display shrink-0">&nbsp;{siteConfig.headerNotice.text}&nbsp;</span>
+            <span class="font-serif-display shrink-0">&nbsp;{siteConfig.headerNotice.text}&nbsp;</span>
+          </div>
         </div>
-      </div>
+      )}
     </header>
 
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 pb-24 md:pb-12">
+      {siteConfig?.adSlots?.aboveFold?.enabled && (
+        <AdSlot slotConfig={siteConfig.adSlots.aboveFold} slotId="aboveFold" />
+      )}
       {shouldShowSidebar ? (
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div class="lg:col-span-8 min-w-0 space-y-6">
@@ -322,6 +330,13 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
       )}
     </main>
 
+    <!-- Footer Ad Slot -->
+    {siteConfig?.adSlots?.footer?.enabled && (
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AdSlot slotConfig={siteConfig.adSlots.footer} slotId="footer" />
+      </div>
+    )}
+
     <!-- Footer -->
     <footer class="no-print bg-charcoal-brown text-stone-ivory border-t-8 border-maroon-deep py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -330,13 +345,13 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
           <!-- Branding Column -->
           <div class="md:col-span-2">
             <h3 class="font-serif-display text-xl text-marigold uppercase tracking-wider mb-3">
-              Ram Hanuman Chalisa
+              {siteConfig?.footer?.brandingTitle || "Ram Hanuman Chalisa"}
             </h3>
             <p class="text-sm text-stone-ivory/80 max-w-sm leading-relaxed">
-              A digital sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and digest the glorious verses composed by Goswami Tulsidas. Reviewed by traditional scholars to ensure absolute accuracy of translation and context.
+              {siteConfig?.footer?.brandingDesc || "A digital sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and digest the glorious verses composed by Goswami Tulsidas. Reviewed by traditional scholars to ensure absolute accuracy of translation and context."}
             </p>
             <p class="mt-4 text-xs text-brass-gold">
-              © {currentYear} RamHanumanChalisa.com. All Rights Reserved.
+              © {currentYear} {siteConfig?.footer?.copyrightText || "RamHanumanChalisa.com. All Rights Reserved."}
             </p>
           </div>
 
@@ -346,13 +361,9 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
               Pillars
             </h4>
             <ul class="space-y-2 text-sm text-stone-ivory/80">
-              <li><a href="/" class="hover:text-marigold transition-colors">Hanuman Chalisa Text</a></li>
-              <li><a href="/hanuman-chalisa-meaning" class="hover:text-marigold transition-colors">Bilingual Meanings</a></li>
-              <li><a href="/hanuman-chalisa-audio-mp3" class="hover:text-marigold transition-colors">Audio Synced Player</a></li>
-              <li><a href="/hanuman-chalisa-english" class="hover:text-marigold transition-colors">Hanuman Chalisa in English</a></li>
-              <li><a href="/hanuman-chalisa-benefits" class="hover:text-marigold transition-colors">40 Chaupai Benefits & Meaning</a></li>
-              <li><a href="/shri-hanuman-chalisa-path-vidhi" class="hover:text-marigold transition-colors">Recitation Rules</a></li>
-              <li><a href="/hanuman-chalisa-pdf" class="hover:text-marigold transition-colors">📥 Download & Save Prayers (PDF, Verses & Cards)</a></li>
+              {(siteConfig?.footer?.quickLinks || []).map((link) => (
+                <li><a href={link.href} class="hover:text-marigold transition-colors">{link.label}</a></li>
+              ))}
             </ul>
           </div>
 
@@ -362,14 +373,9 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
               Devotional Texts
             </h4>
             <ul class="space-y-2 text-sm text-stone-ivory/80">
-              <li><a href="/ram-chalisa" class="hover:text-marigold transition-colors">Shri Ram Chalisa</a></li>
-              <li><a href="/hanuman-stuti" class="hover:text-marigold transition-colors">Hanuman Stuti</a></li>
-              <li><a href="/bajrang-baan" class="hover:text-marigold transition-colors">Bajrang Baan</a></li>
-              <li><a href="/sankat-mochan-hanumanashtak" class="hover:text-marigold transition-colors">Hanumanashtak</a></li>
-              <li><a href="/hanuman-aarti" class="hover:text-marigold transition-colors">Hanuman Aarti</a></li>
-              <li><a href="/ram-hanuman-chalisa" class="hover:text-marigold transition-colors">Shree Ram & Hanuman</a></li>
-              <li><a href="/hanuman-jayanti" class="hover:text-marigold transition-colors">Hanuman Jayanti</a></li>
-              <li><a href="/blog" class="hover:text-marigold transition-colors">Bhakti Blog</a></li>
+              {(siteConfig?.footer?.devotionalLinks || []).map((link) => (
+                <li><a href={link.href} class="hover:text-marigold transition-colors">{link.label}</a></li>
+              ))}
             </ul>
           </div>
 
@@ -379,16 +385,13 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
 
         <!-- Compliance & Footer Links -->
         <div class="flex flex-wrap justify-between items-center gap-4 text-xs text-stone-ivory/60">
-          <div class="flex gap-4">
-            <a href="/about" class="hover:text-marigold">About Us</a>
-            <a href="/contact" class="hover:text-marigold">Contact</a>
-            <a href="/blog" class="hover:text-marigold">Bhakti Blog</a>
-            <a href="/privacy-policy" class="hover:text-marigold">Privacy Policy</a>
-            <a href="/disclaimer" class="hover:text-marigold">Disclaimer</a>
-            <a href="/faq" class="hover:text-marigold">FAQ</a>
+          <div class="flex flex-wrap gap-4">
+            {(siteConfig?.footer?.complianceLinks || []).map((link) => (
+              <a href={link.href} class="hover:text-marigold">{link.label}</a>
+            ))}
           </div>
           <p class="max-w-md text-right text-[10px] md:text-xs">
-            Disclaimer: The materials provided are for devotional, cultural, and educational purposes. AdSense slots are integrated layout-stable.
+            {siteConfig?.footer?.disclaimerText || "Disclaimer: The materials provided are for devotional, cultural, and educational purposes. AdSense slots are integrated layout-stable."}
           </p>
         </div>
 

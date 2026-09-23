@@ -1,0 +1,126 @@
+---
+import type { GadgetInstance } from "../../lib/siteConfig";
+import type { BlogPost } from "../../data/blog";
+import SubscriptionGadget from "./SubscriptionGadget";
+import ContactFormGadget from "./ContactFormGadget";
+
+interface Props {
+  gadget: GadgetInstance;
+  recentPosts?: BlogPost[];
+}
+
+const { gadget, recentPosts = [] } = Astro.props;
+
+if (!gadget || !gadget.isEnabled) {
+  return;
+}
+
+const { type, title, config = {} } = gadget;
+---
+
+{type === "subscription" && (
+  <SubscriptionGadget
+    client:load
+    title={title || "Daily Morning Hanuman Blessings"}
+    subtitle={config.subscriptionSubtitle}
+    buttonText={config.buttonText}
+    placeholder={config.placeholder}
+    disclaimer={config.disclaimer}
+  />
+)}
+
+{type === "contact_form" && (
+  <ContactFormGadget
+    client:load
+    title={title || "Devotee Inquiries & Prayers"}
+    subtitle={config.subtitle}
+    recipientNote={config.recipientNote}
+  />
+)}
+
+{type === "featured_post" && (
+  <div class="bg-radial from-marigold/20 via-stone-ivory to-stone-ivory border-2 border-marigold/60 rounded-xl p-5 shadow-sm space-y-3 relative overflow-hidden">
+    <div class="absolute -top-3 -right-3 text-4xl opacity-10 font-serif select-none pointer-events-none">ॐ</div>
+    <span class="text-[10px] font-bold uppercase tracking-widest text-maroon-deep bg-marigold/40 px-2 py-0.5 rounded border border-marigold">
+      {config.badgeText || "⭐ Featured Hymn"}
+    </span>
+    <h4 class="font-serif-display text-base font-bold text-maroon-deep leading-snug">
+      {config.featuredTitle || "Shri Hanuman Chalisa"}
+    </h4>
+    <p class="text-xs text-charcoal-brown/75 leading-relaxed">
+      {config.featuredDesc || "Recite the glorious 40 chaupais composed by Goswami Tulsidas."}
+    </p>
+    <a
+      href={config.featuredUrl || "/"}
+      class="inline-flex items-center gap-1.5 px-4 py-2 bg-maroon-deep hover:bg-vermilion text-stone-ivory text-xs font-bold uppercase tracking-wider rounded transition-colors shadow-xs"
+    >
+      <span>{config.featuredButtonText || "Recite Now →"}</span>
+    </a>
+  </div>
+)}
+
+{type === "popular_posts" && (
+  <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-5 shadow-xs space-y-3">
+    <h3 class="font-serif-display font-bold text-maroon-deep text-sm uppercase tracking-wider border-b border-brass-gold/20 pb-2 flex items-center gap-2">
+      <span>📜</span> {title || "Latest Sacred Hymns"}
+    </h3>
+    {recentPosts.length > 0 ? (
+      <ul class="divide-y divide-brass-gold/15 space-y-2">
+        {recentPosts.slice(0, config.postsLimit || 5).map((rPost, index) => (
+          <li class="pt-2 first:pt-0">
+            <a
+              href={`/blog/${rPost.slug}`}
+              class="group flex items-start gap-2.5 space-y-1"
+            >
+              {config.showRanking && (
+                <span class="shrink-0 w-5 h-5 rounded-full bg-marigold/20 text-maroon-deep font-bold text-[10px] flex items-center justify-center border border-marigold/40 mt-0.5">
+                  {index + 1}
+                </span>
+              )}
+              <div class="min-w-0 flex-1">
+                <span class="text-xs font-bold text-maroon-deep group-hover:text-vermilion transition-colors line-clamp-2 leading-snug block">
+                  {rPost.title}
+                </span>
+                <span class="text-[10px] text-charcoal-brown/50 block font-mono mt-0.5">
+                  {rPost.createdAt}
+                </span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="text-xs text-charcoal-brown/60 italic">No posts found.</p>
+    )}
+  </div>
+)}
+
+{type === "list" && (
+  <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-5 shadow-xs space-y-3">
+    <h3 class="font-serif-display font-bold text-maroon-deep text-sm uppercase tracking-wider border-b border-brass-gold/20 pb-2 flex items-center gap-2">
+      <span>🙏</span> {title || "Sacred Deity Collections"}
+    </h3>
+    <div class="flex flex-wrap gap-1.5">
+      {(config.items || []).map((item) => (
+        <a
+          href={item.url}
+          class="px-2.5 py-1 text-[11px] font-semibold bg-white border border-brass-gold/30 rounded-full text-charcoal-brown hover:border-maroon-deep hover:text-maroon-deep transition-all flex items-center gap-1"
+        >
+          {item.icon && <span>{item.icon}</span>}
+          <span>{item.label}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+)}
+
+{type === "html_js" && (
+  <div class="bg-stone-ivory border border-brass-gold/35 rounded-xl p-4 shadow-xs overflow-hidden">
+    {title && (
+      <h3 class="font-serif-display font-bold text-maroon-deep text-sm uppercase tracking-wider border-b border-brass-gold/20 pb-2 mb-3">
+        {title}
+      </h3>
+    )}
+    <div set:html={config.rawHtml || ""} />
+  </div>
+)}

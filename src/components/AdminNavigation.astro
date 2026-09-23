@@ -1,12 +1,13 @@
-﻿---
+---
 interface Props {
-  activeTab: "dashboard" | "blog" | "benefits" | "faqs" | "audio" | "jayanti" | "languages";
+  activeTab: "dashboard" | "blog" | "benefits" | "faqs" | "audio" | "jayanti" | "languages" | "layout";
 }
 
 const { activeTab } = Astro.props;
 
 const navItems = [
   { id: "dashboard", label: "Dashboard", href: "/admin", icon: "📊" },
+  { id: "layout", label: "Layout & Gadgets", href: "/admin/layout", icon: "🎨" },
   { id: "blog", label: "Blog Articles", href: "/admin/blog", icon: "📝" },
   { id: "benefits", label: "Benefits Pages", href: "/admin/benefits", icon: "🌟" },
   { id: "faqs", label: "Global FAQs", href: "/admin/faqs", icon: "❓" },
