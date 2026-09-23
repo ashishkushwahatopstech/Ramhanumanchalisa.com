@@ -4,7 +4,7 @@ import SearchModal from "../components/SearchModal";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import Sidebar from "../components/Sidebar.astro";
 import AdSlot from "../components/AdSlot.astro";
-import DesktopSideDock from "../components/DesktopSideDock";
+import DesktopSideDock, { MobileBottomActionDock } from "../components/DesktopSideDock";
 import { d1GetBlogConfig, d1GetSiteConfig } from "../lib/d1";
 import { getBlogConfig } from "../lib/dynamicContent";
 import { getSiteLayoutConfig, type SiteLayoutConfig } from "../lib/siteConfig";
@@ -322,13 +322,17 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div class="lg:col-span-8 min-w-0 space-y-6">
             <slot />
+            {showSideDock && <MobileBottomActionDock client:load />}
           </div>
           <aside class="lg:col-span-4 min-w-0 mt-8 lg:mt-0 lg:sticky lg:top-24">
             <Sidebar />
           </aside>
         </div>
       ) : (
-        <slot />
+        <>
+          <slot />
+          {showSideDock && <MobileBottomActionDock client:load />}
+        </>
       )}
     </main>
 
