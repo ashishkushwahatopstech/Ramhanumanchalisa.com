@@ -12,6 +12,7 @@ export interface BlogPost {
   createdAt: string;
   author: string;
   readTime: string;
+  faqs?: string;
 }
 
 const STATIC_BLOG_POSTS: BlogPost[] = [
