@@ -46,176 +46,166 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
     <ChalisaTemplate data={data} isHomepage={true} client:load />
 
     <!-- Interactive Ambient Puja & Japa Counter -->
-    <div className="py-8 border-y border-brass-gold/25 bg-[#F6EFE3]">
+    <div class="py-8 border-y border-brass-gold/25 bg-[#F6EFE3]">
       <DiyaCounter client:load />
     </div>
 
     <!-- SECTION 1: Sacred Stotras & Chalisas Hub (Illuminated Treasury) -->
-    <section className="max-w-6xl mx-auto px-4">
-      {/* Section Epigraph Header */}
-      <div className="text-center mb-8 space-y-2">
-        <div className="flex justify-center">
-          <span className="rubric-marker">
+    <section class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-8 space-y-2">
+        <div class="flex justify-center">
+          <span class="rubric-marker">
             <span>— प्रथम प्रभाग : संपूर्ण स्तोत्र एवं चालीसा संग्रह —</span>
           </span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
+        <h2 class="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
           सम्पूर्ण स्तोत्र एवं चालीसा संग्रह
         </h2>
-        <p className="text-xs sm:text-sm text-charcoal-brown/75 max-w-xl mx-auto font-sans leading-relaxed">
+        <p class="text-xs sm:text-sm text-charcoal-brown/75 max-w-xl mx-auto font-sans leading-relaxed">
           Recite timeless Vedic and Awadhi prayers dedicated to Lord Rama and Mahavira Hanuman with authentic lyrics, word breakdowns, and verified translations.
         </p>
       </div>
 
-      {/* Asymmetrical Sacred Treasury Layout */}
-      <div className="space-y-6">
-        {/* Top Tier: Twin Pillars (Shri Ram Chalisa & Bajrang Baan) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Ram Chalisa Featured Sanctuary */}
+      <div class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <a
             href="/ram-chalisa"
-            className="group manuscript-frame p-6 sm:p-8 flex flex-col justify-between hover:border-brass-gold transition-colors"
+            class="group manuscript-frame p-6 sm:p-8 flex flex-col justify-between hover:border-brass-gold transition-colors"
           >
-            <div className="space-y-3">
-              <div className="flex items-center justify-between text-xs">
-                <span className="rubric-marker !py-0.5">॥ मर्यादा पुरुषोत्तम ॥</span>
-                <span className="text-xs text-brass-gold font-bold font-mono">४० चौपाई • ४ दोहे</span>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <span class="rubric-marker !py-0.5">॥ मर्यादा पुरुषोत्तम ॥</span>
+                <span class="text-xs text-brass-gold font-bold font-mono">४० चौपाई • ४ दोहे</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-serif-display font-bold text-maroon-deep group-hover:text-vermilion transition-colors">
+              <h3 class="text-xl sm:text-2xl font-serif-display font-bold text-maroon-deep group-hover:text-vermilion transition-colors">
                 Shree Ram Chalisa (श्री राम चालीसा)
               </h3>
-              <p className="text-xs sm:text-sm text-charcoal-brown/80 leading-relaxed font-sans">
+              <p class="text-xs sm:text-sm text-charcoal-brown/80 leading-relaxed font-sans">
                 The authentic 40 chaupais revering Bhagwan Shri Ram Chandra, celebrating his righteous reign (Ram Rajya), gentle compassion, and supreme protection with complete verse translations.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-brass-gold/25 flex items-center justify-between text-xs font-semibold text-maroon-deep">
-              <span className="text-brass-gold group-hover:text-vermilion transition-colors">Explore Lyrics & Meaning</span>
-              <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+            <div class="mt-6 pt-4 border-t border-brass-gold/25 flex items-center justify-between text-xs font-semibold text-maroon-deep">
+              <span class="text-brass-gold group-hover:text-vermilion transition-colors">Explore Lyrics & Meaning</span>
+              <span class="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
             </div>
           </a>
 
-          {/* Bajrang Baan Featured Sanctuary */}
           <a
             href="/bajrang-baan"
-            className="group manuscript-frame p-6 sm:p-8 flex flex-col justify-between hover:border-brass-gold transition-colors"
+            class="group manuscript-frame p-6 sm:p-8 flex flex-col justify-between hover:border-brass-gold transition-colors"
           >
-            <div className="space-y-3">
-              <div className="flex items-center justify-between text-xs">
-                <span className="rubric-marker !py-0.5">॥ अमोघ रक्षा कवच ॥</span>
-                <span className="text-xs text-brass-gold font-bold font-mono">तांत्रिक रक्षा स्तोत्र</span>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <span class="rubric-marker !py-0.5">॥ अमोघ रक्षा कवच ॥</span>
+                <span class="text-xs text-brass-gold font-bold font-mono">तांत्रिक रक्षा स्तोत्र</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-serif-display font-bold text-maroon-deep group-hover:text-vermilion transition-colors">
+              <h3 class="text-xl sm:text-2xl font-serif-display font-bold text-maroon-deep group-hover:text-vermilion transition-colors">
                 Shree Bajrang Baan (श्री बजरंग बाण)
               </h3>
-              <p className="text-xs sm:text-sm text-charcoal-brown/80 leading-relaxed font-sans">
+              <p class="text-xs sm:text-sm text-charcoal-brown/80 leading-relaxed font-sans">
                 The invincible protection shield hymn invoking the sacred oaths of Lord Rama to dispel severe adversities, negativity, fear, and planetary afflictions.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-brass-gold/25 flex items-center justify-between text-xs font-semibold text-maroon-deep">
-              <span className="text-brass-gold group-hover:text-vermilion transition-colors">Recite Sacred Oaths</span>
-              <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+            <div class="mt-6 pt-4 border-t border-brass-gold/25 flex items-center justify-between text-xs font-semibold text-maroon-deep">
+              <span class="text-brass-gold group-hover:text-vermilion transition-colors">Recite Sacred Oaths</span>
+              <span class="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
             </div>
           </a>
         </div>
 
-        {/* Bottom Tier: Architectural Epigraph Ledger (4 Complementary Texts) */}
-        <div className="manuscript-frame overflow-hidden">
-          <div className="px-5 py-3.5 bg-[#F3ECE0] border-b border-brass-gold/30 flex items-center justify-between">
-            <span className="font-serif-display text-xs font-bold uppercase tracking-wider text-maroon-deep flex items-center gap-2">
-              <span className="text-vermilion">॥</span>
+        <div class="manuscript-frame overflow-hidden">
+          <div class="px-5 py-3.5 bg-[#F3ECE0] border-b border-brass-gold/30 flex items-center justify-between">
+            <span class="font-serif-display text-xs font-bold uppercase tracking-wider text-maroon-deep flex items-center gap-2">
+              <span class="text-vermilion">॥</span>
               <span>सहायक स्तोत्र एवं नित्य अर्चना सूची</span>
             </span>
-            <span className="text-[11px] text-charcoal-brown/60 hidden sm:inline">
+            <span class="text-[11px] text-charcoal-brown/60 hidden sm:inline">
               Classical Awadhi & Sanskrit Hymns
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-brass-gold/20 bg-[#FAF6EE]">
-            {/* Sankat Mochan */}
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-brass-gold/20 bg-[#FAF6EE]">
             <a
               href="/sankat-mochan-hanumanashtak"
-              className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
+              class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
             >
               <div>
-                <div className="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
+                <div class="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
                   स्तोत्र ०१
                 </div>
-                <h4 className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                <h4 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
                   Sankat Mochan (संकटमोचन)
                 </h4>
-                <p className="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
+                <p class="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
                   Eight sacred couplets recounting the heroic feats of Mahavira.
                 </p>
               </div>
-              <div className="mt-4 pt-2 border-t border-brass-gold/15 text-[11px] font-semibold text-vermilion flex items-center justify-between">
+              <div class="mt-4 pt-2 border-t border-brass-gold/15 text-[11px] font-semibold text-vermilion flex items-center justify-between">
                 <span>८ पद • सस्वर पाठ</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </a>
 
-            {/* Hanuman Aarti */}
             <a
               href="/hanuman-aarti"
-              className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
+              class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
             >
               <div>
-                <div className="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
+                <div class="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
                   स्तोत्र ०२
                 </div>
-                <h4 className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                <h4 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
                   Hanuman Aarti (संध्या आरती)
                 </h4>
-                <p className="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
+                <p class="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
                   Traditional mandir twilight prayer &ldquo;Aarti Kije Hanuman Lala Ki&rdquo;.
                 </p>
               </div>
-              <div className="mt-4 pt-2 border-t border-brass-gold/15 text-[11px] font-semibold text-vermilion flex items-center justify-between">
+              <div class="mt-4 pt-2 border-t border-brass-gold/15 text-[11px] font-semibold text-vermilion flex items-center justify-between">
                 <span>आरती • कपूर ज्योति</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </a>
 
-            {/* Hanuman Stuti */}
             <a
               href="/hanuman-stuti"
-              className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
+              class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
             >
               <div>
-                <div className="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
+                <div class="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
                   स्तोत्र ०३
                 </div>
-                <h4 className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                <h4 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
                   Hanuman Stuti (स्तुति)
                 </h4>
-                <p className="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
+                <p class="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
                   Classical Awadhi-Sanskrit verses revering matchless strength and bhakti.
                 </p>
               </div>
-              <div className="mt-4 pt-2 border-t border-brass-gold/15 text-[11px] font-semibold text-vermilion flex items-center justify-between">
+              <div class="mt-4 pt-2 border-t border-brass-gold/15 text-[11px] font-semibold text-vermilion flex items-center justify-between">
                 <span>भक्ति स्तुति • वन्दना</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </a>
 
-            {/* Ram-Hanuman Bond */}
             <a
               href="/ram-hanuman-chalisa"
-              className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
+              class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
             >
               <div>
-                <div className="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
+                <div class="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
                   तत्त्व ०४
                 </div>
-                <h4 className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                <h4 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
                   Ram-Hanuman Bond (संबंध)
                 </h4>
-                <p className="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
+                <p class="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
                   The metaphysical key linking Rama&apos;s holy name with Hanuman&apos;s grace.
                 </p>
               </div>
-              <div className="mt-4 pt-2 border-t border-brass-gold/15 text-[11px] font-semibold text-vermilion flex items-center justify-between">
+              <div class="mt-4 pt-2 border-t border-brass-gold/15 text-[11px] font-semibold text-vermilion flex items-center justify-between">
                 <span>भक्ति तत्त्व • रहस्य</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </a>
           </div>
@@ -224,158 +214,150 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
     </section>
 
     <!-- SECTION 2: Regional Language Editions (Multilingual Script Pavilion) -->
-    <section className="max-w-6xl mx-auto px-4">
-      <div className="manuscript-frame overflow-hidden">
-        {/* Pavilion Header */}
-        <div className="p-6 sm:p-8 text-center border-b border-brass-gold/30 bg-[#F4EDE0] space-y-2">
-          <div className="flex justify-center">
-            <span className="rubric-marker">
+    <section class="max-w-6xl mx-auto px-4">
+      <div class="manuscript-frame overflow-hidden">
+        <div class="p-6 sm:p-8 text-center border-b border-brass-gold/30 bg-[#F4EDE0] space-y-2">
+          <div class="flex justify-center">
+            <span class="rubric-marker">
               <span>— द्वितीय प्रभाग : बहुभाषिक लिपि मण्डप —</span>
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
+          <h2 class="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
             Regional Language Editions & Sacred Scripts
           </h2>
-          <p className="text-xs sm:text-sm text-charcoal-brown/75 max-w-xl mx-auto font-sans leading-relaxed">
+          <p class="text-xs sm:text-sm text-charcoal-brown/75 max-w-xl mx-auto font-sans leading-relaxed">
             Read the Shree Hanuman Chalisa in your mother tongue with synchronized audio recitations, authentic translations, and downloadable PDF sheets.
           </p>
         </div>
 
-        {/* 6-Script Typographic Pavilion Matrix */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-y sm:divide-y-0 divide-x divide-brass-gold/25 bg-[#FAF6EE]">
-          {/* Telugu */}
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-y sm:divide-y-0 divide-x divide-brass-gold/25 bg-[#FAF6EE]">
           <a
             href="/hanuman-chalisa/te"
-            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
+            class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
             aria-label="Read Shree Hanuman Chalisa in Telugu"
           >
             <div>
-              <div className="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
+              <div class="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
                 తెలుగు
               </div>
-              <div className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
+              <div class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
                 Telugu
               </div>
-              <div className="text-[11px] text-charcoal-brown/70 mt-1">
+              <div class="text-[11px] text-charcoal-brown/70 mt-1">
                 శ్రీ హనుమాన్ చాలీసా
               </div>
             </div>
-            <span className="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+            <span class="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
               <span>పఠించండి</span>
               <span>&rarr;</span>
             </span>
           </a>
 
-          {/* Kannada */}
           <a
             href="/hanuman-chalisa/kn"
-            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
+            class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
             aria-label="Read Shree Hanuman Chalisa in Kannada"
           >
             <div>
-              <div className="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
+              <div class="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
                 ಕನ್ನಡ
               </div>
-              <div className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
+              <div class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
                 Kannada
               </div>
-              <div className="text-[11px] text-charcoal-brown/70 mt-1">
+              <div class="text-[11px] text-charcoal-brown/70 mt-1">
                 ಶ್ರೀ ಹನುಮಾನ್ ಚಾಲೀಸಾ
               </div>
             </div>
-            <span className="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+            <span class="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
               <span>ಓದಿರಿ</span>
               <span>&rarr;</span>
             </span>
           </a>
 
-          {/* Gujarati */}
           <a
             href="/hanuman-chalisa/gu"
-            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
+            class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
             aria-label="Read Shree Hanuman Chalisa in Gujarati"
           >
             <div>
-              <div className="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
+              <div class="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
                 ગુજરાતી
               </div>
-              <div className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
+              <div class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
                 Gujarati
               </div>
-              <div className="text-[11px] text-charcoal-brown/70 mt-1">
+              <div class="text-[11px] text-charcoal-brown/70 mt-1">
                 શ્રી હનુમાન ચાલીસા
               </div>
             </div>
-            <span className="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+            <span class="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
               <span>વાંચો</span>
               <span>&rarr;</span>
             </span>
           </a>
 
-          {/* Marathi */}
           <a
             href="/hanuman-chalisa/mr"
-            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
+            class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
             aria-label="Read Shree Hanuman Chalisa in Marathi"
           >
             <div>
-              <div className="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
+              <div class="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
                 मराठी
               </div>
-              <div className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
+              <div class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
                 Marathi
               </div>
-              <div className="text-[11px] text-charcoal-brown/70 mt-1">
+              <div class="text-[11px] text-charcoal-brown/70 mt-1">
                 श्री हनुमान चालीसा
               </div>
             </div>
-            <span className="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+            <span class="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
               <span>वाचा</span>
               <span>&rarr;</span>
             </span>
           </a>
 
-          {/* Bengali */}
           <a
             href="/hanuman-chalisa/bn"
-            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
+            class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
             aria-label="Read Shree Hanuman Chalisa in Bengali"
           >
             <div>
-              <div className="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
+              <div class="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
                 বাংলা
               </div>
-              <div className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
+              <div class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
                 Bengali
               </div>
-              <div className="text-[11px] text-charcoal-brown/70 mt-1">
+              <div class="text-[11px] text-charcoal-brown/70 mt-1">
                 শ্রী হনুমান চালীসা
               </div>
             </div>
-            <span className="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+            <span class="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
               <span>পাঠ করুন</span>
               <span>&rarr;</span>
             </span>
           </a>
 
-          {/* English */}
           <a
             href="/hanuman-chalisa/en"
-            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
+            class="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col items-center justify-between text-center min-h-[150px]"
             aria-label="Read Shree Hanuman Chalisa in English"
           >
             <div>
-              <div className="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
+              <div class="text-2xl font-serif text-maroon-deep/80 group-hover:scale-110 transition-transform mb-1">
                 English
               </div>
-              <div className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
+              <div class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">
                 English
               </div>
-              <div className="text-[11px] text-charcoal-brown/70 mt-1">
+              <div class="text-[11px] text-charcoal-brown/70 mt-1">
                 With Translation
               </div>
             </div>
-            <span className="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+            <span class="text-[11px] font-semibold text-vermilion mt-3 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
               <span>Read Translation</span>
               <span>&rarr;</span>
             </span>
@@ -385,107 +367,103 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
     </section>
 
     <!-- SECTION 3: Mandir Sadhana & Chanting Utilities (Altar Bench) -->
-    <section className="max-w-6xl mx-auto px-4">
-      <div className="text-center mb-8 space-y-2">
-        <div className="flex justify-center">
-          <span className="rubric-marker">
+    <section class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-8 space-y-2">
+        <div class="flex justify-center">
+          <span class="rubric-marker">
             <span>— तृतीय प्रभाग : नित्य साधना एवं अध्ययन पीठ —</span>
           </span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
+        <h2 class="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
           पूजा एवं साधना साधन • Altar Instruments
         </h2>
-        <p className="text-xs sm:text-sm text-charcoal-brown/75 max-w-xl mx-auto font-sans leading-relaxed">
+        <p class="text-xs sm:text-sm text-charcoal-brown/75 max-w-xl mx-auto font-sans leading-relaxed">
           Sacred study aids and ritual instruments designed to deepen your daily recitation discipline, pronunciation, and understanding.
         </p>
       </div>
 
-      <div className="manuscript-frame overflow-hidden">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-brass-gold/25 bg-[#FAF6EE]">
-          {/* Word Meaning */}
+      <div class="manuscript-frame overflow-hidden">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-brass-gold/25 bg-[#FAF6EE]">
           <a
             href="/hanuman-chalisa-meaning"
-            className="group p-6 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
+            class="group p-6 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
           >
             <div>
-              <div className="flex items-center justify-between text-xs text-brass-gold font-bold mb-2">
+              <div class="flex items-center justify-between text-xs text-brass-gold font-bold mb-2">
                 <span>साधन ०१</span>
-                <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+                <span class="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
               </div>
-              <h3 className="font-bold font-serif-display text-base text-maroon-deep group-hover:text-vermilion transition-colors">
+              <h3 class="font-bold font-serif-display text-base text-maroon-deep group-hover:text-vermilion transition-colors">
                 Verse-by-Verse Meaning
               </h3>
-              <p className="text-xs text-charcoal-brown/75 mt-2 leading-relaxed font-sans">
+              <p class="text-xs text-charcoal-brown/75 mt-2 leading-relaxed font-sans">
                 Detailed Sanskrit-Awadhi word vocabulary, grammatical roots, and metaphysical explanation for all 40 chaupais.
               </p>
             </div>
-            <div className="mt-5 pt-3 border-t border-brass-gold/20 text-xs font-semibold text-brass-gold group-hover:text-vermilion">
+            <div class="mt-5 pt-3 border-t border-brass-gold/20 text-xs font-semibold text-brass-gold group-hover:text-vermilion">
               शब्दार्थ एवं भावार्थ विश्लेषण &rarr;
             </div>
           </a>
 
-          {/* Synced Audio */}
           <a
             href="/hanuman-chalisa-audio-mp3"
-            className="group p-6 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
+            class="group p-6 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
           >
             <div>
-              <div className="flex items-center justify-between text-xs text-brass-gold font-bold mb-2">
+              <div class="flex items-center justify-between text-xs text-brass-gold font-bold mb-2">
                 <span>साधन ०२</span>
-                <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+                <span class="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
               </div>
-              <h3 className="font-bold font-serif-display text-base text-maroon-deep group-hover:text-vermilion transition-colors">
+              <h3 class="font-bold font-serif-display text-base text-maroon-deep group-hover:text-vermilion transition-colors">
                 Synced Audio MP3 Studio
               </h3>
-              <p className="text-xs text-charcoal-brown/75 mt-2 leading-relaxed font-sans">
+              <p class="text-xs text-charcoal-brown/75 mt-2 leading-relaxed font-sans">
                 Traditional recitation with real-time synchronized karaoke verse highlighting and adjustable speed controls.
               </p>
             </div>
-            <div className="mt-5 pt-3 border-t border-brass-gold/20 text-xs font-semibold text-brass-gold group-hover:text-vermilion">
+            <div class="mt-5 pt-3 border-t border-brass-gold/20 text-xs font-semibold text-brass-gold group-hover:text-vermilion">
               सस्वर पाठ सुनें &rarr;
             </div>
           </a>
 
-          {/* Free PDF */}
           <a
             href="/hanuman-chalisa-pdf"
-            className="group p-6 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
+            class="group p-6 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
           >
             <div>
-              <div className="flex items-center justify-between text-xs text-brass-gold font-bold mb-2">
+              <div class="flex items-center justify-between text-xs text-brass-gold font-bold mb-2">
                 <span>साधन ०३</span>
-                <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+                <span class="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
               </div>
-              <h3 className="font-bold font-serif-display text-base text-maroon-deep group-hover:text-vermilion transition-colors">
+              <h3 class="font-bold font-serif-display text-base text-maroon-deep group-hover:text-vermilion transition-colors">
                 Printable Altar PDF Booklet
               </h3>
-              <p className="text-xs text-charcoal-brown/75 mt-2 leading-relaxed font-sans">
+              <p class="text-xs text-charcoal-brown/75 mt-2 leading-relaxed font-sans">
                 High-resolution vector PDF in Hindi, English, and Telugu specifically formatted for home mandir recitation.
               </p>
             </div>
-            <div className="mt-5 pt-3 border-t border-brass-gold/20 text-xs font-semibold text-brass-gold group-hover:text-vermilion">
+            <div class="mt-5 pt-3 border-t border-brass-gold/20 text-xs font-semibold text-brass-gold group-hover:text-vermilion">
               नित्य पाठ पत्रक डाउनलोड &rarr;
             </div>
           </a>
 
-          {/* Path Vidhi */}
           <a
             href="/shri-hanuman-chalisa-path-vidhi"
-            className="group p-6 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
+            class="group p-6 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
           >
             <div>
-              <div className="flex items-center justify-between text-xs text-brass-gold font-bold mb-2">
+              <div class="flex items-center justify-between text-xs text-brass-gold font-bold mb-2">
                 <span>साधन ०४</span>
-                <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+                <span class="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
               </div>
-              <h3 className="font-bold font-serif-display text-base text-maroon-deep group-hover:text-vermilion transition-colors">
+              <h3 class="font-bold font-serif-display text-base text-maroon-deep group-hover:text-vermilion transition-colors">
                 Path Vidhi & Ritual Rules
               </h3>
-              <p className="text-xs text-charcoal-brown/75 mt-2 leading-relaxed font-sans">
+              <p class="text-xs text-charcoal-brown/75 mt-2 leading-relaxed font-sans">
                 Authentic guidelines for asana selection, diya direction, Brahma Muhurat timings, and 100 recitations.
               </p>
             </div>
-            <div className="mt-5 pt-3 border-t border-brass-gold/20 text-xs font-semibold text-brass-gold group-hover:text-vermilion">
+            <div class="mt-5 pt-3 border-t border-brass-gold/20 text-xs font-semibold text-brass-gold group-hover:text-vermilion">
               शास्त्रोक्त विधि देखें &rarr;
             </div>
           </a>
@@ -494,99 +472,94 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
     </section>
 
     <!-- SECTION 4: Featured Devotional Chronicles & Gazette (ज्ञान गंगा) -->
-    <section className="max-w-6xl mx-auto px-4">
-      <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 pb-3 border-b border-brass-gold/30 gap-4">
-        <div className="space-y-1">
-          <span className="rubric-marker">
+    <section class="max-w-6xl mx-auto px-4">
+      <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 pb-3 border-b border-brass-gold/30 gap-4">
+        <div class="space-y-1">
+          <span class="rubric-marker">
             <span>— चतुर्थ प्रभाग : शोध एवं आध्यात्मिक आलेख —</span>
           </span>
-          <h2 className="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
+          <h2 class="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
             आध्यात्मिक आलेख एवं ज्ञान गंगा
           </h2>
-          <p className="text-xs sm:text-sm text-charcoal-brown/75 font-sans">
+          <p class="text-xs sm:text-sm text-charcoal-brown/75 font-sans">
             In-depth theological treatises on Vedic meter, devotional history, and the sacred science of mantra chanting.
           </p>
         </div>
         <a
           href="/blog"
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-maroon-deep text-stone-ivory text-xs font-bold uppercase tracking-wider hover:text-marigold border border-brass-gold shadow-sm transition-colors whitespace-nowrap"
+          class="inline-flex items-center gap-1.5 px-4 py-2 bg-maroon-deep text-stone-ivory text-xs font-bold uppercase tracking-wider hover:text-marigold border border-brass-gold shadow-sm transition-colors whitespace-nowrap"
         >
           <span>View All 100+ Articles</span>
           <span>→</span>
         </a>
       </div>
 
-      {/* Scholarly Broadside Grid: Lead Feature + Dual Dispatches */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        {/* Lead Broadside Essay */}
-        <article className="lg:col-span-7 manuscript-frame p-6 sm:p-8 flex flex-col justify-between hover:border-brass-gold transition-colors">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between text-xs">
-              <span className="rubric-marker !py-0.5">॥ मुख्य शोध आलेख ॥</span>
-              <span className="text-brass-gold font-mono text-[11px]">४ मिनट पठन</span>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <article class="lg:col-span-7 manuscript-frame p-6 sm:p-8 flex flex-col justify-between hover:border-brass-gold transition-colors">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <span class="rubric-marker !py-0.5">॥ मुख्य शोध आलेख ॥</span>
+              <span class="text-brass-gold font-mono text-[11px]">४ मिनट पठन</span>
             </div>
-            <h3 className="text-lg sm:text-xl font-serif-display font-bold text-maroon-deep hover:text-vermilion transition-colors">
+            <h3 class="text-lg sm:text-xl font-serif-display font-bold text-maroon-deep hover:text-vermilion transition-colors">
               <a href="/blog/significance-of-forty-verses">
                 Why Hanuman Chalisa Has Exactly 40 Verses: Biological & Cosmic Cycles
               </a>
             </h3>
-            <p className="text-xs sm:text-sm text-charcoal-brown/80 leading-relaxed font-sans">
+            <p class="text-xs sm:text-sm text-charcoal-brown/80 leading-relaxed font-sans">
               Explore the astronomical, biological (Ayurvedic Mandala 40-day cycle), and scriptural significance of the forty quatrains composed by Goswami Tulsidas during his imprisonment in Fatehpur Sikri.
             </p>
           </div>
-          <div className="mt-6 pt-4 border-t border-brass-gold/25 flex items-center justify-between text-xs text-charcoal-brown/70 font-sans">
-            <span className="font-semibold text-maroon-deep">Acharya Ramesh Dwivedi (BHU)</span>
-            <span className="text-vermilion font-semibold">Read Treatise &rarr;</span>
+          <div class="mt-6 pt-4 border-t border-brass-gold/25 flex items-center justify-between text-xs text-charcoal-brown/70 font-sans">
+            <span class="font-semibold text-maroon-deep">Acharya Ramesh Dwivedi (BHU)</span>
+            <span class="text-vermilion font-semibold">Read Treatise &rarr;</span>
           </div>
         </article>
 
-        {/* Side Editorial Dispatches */}
-        <div className="lg:col-span-5 flex flex-col gap-6 justify-between">
-          {/* Dispatch 1 */}
-          <article className="manuscript-frame p-5 flex flex-col justify-between flex-1 hover:border-brass-gold transition-colors">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-brass-gold font-mono">
+        <div class="lg:col-span-5 flex flex-col gap-6 justify-between">
+          <article class="manuscript-frame p-5 flex flex-col justify-between flex-1 hover:border-brass-gold transition-colors">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-brass-gold font-mono">
                   [ ब्रह्म मुहूर्त साधना ]
                 </span>
-                <span className="text-[11px] text-charcoal-brown/60">५ मिनट</span>
+                <span class="text-[11px] text-charcoal-brown/60">५ मिनट</span>
               </div>
-              <h4 className="font-serif-display font-bold text-sm sm:text-base text-maroon-deep hover:text-vermilion transition-colors">
+              <h4 class="font-serif-display font-bold text-sm sm:text-base text-maroon-deep hover:text-vermilion transition-colors">
                 <a href="/blog/brahma-muhurat-recitation-hours">
                   The Hours of the Gods: Chanting in Brahma Muhurat
                 </a>
               </h4>
-              <p className="text-xs text-charcoal-brown/75 line-clamp-2 leading-relaxed font-sans">
+              <p class="text-xs text-charcoal-brown/75 line-clamp-2 leading-relaxed font-sans">
                 Learn why dawn chanting between 4:00 AM and 5:30 AM multiplies the mental, spiritual, and cellular harmony of the reciter.
               </p>
             </div>
-            <div className="mt-3 pt-2 border-t border-brass-gold/20 flex items-center justify-between text-[11px] text-charcoal-brown/70">
+            <div class="mt-3 pt-2 border-t border-brass-gold/20 flex items-center justify-between text-[11px] text-charcoal-brown/70">
               <span>Pandit Krishna Kant</span>
-              <span className="text-vermilion font-semibold">Read &rarr;</span>
+              <span class="text-vermilion font-semibold">Read &rarr;</span>
             </div>
           </article>
 
-          {/* Dispatch 2 */}
-          <article className="manuscript-frame p-5 flex flex-col justify-between flex-1 hover:border-brass-gold transition-colors">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-brass-gold font-mono">
+          <article class="manuscript-frame p-5 flex flex-col justify-between flex-1 hover:border-brass-gold transition-colors">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-brass-gold font-mono">
                   [ स्तोत्र एवं भजन ]
                 </span>
-                <span className="text-[11px] text-charcoal-brown/60">६ मिनट</span>
+                <span class="text-[11px] text-charcoal-brown/60">६ मिनट</span>
               </div>
-              <h4 className="font-serif-display font-bold text-sm sm:text-base text-maroon-deep hover:text-vermilion transition-colors">
+              <h4 class="font-serif-display font-bold text-sm sm:text-base text-maroon-deep hover:text-vermilion transition-colors">
                 <a href="/blog/shri-ramchandra-kripalu-lyrics-in-english">
                   Shri Ramchandra Kripalu Bhajman: Sacred Hymn & Meaning
                 </a>
               </h4>
-              <p className="text-xs text-charcoal-brown/75 line-clamp-2 leading-relaxed font-sans">
+              <p class="text-xs text-charcoal-brown/75 line-clamp-2 leading-relaxed font-sans">
                 Read the sublime Awadhi-Sanskrit prayer praising Lord Rama&apos;s mercy, composed in the 16th century by Goswami Tulsidas.
               </p>
             </div>
-            <div className="mt-3 pt-2 border-t border-brass-gold/20 flex items-center justify-between text-[11px] text-charcoal-brown/70">
+            <div class="mt-3 pt-2 border-t border-brass-gold/20 flex items-center justify-between text-[11px] text-charcoal-brown/70">
               <span>Devotional Editorial</span>
-              <span className="text-vermilion font-semibold">Read &rarr;</span>
+              <span class="text-vermilion font-semibold">Read &rarr;</span>
             </div>
           </article>
         </div>
