@@ -59,7 +59,7 @@ export default function SubscriptionGadget({
   };
 
   return (
-    <div className="bg-gradient-to-br from-maroon-deep via-[#4A0E17] to-maroon-deep border-2 border-brass-gold/60 text-stone-ivory rounded-xl p-5 sm:p-6 shadow-md relative overflow-hidden">
+    <div className="manuscript-frame bg-[#2D070B] border-2 border-brass-gold/60 text-stone-ivory p-5 sm:p-6 shadow-md relative overflow-hidden">
       {/* Decorative Om Aura */}
       <div className="absolute -top-3 -right-3 text-5xl opacity-10 font-serif select-none pointer-events-none">
         ॐ

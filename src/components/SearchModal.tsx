@@ -157,16 +157,16 @@ export default function SearchModal() {
 
   return (
     <>
-      {/* Floating Pill Search Button (Stacked directly above ScrollToTop) */}
+      {/* Temple Epigraph Search Trigger Button */}
       <button
         onClick={() => setIsOpen(true)}
         type="button"
         aria-label="Search scriptures and hymns"
         title="Search scriptures (Ctrl+K / ⌘K)"
-        className={`no-print fixed z-40 right-4 sm:right-8 bottom-33 sm:bottom-22 bg-maroon-deep/95 hover:bg-maroon-deep text-stone-ivory border-2 border-brass-gold/80 hover:border-marigold shadow-xl hover:shadow-2xl rounded-full h-11 sm:h-12 flex items-center justify-center cursor-pointer backdrop-blur-sm group active:scale-95 focus:outline-none focus:ring-2 focus:ring-marigold overflow-hidden transition-[max-width,padding,box-shadow,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`no-print fixed z-40 right-4 sm:right-8 bottom-33 sm:bottom-22 bg-[#2D070B] hover:bg-[#3D0A0F] text-stone-ivory border-2 border-brass-gold shadow-xl h-11 sm:h-12 flex items-center justify-center cursor-pointer group active:scale-95 focus:outline-none focus:ring-2 focus:ring-marigold overflow-hidden transition-[max-width,padding,box-shadow,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isCollapsed
             ? "max-w-[44px] sm:max-w-[48px] px-2.5 sm:px-3 shadow-md"
-            : "max-w-[170px] px-3.5 sm:px-4 shadow-[0_4px_20px_rgba(80,16,20,0.4)]"
+            : "max-w-[170px] px-3.5 sm:px-4"
         }`}
       >
         {/* Search Icon (Always visible and anchored) */}
@@ -185,7 +185,7 @@ export default function SearchModal() {
           />
         </svg>
 
-        {/* Pill Label: smoothly slides & fades in/out with gentle cubic-bezier curve */}
+        {/* Search Label: smoothly slides & fades in/out with gentle cubic-bezier curve */}
         <div
           className={`flex items-center gap-1.5 overflow-hidden transition-[max-width,opacity,margin,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isCollapsed
@@ -193,10 +193,10 @@ export default function SearchModal() {
               : "max-w-[110px] opacity-100 ml-2 translate-x-0"
           }`}
         >
-          <span className="font-bold text-xs sm:text-sm tracking-wider uppercase text-stone-ivory group-hover:text-marigold whitespace-nowrap">
+          <span className="font-serif-display font-bold text-xs sm:text-sm tracking-wider uppercase text-stone-ivory group-hover:text-marigold whitespace-nowrap">
             Search
           </span>
-          <kbd className="hidden lg:inline-flex items-center bg-black/30 border border-brass-gold/40 rounded px-1.5 py-0.5 text-[10px] text-marigold font-mono">
+          <kbd className="hidden lg:inline-flex items-center bg-black/40 border border-brass-gold/40 px-1.5 py-0.5 text-[10px] text-marigold font-mono">
             ⌘K
           </kbd>
         </div>
@@ -271,7 +271,7 @@ export default function SearchModal() {
                 </button>
               </div>
 
-              {/* Category Pills */}
+              {/* Category Manuscript Tabs */}
               <div className="flex items-center gap-1.5 overflow-x-auto pt-3 pb-1 no-scrollbar text-xs">
                 {categories.map((cat) => (
                   <button
@@ -280,10 +280,10 @@ export default function SearchModal() {
                       setSelectedCategory(cat);
                       setSelectedIndex(0);
                     }}
-                    className={`px-3 py-1 rounded-full whitespace-nowrap transition-all duration-200 font-medium ${
+                    className={`px-3 py-1 font-mono text-[11px] uppercase tracking-wider whitespace-nowrap transition-colors border ${
                       selectedCategory === cat
-                        ? "bg-marigold text-maroon-deep font-bold shadow-sm"
-                        : "bg-black/20 text-stone-ivory/70 hover:text-stone-ivory hover:bg-black/40 border border-brass-gold/20"
+                        ? "bg-marigold text-maroon-deep font-bold border-marigold shadow-xs"
+                        : "bg-black/30 text-stone-ivory/80 hover:text-stone-ivory hover:bg-black/50 border-brass-gold/30"
                     }`}
                   >
                     {cat}
@@ -314,10 +314,10 @@ export default function SearchModal() {
                       <a
                         href={item.url}
                         onMouseEnter={() => setSelectedIndex(idx)}
-                        className={`group block p-3 rounded-xl transition-all duration-150 border ${
+                        className={`group block p-3 transition-colors border ${
                           selectedIndex === idx
-                            ? "bg-marigold/15 border-brass-gold/60 shadow-sm translate-x-1"
-                            : "bg-stone-ivory/60 hover:bg-marigold/10 border-brass-gold/20"
+                            ? "bg-marigold/20 border-brass-gold/70"
+                            : "bg-stone-ivory/70 hover:bg-marigold/10 border-brass-gold/20"
                         }`}
                       >
                         <div className="flex items-start justify-between gap-3">

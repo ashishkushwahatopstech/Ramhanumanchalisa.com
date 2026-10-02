@@ -39,9 +39,9 @@ const { type, title, config = {} } = gadget;
 )}
 
 {type === "featured_post" && (
-  <div class="bg-radial from-marigold/20 via-stone-ivory to-stone-ivory border-2 border-marigold/60 rounded-xl p-5 shadow-sm space-y-3 relative overflow-hidden">
+  <div class="manuscript-frame bg-[#FAF6EE] border-2 border-brass-gold/40 p-5 space-y-3 relative overflow-hidden">
     <div class="absolute -top-3 -right-3 text-4xl opacity-10 font-serif select-none pointer-events-none">ॐ</div>
-    <span class="text-[10px] font-bold uppercase tracking-widest text-maroon-deep bg-marigold/40 px-2 py-0.5 rounded border border-marigold">
+    <span class="rubric-marker">
       {config.badgeText || "⭐ Featured Hymn"}
     </span>
     <h4 class="font-serif-display text-base font-bold text-maroon-deep leading-snug">
@@ -52,7 +52,7 @@ const { type, title, config = {} } = gadget;
     </p>
     <a
       href={config.featuredUrl || "/"}
-      class="inline-flex items-center gap-1.5 px-4 py-2 bg-maroon-deep hover:bg-vermilion text-stone-ivory text-xs font-bold uppercase tracking-wider rounded transition-colors shadow-xs"
+      class="inline-flex items-center gap-1.5 px-4 py-2 bg-maroon-deep hover:bg-vermilion text-stone-ivory text-xs font-bold uppercase tracking-wider border border-brass-gold/40 transition-colors shadow-xs"
     >
       <span>{config.featuredButtonText || "Recite Now →"}</span>
     </a>
@@ -73,7 +73,7 @@ const { type, title, config = {} } = gadget;
               class="group flex items-start gap-2.5 space-y-1"
             >
               {config.showRanking && (
-                <span class="shrink-0 w-5 h-5 rounded-full bg-marigold/20 text-maroon-deep font-bold text-[10px] flex items-center justify-center border border-marigold/40 mt-0.5">
+                <span class="shrink-0 w-5 h-5 bg-marigold/20 text-maroon-deep font-bold text-[10px] flex items-center justify-center border border-marigold/40 mt-0.5 font-mono">
                   {index + 1}
                 </span>
               )}
@@ -104,7 +104,7 @@ const { type, title, config = {} } = gadget;
       {(config.items || []).map((item) => (
         <a
           href={item.url}
-          class="px-2.5 py-1 text-[11px] font-semibold bg-white border border-brass-gold/30 rounded-full text-charcoal-brown hover:border-maroon-deep hover:text-maroon-deep transition-all flex items-center gap-1"
+          class="px-2.5 py-1 text-[11px] font-semibold bg-white border border-brass-gold/30 text-charcoal-brown hover:border-maroon-deep hover:text-maroon-deep transition-all flex items-center gap-1"
         >
           {item.icon && <span>{item.icon}</span>}
           <span>{item.label}</span>

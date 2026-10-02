@@ -147,19 +147,22 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
       )}
       
       {/* 1. Garbhagriha Hero Section (Sanctum) */}
-      <section className="relative overflow-hidden w-full bg-gradient-to-b from-marigold/5 to-transparent border border-brass-gold/20 rounded-lg shadow-sm max-w-4xl mx-auto">
-
+      <section className="relative overflow-hidden w-full manuscript-frame max-w-4xl mx-auto">
         {/* Content Wrapper */}
-        <div className="relative z-10 max-w-4xl mx-auto py-8 space-y-6 text-center">
-          <span className="text-xs uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded-full border border-marigold">
-            जय श्री राम • जय हनुमान
-          </span>
+        <div className="relative z-10 max-w-4xl mx-auto py-8 sm:py-10 px-4 sm:px-8 space-y-6 text-center">
+          <div className="flex justify-center">
+            <span className="rubric-marker">
+              <span>॥ श्री सीताराम ॥</span>
+              <span className="text-brass-gold">•</span>
+              <span>॥ श्रीहनुमते नमः ॥</span>
+            </span>
+          </div>
           
           {/* Torana Arch Framing the Opening Doha */}
-          <div className="torana-arch py-12 px-6 sm:px-12 rounded-t-full shadow-lg border-t-4 border-brass-gold flex flex-col items-center justify-center bg-stone-ivory/95">
-            <span className="text-3xl filter drop-shadow mb-4 select-none">🕉️</span>
+          <div className="torana-arch py-10 px-6 sm:px-12 border-t-2 border-brass-gold flex flex-col items-center justify-center">
+            <span className="text-2xl filter drop-shadow mb-3 select-none text-brass-gold">ॐ</span>
             
-            <h1 className="font-serif-display text-xl sm:text-2xl text-maroon-deep font-bold tracking-normal border-b border-brass-gold/30 pb-2 mb-6">
+            <h1 className="font-serif-display text-2xl sm:text-3xl text-maroon-deep font-bold tracking-normal border-b border-brass-gold/30 pb-3 mb-6">
               {data.h1}
             </h1>
 
@@ -167,27 +170,37 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
             <div className="space-y-6 max-w-2xl font-semibold">
               {doha1 && (
                 <div className="space-y-2">
+                  <div className="text-[11px] font-bold uppercase tracking-widest text-vermilion">
+                    ॥ प्रथम दोहा ॥
+                  </div>
                   <p className={getScriptClass(data.lang)}>
                     {doha1.text}
                   </p>
                   {doha1.transliteration && (
-                    <p className="font-sans text-xs tracking-wide text-maroon-deep/80 font-normal italic text-center">
+                    <p className="font-sans text-xs tracking-wide text-charcoal-brown/75 font-normal italic text-center">
                       &ldquo;{doha1.transliteration}&rdquo;
                     </p>
                   )}
                 </div>
               )}
               
-              <div className="w-16 h-0.5 bg-brass-gold/30 mx-auto" />
+              <div className="flex items-center justify-center gap-2 text-brass-gold/50 my-4">
+                <span className="h-px w-12 bg-brass-gold/30" />
+                <span className="text-xs">✦</span>
+                <span className="h-px w-12 bg-brass-gold/30" />
+              </div>
               
               {/* Doha 2 */}
               {doha2 && (
                 <div className="space-y-2">
+                  <div className="text-[11px] font-bold uppercase tracking-widest text-vermilion">
+                    ॥ द्वितीय दोहा ॥
+                  </div>
                   <p className={getScriptClass(data.lang)}>
                     {doha2.text}
                   </p>
                   {doha2.transliteration && (
-                    <p className="font-sans text-xs tracking-wide text-maroon-deep/80 font-normal italic text-center">
+                    <p className="font-sans text-xs tracking-wide text-charcoal-brown/75 font-normal italic text-center">
                       &ldquo;{doha2.transliteration}&rdquo;
                     </p>
                   )}
@@ -205,47 +218,91 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
 
       <CarvedDivider icon="🔔" />
 
-      {/* 2. Pillars Leading Off the Courtyard (Navigation Shortcuts) */}
-      <section className="bg-stone-ivory border-2 border-brass-gold/40 p-6 sm:p-8 rounded-lg shadow-sm max-w-5xl mx-auto">
-        <h2 className="font-serif-display text-xl text-center text-maroon-deep font-bold mb-6 tracking-normal">
-          Temple Courtyard Navigation
-        </h2>
+      {/* 2. Integrated Altar Pathway (Navigation Ledger) */}
+      <section className="manuscript-frame max-w-5xl mx-auto overflow-hidden">
+        <div className="p-4 sm:p-5 border-b border-brass-gold/30 bg-[#F4EDE0] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="text-vermilion text-sm font-bold">॥</span>
+            <h2 className="font-serif-display text-base sm:text-lg text-maroon-deep font-bold tracking-normal">
+              Temple Courtyard & Study Stations (मन्दिर परिक्रमा)
+            </h2>
+          </div>
+          <span className="text-[11px] text-charcoal-brown/65 uppercase tracking-wider font-semibold">
+            Essential Sacred Portals
+          </span>
+        </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-brass-gold/25 bg-[#FAF6EE]">
           <a
             href="/hanuman-chalisa-meaning"
-            className="flex flex-col items-center justify-center p-5 sm:p-6 min-h-[140px] bg-maroon-deep border border-brass-gold hover:border-marigold text-stone-ivory hover:text-marigold rounded-lg text-center transition-all duration-200 hover:-translate-y-0.5 shadow-md"
+            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
           >
-            <span className="text-2xl mb-2" aria-hidden="true">📖</span>
-            <span className="font-serif-display font-bold text-xs sm:text-sm">Bilingual Meaning</span>
-            <span className="text-xs text-stone-ivory/75 mt-1.5 leading-snug">Line-by-line translations</span>
+            <div>
+              <div className="flex items-center justify-between text-[11px] text-brass-gold font-bold mb-2">
+                <span>PORTAL ०१</span>
+                <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+              <h3 className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                Bilingual Meaning
+              </h3>
+              <p className="text-xs text-charcoal-brown/75 mt-1 leading-relaxed">
+                Word-by-word Awadhi breakdown & commentary
+              </p>
+            </div>
           </a>
 
           <a
             href="/hanuman-chalisa-audio-mp3"
-            className="flex flex-col items-center justify-center p-5 sm:p-6 min-h-[140px] bg-maroon-deep border border-brass-gold hover:border-marigold text-stone-ivory hover:text-marigold rounded-lg text-center transition-all duration-200 hover:-translate-y-0.5 shadow-md"
+            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
           >
-            <span className="text-2xl mb-2" aria-hidden="true">🎵</span>
-            <span className="font-serif-display font-bold text-xs sm:text-sm">Audio & Highlights</span>
-            <span className="text-xs text-stone-ivory/75 mt-1.5 leading-snug">Play synced recitation</span>
+            <div>
+              <div className="flex items-center justify-between text-[11px] text-brass-gold font-bold mb-2">
+                <span>PORTAL ०२</span>
+                <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+              <h3 className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                Synced Audio Studio
+              </h3>
+              <p className="text-xs text-charcoal-brown/75 mt-1 leading-relaxed">
+                Traditional recitation with karaoke verse sync
+              </p>
+            </div>
           </a>
 
           <a
             href="/shri-hanuman-chalisa-path-vidhi"
-            className="flex flex-col items-center justify-center p-5 sm:p-6 min-h-[140px] bg-maroon-deep border border-brass-gold hover:border-marigold text-stone-ivory hover:text-marigold rounded-lg text-center transition-all duration-200 hover:-translate-y-0.5 shadow-md"
+            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
           >
-            <span className="text-2xl mb-2" aria-hidden="true">✨</span>
-            <span className="font-serif-display font-bold text-xs sm:text-sm">Path Vidhi</span>
-            <span className="text-xs text-stone-ivory/75 mt-1.5 leading-snug">How and when to recite</span>
+            <div>
+              <div className="flex items-center justify-between text-[11px] text-brass-gold font-bold mb-2">
+                <span>PORTAL ०३</span>
+                <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+              <h3 className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                Path Vidhi & Rituals
+              </h3>
+              <p className="text-xs text-charcoal-brown/75 mt-1 leading-relaxed">
+                Brahma muhurat timings, rules & asanas
+              </p>
+            </div>
           </a>
 
           <a
             href="/hanuman-chalisa-pdf"
-            className="flex flex-col items-center justify-center p-5 sm:p-6 min-h-[140px] bg-maroon-deep border border-brass-gold hover:border-marigold text-stone-ivory hover:text-marigold rounded-lg text-center transition-all duration-200 hover:-translate-y-0.5 shadow-md"
+            className="group p-5 hover:bg-[#F2EAE0] transition-colors flex flex-col justify-between"
           >
-            <span className="text-2xl mb-2" aria-hidden="true">📄</span>
-            <span className="font-serif-display font-bold text-xs sm:text-sm">PDF & Statuses</span>
-            <span className="text-xs text-stone-ivory/75 mt-1.5 leading-snug">Download and share</span>
+            <div>
+              <div className="flex items-center justify-between text-[11px] text-brass-gold font-bold mb-2">
+                <span>PORTAL ०४</span>
+                <span className="text-vermilion group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+              <h3 className="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                Printable Altar PDF
+              </h3>
+              <p className="text-xs text-charcoal-brown/75 mt-1 leading-relaxed">
+                High-res vector sheet formatted for home puja
+              </p>
+            </div>
           </a>
         </div>
       </section>
@@ -279,22 +336,24 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="manuscript-frame overflow-hidden divide-y divide-brass-gold/25">
           {chaupais.map((verse) => (
             <div
               key={verse.id}
               id={`verse-${verse.verse_number}`}
-              className="p-6 bg-stone-ivory border-l-4 border-maroon-deep border-r border-t border-b border-brass-gold/30 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200 scroll-mt-24"
+              className="p-6 sm:p-8 space-y-4 hover:bg-[#FAF5EC] transition-colors scroll-mt-24"
             >
               {/* Verse Header */}
-              <div className="flex items-center gap-3 text-xs font-bold text-brass-gold tracking-wider">
-                <span>Chaupai {verse.verse_number}</span>
-                <span className="text-brass-gold/40">•</span>
+              <div className="flex items-center justify-between text-xs font-bold text-brass-gold">
+                <span className="rubric-marker">
+                  <span>॥ चौपाई {verse.verse_number} ॥</span>
+                </span>
                 <a
                   href={`/hanuman-chalisa-meaning#verse-${verse.verse_number}`}
-                  className="text-vermilion hover:text-marigold transition-colors flex items-center gap-1 font-semibold"
+                  className="text-vermilion hover:text-maroon-deep transition-colors text-xs font-semibold flex items-center gap-1"
                 >
-                  View Meaning &rarr;
+                  <span>पद व्याख्या</span>
+                  <span>&rarr;</span>
                 </a>
               </div>
 
@@ -305,14 +364,14 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
 
               {/* English Transliteration (if not English page) */}
               {verse.transliteration && (
-                <p className="text-xs sm:text-sm text-center text-charcoal-brown/70 italic max-w-xl mx-auto">
-                  {verse.transliteration}
+                <p className="font-sans text-xs sm:text-sm text-center text-charcoal-brown/70 italic max-w-xl mx-auto">
+                  &ldquo;{verse.transliteration}&rdquo;
                 </p>
               )}
 
               {/* Translation Meaning */}
               <div className="border-t border-brass-gold/20 pt-3">
-                <p className="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed text-center font-semibold max-w-2xl mx-auto">
+                <p className="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed text-center font-medium max-w-2xl mx-auto">
                   {verse.meaning}
                 </p>
               </div>
@@ -322,15 +381,12 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
 
         {/* Homepage CTA Callout to Meaning Page */}
         {isHomepage && (
-          <div className="p-8 sm:p-10 bg-gradient-to-b from-stone-ivory to-marigold/15 border-2 border-brass-gold/50 rounded-xl shadow-md text-center space-y-5 my-8">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-maroon-deep text-marigold text-2xl shadow-inner border border-brass-gold/40">
-              📖
-            </div>
+          <div className="p-8 sm:p-10 manuscript-frame text-center space-y-5 my-8">
             <div className="space-y-2">
-              <span className="text-xs uppercase font-bold tracking-wider text-maroon-deep bg-marigold/30 px-2.5 py-0.5 rounded border border-marigold inline-block">
-                Complete Scripture • संपूर्ण भावार्थ
+              <span className="rubric-marker">
+                <span>॥ संपूर्ण ग्रंथ भावार्थ ॥</span>
               </span>
-              <h3 className="font-serif-display text-xl sm:text-2xl font-bold text-maroon-deep">
+              <h3 className="font-serif-display text-xl sm:text-2xl font-bold text-maroon-deep mt-2">
                 Read All 40 Chaupais with Line-by-Line Meaning
               </h3>
               <p className="text-xs sm:text-sm text-charcoal-brown/80 max-w-xl mx-auto leading-relaxed">
@@ -340,7 +396,7 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
             <div className="pt-2">
               <a
                 href="/hanuman-chalisa-meaning"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-maroon-deep text-marigold hover:bg-maroon-deep/90 border-2 border-brass-gold font-bold text-sm uppercase tracking-wider rounded-lg shadow-md hover:shadow-xl transition-all group hover:scale-105"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-maroon-deep text-stone-ivory hover:text-marigold border border-brass-gold font-bold text-xs sm:text-sm uppercase tracking-wider shadow-sm transition-colors group"
               >
                 <span>Read the full meaning, chaupai by chaupai</span>
                 <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
@@ -351,16 +407,16 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
 
         {/* Doha Closing (Rendered when not in homepage preview mode) */}
         {!isHomepage && dohaClosing && (
-          <div className="p-8 bg-maroon-deep border-2 border-brass-gold text-stone-ivory rounded shadow-md text-center space-y-4 max-w-2xl mx-auto">
-            <span className="text-xs uppercase font-bold tracking-widest text-marigold">
-              Concluding Doha (दोहा)
-            </span>
+          <div className="p-8 akhand-sanctum text-center space-y-4 max-w-2xl mx-auto">
+            <div className="text-xs uppercase font-bold tracking-widest text-brass-gold">
+              ॥ उपसंहार दोहा ॥
+            </div>
             <p className={getScriptClass(data.lang) + " !text-stone-ivory"}>
               {dohaClosing.text}
             </p>
             {dohaClosing.transliteration && (
               <p className="text-xs sm:text-sm italic text-stone-ivory/70 max-w-lg mx-auto">
-                {dohaClosing.transliteration}
+                &ldquo;{dohaClosing.transliteration}&rdquo;
               </p>
             )}
             <div className="border-t border-brass-gold/30 pt-3">
@@ -373,7 +429,7 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
       </section>
 
       {/* 5. In-content AdSense Slot */}
-      <div className="no-print w-full max-w-4xl mx-auto min-h-[90px] max-h-[250px] my-6 sm:my-8 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/60 tracking-wider rounded overflow-hidden shadow-inner">
+      <div className="no-print w-full max-w-4xl mx-auto min-h-[90px] max-h-[250px] my-6 sm:my-8 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/60 tracking-wider overflow-hidden">
         Ad Slot — In-Content (Layout Stable Skeleton)
       </div>
 
@@ -381,10 +437,10 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
       {data.lang === "en" && (
         <section id="full-translation" className="max-w-4xl mx-auto space-y-6">
           <div className="text-center space-y-2">
-            <span className="text-xs uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
-              Complete Verses Meaning (संपूर्ण भावार्थ)
+            <span className="rubric-marker">
+              <span>॥ संपूर्ण भावार्थ ॥</span>
             </span>
-            <h2 className="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+            <h2 className="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep mt-2">
               Hanuman Chalisa in English — Full Translation
             </h2>
             <p className="text-xs sm:text-sm text-charcoal-brown/70 max-w-2xl mx-auto leading-relaxed">
@@ -396,7 +452,7 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
             {translationGroups.map((group, gIdx) => (
               <details
                 key={gIdx}
-                className="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-4 sm:p-5 shadow-sm group transition-all duration-200 hover:border-brass-gold"
+                className="manuscript-frame p-4 sm:p-5 group transition-colors hover:border-brass-gold"
                 open={gIdx === 0}
               >
                 <summary className="font-serif-display font-bold text-maroon-deep text-sm sm:text-base cursor-pointer flex justify-between items-center select-none">

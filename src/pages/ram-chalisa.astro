@@ -138,36 +138,41 @@ const faqSchema = {
     <CarvedDivider icon="🏹" />
 
     {/* Quick Facts Table (Snippet Optimization) */}
-    <section class="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-6 shadow-sm space-y-4">
-      <h2 class="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep text-center">
+    <section class="manuscript-frame p-6 sm:p-8 space-y-4">
+      <div class="flex justify-center">
+        <span class="rubric-marker">
+          <span>॥ ग्रंथ परिचय एवं तथ्य ॥</span>
+        </span>
+      </div>
+      <h2 class="font-serif-display text-base font-bold uppercase tracking-wider text-maroon-deep text-center">
         Shri Ram Chalisa Quick Facts
       </h2>
       <div class="overflow-x-auto">
         <table class="min-w-full text-xs text-charcoal-brown">
           <tbody>
             <tr class="border-b border-brass-gold/25">
-              <td class="py-2.5 font-bold uppercase tracking-wider w-1/3">Deity (देवता)</td>
-              <td class="py-2.5">Lord Sri Ram (भगवान श्री राम)</td>
+              <td class="py-2.5 font-bold uppercase tracking-wider w-1/3 text-vermilion">Deity (देवता)</td>
+              <td class="py-2.5 font-medium">Lord Sri Ram (भगवान श्री राम)</td>
             </tr>
             <tr class="border-b border-brass-gold/25">
-              <td class="py-2.5 font-bold uppercase tracking-wider">Verse Structure</td>
-              <td class="py-2.5">Opening Doha + 40 Chaupais + Concluding Doha</td>
+              <td class="py-2.5 font-bold uppercase tracking-wider text-vermilion">Verse Structure</td>
+              <td class="py-2.5 font-medium">Opening Doha + 40 Chaupais + Concluding Doha</td>
             </tr>
             <tr class="border-b border-brass-gold/25">
-              <td class="py-2.5 font-bold uppercase tracking-wider">Language (भाषा)</td>
-              <td class="py-2.5">Awadhi / Hindi (अवधी/हिंदी)</td>
+              <td class="py-2.5 font-bold uppercase tracking-wider text-vermilion">Language (भाषा)</td>
+              <td class="py-2.5 font-medium">Awadhi / Hindi (अवधी/हिंदी)</td>
             </tr>
             <tr class="border-b border-brass-gold/25">
-              <td class="py-2.5 font-bold uppercase tracking-wider">Best Days to Recite</td>
-              <td class="py-2.5">Daily, especially Sundays, Rama Navami & Hanuman Jayanti</td>
+              <td class="py-2.5 font-bold uppercase tracking-wider text-vermilion">Best Days to Recite</td>
+              <td class="py-2.5 font-medium">Daily, especially Sundays, Rama Navami & Hanuman Jayanti</td>
             </tr>
             <tr class="border-b border-brass-gold/25">
-              <td class="py-2.5 font-bold uppercase tracking-wider">Primary Benefits</td>
-              <td class="py-2.5">Peace of mind, removal of sins, family harmony, fearlessness, liberation</td>
+              <td class="py-2.5 font-bold uppercase tracking-wider text-vermilion">Primary Benefits</td>
+              <td class="py-2.5 font-medium">Peace of mind, removal of sins, family harmony, fearlessness, liberation</td>
             </tr>
             <tr>
-              <td class="py-2.5 font-bold uppercase tracking-wider">Formats Available</td>
-              <td class="py-2.5">Hindi Unicode, English Transliteration, English Meaning, PDF Print</td>
+              <td class="py-2.5 font-bold uppercase tracking-wider text-vermilion">Formats Available</td>
+              <td class="py-2.5 font-medium">Hindi Unicode, English Transliteration, English Meaning, PDF Print</td>
             </tr>
           </tbody>
         </table>
@@ -175,18 +180,18 @@ const faqSchema = {
     </section>
 
     {/* PDF Download Action Banner */}
-    <div class="no-print bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="no-print manuscript-frame p-6 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="space-y-1 text-center md:text-left">
-        <h2 class="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
-          Download Shri Ram Chalisa PDF
+        <h2 class="font-serif-display text-base sm:text-lg text-maroon-deep uppercase tracking-wider font-bold">
+          Download Shri Ram Chalisa PDF (मुद्रण पत्रक)
         </h2>
-        <p class="text-xs text-stone-ivory/80 max-w-lg leading-relaxed">
-          Generate an elegant, high-contrast printable document with lyrics and translation for daily worship.
+        <p class="text-xs text-charcoal-brown/80 max-w-lg leading-relaxed font-sans">
+          Generate an authentic, high-contrast printable document with lyrics and translation for daily worship.
         </p>
       </div>
       <button
         onclick="window.print()"
-        class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-5 py-2.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300 whitespace-nowrap cursor-pointer"
+        class="bg-vermilion hover:bg-[#a63405] text-stone-ivory px-5 py-2.5 text-xs font-bold uppercase tracking-wider border border-brass-gold shadow-xs transition-colors whitespace-nowrap cursor-pointer"
       >
         🖨️ Print / Save PDF
       </button>
@@ -194,35 +199,41 @@ const faqSchema = {
 
     <!-- 1. Opening Doha -->
     {openingDoha && (
-      <section class="p-6 bg-stone-ivory border-2 border-brass-gold text-charcoal-brown rounded-lg shadow-sm text-center space-y-4 max-w-2xl mx-auto" id="opening-doha">
-        <span class="text-xs uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
-          Opening Couplet (प्रारंभिक दोहा)
-        </span>
-        <div class="space-y-2">
+      <section class="manuscript-frame text-charcoal-brown p-6 sm:p-8 text-center space-y-4 max-w-2xl mx-auto" id="opening-doha">
+        <div class="flex justify-center">
+          <span class="rubric-marker">
+            <span>॥ प्रारंभिक दोहा ॥</span>
+          </span>
+        </div>
+        <div class="space-y-3">
           <p class="font-hindi-display text-xl sm:text-2xl leading-loose font-bold whitespace-pre-line text-charcoal-brown">
             {openingDoha.devanagari}
           </p>
-          <div class="bg-sand-warm/30 p-3 rounded border border-brass-gold/20">
-            <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep block mb-1">
-              English Pronunciation / Transliteration
+          <div class="p-3 border-y border-brass-gold/20 text-center">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-brass-gold block mb-1">
+              English Transliteration
             </span>
-            <p class="text-xs sm:text-sm text-charcoal-brown italic leading-relaxed whitespace-pre-line">
-              {openingDoha.transliteration}
+            <p class="font-sans text-xs sm:text-sm text-charcoal-brown/80 italic leading-relaxed whitespace-pre-line">
+              &ldquo;{openingDoha.transliteration}&rdquo;
             </p>
           </div>
-          <div class="pt-2 text-left space-y-1.5 border-t border-brass-gold/20">
-            <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
-              English Meaning:
-            </span>
-            <p class="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed">
-              {openingDoha.literal_translation.en}
-            </p>
-            <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block pt-1">
-              हिंदी भावार्थ:
-            </span>
-            <p class="text-xs sm:text-sm text-charcoal-brown/85 font-hindi-display leading-relaxed">
-              {openingDoha.literal_translation.hi}
-            </p>
+          <div class="pt-2 text-left space-y-2 border-t border-brass-gold/20 font-sans">
+            <div>
+              <span class="text-[11px] uppercase font-bold tracking-wider text-vermilion block">
+                English Meaning:
+              </span>
+              <p class="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed mt-0.5">
+                {openingDoha.literal_translation.en}
+              </p>
+            </div>
+            <div>
+              <span class="text-[11px] uppercase font-bold tracking-wider text-vermilion block pt-1">
+                हिंदी भावार्थ:
+              </span>
+              <p class="text-xs sm:text-sm text-charcoal-brown/85 font-hindi-display leading-relaxed mt-0.5">
+                {openingDoha.literal_translation.hi}
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -231,25 +242,30 @@ const faqSchema = {
     <!-- 2. Main Verses (40 Chaupais) -->
     <section class="space-y-6" id="ram-chalisa-verses">
       <div class="text-center space-y-2">
-        <h2 class="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
+        <div className="flex justify-center">
+          <span className="rubric-marker">
+            <span>॥ चालीसा चौपाई — ४० श्लोक ॥</span>
+          </span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
           Shri Ram Chalisa Lyrics in English & Hindi (40 Chaupais)
         </h2>
-        <p class="text-xs text-charcoal-brown/70 max-w-xl mx-auto">
+        <p class="text-xs text-charcoal-brown/70 max-w-xl mx-auto font-sans">
           Recite the 40 chaupais celebrating the pastimes, courage, and unconditional mercy of Lord Rama.
         </p>
       </div>
 
-      <div class="space-y-6">
+      <div class="manuscript-frame overflow-hidden divide-y divide-brass-gold/25">
         {chaupais.map((verse) => (
           <article
             id={verse.id}
-            class="p-6 bg-stone-ivory border-l-4 border-brass-gold border-r border-t border-b border-brass-gold/20 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200"
+            class="p-6 sm:p-8 space-y-4 hover:bg-[#FAF5EC] transition-colors"
           >
             <div class="flex flex-wrap items-center justify-between border-b border-brass-gold/15 pb-2 gap-2">
-              <span class="text-xs font-bold uppercase tracking-wider text-maroon-deep">
-                Chaupai {verse.verse_number}: {verse.title_en}
+              <span class="rubric-marker">
+                <span>॥ चौपाई {verse.verse_number} ॥</span>
               </span>
-              <span class="text-xs font-hindi-display text-maroon-deep font-semibold">
+              <span class="text-xs font-serif-display text-maroon-deep font-semibold">
                 {verse.title_hi}
               </span>
             </div>
@@ -260,19 +276,16 @@ const faqSchema = {
             </p>
 
             <!-- English Transliteration -->
-            <div class="bg-sand-warm/30 p-3 rounded border border-brass-gold/20 text-center">
-              <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep block mb-1">
-                English Lyrics / Transliteration
-              </span>
-              <p class="text-xs sm:text-sm text-charcoal-brown italic leading-relaxed">
-                {verse.transliteration}
+            {verse.transliteration && (
+              <p class="font-sans text-xs sm:text-sm text-charcoal-brown/70 italic leading-relaxed text-center max-w-xl mx-auto">
+                &ldquo;{verse.transliteration}&rdquo;
               </p>
-            </div>
+            )}
 
             <!-- English & Hindi Meaning -->
-            <div class="space-y-2 pt-1 border-t border-brass-gold/15">
+            <div class="space-y-2 pt-3 border-t border-brass-gold/15 font-sans">
               <div>
-                <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+                <span class="text-[11px] uppercase font-bold tracking-wider text-vermilion block">
                   English Meaning:
                 </span>
                 <p class="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed mt-0.5">
@@ -281,7 +294,7 @@ const faqSchema = {
               </div>
 
               <div>
-                <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
+                <span class="text-[11px] uppercase font-bold tracking-wider text-vermilion block">
                   हिंदी भावार्थ:
                 </span>
                 <p class="text-xs sm:text-sm text-charcoal-brown/85 font-hindi-display leading-relaxed mt-0.5">
@@ -296,35 +309,34 @@ const faqSchema = {
 
     <!-- 3. Concluding Doha -->
     {closingDoha && (
-      <section class="p-6 bg-stone-ivory border-2 border-brass-gold text-charcoal-brown rounded-lg shadow-sm text-center space-y-4 max-w-2xl mx-auto" id="concluding-doha">
-        <span class="text-xs uppercase font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
-          Concluding Couplet (समापन दोहा)
-        </span>
-        <div class="space-y-2">
-          <p class="font-hindi-display text-xl sm:text-2xl leading-loose font-bold whitespace-pre-line text-charcoal-brown">
+      <section class="akhand-sanctum p-6 sm:p-8 text-center space-y-4 max-w-2xl mx-auto" id="concluding-doha">
+        <div class="text-xs uppercase font-bold tracking-widest text-brass-gold font-mono">
+          ॥ समापन दोहा ॥
+        </div>
+        <div class="space-y-3">
+          <p class="font-hindi-display text-xl sm:text-2xl leading-loose font-bold whitespace-pre-line text-stone-ivory">
             {closingDoha.devanagari}
           </p>
-          <div class="bg-sand-warm/30 p-3 rounded border border-brass-gold/20">
-            <span class="text-[10px] uppercase font-bold tracking-widest text-maroon-deep block mb-1">
-              English Pronunciation / Transliteration
-            </span>
-            <p class="text-xs sm:text-sm text-charcoal-brown italic leading-relaxed whitespace-pre-line">
-              {closingDoha.transliteration}
-            </p>
-          </div>
-          <div class="pt-2 text-left space-y-1.5 border-t border-brass-gold/20">
-            <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block">
-              English Meaning:
-            </span>
-            <p class="text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed">
-              {closingDoha.literal_translation.en}
-            </p>
-            <span class="text-[11px] uppercase font-bold tracking-wider text-maroon-deep block pt-1">
-              हिंदी भावार्थ:
-            </span>
-            <p class="text-xs sm:text-sm text-charcoal-brown/85 font-hindi-display leading-relaxed">
-              {closingDoha.literal_translation.hi}
-            </p>
+          <p class="font-sans text-xs sm:text-sm text-stone-ivory/70 italic leading-relaxed whitespace-pre-line">
+            &ldquo;{closingDoha.transliteration}&rdquo;
+          </p>
+          <div class="pt-3 border-t border-brass-gold/30 text-left space-y-2 font-sans">
+            <div>
+              <span class="text-[11px] uppercase font-bold tracking-wider text-marigold block">
+                English Meaning:
+              </span>
+              <p class="text-xs sm:text-sm text-stone-ivory/90 leading-relaxed mt-0.5">
+                {closingDoha.literal_translation.en}
+              </p>
+            </div>
+            <div>
+              <span class="text-[11px] uppercase font-bold tracking-wider text-marigold block pt-1">
+                हिंदी भावार्थ:
+              </span>
+              <p class="text-xs sm:text-sm text-marigold font-hindi-display leading-relaxed mt-0.5">
+                {closingDoha.literal_translation.hi}
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -332,7 +344,7 @@ const faqSchema = {
 
     <!-- Recitation Vidhi & Benefits Guide -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <section class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-3">
+      <section class="manuscript-frame p-6 space-y-3">
         <h3 class="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
           Recitation Method (पाठ विधि)
         </h3>

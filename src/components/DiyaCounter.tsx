@@ -252,41 +252,38 @@ export default function DiyaCounter() {
   const progressPercent = Math.min(100, Math.round((personalCount / nextMilestone.target) * 100));
 
   return (
-    <section className="relative overflow-hidden p-6 sm:p-8 bg-gradient-to-b from-[#3a0b0e] via-[#481014] to-[#2b080a] border-2 border-brass-gold/60 rounded-2xl shadow-2xl max-w-md mx-auto text-stone-ivory select-none">
+    <section className="relative overflow-hidden p-6 sm:p-8 akhand-sanctum max-w-md mx-auto select-none shadow-xl">
       {/* Decorative Mandir Corner Accents */}
-      <div className="absolute top-2 left-2 text-brass-gold/30 text-xs font-serif">❖</div>
-      <div className="absolute top-2 right-2 text-brass-gold/30 text-xs font-serif">❖</div>
-      <div className="absolute bottom-2 left-2 text-brass-gold/30 text-xs font-serif">❖</div>
-      <div className="absolute bottom-2 right-2 text-brass-gold/30 text-xs font-serif">❖</div>
+      <div className="absolute top-2 left-2 text-brass-gold/40 text-xs font-serif">❖</div>
+      <div className="absolute top-2 right-2 text-brass-gold/40 text-xs font-serif">❖</div>
+      <div className="absolute bottom-2 left-2 text-brass-gold/40 text-xs font-serif">❖</div>
+      <div className="absolute bottom-2 right-2 text-brass-gold/40 text-xs font-serif">❖</div>
 
-      {/* Header with Live Syncing Indicator & Bell Audio Toggle */}
-      <div className="flex items-center justify-between w-full mb-3 border-b border-brass-gold/20 pb-2">
+      {/* Header with Devotional Tally Status & Chime Audio Toggle */}
+      <div className="flex items-center justify-between w-full mb-3 border-b border-brass-gold/30 pb-2">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-bold tracking-wider text-brass-gold">
-            Daily Mandir Sadhana
+          <span className="text-vermilion text-xs font-bold">॥</span>
+          <span className="text-xs font-serif-display font-bold tracking-widest text-marigold uppercase">
+            अखण्ड ज्योति साधना
           </span>
-          <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium bg-black/30 px-2 py-0.5 rounded-full border border-emerald-500/30">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-            </span>
-            <span>Live Sync</span>
-          </div>
+          <span className="text-[10px] text-brass-gold/80 font-mono tracking-wider">
+            [ Daily Sadhana ]
+          </span>
         </div>
         <button
           onClick={() => setSoundEnabled((prev) => !prev)}
-          className="text-xs text-stone-ivory/80 hover:text-marigold transition-colors flex items-center gap-1 cursor-pointer px-2 py-1 rounded bg-black/20 hover:bg-black/40 border border-brass-gold/30"
+          className="text-xs text-stone-ivory/80 hover:text-marigold transition-colors flex items-center gap-1 cursor-pointer px-2 py-1 bg-black/40 hover:bg-black/60 border border-brass-gold/30"
           aria-label={soundEnabled ? "Mute bell chime" : "Enable bell chime"}
           title={soundEnabled ? "Mute bell chime" : "Enable bell chime"}
         >
           <span>{soundEnabled ? "🔔" : "🔕"}</span>
-          <span className="hidden sm:inline">{soundEnabled ? "Chime On" : "Muted"}</span>
+          <span className="hidden sm:inline text-[11px] font-sans">{soundEnabled ? "घंटी On" : "Muted"}</span>
         </button>
       </div>
 
       {/* Remote Live Chanting Notification Toast */}
       {remoteActivityToast && (
-        <div className="mb-2 text-center text-xs text-yellow-200 font-semibold bg-marigold/20 border border-marigold/40 py-1 px-3 rounded-full shadow animate-pulse">
+        <div className="mb-2 text-center text-xs text-marigold font-semibold bg-black/40 border border-brass-gold/50 py-1 px-3 shadow">
           {remoteActivityToast}
         </div>
       )}
@@ -305,10 +302,10 @@ export default function DiyaCounter() {
 
           {/* Diya Flame with flare effect */}
           <div
-            className={`absolute top-0 left-[46%] w-5 h-9 bg-gradient-to-t from-vermilion via-marigold to-yellow-100 rounded-b-full rounded-t-full transition-all duration-200 ${
+            className={`absolute top-0 left-[46%] w-5 h-9 bg-marigold rounded-b-full rounded-t-full transition-all duration-200 ${
               isFlaring
-                ? "scale-135 brightness-150 drop-shadow-[0_0_20px_#FFB300]"
-                : "scale-100 drop-shadow-[0_0_10px_#FFB300]/80"
+                ? "scale-135 brightness-150 drop-shadow-[0_0_20px_#E8A33D]"
+                : "scale-100 drop-shadow-[0_0_12px_#E8A33D]/90"
             }`}
           />
 
@@ -317,7 +314,7 @@ export default function DiyaCounter() {
             <div
               key={p.id}
               style={{ transform: `translateX(${p.x}px)` }}
-              className="absolute -top-4 pointer-events-none text-xs font-bold text-marigold bg-maroon-deep/90 border border-marigold/50 px-2 py-0.5 rounded-full shadow-lg animate-float-fade whitespace-nowrap z-20"
+              className="absolute -top-4 pointer-events-none text-xs font-bold text-marigold bg-[#200507] border border-brass-gold/60 px-2 py-0.5 shadow-lg animate-float-fade whitespace-nowrap z-20"
             >
               {p.text}
             </div>
@@ -326,57 +323,59 @@ export default function DiyaCounter() {
 
         {/* Global Recitation Counter Display */}
         <div className="text-center mt-2">
-          <p className="font-serif-display text-xs tracking-wide text-brass-gold font-medium">
-            Global Devotee Counter Today
+          <p className="font-serif-display text-xs tracking-widest text-brass-gold font-medium uppercase">
+            समर्पण गणना • Global Recitations Today
           </p>
-          <div className="text-3xl font-extrabold font-sans text-marigold tracking-tight mt-0.5">
+          <div className="text-3xl font-bold font-serif-display text-marigold tracking-wide mt-0.5">
             {globalCount.toLocaleString("en-IN")}{" "}
-            <span className="text-sm font-normal text-stone-ivory/80">Recitations</span>
+            <span className="text-sm font-sans font-normal text-stone-ivory/80">आहुति / Chants</span>
           </div>
-          <p className="text-xs text-stone-ivory/80 mt-0.5">
-            offered globally by devotees today
+          <p className="text-[11px] text-stone-ivory/70 mt-0.5 font-sans">
+            Offered in unison by devotees worldwide today
           </p>
         </div>
 
         {/* Personal Sadhana / Mala Progress Section */}
         <div className="w-full mt-4 space-y-1.5 text-center">
           <div className="flex justify-between items-center text-xs">
-            <span className="text-stone-ivory/80">Your Chants: <strong className="text-marigold">{personalCount}</strong> / {nextMilestone.target}</span>
-            <span className="text-stone-ivory/70 text-xs">Goal: {nextMilestone.label}</span>
+            <span className="text-stone-ivory/90 font-serif-display">
+              व्यक्तिगत जप: <strong className="text-marigold font-sans">{personalCount}</strong> / {nextMilestone.target}
+            </span>
+            <span className="text-brass-gold text-xs font-mono">{nextMilestone.label}</span>
           </div>
 
-          {/* Progress Bar */}
-          <div className="w-full h-2 bg-black/40 rounded-full overflow-hidden border border-brass-gold/30">
+          {/* Progress Bar (Crisp Ledger Track) */}
+          <div className="w-full h-2 bg-black/50 overflow-hidden border border-brass-gold/40">
             <div
-              className="h-full bg-gradient-to-r from-vermilion via-marigold to-yellow-300 transition-all duration-300 rounded-full"
+              className="h-full bg-brass-gold transition-all duration-300"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
 
           {/* Milestone Badge when achieved */}
           {lastMilestone && (
-            <div className="mt-2 text-xs text-yellow-300 font-bold bg-maroon-deep/90 border border-marigold/40 py-1 px-2 rounded-lg animate-pulse">
+            <div className="mt-2 text-xs text-marigold font-bold bg-black/50 border border-brass-gold/40 py-1 px-2">
               {lastMilestone}
             </div>
           )}
         </div>
 
-        {/* Main Sacred Click Button (Instant, Click Infinitely) */}
+        {/* Main Sacred Click Button */}
         <button
           onClick={handleRecite}
-          className="mt-4 w-full flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl font-bold uppercase tracking-wider text-sm border-2 border-marigold shadow-lg transition-all duration-150 cursor-pointer bg-gradient-to-r from-vermilion via-marigold to-vermilion text-stone-ivory hover:brightness-110 active:scale-95 hover:shadow-[0_0_20px_rgba(255,179,0,0.5)]"
+          className="mt-4 w-full flex items-center justify-center gap-2.5 px-6 py-3.5 font-bold uppercase tracking-wider text-xs sm:text-sm border-2 border-brass-gold shadow-md transition-colors cursor-pointer bg-vermilion hover:bg-[#a63405] text-stone-ivory active:scale-[0.99]"
         >
-          <span className={`text-lg ${isFlaring ? "scale-125 transition-transform" : ""}`}>
+          <span className={`text-base ${isFlaring ? "scale-125 transition-transform" : ""}`}>
             🔔
           </span>
-          <span>Offer Recitation (+1)</span>
-          <span className="text-xs bg-black/25 px-2 py-0.5 rounded text-stone-ivory font-semibold">
+          <span>आहुति अर्पण • Offer Recitation (+1)</span>
+          <span className="text-xs bg-black/40 px-2 py-0.5 text-marigold font-mono font-semibold border border-brass-gold/30">
             {personalCount}
           </span>
         </button>
 
-        <p className="text-xs text-stone-ivory/80 mt-2.5 text-center leading-snug">
-          Click with devotion after each Chaupai or full Chalisa recitation. Your progress is saved automatically.
+        <p className="text-[11px] text-stone-ivory/70 mt-2.5 text-center leading-snug">
+          Click with devotion after each Chaupai or full recitation. Your sacred sadhana progress is preserved.
         </p>
       </div>
 

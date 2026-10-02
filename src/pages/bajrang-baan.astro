@@ -93,8 +93,8 @@ const compositionSchema = {
 
     <!-- Header -->
     <div class="text-center space-y-3">
-      <span class="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
-        Protection Shield (सुरक्षा कवच)
+      <span class="rubric-marker">
+        सुरक्षा कवच • Protection Shield
       </span>
       <h1 class="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
         Shree Bajrang Baan
@@ -113,19 +113,19 @@ const compositionSchema = {
 
     <!-- 1. Opening Dohas -->
     {openingDohas.length > 0 && (
-      <section class="p-6 bg-stone-ivory border-2 border-brass-gold text-charcoal-brown rounded shadow-sm text-center space-y-4 max-w-2xl mx-auto">
-        <span class="text-xs uppercase font-bold tracking-widest text-brass-gold">
+      <section class="manuscript-frame p-6 sm:p-8 bg-[#FAF6EE] border-2 border-brass-gold/50 text-charcoal-brown shadow-sm text-center space-y-4 max-w-2xl mx-auto">
+        <span class="rubric-marker">
           Opening Couplets (दोहा)
         </span>
         {openingDohas.map((doha) => (
           <div class="space-y-2">
-            <p class="font-hindi-display text-lg sm:text-xl leading-loose font-bold">
+            <p class="font-hindi-display text-lg sm:text-xl leading-loose font-bold text-maroon-deep">
               {doha.devanagari}
             </p>
             <p class="text-xs text-charcoal-brown/60 italic">
               {doha.transliteration}
             </p>
-            <p class="text-xs sm:text-sm font-semibold text-maroon-deep">
+            <p class="text-xs sm:text-sm font-semibold text-vermilion">
               {doha.literal_translation.en}
             </p>
           </div>
@@ -135,21 +135,29 @@ const compositionSchema = {
 
     <!-- 2. Main Verses (Chaupais) -->
     <section class="space-y-6">
-      <h2 class="font-serif-display text-xl uppercase tracking-wider font-bold text-center text-maroon-deep">
-        The Bajrang Baan Verses
-      </h2>
+      <div class="text-center space-y-1">
+        <span class="rubric-marker">॥ श्री बजरंग बाण पाठ ॥</span>
+        <h2 class="font-serif-display text-2xl uppercase tracking-wider font-bold text-maroon-deep">
+          The Bajrang Baan Verses
+        </h2>
+      </div>
 
-      <div class="space-y-6">
+      <div class="manuscript-frame bg-[#FAF6EE] border-2 border-brass-gold/40 shadow-sm divide-y divide-brass-gold/20">
         {chaupais.map((verse) => (
           <div
-            class="p-6 bg-stone-ivory border-l-4 border-brass-gold border-r border-t border-b border-brass-gold/20 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200"
+            class="p-6 sm:p-8 space-y-4 hover:bg-[#F3EBDD]/40 transition-colors"
           >
-            <div class="text-[10px] font-bold text-brass-gold tracking-widest uppercase">
-              Verse {verse.verse_number}
+            <div class="flex items-center justify-between border-b border-brass-gold/15 pb-2">
+              <span class="rubric-marker">
+                ॥ बाण चौपाई {verse.verse_number} ॥
+              </span>
+              <span class="text-[10px] font-mono tracking-widest text-charcoal-brown/40 uppercase">
+                Verse {verse.verse_number}
+              </span>
             </div>
 
             <!-- Devanagari -->
-            <p class="font-hindi-display text-lg sm:text-xl text-charcoal-brown tracking-wide leading-loose text-center font-bold">
+            <p class="font-hindi-display text-lg sm:text-xl text-maroon-deep tracking-wide leading-loose text-center font-bold">
               {verse.devanagari}
             </p>
 
@@ -176,24 +184,24 @@ const compositionSchema = {
 
     <!-- 3. Closing Doha -->
     {closingDoha && (
-      <section class="p-6 bg-maroon-deep border-2 border-brass-gold text-stone-ivory rounded shadow-md text-center space-y-3 max-w-2xl mx-auto">
-        <span class="text-xs uppercase font-bold tracking-widest text-marigold">
+      <section class="manuscript-frame p-6 sm:p-8 bg-[#2D070B] border-2 border-brass-gold text-stone-ivory shadow-md text-center space-y-3 max-w-2xl mx-auto">
+        <span class="rubric-marker">
           Concluding Couplet (दोहा)
         </span>
-        <p class="font-hindi-display text-lg sm:text-xl leading-loose font-bold">
+        <p class="font-hindi-display text-lg sm:text-xl leading-loose font-bold text-marigold">
           {closingDoha.devanagari}
         </p>
         <p class="text-xs text-stone-ivory/70 italic">
           {closingDoha.transliteration}
         </p>
-        <p class="text-xs sm:text-sm font-semibold text-marigold">
+        <p class="text-xs sm:text-sm font-semibold text-stone-ivory">
           {closingDoha.literal_translation.en}
         </p>
       </section>
     )}
 
     <!-- 4. Caution Guideline -->
-    <section class="bg-vermilion/5 border-l-4 border-vermilion p-6 rounded-r space-y-3 text-sm leading-relaxed">
+    <section class="manuscript-frame bg-[#FFF7F4] border-2 border-[#C1440E]/40 p-6 space-y-3 text-sm leading-relaxed">
       <h4 class="font-serif-display font-bold uppercase tracking-wider text-vermilion flex items-center gap-1.5">
         ⚠️ Important Recitation Warning (सावधानी निर्देश)
       </h4>

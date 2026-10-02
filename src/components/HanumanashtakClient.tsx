@@ -17,8 +17,8 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
         
         {/* Header */}
         <div className="text-center space-y-3">
-          <span className="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
-            Crisis Solver (संकट मोचन)
+          <span className="rubric-marker">
+            संकट मोचन • Crisis Solver
           </span>
           <h1 className="font-serif-display text-3xl uppercase tracking-wider font-bold text-maroon-deep">
             Sankat Mochan Hanuman Ashtak
@@ -31,10 +31,13 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
         <CarvedDivider icon="🕉️" />
 
         {/* Quick Facts Table (Snippet Optimization) */}
-        <section className="bg-stone-ivory border-2 border-brass-gold/30 rounded-lg p-6 shadow-sm space-y-4">
-          <h2 className="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep text-center">
-            Sankat Mochan Hanuman Ashtak Quick Facts
-          </h2>
+        <section className="shilalekh-ledger p-6 space-y-4">
+          <div className="flex items-center justify-between border-b border-brass-gold/25 pb-2">
+            <span className="rubric-marker">ग्रंथ विवरण</span>
+            <h2 className="font-serif-display text-sm font-bold uppercase tracking-wider text-maroon-deep">
+              Sankat Mochan Hanuman Ashtak Quick Facts
+            </h2>
+          </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-xs text-charcoal-brown">
               <tbody>
@@ -72,13 +75,13 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
           <h2 className="font-serif-display text-base font-bold uppercase tracking-wider text-maroon-deep text-center">
             Listen with Synced Lyrics
           </h2>
-          <div className="border border-brass-gold/30 rounded-lg p-4 bg-stone-ivory shadow-sm">
+          <div className="manuscript-frame p-4 bg-[#FAF6EE] border-2 border-brass-gold/30 shadow-sm">
             <SyncedAudioPlayer defaultTrackId="track-2" />
           </div>
         </section>
 
         {/* PDF Download Action Banner */}
-        <div className="bg-maroon-deep text-stone-ivory border-2 border-brass-gold p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="manuscript-frame bg-[#2D070B] text-stone-ivory border-2 border-brass-gold p-6 shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
             <h2 className="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
               Download Hanumanashtak PDF
@@ -89,7 +92,7 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
           </div>
           <button
             onClick={() => window.print()}
-            className="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-5 py-2.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300 whitespace-nowrap"
+            className="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-5 py-2.5 text-xs font-bold uppercase border border-brass-gold shadow-sm transition-all duration-300 whitespace-nowrap"
           >
             🖨️ Print / Save PDF
           </button>
@@ -98,7 +101,7 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
         {/* 8 Verses Lyrics Section — Visible on Web for SEO & Recitation */}
         <section className="space-y-8" id="sankat-mochan-lyrics">
           <div className="text-center space-y-2">
-            <span className="text-xs font-bold tracking-widest text-maroon-deep bg-marigold/30 px-3 py-1 rounded border border-marigold">
+            <span className="rubric-marker">
               सम्पूर्ण संकट मोचन हनुमानाष्टक
             </span>
             <h2 className="font-serif-display text-2xl sm:text-3xl uppercase tracking-wider font-bold text-maroon-deep">
@@ -109,16 +112,16 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="manuscript-frame bg-[#FAF6EE] border-2 border-brass-gold/40 shadow-sm divide-y divide-brass-gold/20">
             {verses.map((verse) => (
               <article
                 key={verse.id}
                 id={verse.id}
-                className="p-6 bg-stone-ivory border-l-4 border-brass-gold border-r border-t border-b border-brass-gold/20 rounded-r shadow-sm space-y-4 hover:shadow-md transition-shadow duration-200"
+                className="p-6 sm:p-8 space-y-4 hover:bg-[#F3EBDD]/40 transition-colors"
               >
                 <div className="flex flex-wrap items-center justify-between border-b border-brass-gold/15 pb-2 gap-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-maroon-deep">
-                    Verse {verse.verse_number}: {verse.title_en}
+                  <span className="rubric-marker">
+                    ॥ श्लोक {verse.verse_number} • {verse.title_en} ॥
                   </span>
                   <span className="text-xs font-hindi-display text-maroon-deep font-semibold">
                     {verse.title_hi}
@@ -126,12 +129,12 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
                 </div>
 
                 {/* Devanagari Lyrics */}
-                <p className="font-hindi-display text-lg sm:text-xl text-charcoal-brown tracking-wide leading-loose text-center font-bold whitespace-pre-line">
+                <p className="font-hindi-display text-lg sm:text-xl text-maroon-deep tracking-wide leading-loose text-center font-bold whitespace-pre-line">
                   {verse.devanagari}
                 </p>
 
                 {/* English Transliteration */}
-                <div className="bg-sand-warm/30 p-3.5 rounded border border-brass-gold/20 text-center">
+                <div className="bg-[#F4ECE0] p-3.5 border border-brass-gold/25 text-center">
                   <span className="text-[10px] uppercase font-bold tracking-widest text-maroon-deep block mb-1">
                     English Lyrics / Transliteration
                   </span>
@@ -168,20 +171,26 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
         </section>
 
         {/* Meaning & Importance */}
-        <section className="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
-          <h3 className="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
-            Meaning & Importance (महत्व)
-          </h3>
+        <section className="shilalekh-ledger p-6 space-y-4">
+          <div className="flex items-center justify-between border-b border-brass-gold/25 pb-2">
+            <span className="rubric-marker">भावार्थ व महात्म्य</span>
+            <h3 className="font-serif-display text-base uppercase tracking-wider font-bold text-maroon-deep">
+              Meaning & Importance (महत्व)
+            </h3>
+          </div>
           <p className="text-xs sm:text-sm leading-relaxed text-charcoal-brown/90">
             <strong>Sankat Mochan Hanuman Ashtak</strong> is a devotional masterpiece consisting of eight stanzas in praise of Lord Hanuman. The phrase <em>&quot;Sankat Mochan&quot;</em> translates to &quot;reliever of crises&quot; or &quot;liberator from distress.&quot; Written by Goswami Tulsidas, each verse lists a great crisis faced by the gods or humans—such as the sun being swallowed, Sugriva being chased, or Lakshmana lying unconscious—and reminds us how Hanumanji immediately resolved it. Reciting it instills deep confidence that no challenge is too heavy for Bajrangbali to dismantle.
           </p>
         </section>
 
         {/* Recitation Guide (Paath Vidhi) */}
-        <section className="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
-          <h3 className="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
-            Recitation Guide (पाठ विधि)
-          </h3>
+        <section className="shilalekh-ledger p-6 space-y-4">
+          <div className="flex items-center justify-between border-b border-brass-gold/25 pb-2">
+            <span className="rubric-marker">पाठ विधान</span>
+            <h3 className="font-serif-display text-base uppercase tracking-wider font-bold text-maroon-deep">
+              Recitation Guide (पाठ विधि)
+            </h3>
+          </div>
           <ul className="list-disc pl-5 text-xs sm:text-sm leading-relaxed space-y-2 text-charcoal-brown/90">
             <li><strong>Preparation</strong>: Wake up during Brahma Muhurat or schedule during evening sandhya hours. Bathe and sit facing East or North on a clean mat (Asana).</li>
             <li><strong>Chanting</strong>: Light a ghee or mustard oil diya in front of Hanumanji&apos;s photo or idol. Chants can be done 1, 3, 7, or 11 times.</li>
@@ -190,10 +199,13 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
         </section>
 
         {/* Benefits Section */}
-        <section className="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
-          <h3 className="font-serif-display text-lg uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
-            Benefits of Hanuman Ashtak Chanting
-          </h3>
+        <section className="shilalekh-ledger p-6 space-y-4">
+          <div className="flex items-center justify-between border-b border-brass-gold/25 pb-2">
+            <span className="rubric-marker">फलश्रुति</span>
+            <h3 className="font-serif-display text-base uppercase tracking-wider font-bold text-maroon-deep">
+              Benefits of Hanuman Ashtak Chanting
+            </h3>
+          </div>
           <p className="text-xs sm:text-sm leading-relaxed text-charcoal-brown/90">
             Consistent chanting of the Hanuman Ashtak provides a protective shield around the devotee. It is widely known to:
           </p>
@@ -208,17 +220,20 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
         </section>
 
         {/* Hariharan Reciter Block */}
-        <section className="bg-maroon-deep border-2 border-brass-gold p-6 rounded-lg shadow-md text-stone-ivory space-y-4">
-          <h3 className="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
-            Featured Reciter: Hariharan
-          </h3>
+        <section className="manuscript-frame bg-[#2D070B] border-2 border-brass-gold p-6 text-stone-ivory space-y-4 shadow-md">
+          <div className="flex items-center justify-between border-b border-brass-gold/30 pb-2">
+            <span className="rubric-marker">भजन सम्राट</span>
+            <h3 className="font-serif-display text-lg text-marigold uppercase tracking-wider font-bold">
+              Featured Reciter: Hariharan
+            </h3>
+          </div>
           <p className="text-xs text-stone-ivory/80 leading-relaxed">
             The legendary playback singer **Hariharan** has recorded one of the most spiritually stirring renditions of the Sankat Mochan Hanuman Ashtak. His calm vocal delivery combined with classical raagas creates a deep meditative experience.
           </p>
           <div className="pt-2">
             <a
               href="/hanuman-chalisa-audio-mp3#hariharan-ashtak"
-              className="inline-block bg-marigold hover:bg-vermilion text-maroon-deep hover:text-stone-ivory px-4 py-2 rounded text-xs font-bold uppercase transition-colors"
+              className="inline-block bg-marigold hover:bg-vermilion text-maroon-deep hover:text-stone-ivory px-4 py-2 text-xs font-bold uppercase transition-colors border border-brass-gold"
             >
               Listen to Hariharan&apos;s Rendition &rarr;
             </a>
