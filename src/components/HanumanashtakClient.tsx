@@ -242,9 +242,9 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
 
         {/* Related Content Links */}
         <section className="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
-          <h4 className="font-serif-display text-sm font-bold uppercase text-maroon-deep">
+          <h2 className="font-serif-display text-sm sm:text-base font-bold uppercase text-maroon-deep">
             Related Devotional Chants (संबंधित पाठ)
-          </h4>
+          </h2>
           <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold">
             <a href="/" className="text-vermilion hover:text-marigold underline">
               Shree Hanuman Chalisa
@@ -269,9 +269,9 @@ export default function HanumanashtakClient({ verses }: HanumanashtakClientProps
       {/* 2. Print Layout (Only visible when printing) */}
       <div className="print-only hidden p-10 max-w-3xl mx-auto border-8 double border-black bg-white text-black space-y-6">
         <div className="text-center border-b-2 border-black pb-4">
-          <h1 className="font-serif-display text-2xl font-bold uppercase tracking-wider">
+          <div className="font-serif-display text-2xl font-bold uppercase tracking-wider" role="heading" aria-level={2}>
             SANKAT MOCHAN HANUMAN ASHTAK
-          </h1>
+          </div>
           <p className="text-xs uppercase tracking-widest font-semibold mt-1">
             जय श्री राम • जय हनुमान
           </p>

@@ -2,8 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
 
-const title = "Contact Us — Devotional Queries & Text Corrections Support";
-const description = "Contact the editorial and scholarly team at RamHanumanChalisa.com for text inquiries, scriptural feedback, pronunciation corrections, and submissions.";
+const title = "Contact Us — Devotional Queries and Scripture Support";
+const description = "Contact the editorial team at Ram Hanuman Chalisa for scriptural feedback, verse corrections, audio inquiries, and suggestions.";
 
 const contactSchema = {
   "@context": "https://schema.org",
@@ -14,7 +14,7 @@ const contactSchema = {
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <!-- ContactPage Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(contactSchema)} />
 
@@ -52,9 +52,9 @@ const contactSchema = {
     <section class="bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-6">
       <div class="space-y-4">
         <div class="flex flex-col gap-1">
-          <h4 class="font-bold text-maroon-deep uppercase tracking-wider text-xs">
+          <h2 class="font-bold text-maroon-deep uppercase tracking-wider text-xs sm:text-sm">
             Email Correspondence
-          </h4>
+          </h2>
           <p class="text-sm font-semibold text-brass-gold select-all">
             support@ramhanumanchalisa.com
           </p>
@@ -66,9 +66,9 @@ const contactSchema = {
         <hr class="border-brass-gold/20" />
 
         <div class="flex flex-col gap-1">
-          <h4 class="font-bold text-maroon-deep uppercase tracking-wider text-xs">
+          <h2 class="font-bold text-maroon-deep uppercase tracking-wider text-xs sm:text-sm">
             Address (Karyalaya)
-          </h4>
+          </h2>
           <p class="text-xs text-charcoal-brown/80 leading-relaxed">
             Ram Hanuman Chalisa Devotional Hub<br />
             Varanasi, Uttar Pradesh, India - 221005

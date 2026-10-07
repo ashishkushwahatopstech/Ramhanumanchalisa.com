@@ -44,9 +44,9 @@ const { type, title, config = {} } = gadget;
     <span class="rubric-marker">
       {config.badgeText || "⭐ Featured Hymn"}
     </span>
-    <h4 class="font-serif-display text-base font-bold text-maroon-deep leading-snug">
+    <div role="heading" aria-level={3} class="font-serif-display text-base font-bold text-maroon-deep leading-snug">
       {config.featuredTitle || "Shri Hanuman Chalisa"}
-    </h4>
+    </div>
     <p class="text-xs text-charcoal-brown/75 leading-relaxed">
       {config.featuredDesc || "Recite the glorious 40 chaupais composed by Goswami Tulsidas."}
     </p>

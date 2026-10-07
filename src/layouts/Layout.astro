@@ -15,6 +15,7 @@ interface Props {
   description?: string;
   canonicalUrl?: string;
   showHreflangs?: boolean;
+  lang?: string;
   ogImage?: string;
   ogImageAlt?: string;
   ogImageType?: string;
@@ -22,13 +23,15 @@ interface Props {
   ogImageWidth?: number;
   ogImageHeight?: number;
   hideSidebar?: boolean;
+  noindex?: boolean;
 }
 
 const { 
-  title = "Shree Hanuman Chalisa — Audio, Meaning, PDF & Recitation Guide", 
-  description = "Step into our digital mandir. Read the authentic Hanuman Chalisa in Devanagari, English, and Gujarati, with line-by-line Hindi/English meanings, synced audio, PDF, and path vidhi.",
+  title = "Hanuman Chalisa Lyrics with Meaning | Ram Hanuman Chalisa", 
+  description = "Read authentic Shree Hanuman Chalisa in Hindi and English with line-by-line meaning, synced audio, printable PDF, and complete path vidhi guidelines.",
   canonicalUrl: propCanonicalUrl,
   showHreflangs = false,
+  lang = "en",
   ogImage: rawOgImage = "https://ramhanumanchalisa.com/og-image.jpg",
   ogImageAlt,
   ogImageType,
@@ -36,6 +39,7 @@ const {
   ogImageWidth = 1200,
   ogImageHeight = 630,
   hideSidebar = false,
+  noindex = false,
 } = Astro.props;
 
 // Determine whether sidebar should appear across the site
@@ -44,6 +48,7 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 const isExcludedPage = 
   hideSidebar ||
   currentPath === "/" ||
+  currentPath === "/faq" ||
   currentPath === "/about" ||
   currentPath === "/contact" ||
   currentPath === "/privacy-policy" ||
@@ -110,6 +115,17 @@ if (renderedTitle.includes("Ram Hanuman Chalisa") || renderedTitle.includes("Ram
 const currentYear = new Date().getFullYear();
 const gaId = import.meta.env.PUBLIC_GA_ID || Astro.locals.runtime?.env?.PUBLIC_GA_ID || "G-VBBLMPSKY2";
 
+// Robots directive calculation (index on production, conditional noindex on preview/staging)
+const host = Astro.url.hostname;
+const isPreviewEnv = 
+  import.meta.env.PUBLIC_INDEXING_DISABLED === "true" ||
+  host.endsWith("pages.dev") ||
+  noindex;
+
+const robotsDirective = isPreviewEnv
+  ? "noindex, nofollow"
+  : "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1";
+
 // Compute BreadcrumbList Schema dynamically
 const urlObj = new URL(canonicalUrl);
 const pathName = urlObj.pathname;
@@ -118,7 +134,7 @@ const breadcrumbItems = [
     "@type": "ListItem",
     "position": 1,
     "name": "Home",
-    "item": "https://ramhanumanchalisa.com"
+    "item": "https://ramhanumanchalisa.com/"
   }
 ];
 
@@ -168,7 +184,7 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
 ---
 
 <!doctype html>
-<html lang="en" class="h-full antialiased">
+<html lang={lang} class="h-full antialiased">
   <head>
     <!-- Google Tag Manager -->
     <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -197,7 +213,13 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{renderedTitle}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={robotsDirective} />
     <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     {showHreflangs && (
       <>
@@ -350,12 +372,28 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
           
           <!-- Branding Column -->
           <div class="md:col-span-2">
-            <h3 class="font-serif-display text-xl text-marigold uppercase tracking-wider mb-3">
+            <div class="font-serif-display text-xl text-marigold uppercase tracking-wider mb-3 font-bold" role="heading" aria-level={3}>
               {siteConfig?.footer?.brandingTitle || "Ram Hanuman Chalisa"}
-            </h3>
+            </div>
             <p class="text-sm text-stone-ivory/80 max-w-sm leading-relaxed">
               {siteConfig?.footer?.brandingDesc || "A digital sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and digest the glorious verses composed by Goswami Tulsidas. Reviewed by traditional scholars to ensure absolute accuracy of translation and context."}
             </p>
+            <div class="mt-4 flex items-center gap-4">
+              <!-- Official Verified Social Links -->
+              <a
+                href="https://www.instagram.com/ramhanumanchalisadotcom/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-xs text-stone-ivory/80 hover:text-marigold transition-colors"
+                aria-label="Follow Ram Hanuman Chalisa on Instagram"
+              >
+                <span>📷</span>
+                <span>Instagram</span>
+              </a>
+              {/* TODO: Add official Facebook profile URL once created */}
+              {/* TODO: Add official Twitter/X profile URL once created */}
+              {/* TODO: Add official YouTube channel URL once created */}
+            </div>
             <p class="mt-4 text-xs text-brass-gold">
               © {currentYear} {siteConfig?.footer?.copyrightText || "RamHanumanChalisa.com. All Rights Reserved."}
             </p>
@@ -363,9 +401,9 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
 
           <!-- Quick Links Column -->
           <div>
-            <h4 class="font-serif-display text-sm uppercase tracking-widest text-marigold mb-4">
+            <div class="font-serif-display text-sm uppercase tracking-widest text-marigold mb-4 font-bold" role="heading" aria-level={3}>
               Pillars
-            </h4>
+            </div>
             <ul class="space-y-2 text-sm text-stone-ivory/80">
               {(siteConfig?.footer?.quickLinks || []).map((link) => (
                 <li><a href={link.href} class="hover:text-marigold transition-colors">{link.label}</a></li>
@@ -375,9 +413,9 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
 
           <!-- Supporting Texts & Admin -->
           <div>
-            <h4 class="font-serif-display text-base font-bold text-marigold mb-4 tracking-normal">
+            <div class="font-serif-display text-base font-bold text-marigold mb-4 tracking-normal" role="heading" aria-level={3}>
               Devotional Texts
-            </h4>
+            </div>
             <ul class="space-y-2 text-sm text-stone-ivory/80">
               {(siteConfig?.footer?.devotionalLinks || []).map((link) => (
                 <li><a href={link.href} class="hover:text-marigold transition-colors">{link.label}</a></li>

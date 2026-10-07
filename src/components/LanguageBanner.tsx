@@ -53,22 +53,22 @@ export default function LanguageBanner() {
   };
 
   return (
-    <div className="no-print w-full bg-marigold text-maroon-deep py-2.5 px-4 text-xs sm:text-sm font-semibold flex items-center justify-between border-b border-brass-gold/30 shadow-inner relative z-40">
-      <div className="flex-grow text-center pr-4">
+    <div className="no-print fixed bottom-20 md:bottom-6 right-4 max-w-md bg-stone-ivory border-2 border-brass-gold text-maroon-deep py-3 px-4 text-xs sm:text-sm font-semibold flex items-center justify-between rounded-xl shadow-2xl z-50 transition-all duration-300">
+      <div className="flex-grow pr-3 leading-snug">
         📯 Looks like you might prefer the {languageNames[suggestedLang]} version of Shree Hanuman Chalisa.{" "}
         <a
           href={`/hanuman-chalisa/${suggestedLang}`}
           onClick={() => {
             document.cookie = `user-selected-lang=${suggestedLang}; path=/; max-age=31536000; SameSite=Lax`;
           }}
-          className="underline hover:text-vermilion font-bold transition-colors ml-1"
+          className="underline hover:text-vermilion font-bold transition-colors ml-1 inline-block"
         >
           Switch now &rarr;
         </a>
       </div>
       <button
         onClick={handleDismiss}
-        className="text-maroon-deep/70 hover:text-maroon-deep font-bold text-lg leading-none p-1 transition-colors hover:scale-110"
+        className="text-maroon-deep/70 hover:text-maroon-deep font-bold text-lg leading-none p-1 transition-colors hover:scale-110 shrink-0"
         aria-label="Dismiss banner"
       >
         &times;

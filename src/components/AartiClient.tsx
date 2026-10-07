@@ -4,6 +4,51 @@ import React from "react";
 import CarvedDivider from "@/components/CarvedDivider";
 import SyncedAudioPlayer from "@/components/SyncedAudioPlayer";
 
+const AARTI_VERSES = [
+  {
+    title: "प्रारंभिक दोहा (Opening Couplet)",
+    devanagari: "लाल देह लाली लसे, अरु धरि लाल लंगूर।\nबज्र देह दानव दलन, जय जय जय कपिसूर।।",
+    transliteration: "Lal deh lalee lase, aru dhari lal langoor |\nBajra deh danav dalan, jai jai jai kapeesoor ||",
+    meaning: "Adorned in radiant red complexion and sporting a long red tail, with a thunderbolt-like mighty frame that crushes demons, victory unto the lord of monkeys!"
+  },
+  {
+    title: "आरती पद १ (Verse 1)",
+    devanagari: "आरती कीजै हनुमान लला की। दुष्ट दलन रघुनाथ कला की।।\nजाके बल से गिरिवर कांपै। रोग दोष जाके निकट न झांपै।।",
+    transliteration: "Aarti kije Hanuman lala ki | Dusht dalan Raghunath kala ki ||\nJake bal se girivar kampe | Rog dosh jake nikat na jhampe ||",
+    meaning: "Perform the sacred Aarti of beloved child Hanuman, the annihilator of wickedness and divine spark of Lord Rama. By whose strength even great mountains tremble, and near whom diseases and flaws dare not approach."
+  },
+  {
+    title: "आरती पद २ (Verse 2)",
+    devanagari: "अंजनि पुत्र महा बलदाई। संतन के प्रभु सदा सहाई।।\nदे बीरा रघुनाथ पठाये। लंका जारि सिया सुधि लाये।।",
+    transliteration: "Anjani putra maha baladai | Santan ke prabhu sada sahai ||\nDe beera Raghunath pathaye | Lanka jari siya sudhi laye ||",
+    meaning: "O son of Mother Anjana, reservoir of supreme power, ever the savior of holy saints! Commissioned by Lord Rama, you burnt the city of Lanka and brought back auspicious news of Mother Sita."
+  },
+  {
+    title: "आरती पद ३ (Verse 3)",
+    devanagari: "लंका सो कोट समुद्र सी खाई। जात पवनसुत बार न लाई।।\nलंक जारि असुर संहारे। सियारामजी के काज संवारे।।",
+    transliteration: "Lanka so kot samudra si khai | Jat pavansut bar na lai ||\nLank jari asur sanhare | Siyarambhaji ke kaj sanvare ||",
+    meaning: "The fortress was Lanka and the ocean was its deep moat, yet the son of the wind crossed it without a moment's hesitation. Burning Lanka and slaying demons, he accomplished the divine mission of Sita and Rama."
+  },
+  {
+    title: "आरती पद ४ (Verse 4)",
+    devanagari: "लक्ष्मण मूर्छित पड़े सकारे, आनि संजीवन प्राण उबारे।\nपैठि पाताल तोरि जम-कारे, अहिरावण की भुजा उखारे।।",
+    transliteration: "Lakshman murchhit pade sakare, aani sanjeevan pran ubare |\nPaithi patal tori jam-kare, Ahiravan ki bhuja ukhare ||",
+    meaning: "When Lakshmana lay unconscious at dawn, he brought the Sanjeevani herb and revived his life breath. Entering the netherworld, shattering Yamaraj's shackles, he tore off the arms of sorcerer Ahiravana."
+  },
+  {
+    title: "आरती पद ५ (Verse 5)",
+    devanagari: "बाएं भुजा असुर दल मारे। दाहिने भुजा संतजन तारे।।\nसुर नर मुनि जन आरती उतारें। जय जय जय हनुमान उचारें।।",
+    transliteration: "Baen bhuja asur dal mare | Dahine bhuja santajan tare ||\nSur nar muni jan aarti utaren | Jai jai jai Hanuman ucharen ||",
+    meaning: "With his left hand he vanquished the army of demons, while with his right hand he gave sanctuary to saints. Devas, mortals, and sages join in waving the holy lamps, chanting: 'Hail, all victory to Lord Hanuman!'"
+  },
+  {
+    title: "आरती पद ६ व फलश्रुति (Verse 6 & Phalasruti)",
+    devanagari: "कंचन थार कपूर सुहाई। आरती करत अंजना माई।।\nजो हनुमानजी की आरती गावै। बसि बैकुंठ परम पद पावै।।",
+    transliteration: "Kanchan thar kapoor suhai | Aarti karat Anjana mai ||\nJo Hanumanji ki aarti gavai | Basi baikunth param pad pavai ||",
+    meaning: "Mother Anjana offers the golden platter fragrant with burning camphor. Whoever sings this devotional Aarti of Hanuman attains residence in Vaikuntha, the supreme spiritual abode."
+  }
+];
+
 export default function AartiClient() {
   return (
     <div className="space-y-12 max-w-4xl mx-auto">
@@ -24,6 +69,36 @@ export default function AartiClient() {
         </div>
 
         <CarvedDivider icon="🕉️" />
+
+        {/* Complete Scripture Lyrics */}
+        <section className="space-y-6">
+          <div className="text-center space-y-1">
+            <h2 className="font-serif-display text-2xl uppercase tracking-wider font-bold text-maroon-deep">
+              Shree Hanuman Aarti Lyrics & Meaning
+            </h2>
+            <p className="text-xs text-charcoal-brown/60">आरती कीजै हनुमान लला की — संपूर्ण पद एवं हिंदी भावार्थ</p>
+          </div>
+
+          <div className="space-y-4">
+            {AARTI_VERSES.map((v, idx) => (
+              <div key={idx} className="p-6 bg-stone-ivory border border-brass-gold/30 rounded-lg shadow-sm space-y-3">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brass-gold block">
+                  {v.title}
+                </span>
+                <p className="font-hindi-display text-xl sm:text-2xl text-maroon-deep font-bold text-center leading-loose whitespace-pre-line">
+                  {v.devanagari}
+                </p>
+                <p className="text-xs text-charcoal-brown/70 italic text-center whitespace-pre-line">
+                  {v.transliteration}
+                </p>
+                <div className="pt-2 border-t border-brass-gold/20 text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed">
+                  <strong className="text-vermilion block text-[11px] uppercase tracking-wider mb-0.5">Meaning:</strong>
+                  {v.meaning}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Synced Audio Player */}
         <section className="space-y-4">
@@ -77,9 +152,9 @@ export default function AartiClient() {
 
         {/* Related Content Links */}
         <section className="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
-          <h4 className="font-serif-display text-sm font-bold uppercase text-maroon-deep">
+          <h3 className="font-serif-display text-sm font-bold uppercase text-maroon-deep">
             Related Devotional Chants (संबंधित पाठ)
-          </h4>
+          </h3>
           <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold">
             <a href="/" className="text-vermilion hover:text-marigold underline">
               Shree Hanuman Chalisa

@@ -344,9 +344,9 @@ export function MobileBottomActionDock() {
         <div className="flex items-center gap-2">
           <span className="text-xl">🪔</span>
           <div>
-            <h4 className="font-serif-display font-bold text-maroon-deep text-sm sm:text-base uppercase tracking-wider leading-snug">
+            <div role="heading" aria-level={3} className="font-serif-display font-bold text-maroon-deep text-sm sm:text-base uppercase tracking-wider leading-snug">
               Share Devotion & Follow Us
-            </h4>
+            </div>
             <p className="text-[11px] text-charcoal-brown/70 leading-tight">
               Spread sacred blessings with family & add to Google
             </p>

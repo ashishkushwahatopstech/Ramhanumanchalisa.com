@@ -29,6 +29,20 @@ const LEGACY_SLUG_REDIRECTS: Record<string, string> = {
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
+
+  // 1. Canonical Host Redirect: www.ramhanumanchalisa.com -> ramhanumanchalisa.com
+  if (url.hostname === "www.ramhanumanchalisa.com") {
+    const cleanUrl = `https://ramhanumanchalisa.com${url.pathname}${url.search}`;
+    return context.redirect(cleanUrl, 301);
+  }
+
+  // 2. Trailing slash normalization for non-root paths (e.g. /about/ -> /about)
+  if (url.pathname.length > 1 && url.pathname.endsWith("/")) {
+    const cleanPath = url.pathname.slice(0, -1);
+    const cleanUrl = `${cleanPath}${url.search}`;
+    return context.redirect(cleanUrl, 301);
+  }
+
   const normalizedPath = url.pathname.replace(/\/+$/, "");
 
   // 301 Redirect for legacy malformed slugs

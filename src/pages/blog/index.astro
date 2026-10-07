@@ -111,8 +111,8 @@ posts.sort((a, b) => {
 
 const recentPosts = posts.slice(0, 5);
 
-const title = "Bhakti Blog & Scripture Library — Chalisas, Aartis & Stotras";
-const description = "Explore our Bhakti blog and devotional library with complete lyrics, word-by-word meanings, PDFs, and scholarly guides for Chalisas, Aartis, and Stotras.";
+const title = "Bhakti Blog & Scripture Library | Chalisas & Aartis";
+const description = "Explore our Bhakti blog and scripture library with lyrics, word meanings, PDFs, and chanting guides for sacred Hindu prayers.";
 
 // Collect unique categories
 const allCategories = [
@@ -147,7 +147,7 @@ const paginatedPosts = filteredPosts.slice((page - 1) * pageSize, page * pageSiz
 const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <div class={`space-y-8 mx-auto ${isSidebarActive ? "max-w-7xl px-3 sm:px-4" : "max-w-4xl"}`}>
     
     <!-- Breadcrumbs -->

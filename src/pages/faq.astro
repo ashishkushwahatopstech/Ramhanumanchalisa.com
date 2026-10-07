@@ -65,10 +65,10 @@ const schema = {
 };
 
 const title = "Hanuman Chalisa FAQs — Meaning, Rules, Purity & Benefits";
-const description = "Find authentic answers to all Hanuman Chalisa questions: history, composer Goswami Tulsidas, ideal chanting times, 100 recitations, rules, and benefits.";
+const description = "Find authentic answers to Hanuman Chalisa questions: author Goswami Tulsidas, meaning, rules, 100 recitations, and benefits.";
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <div class="space-y-10 max-w-3xl mx-auto">
     
     <!-- Breadcrumbs -->
@@ -107,6 +107,9 @@ const description = "Find authentic answers to all Hanuman Chalisa questions: hi
 
     <!-- Accordions -->
     <section class="space-y-4">
+      <h2 class="font-serif-display text-lg font-bold text-maroon-deep uppercase border-b border-brass-gold/20 pb-2">
+        Sacred Hymn and Chanting Inquiries
+      </h2>
       {faqs.map((faq) => (
         <details
           class="group p-5 bg-stone-ivory border border-brass-gold/25 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"

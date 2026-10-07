@@ -12,7 +12,7 @@ const closingDoha = verses.find((v) => v.id === "doha-closing");
 const chaupais = verses.filter((v) => v.id.startsWith("chaupai-"));
 
 const title = "Shree Bajrang Baan Lyrics — Hindi, English & Path Vidhi";
-const description = "Read complete Shree Bajrang Baan with original Devanagari verses, English transliteration, line-by-line meaning, path vidhi, and protection benefits.";
+const description = "Read Shree Bajrang Baan lyrics in Hindi & English with line-by-line meaning, authentic path vidhi, and protection benefits.";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -31,7 +31,7 @@ const articleSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
@@ -58,20 +58,20 @@ const compositionSchema = {
     "name": "Goswami Tulsidas"
   },
   "lyrics": {
-    "@type": "MusicLyric",
+    "@type": "CreativeWork",
     "text": verses.map((v) => `${v.title || v.id}:\n${v.devanagari}\n${v.transliteration}`).join("\n\n"),
     "inLanguage": "hi"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": "https://ramhanumanchalisa.com/icon.png"
   }
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="hi">
   <!-- Article & Composition JSON-LD Schemas -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
@@ -202,9 +202,9 @@ const compositionSchema = {
 
     <!-- 4. Caution Guideline -->
     <section class="manuscript-frame bg-[#FFF7F4] border-2 border-[#C1440E]/40 p-6 space-y-3 text-sm leading-relaxed">
-      <h4 class="font-serif-display font-bold uppercase tracking-wider text-vermilion flex items-center gap-1.5">
+      <h2 class="font-serif-display font-bold uppercase tracking-wider text-vermilion flex items-center gap-1.5 text-base sm:text-lg">
         ⚠️ Important Recitation Warning (सावधानी निर्देश)
-      </h4>
+      </h2>
       <p class="text-charcoal-brown/95">
         Unlike the Hanuman Chalisa, which is gentle and can be chanted casually at any time, the **Bajrang Baan** contains seed mantras (bij mantras like <i>hrim, klim, shrim</i>) and involves making a vow (shapath) in the name of Lord Rama to compel Hanuman to act.
       </p>
@@ -215,9 +215,9 @@ const compositionSchema = {
 
     <!-- Related Content Links -->
     <section class="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
-      <h4 class="font-serif-display text-sm font-bold uppercase text-maroon-deep">
+      <h2 class="font-serif-display text-sm sm:text-base font-bold uppercase text-maroon-deep">
         Related Devotional Chants (संबंधित पाठ)
-      </h4>
+      </h2>
       <div class="flex flex-wrap justify-center gap-4 text-xs font-semibold">
         <a href="/" class="text-vermilion hover:text-marigold underline">
           Shree Hanuman Chalisa

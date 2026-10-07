@@ -176,9 +176,9 @@ export default function ShareCardGenerator() {
       {/* Settings / Controls Column */}
       <div className="flex-1 space-y-6 max-w-sm w-full">
         <div className="space-y-2">
-          <h4 className="font-serif-display text-lg font-bold text-maroon-deep uppercase">
+          <h2 className="font-serif-display text-lg font-bold text-maroon-deep uppercase">
             WhatsApp Status Creator
-          </h4>
+          </h2>
           <p className="text-xs text-charcoal-brown/70 leading-relaxed">
             Create beautifully typeset images of any verse. Select your favorite verse, customize the theme, and download it instantly to share on WhatsApp or social media.
           </p>

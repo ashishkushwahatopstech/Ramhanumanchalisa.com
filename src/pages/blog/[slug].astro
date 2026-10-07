@@ -203,13 +203,25 @@ function parseMarkdown(content: string, postTitle: string) {
   let headingCount = 0;
 
   return sections.map((sec) => {
+    if (sec.startsWith("#### ")) {
+      headingCount++;
+      const text = renderInlineMarkdown(sec.replace("#### ", ""));
+      const rawText = sec.replace("#### ", "").replace(/<[^>]+>/g, "").trim();
+      const id = `section-${headingCount}-${rawText.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 30)}`;
+      return {
+        type: "h4",
+        id,
+        rawText,
+        text,
+      };
+    }
     if (sec.startsWith("### ")) {
       headingCount++;
       const text = renderInlineMarkdown(sec.replace("### ", ""));
       const rawText = sec.replace("### ", "").replace(/<[^>]+>/g, "").trim();
       const id = `section-${headingCount}-${rawText.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 30)}`;
       return {
-        type: "h4",
+        type: "h3",
         id,
         rawText,
         text,
@@ -482,52 +494,79 @@ const cleanTitle = post.title.replace(/\s+/g, " ").trim();
 
 // Target strictly 50-60 characters for page title
 let pageTitle = post.metaTitle;
+if (pageTitle && (pageTitle.length < 50 || pageTitle.length > 60)) {
+  pageTitle = undefined;
+}
 if (!pageTitle) {
   if (cleanTitle.length >= 50 && cleanTitle.length <= 60) {
     pageTitle = cleanTitle;
   } else if (cleanTitle.length < 50) {
     const titleCandidates = [
       `${cleanTitle} — Lyrics, Meaning & PDF`,
-      `${cleanTitle} — Lyrics & Full Meaning`,
-      `${cleanTitle} — Lyrics and Meaning`,
-      `${cleanTitle} — Lyrics, Meaning`,
-      `${cleanTitle} — Sacred Hymn Lyrics`,
-      `${cleanTitle} — Meaning & PDF Sheet`,
-      `${cleanTitle} — Complete Devotional Lyrics`,
+      `${cleanTitle} — Lyrics & English Meaning`,
+      `${cleanTitle} — Lyrics and Full Meaning`,
+      `${cleanTitle} — Meaning & Chanting Guide`,
+      `${cleanTitle} — Sacred Lyrics & Meaning`,
+      `${cleanTitle} — Lyrics, Meaning & Chants`,
       `${cleanTitle} — Complete Lyrics & Meaning`,
+      `${cleanTitle} — Lyrics, Meaning & Guide`,
+      `${cleanTitle} — Lyrics & Printable PDF`,
+      `${cleanTitle} — Devotional Hymn Lyrics`,
+      `${cleanTitle} — Sacred Devotional Guide`,
     ];
     const match = titleCandidates.find((c) => c.length >= 50 && c.length <= 60);
     if (match) {
       pageTitle = match;
     } else {
-      const under60 = titleCandidates.filter((c) => c.length <= 60).sort((a, b) => b.length - a.length);
-      pageTitle = under60.length > 0 ? under60[0] : `${cleanTitle} — Devotional Guide`.padEnd(50, " ").trim();
-      if (pageTitle.length < 50) {
-        pageTitle = `${cleanTitle} — Complete Devotional Guide & Lyrics`.slice(0, 60);
+      const best = titleCandidates.filter((c) => c.length <= 60).sort((a, b) => b.length - a.length)[0];
+      if (best && best.length >= 50) {
+        pageTitle = best;
+      } else {
+        const padded = `${cleanTitle} — Complete Devotional Lyrics & Meaning`;
+        pageTitle = padded.length >= 50 && padded.length <= 60 ? padded : (padded.slice(0, 58).trim() + "..");
+        if (pageTitle.length < 50) {
+          pageTitle = pageTitle.padEnd(50, ".");
+        }
       }
     }
   } else {
-    pageTitle = cleanTitle.slice(0, 57).trim() + "...";
+    pageTitle = cleanTitle.slice(0, 56).trim() + "...";
   }
 }
 
-// Target strictly 140-155 characters for meta description
+// Target strictly 100-130 characters for meta description
 let pageDescription = post.metaDescription;
-if (!pageDescription) {
-  const defaultTemplate = `Read authentic ${cleanTitle} with complete Hindi lyrics, English transliteration, word-by-word spiritual meaning, and recitation guidelines on RHC.`;
-  if (defaultTemplate.length >= 140 && defaultTemplate.length <= 155) {
-    pageDescription = defaultTemplate;
-  } else if (defaultTemplate.length > 155) {
-    pageDescription = `Read ${cleanTitle} with full Hindi lyrics, English transliteration, word-by-word meaning, recitation vidhi, and spiritual significance on RHC.`;
-    if (pageDescription.length > 155) {
-      pageDescription = pageDescription.slice(0, 151).trim() + "...";
+if (pageDescription && (pageDescription.length < 100 || pageDescription.length > 130)) {
+  if (pageDescription.length > 130) {
+    pageDescription = pageDescription.slice(0, 127).trim() + "...";
+    if (pageDescription.length < 100) {
+      pageDescription = undefined;
     }
   } else {
-    const base = `Read authentic ${cleanTitle} with complete Hindi lyrics, English transliteration, word-by-word spiritual meaning, audio, and recitation guidelines.`;
-    if (base.length >= 140 && base.length <= 155) {
-      pageDescription = base;
+    pageDescription = undefined;
+  }
+}
+
+if (!pageDescription) {
+  const descCandidates = [
+    `Read ${cleanTitle} with full lyrics, English translation, line-by-line spiritual meaning, and chanting guide.`,
+    `Read ${cleanTitle} with full lyrics, line-by-line meaning, and chanting guide for daily prayers.`,
+    `Read ${cleanTitle} lyrics with complete meaning, benefits, and recitation guide for daily worship.`,
+    `Read complete ${cleanTitle} with Hindi lyrics, English meaning, benefits, and recitation rules.`,
+    `Explore ${cleanTitle} with authentic lyrics, English transliteration, word meanings, and puja vidhi.`,
+  ];
+  const descMatch = descCandidates.find((d) => d.length >= 100 && d.length <= 130);
+  if (descMatch) {
+    pageDescription = descMatch;
+  } else {
+    const under130 = descCandidates.filter((d) => d.length <= 130).sort((a, b) => b.length - a.length);
+    if (under130.length > 0 && under130[0].length >= 100) {
+      pageDescription = under130[0];
     } else {
-      pageDescription = `Explore authentic ${cleanTitle} with complete Hindi lyrics, English transliteration, word-by-word spiritual meaning, audio player, and chanting vidhi.`;
+      pageDescription = `Read authentic ${cleanTitle} with lyrics, meaning, chanting vidhi, and spiritual significance.`.slice(0, 127).trim() + "...";
+      if (pageDescription.length < 100) {
+        pageDescription = `Read authentic ${cleanTitle} lyrics in Hindi and English with full word-by-word meaning and recitation rules.`;
+      }
     }
   }
 }
@@ -552,7 +591,7 @@ const articleSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
@@ -593,6 +632,7 @@ const postOgImageAlt = post.imageAlt || `${cleanTitle} - Ram Hanuman Chalisa`;
   ogImage={postOgImage}
   ogImageAlt={postOgImageAlt}
   ogType="article"
+  lang="en"
 >
   <!-- Blog Article Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />

@@ -4,7 +4,7 @@ import CarvedDivider from "../components/CarvedDivider";
 import PageFaqs from "../components/PageFaqs.astro";
 
 const title = "Ram Hanuman Connection — Bond of Supreme Bhakti & Seva";
-const description = "Explore the divine bond between Lord Rama and Hanuman. Understand how selfless devotion, surrender, and seva power the spiritual essence of Ramayana.";
+const description = "Explore the divine bond between Lord Rama and Hanuman. Discover how selfless devotion, surrender, and seva empower the seeker.";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -21,7 +21,7 @@ const articleSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
@@ -30,7 +30,7 @@ const articleSchema = {
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <!-- Article JSON-LD Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
@@ -123,9 +123,9 @@ const articleSchema = {
       <!-- Sidebar Panel -->
       <div class="space-y-6">
         <div class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
-          <h4 class="font-serif-display text-sm uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
+          <h3 class="font-serif-display text-sm uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
             Key Milestones
-          </h4>
+          </h3>
           
           <ul class="space-y-3 text-xs text-charcoal-brown/80 leading-relaxed">
             <li class="flex gap-2">

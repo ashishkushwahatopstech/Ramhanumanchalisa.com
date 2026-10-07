@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
 
 const title = "About Ram Hanuman Chalisa — Vedic Mission & Authenticity";
-const description = "Learn about the spiritual mission of RamHanumanChalisa.com, our authenticated Gita Press sources, Vedic scholars panel, and strict editorial standards.";
+const description = "Learn about our spiritual mission, authenticated Gita Press sources, Vedic scholars panel, and strict editorial review standards.";
 
 const aboutSchema = {
   "@context": "https://schema.org",
@@ -14,13 +14,13 @@ const aboutSchema = {
   "mainEntity": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": "https://ramhanumanchalisa.com/icon.png"
   }
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <!-- AboutPage Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
 
@@ -78,13 +78,13 @@ const aboutSchema = {
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-2">
         <div class="p-3 bg-stone-ivory border border-brass-gold/15 rounded">
-          <h4 class="font-bold text-maroon-deep uppercase">Acharya Ramesh Dwivedi</h4>
+          <h3 class="font-bold text-maroon-deep uppercase text-sm">Acharya Ramesh Dwivedi</h3>
           <p class="text-charcoal-brown/70 mt-0.5">Sanskrit Scholar & retired professor of Vedic Lit, Banaras Hindu University (BHU).</p>
           <p class="text-[10px] text-brass-gold mt-1">Role: Verified Awadhi translation grammar and word-by-word annotations.</p>
         </div>
 
         <div class="p-3 bg-stone-ivory border border-brass-gold/15 rounded">
-          <h4 class="font-bold text-maroon-deep uppercase">Pandit Krishna Kant Shastri</h4>
+          <h3 class="font-bold text-maroon-deep uppercase text-sm">Pandit Krishna Kant Shastri</h3>
           <p class="text-charcoal-brown/70 mt-0.5">Vedic Pujari & advisor on ritual protocols (Path Vidhi), Haridwar.</p>
           <p class="text-[10px] text-brass-gold mt-1">Role: Reviewed and formatted recitation rules and fast (Vrata) guidelines.</p>
         </div>

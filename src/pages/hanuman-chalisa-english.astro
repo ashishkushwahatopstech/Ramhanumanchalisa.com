@@ -6,8 +6,8 @@ import type { ScriptureVerse } from "../types/scripture";
 
 const verses = hanumanChalisaData as ScriptureVerse[];
 
-const title = "Hanuman Chalisa Lyrics in English — Transliteration Guide";
-const description = "Read full Hanuman Chalisa lyrics in English transliteration with romanized phonetic syllables, line-by-line translation, and easy English chanting guide.";
+const title = "Hanuman Chalisa Lyrics in English — Meaning and Translation";
+const description = "Read Hanuman Chalisa lyrics in English with romanized transliteration, word-by-word meaning, pronunciation, and chanting guide.";
 
 const scriptureSchema = {
   "@context": "https://schema.org",
@@ -24,7 +24,7 @@ const scriptureSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
@@ -51,20 +51,20 @@ const compositionSchema = {
     "name": "Goswami Tulsidas"
   },
   "lyrics": {
-    "@type": "MusicLyric",
+    "@type": "CreativeWork",
     "text": verses.map((v) => `${v.title || v.id}: ${v.transliteration || v.devanagari}`).join("\n"),
     "inLanguage": "en"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": "https://ramhanumanchalisa.com/icon.png"
   }
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <!-- Scripture & Composition Schemas -->
   <script type="application/ld+json" set:html={JSON.stringify(scriptureSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />

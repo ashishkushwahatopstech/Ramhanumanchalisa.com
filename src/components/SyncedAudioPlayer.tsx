@@ -507,9 +507,9 @@ export default function SyncedAudioPlayer({ defaultTrackId = "track-1" }: Synced
           </div>
 
           <div className="space-y-1">
-            <h4 className="font-serif-display text-sm font-bold text-maroon-deep">
+            <div role="heading" aria-level={3} className="font-serif-display text-sm font-bold text-maroon-deep">
               {activeTrack.name}
-            </h4>
+            </div>
             <p className="text-xs text-brass-gold font-semibold">
               Voice: {activeTrack.reciter}
             </p>

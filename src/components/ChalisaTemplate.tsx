@@ -102,7 +102,7 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
       "name": "Goswami Tulsidas"
     },
     "lyrics": {
-      "@type": "MusicLyric",
+      "@type": "CreativeWork",
       "text": data.verses
         ? data.verses
             .map((v) => `${v.verse_number}: ${v.text.replace(/\n/g, " ")}`)
@@ -113,7 +113,7 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
     "publisher": {
       "@type": "Organization",
       "name": "Ram Hanuman Chalisa",
-      "url": "https://ramhanumanchalisa.com",
+      "url": "https://ramhanumanchalisa.com/",
       "logo": "https://ramhanumanchalisa.com/icon.png"
     }
   };
@@ -527,9 +527,9 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
 
           {data.lang === "en" && (
             <div className="p-4 bg-marigold/10 border border-brass-gold/40 rounded-lg space-y-2">
-              <h2 className="font-serif-display text-sm sm:text-base uppercase tracking-wider font-bold text-maroon-deep">
+              <h4 className="font-serif-display text-sm sm:text-base uppercase tracking-wider font-bold text-maroon-deep">
                 Is 'Ram Chalisa' the Same as 'Hanuman Chalisa'?
-              </h2>
+              </h4>
               <p className="text-xs text-charcoal-brown/85 leading-relaxed">
                 No, the "Ram Chalisa" and "Hanuman Chalisa" are distinct devotional hymns. The Hanuman Chalisa is Goswami Tulsidas's 40-verse poem praising Lord Hanuman's valor and loyalty, while the Shri Ram Chalisa is dedicated directly to Lord Rama's life, virtues, and worship. However, because Hanuman is the supreme devotee of Lord Rama and Rama's name is chanted throughout the hymn, devotees often search for and recite both prayers together.
               </p>

@@ -12,7 +12,7 @@ const closingDoha = verses.find((v) => v.id === "doha-closing");
 const chaupais = verses.filter((v) => v.id.startsWith("chaupai-"));
 
 const title = "Shri Ram Chalisa Lyrics in English & Hindi with Meaning";
-const description = "Read Shri Ram Chalisa in English and Hindi with line-by-line meaning, word definitions, path vidhi, spiritual benefits, and free printable PDF sheet.";
+const description = "Read Shri Ram Chalisa lyrics in Hindi & English with line-by-line meaning, path vidhi, spiritual benefits, and printable PDF.";
 
 const scriptureSchema = {
   "@context": "https://schema.org",
@@ -31,7 +31,7 @@ const scriptureSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
@@ -53,14 +53,14 @@ const compositionSchema = {
     "name": "Traditional Devotional Composer"
   },
   "lyrics": {
-    "@type": "MusicLyric",
+    "@type": "CreativeWork",
     "text": verses.map((v) => `${v.title || v.id}:\n${v.devanagari}\n${v.transliteration}`).join("\n\n"),
     "inLanguage": "hi"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": "https://ramhanumanchalisa.com/icon.png"
   }
 };
@@ -102,7 +102,7 @@ const faqSchema = {
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <!-- Scripture, Composition & FAQ JSON-LD Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(scriptureSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
@@ -386,9 +386,9 @@ const faqSchema = {
 
     <!-- Related Devotional Links -->
     <section class="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
-      <h4 class="font-serif-display text-sm font-bold uppercase text-maroon-deep">
+      <h3 class="font-serif-display text-sm font-bold uppercase text-maroon-deep">
         Related Devotional Chants (संबंधित पाठ)
-      </h4>
+      </h3>
       <div class="flex flex-wrap justify-center gap-4 text-xs font-semibold">
         <a href="/" class="text-vermilion hover:text-marigold underline">
           Shree Hanuman Chalisa

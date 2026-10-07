@@ -8,7 +8,7 @@ import type { ScriptureVerse } from "../types/scripture";
 const verses = hanumanashtakData as ScriptureVerse[];
 
 const title = "Sankat Mochan Hanuman Ashtak — Lyrics, Meaning & Audio";
-const description = "Read complete Sankat Mochan Hanuman Ashtak lyrics in Hindi and English with line-by-line meaning, synchronized audio by Hariharan, and printable PDF.";
+const description = "Read Sankat Mochan Hanuman Ashtak lyrics in Hindi & English with line-by-line meaning, synced audio, and printable PDF.";
 
 const compositionSchema = {
   "@context": "https://schema.org",
@@ -29,14 +29,14 @@ const compositionSchema = {
     "name": "Goswami Tulsidas"
   },
   "lyrics": {
-    "@type": "MusicLyric",
+    "@type": "CreativeWork",
     "text": verses.map((v) => `${v.title_en || v.id}:\n${v.devanagari}\n${v.transliteration}`).join("\n\n"),
     "inLanguage": "hi"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": "https://ramhanumanchalisa.com/icon.png"
   }
 };
@@ -69,7 +69,7 @@ const hanumanashtakFaqs = [
 ];
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="hi">
   <!-- MusicComposition Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
 

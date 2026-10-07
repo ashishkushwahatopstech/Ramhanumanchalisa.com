@@ -7,7 +7,7 @@ import type { ScriptureVerse } from "../types/scripture";
 const verses = hanumanStutiData as ScriptureVerse[];
 
 const title = "Shri Hanuman Stuti Lyrics — Sanskrit, English & Meaning";
-const description = "Read sacred Shri Hanuman Stuti (Manojavam Maruta Tulya Vegam) in Sanskrit and English with word-by-word meaning, spiritual significance, and audio guide.";
+const description = "Read sacred Shri Hanuman Stuti in Sanskrit & English with word meaning, Manojavam shloka lyrics, and chanting benefits.";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -26,7 +26,7 @@ const articleSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
@@ -48,14 +48,14 @@ const compositionSchema = {
     "name": "Traditional Vedic / Puranic Sages"
   },
   "lyrics": {
-    "@type": "MusicLyric",
+    "@type": "CreativeWork",
     "text": verses.map((v) => `${v.title || v.id}:\n${v.devanagari}\n${v.transliteration}`).join("\n\n"),
     "inLanguage": "sa"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": "https://ramhanumanchalisa.com/icon.png"
   }
 };
@@ -93,7 +93,7 @@ const faqSchema = {
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <!-- Article, Composition & FAQ Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
@@ -306,9 +306,9 @@ const faqSchema = {
 
     <!-- Related Devotional Links -->
     <section class="bg-stone-ivory border border-brass-gold/25 p-6 rounded-lg text-center space-y-3">
-      <h4 class="font-serif-display text-sm font-bold uppercase text-maroon-deep">
+      <h3 class="font-serif-display text-sm sm:text-base font-bold uppercase text-maroon-deep">
         Related Devotional Texts (संबंधित पाठ)
-      </h4>
+      </h3>
       <div class="flex flex-wrap justify-center gap-4 text-xs font-semibold">
         <a href="/" class="text-vermilion hover:text-marigold underline">
           Shree Hanuman Chalisa

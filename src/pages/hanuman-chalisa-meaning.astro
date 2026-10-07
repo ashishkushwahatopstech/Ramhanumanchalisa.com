@@ -8,8 +8,8 @@ import type { ScriptureVerse } from "../types/scripture";
 
 const verses = hanumanChalisaData as ScriptureVerse[];
 
-const title = "Hanuman Chalisa Meaning — Word by Word Hindi & English";
-const description = "Explore complete Hanuman Chalisa meaning with word-by-word Awadhi breakdown, line-by-line Hindi and English translation, Chaupai stories, and deep essence.";
+const title = "Hanuman Chalisa Meaning — Hindi & English Word by Word";
+const description = "Explore complete Hanuman Chalisa meaning with word-by-word Awadhi breakdown, line-by-line Hindi and English translations.";
 
 const meaningFaqs = [
   {
@@ -115,69 +115,12 @@ const articleSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
     }
-  },
-  "hasPart": [
-    {
-      "@type": "WebPageElement",
-      "name": "The Story Behind the Hanuman Chalisa",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#story"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Listen to Hanuman Chalisa While Reading (Synced Audio)",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#audio-player"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Doha 1: Guru Vandana",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#doha-01"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Doha 2: Prayer for Strength, Wisdom & Knowledge",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#doha-02"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Chaupais 1–10",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#chaupais-1-10"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Chaupais 11–20",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#chaupais-11-20"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Chaupais 21–30",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#chaupais-21-30"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Chaupais 31–40",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#chaupais-31-40"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Concluding Doha",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#doha-closing"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Benefits of Reciting the Hanuman Chalisa",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#benefits"
-    },
-    {
-      "@type": "WebPageElement",
-      "name": "Frequently Asked Questions",
-      "url": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning#faqs"
-    }
-  ]
+  }
 };
 
 const verseGists: Record<string, string> = {
@@ -227,7 +170,7 @@ const verseGists: Record<string, string> = {
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="hi">
   <!-- Article JSON-LD Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 

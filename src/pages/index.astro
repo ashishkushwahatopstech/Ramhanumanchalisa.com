@@ -14,10 +14,13 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Ram Hanuman Chalisa",
-  "url": "https://ramhanumanchalisa.com",
+  "url": "https://ramhanumanchalisa.com/",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://ramhanumanchalisa.com/?s={search_term_string}",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://ramhanumanchalisa.com/?s={search_term_string}"
+    },
     "query-input": "required name=search_term_string"
   }
 };
@@ -26,28 +29,31 @@ const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Ram Hanuman Chalisa",
-  "url": "https://ramhanumanchalisa.com",
-  "logo": "https://ramhanumanchalisa.com/icon.png"
+  "url": "https://ramhanumanchalisa.com/",
+  "logo": "https://ramhanumanchalisa.com/icon.png",
+  "sameAs": [
+    "https://www.instagram.com/ramhanumanchalisadotcom/"
+  ]
 };
-const pageTitle = "Shree Hanuman Chalisa — Lyrics, Meaning, Audio & PDF";
-const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and English with line-by-line meaning, synced MP3 audio, printable PDF, and complete path vidhi guidelines.";
+const pageTitle = "Hanuman Chalisa Lyrics with Meaning | Ram Hanuman Chalisa";
+const pageDescription = "Read Hanuman Chalisa lyrics with meaning in Hindi & English. Listen to audio, explore path vidhi, and download free PDF.";
 ---
 
-<Layout title={pageTitle} description={pageDescription} showHreflangs={true}>
+<Layout title={pageTitle} description={pageDescription} showHreflangs={true} lang="hi">
   <!-- Brand Schemas -->
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
 
-  <CookieRedirect client:load />
-  <LanguageBanner client:load />
+  <CookieRedirect client:idle />
+  <LanguageBanner client:idle />
 
   <div class="space-y-16">
     <!-- Primary Scripture Recitation (Hanuman Chalisa 40 Verses) -->
-    <ChalisaTemplate data={data} isHomepage={true} client:load />
+    <ChalisaTemplate data={data} isHomepage={true} />
 
     <!-- Interactive Ambient Puja & Japa Counter -->
     <div class="py-8 border-y border-brass-gold/25 bg-[#F6EFE3]">
-      <DiyaCounter client:load />
+      <DiyaCounter client:visible />
     </div>
 
     <!-- SECTION 1: Sacred Stotras & Chalisas Hub (Illuminated Treasury) -->
@@ -133,9 +139,9 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
                 <div class="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
                   स्तोत्र ०१
                 </div>
-                <h4 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                <h3 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
                   Sankat Mochan (संकटमोचन)
-                </h4>
+                </h3>
                 <p class="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
                   Eight sacred couplets recounting the heroic feats of Mahavira.
                 </p>
@@ -154,9 +160,9 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
                 <div class="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
                   स्तोत्र ०२
                 </div>
-                <h4 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                <h3 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
                   Hanuman Aarti (संध्या आरती)
-                </h4>
+                </h3>
                 <p class="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
                   Traditional mandir twilight prayer &ldquo;Aarti Kije Hanuman Lala Ki&rdquo;.
                 </p>
@@ -175,9 +181,9 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
                 <div class="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
                   स्तोत्र ०३
                 </div>
-                <h4 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                <h3 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
                   Hanuman Stuti (स्तुति)
-                </h4>
+                </h3>
                 <p class="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
                   Classical Awadhi-Sanskrit verses revering matchless strength and bhakti.
                 </p>
@@ -196,9 +202,9 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
                 <div class="text-[10px] text-brass-gold font-bold uppercase tracking-wider mb-1">
                   तत्त्व ०४
                 </div>
-                <h4 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
+                <h3 class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors">
                   Ram-Hanuman Bond (संबंध)
-                </h4>
+                </h3>
                 <p class="text-xs text-charcoal-brown/75 mt-1.5 leading-relaxed">
                   The metaphysical key linking Rama&apos;s holy name with Hanuman&apos;s grace.
                 </p>
@@ -207,6 +213,92 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
                 <span>भक्ति तत्त्व • रहस्य</span>
                 <span class="group-hover:translate-x-1 transition-transform">→</span>
               </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Comprehensive Devotional Guide to Shree Hanuman Chalisa -->
+    <section class="max-w-6xl mx-auto px-4 space-y-8">
+      <div class="manuscript-frame p-8 sm:p-10 space-y-8 bg-[#FAF6EE]">
+        <div class="text-center space-y-2 border-b border-brass-gold/25 pb-6">
+          <div class="flex justify-center">
+            <span class="rubric-marker">
+              <span>— श्रीहनुमान ज्ञान प्रदीप • Devotional Study Guide —</span>
+            </span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-serif-display font-bold text-maroon-deep">
+            Understanding Shree Hanuman Chalisa: Origin, Significance & Recitation
+          </h2>
+          <p class="text-xs sm:text-sm text-charcoal-brown/75 max-w-2xl mx-auto leading-relaxed font-sans">
+            An authentic guide for devotees to explore the history, lyrical architecture, spiritual benefits, and sacred chanting discipline of Goswami Tulsidas&apos;s immortal Awadhi hymn.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed font-sans">
+          <div class="space-y-4">
+            <h3 class="text-lg font-serif-display font-bold text-maroon-deep flex items-center gap-2">
+              <span class="text-vermilion">॥</span> What is the Hanuman Chalisa? (परिचय एवं इतिहास)
+            </h3>
+            <p>
+              The <strong>Shree Hanuman Chalisa</strong> is a revered forty-verse devotional stotra composed in the 16th century by the celebrated Bhakti saint and poet <strong>Goswami Tulsidas</strong> (1532–1623 CE). Composed in melodic <strong>Awadhi</strong>—an Eastern Hindi literary language closely linked with Sanskrit—the word <em>Chalisa</em> derives from the Hindi word <em>chalis</em>, signifying forty. The hymn consists of two introductory couplets (dohas), forty rhythmic quatrains (chaupais), and a concluding blessing doha.
+            </p>
+            <p>
+              According to devotional tradition, Tulsidas composed this sacred prayer while imprisoned in Fatehpur Sikri by the Mughal Emperor Akbar after refusing to perform an imperial miracle. Turning his complete surrender toward Sri Hanuman—the guardian deity of all Rama bhaktas—Tulsidas meditated upon Hanumanji&apos;s divine attributes, valor, and humble servitude. On the fortieth day of recitation, an extraordinary swarm of monkeys entered the citadel, leading to the saint&apos;s honorable release and immortalizing the forty chaupais as a protective armor for humanity.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-lg font-serif-display font-bold text-maroon-deep flex items-center gap-2">
+              <span class="text-vermilion">॥</span> Spiritual & Mental Benefits of Daily Chanting (फलश्रुति)
+            </h3>
+            <p>
+              Devotees across the world recite the Hanuman Chalisa daily to invoke spiritual courage, dispel fear, and invite auspicious blessings into their homes. Classical commentaries emphasize that chanting these sacred Awadhi verses produces harmonizing vibrations that calm nervous tension, dissolve anxiety, and awaken inner fortitude.
+            </p>
+            <p>
+              Scriptures specifically highlight that sincere contemplation of Mahavira Hanuman mitigates the adverse influences of planetary transitions, especially Saturn&apos;s <em>Shani Sade Sati</em> and <em>Dhayya</em>. Chaupai 25 proclaims <em>&ldquo;Nasai rog harai sab peera, japat nirantar Hanumat beera&rdquo;</em>, assuring seekers that continuous recitation acts as a powerful healing balm for chronic distress and mental exhaustion. To learn how individual chaupais address specific life situations including health, career hurdles, and studies, explore our comprehensive <a href="/hanuman-chalisa-benefits" class="text-vermilion underline font-bold hover:text-marigold transition-colors">Hanuman Chalisa Benefits Guide</a>.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-brass-gold/25 space-y-4 text-xs sm:text-sm text-charcoal-brown/90 leading-relaxed font-sans">
+          <h3 class="text-lg font-serif-display font-bold text-maroon-deep flex items-center gap-2">
+            <span class="text-vermilion">॥</span> How to Recite: Path Vidhi, Timing & Rules (शास्त्रोक्त पाठ विधि)
+          </h3>
+          <p>
+            To receive the maximum spiritual resonance from your daily recitation, tradition recommends reciting during <strong>Brahma Muhurat</strong> (approximately 4:00 AM to 5:30 AM before sunrise) or during evening Sandhya hours at dusk. Devotees should cleanse themselves with a bath, sit facing East or North on a clean wool or kusha grass mat (aasan), and illuminate a brass diya with pure cow ghee or sesame (til) oil.
+          </p>
+          <p>
+            It is auspicious to begin every chanting session by remembering Bhagwan Shri Ram Chandra and Mother Sita, as Lord Hanuman is perpetually present wherever the holy name of Rama is uttered with devotion. Depending on one&apos;s daily vows (sankalpa), the Chalisa may be chanted 1, 3, 7, 11, or 100 times (Shatpath). For detailed rules on pronunciation, sankalpa guidelines, Tuesday-Saturday fasting, and deity offerings, refer to our complete <a href="/shri-hanuman-chalisa-path-vidhi" class="text-vermilion underline font-bold hover:text-marigold transition-colors">Hanuman Chalisa Path Vidhi Guide</a>.
+          </p>
+        </div>
+
+        <!-- Direct Navigational Portals to Essential Sections -->
+        <div class="pt-6 border-t border-brass-gold/25">
+          <h3 class="text-sm sm:text-base font-serif-display font-bold text-maroon-deep mb-4 uppercase tracking-wider">
+            Explore Essential Mandir Sections & Holy Verses
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <a href="/hanuman-chalisa-meaning" class="p-4 bg-white border border-brass-gold/30 hover:border-maroon-deep rounded-lg transition-all group">
+              <span class="text-xs font-bold text-brass-gold uppercase block">Word-by-Word</span>
+              <span class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">Chalisa Meaning & Commentary &rarr;</span>
+              <p class="text-[11px] text-charcoal-brown/75 mt-1">Detailed Awadhi vocabulary and Hindi-English verse breakdowns.</p>
+            </a>
+            <a href="/hanuman-chalisa-benefits" class="p-4 bg-white border border-brass-gold/30 hover:border-maroon-deep rounded-lg transition-all group">
+              <span class="text-xs font-bold text-brass-gold uppercase block">Sacred Blessings</span>
+              <span class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">40 Chaupai Benefits &rarr;</span>
+              <p class="text-[11px] text-charcoal-brown/75 mt-1">Discover healing and spiritual solutions for life challenges.</p>
+            </a>
+            <a href="/sankat-mochan-hanumanashtak" class="p-4 bg-white border border-brass-gold/30 hover:border-maroon-deep rounded-lg transition-all group">
+              <span class="text-xs font-bold text-brass-gold uppercase block">Crisis Reliever</span>
+              <span class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">Sankat Mochan Ashtak &rarr;</span>
+              <p class="text-[11px] text-charcoal-brown/75 mt-1">Eight classic stanzas recounting Mahavira&apos;s valorous deeds.</p>
+            </a>
+            <a href="/hanuman-chalisa/en" class="p-4 bg-white border border-brass-gold/30 hover:border-maroon-deep rounded-lg transition-all group">
+              <span class="text-xs font-bold text-brass-gold uppercase block">Bilingual Edition</span>
+              <span class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion">English Lyrics & Audio &rarr;</span>
+              <p class="text-[11px] text-charcoal-brown/75 mt-1">Phonetic Romanized transliteration with synced audio player.</p>
             </a>
           </div>
         </div>
@@ -525,11 +617,11 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
                 </span>
                 <span class="text-[11px] text-charcoal-brown/60">५ मिनट</span>
               </div>
-              <h4 class="font-serif-display font-bold text-sm sm:text-base text-maroon-deep hover:text-vermilion transition-colors">
+              <h3 class="font-serif-display font-bold text-sm sm:text-base text-maroon-deep hover:text-vermilion transition-colors">
                 <a href="/blog/brahma-muhurat-recitation-hours">
                   The Hours of the Gods: Chanting in Brahma Muhurat
                 </a>
-              </h4>
+              </h3>
               <p class="text-xs text-charcoal-brown/75 line-clamp-2 leading-relaxed font-sans">
                 Learn why dawn chanting between 4:00 AM and 5:30 AM multiplies the mental, spiritual, and cellular harmony of the reciter.
               </p>
@@ -548,11 +640,11 @@ const pageDescription = "Read authentic Shree Hanuman Chalisa in Hindi and Engli
                 </span>
                 <span class="text-[11px] text-charcoal-brown/60">६ मिनट</span>
               </div>
-              <h4 class="font-serif-display font-bold text-sm sm:text-base text-maroon-deep hover:text-vermilion transition-colors">
+              <h3 class="font-serif-display font-bold text-sm sm:text-base text-maroon-deep hover:text-vermilion transition-colors">
                 <a href="/blog/shri-ramchandra-kripalu-lyrics-in-english">
                   Shri Ramchandra Kripalu Bhajman: Sacred Hymn & Meaning
                 </a>
-              </h4>
+              </h3>
               <p class="text-xs text-charcoal-brown/75 line-clamp-2 leading-relaxed font-sans">
                 Read the sublime Awadhi-Sanskrit prayer praising Lord Rama&apos;s mercy, composed in the 16th century by Goswami Tulsidas.
               </p>

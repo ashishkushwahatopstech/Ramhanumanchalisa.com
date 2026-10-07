@@ -38,9 +38,10 @@ export const GET: APIRoute = async (context) => {
   let urls = staticPaths.map((path) => {
     const priority = path === "" ? "1.0" : path.includes("meaning") || path.includes("audio") ? "0.9" : "0.8";
     const changefreq = path === "" ? "daily" : "weekly";
+    const locUrl = path === "" ? `${baseUrl}/` : `${baseUrl}${path}`;
     return `
   <url>
-    <loc>${baseUrl}${path}</loc>
+    <loc>${locUrl}</loc>
     <lastmod>${now}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>

@@ -23,7 +23,7 @@ const recommendedPujaTime = config?.pujaMuhurat || "06:05 AM to 08:32 AM (Brahma
 const descriptionText = config?.description || "Hanuman Jayanti celebrates the divine birth of Lord Hanuman to Mother Anjana and King Kesari, under the influence of the Wind God (Vayu Dev).";
 
 const title = "Hanuman Jayanti 2026 — Date, Shubh Muhurat & Puja Vidhi";
-const description = "Find exact Hanuman Jayanti 2026 date, auspicious puja muhurat timings, fasting vidhi, and rituals. Learn how to worship Lord Hanuman at home for blessings.";
+const description = "Find Hanuman Jayanti 2026 date, shubh muhurat timings, fasting rules, and puja vidhi to worship Lord Hanuman for blessings.";
 
 const eventSchema = {
   "@context": "https://schema.org",
@@ -46,7 +46,7 @@ const eventSchema = {
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <!-- Event Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(eventSchema)} />
 
@@ -96,9 +96,9 @@ const eventSchema = {
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-brass-gold/30 pt-6 text-xs sm:text-sm">
         <div class="bg-stone-ivory/5 p-4 rounded border border-brass-gold/20 space-y-2">
-          <h4 class="font-bold text-marigold uppercase tracking-wider">
+          <h3 class="font-bold text-marigold uppercase tracking-wider text-sm">
             Tithi Timings
-          </h4>
+          </h3>
           <p class="text-xs text-stone-ivory/80">
             <b>Purnima Tithi Begins:</b> {purnimaTithiStart}
           </p>
@@ -108,9 +108,9 @@ const eventSchema = {
         </div>
 
         <div class="bg-stone-ivory/5 p-4 rounded border border-brass-gold/20 space-y-2">
-          <h4 class="font-bold text-marigold uppercase tracking-wider">
+          <h3 class="font-bold text-marigold uppercase tracking-wider text-sm">
             Recommended Puja Muhurat
-          </h4>
+          </h3>
           <p class="text-xs text-stone-ivory/80">
             <b>Sunrise Puja:</b> {recommendedPujaTime}
           </p>
@@ -131,18 +131,18 @@ const eventSchema = {
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm leading-relaxed text-charcoal-brown/85">
         <div class="space-y-3">
-          <h4 class="font-bold text-brass-gold uppercase tracking-wide">
+          <h3 class="font-bold text-brass-gold uppercase tracking-wide text-sm">
             1. Fasting (Vrata) Rules
-          </h4>
+          </h3>
           <p>
             Many devotees observe a complete or partial fast (Vrat) on Hanuman Jayanti. The fast begins at sunrise and is broken in the evening after offering prayers to Lord Hanuman. During the fast, take only fruits, milk, and water. Maintain complete celibacy (Brahmacharya).
           </p>
         </div>
 
         <div class="space-y-3">
-          <h4 class="font-bold text-brass-gold uppercase tracking-wide">
+          <h3 class="font-bold text-brass-gold uppercase tracking-wide text-sm">
             2. Puja Setup & Offering
-          </h4>
+          </h3>
           <p>
             Decorate Lord Hanuman's photo with red flowers and marigold garlands. Apply orange sindoor mixed with sesame oil to the idol or photo. Offer red Boondi, Besan Ladoo, bananas, and sweet leaves (Paan) as prasadam.
           </p>

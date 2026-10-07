@@ -192,10 +192,32 @@ try {
   internalLinkList = [];
 }
 
-const pageTitle = benefit.metaTitle || `${benefit.title} — Hanuman Chalisa Chanting Guide`;
-const pageDescription =
-  benefit.metaDescription ||
-  `Learn how chanting Hanuman Chalisa Chaupai ${benefit.targetVerseNumber} resolves issues with ${benefit.situation}. Recommended schedules and step-by-step guidelines.`;
+let pageTitle = benefit.metaTitle;
+if (!pageTitle) {
+  const baseTitle = `${benefit.title} — Hanuman Chalisa Benefits`;
+  if (baseTitle.length >= 50 && baseTitle.length <= 60) {
+    pageTitle = baseTitle;
+  } else if (baseTitle.length < 50) {
+    pageTitle = `${benefit.title} — Hanuman Chalisa Chanting Guide`.slice(0, 60);
+    if (pageTitle.length < 50) {
+      pageTitle = `${benefit.title} — Hanuman Chalisa Chaupai Benefits`.slice(0, 60);
+    }
+  } else {
+    pageTitle = baseTitle.slice(0, 57).trim() + "...";
+  }
+}
+
+let pageDescription = benefit.metaDescription;
+if (!pageDescription) {
+  const candidate = `Chant Hanuman Chalisa Chaupai ${benefit.targetVerseNumber} for ${benefit.situation}. Read sacred meaning, timings, and recitation vidhi on RHC.`;
+  if (candidate.length >= 100 && candidate.length <= 130) {
+    pageDescription = candidate;
+  } else if (candidate.length > 130) {
+    pageDescription = candidate.slice(0, 127).trim() + "...";
+  } else {
+    pageDescription = `Learn how reciting Hanuman Chalisa Chaupai ${benefit.targetVerseNumber} resolves challenges with ${benefit.situation}. Explore sacred vidhi.`;
+  }
+}
 
 const canonicalBenefitUrl = `https://ramhanumanchalisa.com/hanuman-chalisa-benefits/${benefit.slug}`;
 
@@ -235,7 +257,7 @@ const articleSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
@@ -470,9 +492,9 @@ const benefitOgImageAlt = benefit.imageAlt || `${pageTitle} - Ram Hanuman Chalis
         </div>
 
         <div class="bg-stone-ivory border border-brass-gold/30 p-6 rounded-lg shadow-sm space-y-4">
-          <h4 class="font-serif-display text-sm uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
+          <h3 class="font-serif-display text-sm uppercase tracking-wider font-bold text-maroon-deep border-b border-brass-gold/20 pb-2">
             Other Life Situations
-          </h4>
+          </h3>
 
           <div class="space-y-3">
             {otherBenefits.map((b) => (
@@ -482,9 +504,9 @@ const benefitOgImageAlt = benefit.imageAlt || `${pageTitle} - Ram Hanuman Chalis
               >
                 <div class="flex items-center gap-2 mb-1">
                   <span class="text-lg">{b.icon}</span>
-                  <h5 class="font-serif-display font-bold text-xs sm:text-sm text-maroon-deep uppercase leading-tight">
+                  <h4 class="font-serif-display font-bold text-xs sm:text-sm text-maroon-deep uppercase leading-tight">
                     {b.title.split(" for ")[1] || b.title}
-                  </h5>
+                  </h4>
                 </div>
                 <p class="text-[10px] text-charcoal-brown/60 leading-relaxed truncate">
                   {b.situation}

@@ -4,8 +4,8 @@ import CarvedDivider from "../components/CarvedDivider";
 import PageFaqs from "../components/PageFaqs.astro";
 import SyncedAudioPlayer from "../components/SyncedAudioPlayer";
 
-const title = "Hanuman Chalisa Audio MP3 — Synced Lyrics & Chanting Player";
-const description = "Listen to Hanuman Chalisa MP3 audio with line-by-line synchronized lyrics, speed control, clear pronunciation guide, and sacred recitations by Hariharan.";
+const title = "Hanuman Chalisa Audio MP3 — Synced Lyrics and Audio Player";
+const description = "Listen to Hanuman Chalisa audio MP3 with synced lyrics, speed control, pronunciation guide, and sacred devotional recitations.";
 
 const audioSchema = {
   "@context": "https://schema.org",
@@ -36,7 +36,7 @@ const audioSchema = {
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": {
       "@type": "ImageObject",
       "url": "https://ramhanumanchalisa.com/icon.png"
@@ -45,7 +45,7 @@ const audioSchema = {
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="en">
   <!-- AudioObject Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(audioSchema)} />
 
@@ -126,9 +126,9 @@ const audioSchema = {
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm leading-relaxed">
         <div class="space-y-3">
-          <h4 class="font-bold text-brass-gold uppercase tracking-wide">
+          <h3 class="font-bold text-brass-gold uppercase tracking-wide text-sm">
             1. The Importance of Sound (Dhwani)
-          </h4>
+          </h3>
           <p class="text-charcoal-brown/80">
             In Vedic culture, the vibration (dhwani) of Sanskrit syllables is as important as the intellectual meaning. Correct pronunciation activates peaceful cognitive channels, removing mental blockages and anxiety.
           </p>
@@ -138,9 +138,9 @@ const audioSchema = {
         </div>
 
         <div class="space-y-3">
-          <h4 class="font-bold text-brass-gold uppercase tracking-wide">
+          <h3 class="font-bold text-brass-gold uppercase tracking-wide text-sm">
             2. Chanting Rhythms (Lay & Taal)
-          </h4>
+          </h3>
           <p class="text-charcoal-brown/80">
             Goswami Tulsidas composed the Chalisa using two distinct meters: the **Doha** (couplet) and the **Chaupai** (four-lined verse). Dohas are reflective and slow, paving the way for focused meditation. Chaupais are rhythmic, building an energetic tempo.
           </p>

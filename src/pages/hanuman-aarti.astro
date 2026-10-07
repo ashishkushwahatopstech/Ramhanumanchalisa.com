@@ -4,7 +4,7 @@ import AartiClient from "../components/AartiClient";
 import PageFaqs from "../components/PageFaqs.astro";
 
 const title = "Shree Hanuman Aarti Lyrics — Aarti Kije Hanuman Lala Ki";
-const description = "Chant Shree Hanuman Aarti (Aarti Kije Hanuman Lala Ki) in Hindi and English with synced audio player, complete word meaning, puja vidhi, and printable PDF.";
+const description = "Chant Shree Hanuman Aarti lyrics (Aarti Kije Hanuman Lala Ki) in Hindi & English with audio, puja vidhi, and printable PDF.";
 
 const aartiFaqs = [
   {
@@ -44,20 +44,20 @@ const compositionSchema = {
     "name": "Goswami Tulsidas"
   },
   "lyrics": {
-    "@type": "MusicLyric",
+    "@type": "CreativeWork",
     "text": "आरती कीजै हनुमान लला की। दुष्ट दलन रघुनाथ कला की।। जाके बल से गिरिवर कांपै। रोग दोष जाके निकट न झांपै।। अंजनि पुत्र महा बलदाई। सन्तन के प्रभु सदा सहाई।।",
     "inLanguage": "hi"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa",
-    "url": "https://ramhanumanchalisa.com",
+    "url": "https://ramhanumanchalisa.com/",
     "logo": "https://ramhanumanchalisa.com/icon.png"
   }
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} lang="hi">
   <!-- MusicComposition Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(compositionSchema)} />
 
