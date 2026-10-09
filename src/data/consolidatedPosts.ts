@@ -87,7 +87,7 @@ export const CONSOLIDATED_MASTER_POSTS: BlogPost[] = [
     excerpt: "Complete authentic collection of sacred Marathi Sandhya Aartis with original verses, English transliteration, and spiritual meanings for Lord Ganesha, Shiva, Ram, Krishna, Durga, and Dattatreya.",
     category: "Devotional Prayers",
     createdAt: "September 17, 2026",
-    author: "Acharya Ramesh Dwivedi",
+    author: "Ram Hanuman Chalisa Editorial",
     readTime: "12 min read",
     content: `The devotional heritage of Maharashtra holds a unique and revered place in Sanatana Dharma. Through the sweet, intense poetry of the Varkari saints and the divine inspirations of **Samarth Ramdas**, **Sant Eknath**, and **Sant Tukaram**, the singing of Aartis became a powerful bridge between human devotion (*Bhakti*) and divine realization.
 
@@ -326,7 +326,7 @@ Bhagwan Dattatreya synthesizes Brahma, Vishnu, and Shiva into one primordial Gur
     excerpt: "Explore the profound Vedic iconography and view consecrated depictions of Lord Ganesha, Shiva, Durga, Hanuman, Krishna, Balaji, Surya Dev, Shani Dev, and Kal Bhairav for home worship and digital altars.",
     category: "Guide",
     createdAt: "September 17, 2026",
-    author: "Pandit Krishna Kant Shastri",
+    author: "Ram Hanuman Chalisa Editorial",
     readTime: "8 min read",
     content: `In Sanatana Dharma, visual sacred art is known as **Rupa Dhyana**—the meditation upon the divine form. The ancient *Agama Shastras* and *Shilpa Shastras* explain that every color, posture (*Asana*), hand gesture (*Mudra*), and weapon (*Astra*) borne by a deity carries a profound psychological, spiritual, and cosmological truth.
 

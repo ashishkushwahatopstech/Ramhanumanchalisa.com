@@ -13,6 +13,7 @@ export default defineConfig({
   }),
   integrations: [react()],
   redirects: {
+    '/hanuman-chalisa-english': { status: 301, destination: '/hanuman-chalisa/en' },
     '/blog/surya-dev-aarti-bhajan-lyrics-in': { status: 301, destination: '/blog/surya-dev-aarti-bhajan-lyrics-in-english-and-hindi' },
     '/blog/shri-ram-aarti-lord-ram-prayer-in': { status: 301, destination: '/blog/shri-ram-aarti-lord-ram-prayer-in-marathi' },
     '/blog/shri-kaal-bhairav-chalisa-lyrics-in': { status: 301, destination: '/blog/shri-kaal-bhairav-chalisa-lyrics-in-hindi' },

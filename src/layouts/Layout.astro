@@ -194,21 +194,6 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
     })(window,document,'script','dataLayer','GTM-MJKL5P3X');</script>
     <!-- End Google Tag Manager -->
 
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2458897753508445" crossorigin="anonymous"></script>
-
-    {gaId && (
-      <>
-        <!-- Google Analytics -->
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-        <script is:inline define:vars={{ gaId }}>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', gaId);
-        </script>
-      </>
-    )}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{renderedTitle}</title>
@@ -243,6 +228,8 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Ram Hanuman Chalisa" />
+    <meta property="og:locale" content={lang === "hi" ? "hi_IN" : (lang === "en" ? "en_IN" : `${lang}_IN`)} />
+    <meta property="og:locale:alternate" content={lang === "hi" ? "en_IN" : "hi_IN"} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={renderedTitle} />
     <meta property="og:description" content={description} />
@@ -287,7 +274,7 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
               <div class="font-serif-display text-lg sm:text-xl font-bold tracking-wider text-marigold uppercase leading-none">
                 Ram Hanuman Chalisa
               </div>
-              <p class="text-[10px] sm:text-xs text-brass-gold tracking-widest leading-none mt-1">
+              <p class="text-xs text-brass-gold tracking-widest leading-none mt-1">
                 श्री राम जय राम जय जय राम
               </p>
             </div>
@@ -309,7 +296,7 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
 
           <!-- Extra Right Button & Language Switcher -->
           <div class="flex items-center gap-2 sm:gap-3">
-            <LanguageSwitcher client:load />
+            <LanguageSwitcher client:idle />
 
             {siteConfig?.headerCta?.isEnabled && (
               <a
@@ -327,7 +314,7 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
       <!-- Infinite Sita Ram Chanting Marquee -->
       {siteConfig?.headerNotice?.isEnabled && (
         <div class="w-full bg-marigold text-maroon-deep font-bold py-1.5 border-t border-brass-gold/20 text-xs tracking-wide select-none overflow-hidden">
-          <div class="animate-marquee whitespace-nowrap flex">
+          <div class="animate-marquee whitespace-nowrap flex motion-reduce:animate-none">
             <span class="font-serif-display shrink-0">&nbsp;{siteConfig.headerNotice.text}&nbsp;</span>
             <span class="font-serif-display shrink-0">&nbsp;{siteConfig.headerNotice.text}&nbsp;</span>
           </div>
@@ -376,7 +363,7 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
               {siteConfig?.footer?.brandingTitle || "Ram Hanuman Chalisa"}
             </div>
             <p class="text-sm text-stone-ivory/80 max-w-sm leading-relaxed">
-              {siteConfig?.footer?.brandingDesc || "A digital sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and digest the glorious verses composed by Goswami Tulsidas. Reviewed by traditional scholars to ensure absolute accuracy of translation and context."}
+              {siteConfig?.footer?.brandingDesc || "A digital sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and digest the glorious verses composed by Goswami Tulsidas."}
             </p>
             <div class="mt-4 flex items-center gap-4">
               <!-- Official Verified Social Links -->
@@ -434,8 +421,8 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
               <a href={link.href} class="hover:text-marigold">{link.label}</a>
             ))}
           </div>
-          <p class="max-w-md text-right text-[10px] md:text-xs">
-            {siteConfig?.footer?.disclaimerText || "Disclaimer: The materials provided are for devotional, cultural, and educational purposes. AdSense slots are integrated layout-stable."}
+          <p class="max-w-md text-right text-xs">
+            {siteConfig?.footer?.disclaimerText || "Disclaimer: The materials provided are for devotional, cultural, and educational purposes."}
           </p>
         </div>
 
@@ -470,11 +457,32 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
     <ScrollToTop />
 
     <!-- Global Floating Pill Search Button & Modal -->
-    <SearchModal client:load />
+    <SearchModal client:idle />
 
     <!-- Desktop Left Margin Quick Actions Dock -->
     {showSideDock && <DesktopSideDock client:load />}
 
+    <!-- Lazy Google AdSense (Loaded after first user interaction or window idle) -->
+    <script is:inline>
+      (function() {
+        var loaded = false;
+        function loadAdSense() {
+          if (loaded) return;
+          loaded = true;
+          var s = document.createElement('script');
+          s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2458897753508445';
+          s.async = true;
+          s.crossOrigin = 'anonymous';
+          document.head.appendChild(s);
+        }
+        ['pointerdown', 'touchstart', 'scroll', 'keydown'].forEach(function(evt) {
+          window.addEventListener(evt, loadAdSense, { once: true, passive: true });
+        });
+        window.addEventListener('load', function() {
+          setTimeout(loadAdSense, 3500);
+        }, { once: true });
+      })();
+    </script>
   </body>
 </html>
 
@@ -483,5 +491,10 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
     --font-marcellus: 'Marcellus', serif;
     --font-tiro-devanagari: 'Tiro Devanagari Hindi', serif;
     --font-mukta: 'Mukta', sans-serif;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none !important;
+    }
   }
 </style>

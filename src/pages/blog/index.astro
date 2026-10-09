@@ -234,9 +234,7 @@ const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
     </div>
 
     <!-- AdSense Top Slot -->
-    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
-      Ad Slot — Blog Top (Layout Stable)
-    </div>
+    <div class="no-print w-full h-24 bg-transparent overflow-hidden" aria-hidden="true" />
 
     <!-- Main Articles Content -->
     <div class="space-y-6">
@@ -277,7 +275,7 @@ const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
                     <!-- Category Pill -->
                     {post.category && (
                       <div>
-                        <span class="inline-flex items-center px-2.5 py-0.5 text-[11px] font-semibold tracking-wide rounded-[999px] bg-[#F4E4B8] text-[#7A1F1F]">
+                        <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold tracking-wide rounded-[999px] bg-[#F4E4B8] text-[#7A1F1F]">
                           {post.category}
                         </span>
                       </div>
@@ -369,9 +367,7 @@ const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
     </div>
 
     <!-- AdSense Footer Slot -->
-    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
-      Ad Slot — Blog Bottom (Layout Stable)
-    </div>
+    <div class="no-print w-full h-24 bg-transparent overflow-hidden my-12" aria-hidden="true" />
 
   </div>
 </Layout>

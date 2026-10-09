@@ -46,8 +46,6 @@ if (!slotConfig || !slotConfig.enabled) {
 
   {/* Layout-stable fallback if slot is enabled but no custom code is placed yet */}
   {(slotConfig.mode === "customHtml" || slotConfig.mode === "adsense") && !slotConfig.code && (
-    <div class="w-full max-w-4xl mx-auto h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
-      <span>{slotConfig.label || `Advertisement Slot (${slotId})`}</span>
-    </div>
+    <div class="w-full max-w-4xl mx-auto h-24 bg-transparent overflow-hidden" aria-hidden="true" />
   )}
 </div>

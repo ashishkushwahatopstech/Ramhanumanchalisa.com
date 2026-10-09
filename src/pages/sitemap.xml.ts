@@ -15,7 +15,6 @@ export const GET: APIRoute = async (context) => {
     "/shri-hanuman-chalisa-path-vidhi",
     "/ram-hanuman-chalisa",
     "/hanuman-chalisa-meaning",
-    "/hanuman-chalisa-english",
     "/hanuman-chalisa-pdf",
     "/hanuman-chalisa-audio-mp3",
     "/hanuman-chalisa-benefits",

@@ -91,9 +91,7 @@ const itemListSchema = {
     <CarvedDivider icon="✨" />
 
     <!-- AdSense Top Slot -->
-    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
-      Ad Slot — Page Top (Layout Stable Skeleton)
-    </div>
+    <div class="no-print w-full h-24 bg-transparent overflow-hidden" aria-hidden="true" />
 
     <!-- Section Heading for Benefits -->
     <div class="text-center">
@@ -129,12 +127,12 @@ const itemListSchema = {
           </div>
 
           <div class="pt-2 border-t border-brass-gold/10 flex justify-between items-center">
-            <span class="text-[10px] font-bold text-charcoal-brown/50">
+            <span class="text-xs font-bold text-charcoal-brown/50">
               Chaupai {benefit.targetVerseNumber} Reference
             </span>
             <a
               href={`/hanuman-chalisa-benefits/${benefit.slug}`}
-              class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-4 py-1.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-colors duration-200"
+              class="bg-vermilion hover:bg-marigold text-stone-ivory hover:text-maroon-deep px-4 py-1.5 rounded text-xs font-bold uppercase border border-brass-gold shadow-sm transition-colors duration-200 min-h-[44px] inline-flex items-center"
             >
               Read Guide &rarr;
             </a>
@@ -173,8 +171,6 @@ const itemListSchema = {
     </section>
 
     <!-- AdSense Footer Slot -->
-    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
-      Ad Slot — Benefits Page Bottom (Layout Stable Skeleton)
-    </div>
+    <div class="no-print w-full h-24 bg-transparent overflow-hidden my-12" aria-hidden="true" />
   </div>
 </Layout>

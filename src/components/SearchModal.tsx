@@ -163,7 +163,7 @@ export default function SearchModal() {
         type="button"
         aria-label="Search scriptures and hymns"
         title="Search scriptures (Ctrl+K / ⌘K)"
-        className={`no-print fixed z-40 right-4 sm:right-8 bottom-33 sm:bottom-22 bg-[#2D070B] hover:bg-[#3D0A0F] text-stone-ivory border-2 border-brass-gold shadow-xl h-11 sm:h-12 flex items-center justify-center cursor-pointer group active:scale-95 focus:outline-none focus:ring-2 focus:ring-marigold overflow-hidden transition-[max-width,padding,box-shadow,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`no-print fixed z-40 right-4 sm:right-8 bottom-[136px] sm:bottom-24 bg-[#2D070B] hover:bg-[#3D0A0F] text-stone-ivory border-2 border-brass-gold shadow-xl h-11 sm:h-12 flex items-center justify-center cursor-pointer group active:scale-95 focus:outline-none focus:ring-2 focus:ring-marigold overflow-hidden transition-[max-width,padding,box-shadow,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isCollapsed
             ? "max-w-[44px] sm:max-w-[48px] px-2.5 sm:px-3 shadow-md"
             : "max-w-[170px] px-3.5 sm:px-4"
@@ -196,7 +196,7 @@ export default function SearchModal() {
           <span className="font-serif-display font-bold text-xs sm:text-sm tracking-wider uppercase text-stone-ivory group-hover:text-marigold whitespace-nowrap">
             Search
           </span>
-          <kbd className="hidden lg:inline-flex items-center bg-black/40 border border-brass-gold/40 px-1.5 py-0.5 text-[10px] text-marigold font-mono">
+          <kbd className="hidden lg:inline-flex items-center bg-black/40 border border-brass-gold/40 px-1.5 py-0.5 text-xs text-marigold font-mono">
             ⌘K
           </kbd>
         </div>
@@ -280,7 +280,7 @@ export default function SearchModal() {
                       setSelectedCategory(cat);
                       setSelectedIndex(0);
                     }}
-                    className={`px-3 py-1 font-mono text-[11px] uppercase tracking-wider whitespace-nowrap transition-colors border ${
+                    className={`px-3 py-1 font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors border ${
                       selectedCategory === cat
                         ? "bg-marigold text-maroon-deep font-bold border-marigold shadow-xs"
                         : "bg-black/30 text-stone-ivory/80 hover:text-stone-ivory hover:bg-black/50 border-brass-gold/30"
@@ -324,7 +324,7 @@ export default function SearchModal() {
                           <div className="space-y-1 flex-1 min-w-0">
                             <div className="flex items-center gap-2">
                               <span
-                                className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
+                                className={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
                                   item.category === "Scripture"
                                     ? "bg-vermilion/10 text-vermilion border-vermilion/30"
                                     : item.category === "Aarti"
@@ -340,7 +340,7 @@ export default function SearchModal() {
                                 {item.title}
                               </h4>
                             </div>
-                            <p className="text-xs text-charcoal-brown/75 line-clamp-1 leading-relaxed">
+                            <p className="text-sm text-charcoal-brown/75 line-clamp-1 leading-relaxed">
                               {item.description}
                             </p>
                           </div>
@@ -356,7 +356,7 @@ export default function SearchModal() {
             </div>
 
             {/* Footer Status Bar */}
-            <div className="p-2.5 px-4 bg-[#F2ECE1] border-t border-brass-gold/30 text-[11px] text-charcoal-brown/60 flex items-center justify-between select-none">
+            <div className="p-2.5 px-4 bg-[#F2ECE1] border-t border-brass-gold/30 text-xs text-charcoal-brown/60 flex items-center justify-between select-none">
               <span className="flex items-center gap-1.5">
                 <span className="text-xs">🙏</span>
                 <span>{filteredItems.length} sacred pages indexed</span>

@@ -94,32 +94,10 @@ export default function DiyaCounter() {
       console.warn("Could not read personal sadhana count:", e);
     }
 
-    // Initial fetch
+    // Initial fetch of any initial counter state if available
     fetchGlobalCount(false);
 
-    // Live AJAX polling every 3.5 seconds across active devotees
-    const pollInterval = setInterval(() => {
-      fetchGlobalCount(true);
-    }, 3500);
-
-    // Immediate sync when tab becomes visible or browser comes online
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        fetchGlobalCount(true);
-      }
-    };
-
-    const handleOnline = () => {
-      fetchGlobalCount(true);
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("online", handleOnline);
-
     return () => {
-      clearInterval(pollInterval);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("online", handleOnline);
       if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
       if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
     };
@@ -266,18 +244,18 @@ export default function DiyaCounter() {
           <span className="text-xs font-serif-display font-bold tracking-widest text-marigold uppercase">
             अखण्ड ज्योति साधना
           </span>
-          <span className="text-[10px] text-brass-gold/80 font-mono tracking-wider">
+          <span className="text-xs text-brass-gold/80 font-mono tracking-wider">
             [ Daily Sadhana ]
           </span>
         </div>
         <button
           onClick={() => setSoundEnabled((prev) => !prev)}
-          className="text-xs text-stone-ivory/80 hover:text-marigold transition-colors flex items-center gap-1 cursor-pointer px-2 py-1 bg-black/40 hover:bg-black/60 border border-brass-gold/30"
+          className="text-xs text-stone-ivory/80 hover:text-marigold transition-colors flex items-center gap-1 cursor-pointer px-2 py-1 bg-black/40 hover:bg-black/60 border border-brass-gold/30 min-h-[36px]"
           aria-label={soundEnabled ? "Mute bell chime" : "Enable bell chime"}
           title={soundEnabled ? "Mute bell chime" : "Enable bell chime"}
         >
           <span>{soundEnabled ? "🔔" : "🔕"}</span>
-          <span className="hidden sm:inline text-[11px] font-sans">{soundEnabled ? "घंटी On" : "Muted"}</span>
+          <span className="hidden sm:inline text-xs font-sans">{soundEnabled ? "घंटी On" : "Muted"}</span>
         </button>
       </div>
 
@@ -321,24 +299,24 @@ export default function DiyaCounter() {
           ))}
         </div>
 
-        {/* Global Recitation Counter Display */}
+        {/* Personal Sadhana Counter Display */}
         <div className="text-center mt-2">
           <p className="font-serif-display text-xs tracking-widest text-brass-gold font-medium uppercase">
-            समर्पण गणना • Global Recitations Today
+            दैनिक साधना • Today's Sadhana
           </p>
           <div className="text-3xl font-bold font-serif-display text-marigold tracking-wide mt-0.5">
-            {globalCount.toLocaleString("en-IN")}{" "}
+            {personalCount.toLocaleString("en-IN")}{" "}
             <span className="text-sm font-sans font-normal text-stone-ivory/80">आहुति / Chants</span>
           </div>
-          <p className="text-[11px] text-stone-ivory/70 mt-0.5 font-sans">
-            Offered in unison by devotees worldwide today
+          <p className="text-xs text-stone-ivory/70 mt-0.5 font-sans">
+            Personal recitations recorded with devotion today
           </p>
         </div>
 
         {/* Personal Sadhana / Mala Progress Section */}
         <div className="w-full mt-4 space-y-1.5 text-center">
           <div className="flex justify-between items-center text-xs">
-            <span className="text-stone-ivory/90 font-serif-display">
+            <span className="text-stone-ivory/90 font-serif-display text-xs sm:text-sm">
               व्यक्तिगत जप: <strong className="text-marigold font-sans">{personalCount}</strong> / {nextMilestone.target}
             </span>
             <span className="text-brass-gold text-xs font-mono">{nextMilestone.label}</span>
@@ -363,7 +341,7 @@ export default function DiyaCounter() {
         {/* Main Sacred Click Button */}
         <button
           onClick={handleRecite}
-          className="mt-4 w-full flex items-center justify-center gap-2.5 px-6 py-3.5 font-bold uppercase tracking-wider text-xs sm:text-sm border-2 border-brass-gold shadow-md transition-colors cursor-pointer bg-vermilion hover:bg-[#a63405] text-stone-ivory active:scale-[0.99]"
+          className="mt-4 w-full min-h-[48px] flex items-center justify-center gap-2.5 px-6 py-3.5 font-bold uppercase tracking-wider text-xs sm:text-sm border-2 border-brass-gold shadow-md transition-colors cursor-pointer bg-vermilion hover:bg-[#a63405] text-stone-ivory active:scale-[0.99]"
         >
           <span className={`text-base ${isFlaring ? "scale-125 transition-transform" : ""}`}>
             🔔
@@ -374,7 +352,7 @@ export default function DiyaCounter() {
           </span>
         </button>
 
-        <p className="text-[11px] text-stone-ivory/70 mt-2.5 text-center leading-snug">
+        <p className="text-xs text-stone-ivory/70 mt-2.5 text-center leading-snug">
           Click with devotion after each Chaupai or full recitation. Your sacred sadhana progress is preserved.
         </p>
       </div>

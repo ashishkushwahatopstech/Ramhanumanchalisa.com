@@ -220,14 +220,14 @@ export const DEFAULT_SITE_LAYOUT_CONFIG: SiteLayoutConfig = {
   footer: {
     brandingTitle: "Ram Hanuman Chalisa",
     brandingTagline: "श्री राम जय राम जय जय राम",
-    brandingDesc: "A digital sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and digest the glorious verses composed by Goswami Tulsidas. Reviewed by traditional scholars to ensure absolute accuracy of translation and context.",
+    brandingDesc: "A digital sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and digest the glorious verses composed by Goswami Tulsidas.",
     copyrightText: "RamHanumanChalisa.com. All Rights Reserved.",
-    disclaimerText: "Disclaimer: The materials provided are for devotional, cultural, and educational purposes. AdSense slots are integrated layout-stable.",
+    disclaimerText: "Disclaimer: The materials provided are for devotional, cultural, and educational purposes.",
     quickLinks: [
       { label: "Hanuman Chalisa Text", href: "/" },
       { label: "Bilingual Meanings", href: "/hanuman-chalisa-meaning" },
       { label: "Audio Synced Player", href: "/hanuman-chalisa-audio-mp3" },
-      { label: "Hanuman Chalisa in English", href: "/hanuman-chalisa-english" },
+      { label: "Hanuman Chalisa in English", href: "/hanuman-chalisa/en" },
       { label: "40 Chaupai Benefits & Meaning", href: "/hanuman-chalisa-benefits" },
       { label: "Recitation Rules", href: "/shri-hanuman-chalisa-path-vidhi" },
       { label: "📥 Download & Save Prayers (PDF, Verses & Cards)", href: "/hanuman-chalisa-pdf" },

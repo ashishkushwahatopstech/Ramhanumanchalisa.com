@@ -11,6 +11,7 @@ const CONSOLIDATED_MIDDLEWARE_REDIRECTS: Record<string, string> = Object.entries
 
 const LEGACY_SLUG_REDIRECTS: Record<string, string> = {
   ...CONSOLIDATED_MIDDLEWARE_REDIRECTS,
+  "/hanuman-chalisa-english": "/hanuman-chalisa/en",
   "/blog/surya-dev-aarti-bhajan-lyrics-in": "/blog/surya-dev-aarti-bhajan-lyrics-in-english-and-hindi",
   "/blog/shri-kaal-bhairav-chalisa-lyrics-in": "/blog/shri-kaal-bhairav-chalisa-lyrics-in-hindi",
   "/blog/shri-kaal-bhairav-chalisa-lyrics-in_24": "/blog/shri-kaal-bhairav-chalisa-lyrics-in-english",

@@ -21,7 +21,7 @@ const STATIC_BLOG_POSTS: BlogPost[] = [
     title: "Why Hanuman Chalisa Has Exactly 40 Verses",
     excerpt: "Explore the astronomical, biological, and scriptural significance of the number 40 in the Hanuman Chalisa composed by Tulsidas.",
     createdAt: "August 20, 2026",
-    author: "Acharya Ramesh Dwivedi",
+    author: "Ram Hanuman Chalisa Editorial",
     readTime: "4 min read",
     content: `
 The word **Chalisa** is derived from *Chalis*, the Hindi word for forty. Goswami Tulsidas composed exactly forty quatrains (Chaupais) praising Lord Hanuman, preceded by two introductory couplets (Dohas) and followed by one concluding couplet.
@@ -50,7 +50,7 @@ Whether you recite it forty times in a single sitting on a special festival day,
     title: "The Hours of the Gods: Chanting Hanuman Chalisa in Brahma Muhurat",
     excerpt: "Learn why early morning chanting (Brahma Muhurat) multiplies the spiritual and psychological effectiveness of the Chalisa.",
     createdAt: "August 15, 2026",
-    author: "Pandit Krishna Kant Shastri",
+    author: "Ram Hanuman Chalisa Editorial",
     readTime: "5 min read",
     coverImage: "/images/blog/chanting-hanuman-chalisa-brahma-muhurat.webp",
     featuredImage: "/images/blog/chanting-hanuman-chalisa-brahma-muhurat.webp",

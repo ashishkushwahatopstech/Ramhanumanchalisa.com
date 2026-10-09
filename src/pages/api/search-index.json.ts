@@ -134,15 +134,8 @@ const STATIC_SEARCH_ITEMS: SearchItem[] = [
     title: "Hanuman Chalisa in English with Audio & Meaning",
     url: "/hanuman-chalisa/en",
     category: "Language",
-    description: "Complete English edition with audio player, English translation, and printable PDF.",
-    keywords: "hanuman chalisa english audio meaning pdf lyrics"
-  },
-  {
-    title: "Hanuman Chalisa English Chanting Guide (Romanized)",
-    url: "/hanuman-chalisa-english",
-    category: "Language",
-    description: "Line-by-line phonetic transliteration guide for easy chanting in English.",
-    keywords: "hanuman chalisa english transliteration phonetic chanting guide"
+    description: "Complete English edition with phonetic transliteration, audio player, English translation, and printable PDF.",
+    keywords: "hanuman chalisa english audio meaning pdf lyrics transliteration phonetic chanting guide"
   }
 ];
 

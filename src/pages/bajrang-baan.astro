@@ -107,9 +107,7 @@ const compositionSchema = {
     <CarvedDivider icon="🏹" />
 
     <!-- AdSense Top Slot -->
-    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner">
-      Ad Slot — Page Top (Layout Stable)
-    </div>
+    <div class="no-print w-full h-24 bg-transparent overflow-hidden" aria-hidden="true" />
 
     <!-- 1. Opening Dohas -->
     {openingDohas.length > 0 && (
@@ -151,7 +149,7 @@ const compositionSchema = {
               <span class="rubric-marker">
                 ॥ बाण चौपाई {verse.verse_number} ॥
               </span>
-              <span class="text-[10px] font-mono tracking-widest text-charcoal-brown/40 uppercase">
+              <span class="text-xs font-mono tracking-widest text-charcoal-brown/40 uppercase">
                 Verse {verse.verse_number}
               </span>
             </div>
@@ -172,7 +170,7 @@ const compositionSchema = {
                 {verse.literal_translation.en}
               </p>
               {verse.interpretive_meaning && verse.interpretive_meaning.en && (
-                <p class="text-[11px] text-charcoal-brown/60 mt-1.5 text-center leading-relaxed max-w-2xl mx-auto">
+                <p class="text-xs text-charcoal-brown/60 mt-1.5 text-center leading-relaxed max-w-2xl mx-auto">
                   {verse.interpretive_meaning.en}
                 </p>
               )}
@@ -244,9 +242,7 @@ const compositionSchema = {
     />
 
     <!-- AdSense Footer Slot -->
-    <div class="no-print w-full h-24 bg-stone-ivory border border-brass-gold/20 flex items-center justify-center text-xs text-charcoal-brown/40 tracking-widest uppercase rounded shadow-inner my-12">
-      Ad Slot — Page Bottom (Layout Stable)
-    </div>
+    <div class="no-print w-full h-24 bg-transparent overflow-hidden my-12" aria-hidden="true" />
 
   </div>
 </Layout>
