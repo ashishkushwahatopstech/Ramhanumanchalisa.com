@@ -196,17 +196,243 @@ function renderInlineMarkdown(text: string): string {
     .replace(/(^|[^*])\*([^*]+)\*([^*]|$)/g, "$1<em>$2</em>$3");
 }
 
-// Simple parser for standard markdown elements
+function isTableLine(line: string): boolean {
+  const t = line.trim();
+  if (!t.startsWith("|") || t.startsWith("||")) return false;
+  const pipeCount = (t.match(/\|/g) || []).length;
+  return pipeCount >= 2;
+}
+
+function parseTableRowCells(row: string): string[] {
+  let t = row.trim();
+  if (t.startsWith("|")) t = t.slice(1);
+  if (t.endsWith("|")) t = t.slice(0, -1);
+  return t.split("|").map((c) => c.trim());
+}
+
+function isTableSeparatorRow(row: string): boolean {
+  const cells = parseTableRowCells(row);
+  return cells.length > 0 && cells.every((c) => /^:?-{1,}:?$/.test(c));
+}
+
+function cleanHeadingRawText(raw: string): string {
+  return raw
+    .replace(/<[^>]+>/g, "")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/^[*#\s]+|[*#\s]+$/g, "")
+    .trim();
+}
+
+function splitMarkdownBlocks(content: string): string[] {
+  if (!content) return [];
+  const normalized = content
+    .replace(/\r\n?/g, "\n")
+    // Expand single-line collapsed markdown tables if pasted on one line
+    .replace(/\|\s+\|(?=\s*:?-{2,}:?\s*\|)/g, "|\n|")
+    .replace(/(\|\s*:?-{2,}:?\s*\|)\s+\|/g, "$1\n|");
+
+  const lines = normalized.split("\n");
+  const blocks: string[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      i++;
+      continue;
+    }
+
+    // 1. Multi-line HTML block (e.g. <figure>, <table>, <div>)
+    const htmlBlockMatch = trimmed.match(/^<(figure|table|div|ul|ol|blockquote|section)\b/i);
+    if (htmlBlockMatch) {
+      const tagName = htmlBlockMatch[1].toLowerCase();
+      const closeRegex = new RegExp(`</${tagName}\\s*>`, "i");
+      const htmlLines: string[] = [line];
+      i++;
+      if (!closeRegex.test(trimmed)) {
+        while (i < lines.length) {
+          htmlLines.push(lines[i]);
+          if (closeRegex.test(lines[i])) {
+            i++;
+            break;
+          }
+          i++;
+        }
+      }
+      blocks.push(htmlLines.join("\n").trim());
+      continue;
+    }
+
+    // 2. Fenced verse / code block (``` ... ```)
+    if (trimmed.startsWith("```")) {
+      const fenceLines: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i].trim().startsWith("```")) {
+        fenceLines.push(lines[i]);
+        i++;
+      }
+      if (i < lines.length) i++;
+      blocks.push("```\n" + fenceLines.join("\n").trim() + "\n```");
+      continue;
+    }
+
+    // 3. Markdown Table block (consecutive | ... | rows, even if separated by blank lines)
+    if (isTableLine(trimmed)) {
+      const tableLines: string[] = [trimmed];
+      i++;
+      while (i < lines.length) {
+        const nextTrimmed = lines[i].trim();
+        if (isTableLine(nextTrimmed)) {
+          tableLines.push(nextTrimmed);
+          i++;
+        } else if (!nextTrimmed) {
+          let lookahead = i + 1;
+          while (lookahead < lines.length && !lines[lookahead].trim()) {
+            lookahead++;
+          }
+          if (lookahead < lines.length && isTableLine(lines[lookahead].trim())) {
+            i = lookahead;
+          } else {
+            break;
+          }
+        } else {
+          break;
+        }
+      }
+      blocks.push(tableLines.join("\n"));
+      continue;
+    }
+
+    // 4. Markdown Heading (#, ##, ###, ####) or Horizontal Rule (---, ***, ___)
+    if (/^#{1,4}\s+/.test(trimmed) || /^(?:-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
+      blocks.push(trimmed);
+      i++;
+      continue;
+    }
+
+    // 5. Standalone bold heading line (e.g. **Heading** or **Heading**: or unmatched **Heading)
+    if (
+      (/^\*\*[^*]+\*\*:?$/.test(trimmed) && trimmed.length <= 120 && !trimmed.endsWith(".**")) ||
+      (/^\*\*[^*]+$/.test(trimmed) && trimmed.length <= 90 && !trimmed.endsWith("."))
+    ) {
+      blocks.push(trimmed);
+      i++;
+      continue;
+    }
+
+    // 6. Unordered list (- , * , • )
+    if (/^(?:[-•]|\*(?!\*))\s+/.test(trimmed)) {
+      const listLines: string[] = [trimmed];
+      i++;
+      while (i < lines.length && /^(?:[-•]|\*(?!\*))\s+/.test(lines[i].trim())) {
+        listLines.push(lines[i].trim());
+        i++;
+      }
+      blocks.push(listLines.join("\n"));
+      continue;
+    }
+
+    // 7. Ordered list (1. , 2. , etc.)
+    if (/^\d+\.\s+/.test(trimmed)) {
+      const listLines: string[] = [trimmed];
+      i++;
+      while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) {
+        listLines.push(lines[i].trim());
+        i++;
+      }
+      blocks.push(listLines.join("\n"));
+      continue;
+    }
+
+    // 8. Blockquote (> ...)
+    if (trimmed.startsWith(">")) {
+      const quoteLines: string[] = [trimmed];
+      i++;
+      while (i < lines.length && lines[i].trim().startsWith(">")) {
+        quoteLines.push(lines[i].trim());
+        i++;
+      }
+      blocks.push(quoteLines.join("\n"));
+      continue;
+    }
+
+    // 9. Regular paragraph
+    const paraLines: string[] = [trimmed];
+    i++;
+    while (i < lines.length) {
+      const nextTrimmed = lines[i].trim();
+      if (
+        !nextTrimmed ||
+        /^<(figure|table|div|ul|ol|blockquote|section)\b/i.test(nextTrimmed) ||
+        nextTrimmed.startsWith("```") ||
+        isTableLine(nextTrimmed) ||
+        /^#{1,4}\s+/.test(nextTrimmed) ||
+        /^(?:-{3,}|\*{3,}|_{3,})$/.test(nextTrimmed) ||
+        (/^\*\*[^*]+\*\*:?$/.test(nextTrimmed) && nextTrimmed.length <= 120 && !nextTrimmed.endsWith(".**")) ||
+        (/^\*\*[^*]+$/.test(nextTrimmed) && nextTrimmed.length <= 90 && !nextTrimmed.endsWith(".")) ||
+        /^(?:[-•]|\*(?!\*))\s+/.test(nextTrimmed) ||
+        /^\d+\.\s+/.test(nextTrimmed) ||
+        nextTrimmed.startsWith(">")
+      ) {
+        break;
+      }
+      paraLines.push(nextTrimmed);
+      i++;
+    }
+    blocks.push(paraLines.join("\n"));
+  }
+
+  return blocks;
+}
+
+// Comprehensive parser for Markdown & HTML blog elements
 function parseMarkdown(content: string, postTitle: string) {
-  const sections = content.split("\n\n").map((section) => section.trim()).filter(Boolean);
+  const sections = splitMarkdownBlocks(content);
 
   let headingCount = 0;
 
   return sections.map((sec) => {
+    // Horizontal Rule
+    if (/^(?:-{3,}|\*{3,}|_{3,})$/.test(sec)) {
+      return {
+        type: "hr",
+      };
+    }
+
+    // Markdown Table
+    if (isTableLine(sec.split("\n")[0])) {
+      const tableLines = sec.split("\n").map((l) => l.trim()).filter(Boolean);
+      if (tableLines.length >= 2) {
+        const headers = parseTableRowCells(tableLines[0]).map((cell) => renderInlineMarkdown(cell));
+        const bodyLines = tableLines.slice(1).filter((l) => !isTableSeparatorRow(l));
+        const rows = bodyLines.map((rowLine) =>
+          parseTableRowCells(rowLine).map((cell) => renderInlineMarkdown(cell))
+        );
+        return {
+          type: "table",
+          headers,
+          rows,
+        };
+      }
+    }
+
+    // Fenced verse / code block
+    if (sec.startsWith("```") && sec.endsWith("```")) {
+      const inner = sec.replace(/^```\w*\n?/, "").replace(/\n?```$/, "").trim();
+      return {
+        type: "verse",
+        text: renderInlineMarkdown(inner).replace(/\n/g, "<br />"),
+      };
+    }
+
     if (sec.startsWith("#### ")) {
       headingCount++;
-      const text = renderInlineMarkdown(sec.replace("#### ", ""));
-      const rawText = sec.replace("#### ", "").replace(/<[^>]+>/g, "").trim();
+      const body = sec.replace(/^####\s+/, "");
+      const rawText = cleanHeadingRawText(body);
+      const text = renderInlineMarkdown(rawText);
       const id = `section-${headingCount}-${rawText.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 30)}`;
       return {
         type: "h4",
@@ -217,8 +443,9 @@ function parseMarkdown(content: string, postTitle: string) {
     }
     if (sec.startsWith("### ")) {
       headingCount++;
-      const text = renderInlineMarkdown(sec.replace("### ", ""));
-      const rawText = sec.replace("### ", "").replace(/<[^>]+>/g, "").trim();
+      const body = sec.replace(/^###\s+/, "");
+      const rawText = cleanHeadingRawText(body);
+      const text = renderInlineMarkdown(rawText);
       const id = `section-${headingCount}-${rawText.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 30)}`;
       return {
         type: "h3",
@@ -227,10 +454,11 @@ function parseMarkdown(content: string, postTitle: string) {
         text,
       };
     }
-    if (sec.startsWith("## ")) {
+    if (sec.startsWith("## ") || sec.startsWith("# ")) {
       headingCount++;
-      const text = renderInlineMarkdown(sec.replace("## ", ""));
-      const rawText = sec.replace("## ", "").replace(/<[^>]+>/g, "").trim();
+      const body = sec.replace(/^#{1,2}\s+/, "");
+      const rawText = cleanHeadingRawText(body);
+      const text = renderInlineMarkdown(rawText);
       const id = `section-${headingCount}-${rawText.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 30)}`;
       return {
         type: "h2",
@@ -239,19 +467,67 @@ function parseMarkdown(content: string, postTitle: string) {
         text,
       };
     }
-    if (sec.startsWith("*") && sec.endsWith("*")) {
+
+    // Standalone bold heading (**Heading** or **Heading**: or **Heading)
+    if (
+      !sec.includes("\n") &&
+      ((/^\*\*[^*]+\*\*:?$/.test(sec) && sec.length <= 120 && !sec.endsWith(".**")) ||
+        (/^\*\*[^*]+$/.test(sec) && sec.length <= 90 && !sec.endsWith(".")))
+    ) {
+      headingCount++;
+      const isSub = sec.endsWith(":");
+      const rawText = cleanHeadingRawText(sec);
+      const id = `section-${headingCount}-${rawText.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 30)}`;
       return {
-        type: "italic",
-        text: renderInlineMarkdown(sec.replace(/\*/g, "")),
+        type: isSub ? "h3" : "h2",
+        id,
+        rawText,
+        text: rawText,
       };
     }
-    if (sec.startsWith("- ")) {
-      const items = sec.split("\n").map((item) => renderInlineMarkdown(item.replace("- ", "").trim()));
+
+    // Single-asterisk italic line (*...*)
+    if (sec.startsWith("*") && !sec.startsWith("**") && sec.endsWith("*") && !sec.endsWith("**")) {
+      return {
+        type: "italic",
+        text: renderInlineMarkdown(sec.replace(/^\*+|\*+$/g, "")),
+      };
+    }
+
+    // Unordered list (- , * , • )
+    if (/^(?:[-•]|\*(?!\*))\s+/.test(sec)) {
+      const items = sec
+        .split("\n")
+        .map((item) => renderInlineMarkdown(item.replace(/^(?:[-•]|\*(?!\*))\s+/, "").trim()));
       return {
         type: "list",
         items,
       };
     }
+
+    // Ordered list (1. , 2. , etc.)
+    if (/^\d+\.\s+/.test(sec)) {
+      const items = sec
+        .split("\n")
+        .map((item) => renderInlineMarkdown(item.replace(/^\d+\.\s+/, "").trim()));
+      return {
+        type: "olist",
+        items,
+      };
+    }
+
+    // Blockquote (> ...)
+    if (sec.startsWith(">")) {
+      const quoteText = sec
+        .split("\n")
+        .map((l) => renderInlineMarkdown(l.replace(/^>\s*/, "").trim()))
+        .join("<br />");
+      return {
+        type: "blockquote",
+        text: quoteText,
+      };
+    }
+
     if (sec.startsWith("<") && (sec.includes(">") || sec.endsWith(">"))) {
       let sanitizedHtml = sec;
       // Ensure any inline img has alt, loading="lazy", decoding="async"
@@ -299,7 +575,7 @@ function parseMarkdown(content: string, postTitle: string) {
     }
     return {
       type: "p",
-      text: renderInlineMarkdown(sec),
+      text: renderInlineMarkdown(sec).replace(/\n/g, "<br />"),
     };
   });
 }
@@ -729,6 +1005,9 @@ const postOgImageAlt = post.imageAlt || `${cleanTitle} - Ram Hanuman Chalisa`;
     <!-- Main Post Content -->
     <article class="blog-article-content bg-stone-ivory border border-brass-gold/30 p-6 sm:p-8 rounded-lg shadow-sm space-y-4">
       {parsedContent.map((item) => {
+        if (item.type === "hr") {
+          return <hr class="my-6 border-brass-gold/30" />;
+        }
         if (item.type === "h2") {
           return <h2 id={item.id} class="font-serif-display text-xl sm:text-2xl font-bold text-maroon-deep mt-8 mb-3 pb-2 border-b border-brass-gold/20" set:html={item.text} />;
         }
@@ -737,6 +1016,53 @@ const postOgImageAlt = post.imageAlt || `${cleanTitle} - Ram Hanuman Chalisa`;
         }
         if (item.type === "h3") {
           return <h3 id={item.id} class="font-serif-display text-xl font-bold text-maroon-deep mt-8 mb-3" set:html={item.text} />;
+        }
+        if (item.type === "table") {
+          return (
+            <div class="my-6 overflow-x-auto rounded-xl border border-brass-gold/40 shadow-sm bg-white">
+              <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                {item.headers && item.headers.length > 0 && (
+                  <thead>
+                    <tr class="bg-maroon-deep text-stone-ivory border-b border-brass-gold/40">
+                      {item.headers.map((header) => (
+                        <th class="py-3 px-4 font-serif-display font-bold uppercase tracking-wider text-xs sm:text-sm" set:html={header} />
+                      ))}
+                    </tr>
+                  </thead>
+                )}
+                <tbody>
+                  {item.rows?.map((row) => (
+                    <tr class="border-b border-brass-gold/20 last:border-b-0 even:bg-stone-ivory/60 hover:bg-marigold/10 transition-colors">
+                      {row.map((cell, cellIdx) => (
+                        <td
+                          class={`py-3 px-4 align-top leading-relaxed ${
+                            cellIdx === 0 ? "font-semibold text-maroon-deep" : "text-charcoal-brown/90"
+                          }`}
+                          set:html={cell}
+                        />
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
+        if (item.type === "verse") {
+          return (
+            <div
+              class="my-5 p-4 sm:p-5 bg-marigold/10 border-l-4 border-maroon-deep rounded-r-lg font-serif text-sm sm:text-base text-maroon-deep leading-loose text-center"
+              set:html={item.text}
+            />
+          );
+        }
+        if (item.type === "blockquote") {
+          return (
+            <blockquote
+              class="my-4 pl-4 py-2 border-l-4 border-brass-gold bg-marigold/10 italic text-xs sm:text-sm text-charcoal-brown/90 rounded-r"
+              set:html={item.text}
+            />
+          );
         }
         if (item.type === "italic") {
           return <p class="text-xs sm:text-sm text-charcoal-brown/70 italic my-3 text-center" set:html={item.text} />;
@@ -748,6 +1074,15 @@ const postOgImageAlt = post.imageAlt || `${cleanTitle} - Ram Hanuman Chalisa`;
                 <li set:html={li} />
               ))}
             </ul>
+          );
+        }
+        if (item.type === "olist") {
+          return (
+            <ol class="list-decimal list-inside space-y-2 text-xs sm:text-sm text-charcoal-brown/85 my-4 pl-4">
+              {item.items?.map((li) => (
+                <li set:html={li} />
+              ))}
+            </ol>
           );
         }
         if (item.type === "html") {

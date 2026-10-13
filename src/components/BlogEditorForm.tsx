@@ -4,37 +4,274 @@ import React, { useState } from "react";
 import { generateSlug } from "../lib/slugify";
 import { optimizeImageForUpload } from "../lib/clientImageOptimizer";
 
-function previewMarkdown(text: string): string {
-  if (!text || !text.trim()) return "<p class='text-charcoal-brown/50 italic py-4'>Article body is empty. Type content above to see live preview.</p>";
+function formatInlinePreview(text: string): string {
+  if (!text) return "";
   return text
-    .split("\n\n")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, linkText, url) => {
+      const isExt = /^https?:\/\//i.test(url.trim());
+      const target = isExt ? ' target="_blank" rel="noopener noreferrer"' : "";
+      return `<a href="${url.trim()}" class="text-maroon-deep hover:text-vermilion underline font-bold transition-colors"${target}>${linkText}</a>`;
+    })
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^*])\*([^*]+)\*([^*]|$)/g, "$1<em>$2</em>$3");
+}
+
+function isPreviewTableLine(line: string): boolean {
+  const t = line.trim();
+  if (!t.startsWith("|") || t.startsWith("||")) return false;
+  return (t.match(/\|/g) || []).length >= 2;
+}
+
+function parsePreviewTableCells(row: string): string[] {
+  let t = row.trim();
+  if (t.startsWith("|")) t = t.slice(1);
+  if (t.endsWith("|")) t = t.slice(0, -1);
+  return t.split("|").map((c) => c.trim());
+}
+
+function isPreviewSeparatorRow(row: string): boolean {
+  const cells = parsePreviewTableCells(row);
+  return cells.length > 0 && cells.every((c) => /^:?-{1,}:?$/.test(c));
+}
+
+function splitPreviewBlocks(content: string): string[] {
+  if (!content) return [];
+  const normalized = content
+    .replace(/\r\n?/g, "\n")
+    .replace(/\|\s+\|(?=\s*:?-{2,}:?\s*\|)/g, "|\n|")
+    .replace(/(\|\s*:?-{2,}:?\s*\|)\s+\|/g, "$1\n|");
+
+  const lines = normalized.split("\n");
+  const blocks: string[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const trimmed = line.trim();
+    if (!trimmed) {
+      i++;
+      continue;
+    }
+
+    const htmlBlockMatch = trimmed.match(/^<(figure|table|div|ul|ol|blockquote|section)\b/i);
+    if (htmlBlockMatch) {
+      const tagName = htmlBlockMatch[1].toLowerCase();
+      const closeRegex = new RegExp(`</${tagName}\\s*>`, "i");
+      const htmlLines: string[] = [line];
+      i++;
+      if (!closeRegex.test(trimmed)) {
+        while (i < lines.length) {
+          htmlLines.push(lines[i]);
+          if (closeRegex.test(lines[i])) {
+            i++;
+            break;
+          }
+          i++;
+        }
+      }
+      blocks.push(htmlLines.join("\n").trim());
+      continue;
+    }
+
+    if (trimmed.startsWith("```")) {
+      const fenceLines: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i].trim().startsWith("```")) {
+        fenceLines.push(lines[i]);
+        i++;
+      }
+      if (i < lines.length) i++;
+      blocks.push("```\n" + fenceLines.join("\n").trim() + "\n```");
+      continue;
+    }
+
+    if (isPreviewTableLine(trimmed)) {
+      const tableLines: string[] = [trimmed];
+      i++;
+      while (i < lines.length) {
+        const nextTrimmed = lines[i].trim();
+        if (isPreviewTableLine(nextTrimmed)) {
+          tableLines.push(nextTrimmed);
+          i++;
+        } else if (!nextTrimmed) {
+          let lookahead = i + 1;
+          while (lookahead < lines.length && !lines[lookahead].trim()) {
+            lookahead++;
+          }
+          if (lookahead < lines.length && isPreviewTableLine(lines[lookahead].trim())) {
+            i = lookahead;
+          } else {
+            break;
+          }
+        } else {
+          break;
+        }
+      }
+      blocks.push(tableLines.join("\n"));
+      continue;
+    }
+
+    if (/^#{1,4}\s+/.test(trimmed) || /^(?:-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
+      blocks.push(trimmed);
+      i++;
+      continue;
+    }
+
+    if (
+      (/^\*\*[^*]+\*\*:?$/.test(trimmed) && trimmed.length <= 120 && !trimmed.endsWith(".**")) ||
+      (/^\*\*[^*]+$/.test(trimmed) && trimmed.length <= 90 && !trimmed.endsWith("."))
+    ) {
+      blocks.push(trimmed);
+      i++;
+      continue;
+    }
+
+    if (/^(?:[-•]|\*(?!\*))\s+/.test(trimmed)) {
+      const listLines: string[] = [trimmed];
+      i++;
+      while (i < lines.length && /^(?:[-•]|\*(?!\*))\s+/.test(lines[i].trim())) {
+        listLines.push(lines[i].trim());
+        i++;
+      }
+      blocks.push(listLines.join("\n"));
+      continue;
+    }
+
+    if (/^\d+\.\s+/.test(trimmed)) {
+      const listLines: string[] = [trimmed];
+      i++;
+      while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) {
+        listLines.push(lines[i].trim());
+        i++;
+      }
+      blocks.push(listLines.join("\n"));
+      continue;
+    }
+
+    if (trimmed.startsWith(">")) {
+      const quoteLines: string[] = [trimmed];
+      i++;
+      while (i < lines.length && lines[i].trim().startsWith(">")) {
+        quoteLines.push(lines[i].trim());
+        i++;
+      }
+      blocks.push(quoteLines.join("\n"));
+      continue;
+    }
+
+    const paraLines: string[] = [trimmed];
+    i++;
+    while (i < lines.length) {
+      const nextTrimmed = lines[i].trim();
+      if (
+        !nextTrimmed ||
+        /^<(figure|table|div|ul|ol|blockquote|section)\b/i.test(nextTrimmed) ||
+        nextTrimmed.startsWith("```") ||
+        isPreviewTableLine(nextTrimmed) ||
+        /^#{1,4}\s+/.test(nextTrimmed) ||
+        /^(?:-{3,}|\*{3,}|_{3,})$/.test(nextTrimmed) ||
+        (/^\*\*[^*]+\*\*:?$/.test(nextTrimmed) && nextTrimmed.length <= 120 && !nextTrimmed.endsWith(".**")) ||
+        (/^\*\*[^*]+$/.test(nextTrimmed) && nextTrimmed.length <= 90 && !nextTrimmed.endsWith(".")) ||
+        /^(?:[-•]|\*(?!\*))\s+/.test(nextTrimmed) ||
+        /^\d+\.\s+/.test(nextTrimmed) ||
+        nextTrimmed.startsWith(">")
+      ) {
+        break;
+      }
+      paraLines.push(nextTrimmed);
+      i++;
+    }
+    blocks.push(paraLines.join("\n"));
+  }
+
+  return blocks;
+}
+
+function previewMarkdown(text: string): string {
+  if (!text || !text.trim()) {
+    return "<p class='text-charcoal-brown/50 italic py-4'>Article body is empty. Type content above to see live preview.</p>";
+  }
+  return splitPreviewBlocks(text)
     .map((chunk) => {
-      let trimmed = chunk.trim();
+      const trimmed = chunk.trim();
       if (!trimmed) return "";
+
+      if (/^(?:-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
+        return `<hr class="my-4 border-brass-gold/30" />`;
+      }
+
+      if (isPreviewTableLine(trimmed.split("\n")[0])) {
+        const tableLines = trimmed.split("\n").map((l) => l.trim()).filter(Boolean);
+        if (tableLines.length >= 2) {
+          const headers = parsePreviewTableCells(tableLines[0]).map((c) => formatInlinePreview(c));
+          const bodyLines = tableLines.slice(1).filter((l) => !isPreviewSeparatorRow(l));
+          const headerHtml = headers
+            .map((h) => `<th class="py-2.5 px-3 font-serif font-bold uppercase tracking-wider text-xs">${h}</th>`)
+            .join("");
+          const rowsHtml = bodyLines
+            .map((rowLine) => {
+              const cells = parsePreviewTableCells(rowLine).map((c) => formatInlinePreview(c));
+              const cellsHtml = cells
+                .map(
+                  (cell, idx) =>
+                    `<td class="py-2.5 px-3 align-top ${idx === 0 ? "font-semibold text-maroon-deep" : "text-charcoal-brown/90"}">${cell}</td>`
+                )
+                .join("");
+              return `<tr class="border-b border-brass-gold/20 last:border-b-0 even:bg-stone-ivory/60">${cellsHtml}</tr>`;
+            })
+            .join("");
+          return `<div class="my-4 overflow-x-auto rounded-lg border border-brass-gold/40 shadow-xs bg-white"><table class="w-full text-left border-collapse text-xs"><thead><tr class="bg-maroon-deep text-stone-ivory border-b border-brass-gold/40">${headerHtml}</tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
+        }
+      }
+
+      if (trimmed.startsWith("#### ")) {
+        return `<h4 class="font-serif font-bold text-sm text-maroon-deep mt-4 mb-1.5">${formatInlinePreview(trimmed.replace(/^####\s+/, ""))}</h4>`;
+      }
       if (trimmed.startsWith("### ")) {
-        return `<h4 class="font-serif font-bold text-base text-maroon-deep mt-4 mb-2">${trimmed.replace("### ", "")}</h4>`;
+        return `<h3 class="font-serif font-bold text-base text-maroon-deep mt-4 mb-2">${formatInlinePreview(trimmed.replace(/^###\s+/, ""))}</h3>`;
       }
-      if (trimmed.startsWith("## ")) {
-        return `<h3 class="font-serif font-bold text-lg text-maroon-deep mt-4 mb-2 border-b border-brass-gold/20 pb-1">${trimmed.replace("## ", "")}</h3>`;
+      if (trimmed.startsWith("## ") || trimmed.startsWith("# ")) {
+        return `<h2 class="font-serif font-bold text-lg text-maroon-deep mt-4 mb-2 border-b border-brass-gold/20 pb-1">${formatInlinePreview(trimmed.replace(/^#{1,2}\s+/, ""))}</h2>`;
       }
-      if (trimmed.startsWith("- ")) {
+
+      if (
+        !trimmed.includes("\n") &&
+        ((/^\*\*[^*]+\*\*:?$/.test(trimmed) && trimmed.length <= 120 && !trimmed.endsWith(".**")) ||
+          (/^\*\*[^*]+$/.test(trimmed) && trimmed.length <= 90 && !trimmed.endsWith(".")))
+      ) {
+        const cleanHeading = trimmed.replace(/^[*#\s]+|[*#\s]+$/g, "");
+        return `<h2 class="font-serif font-bold text-lg text-maroon-deep mt-4 mb-2 border-b border-brass-gold/20 pb-1">${formatInlinePreview(cleanHeading)}</h2>`;
+      }
+
+      if (/^(?:[-•]|\*(?!\*))\s+/.test(trimmed)) {
         const items = trimmed
           .split("\n")
-          .map((li) => `<li>${li.replace("- ", "").trim()}</li>`)
+          .map((li) => `<li>${formatInlinePreview(li.replace(/^(?:[-•]|\*(?!\*))\s+/, "").trim())}</li>`)
           .join("");
         return `<ul class="list-disc list-inside space-y-1 my-2 text-xs text-charcoal-brown/90">${items}</ul>`;
       }
-      // Process inline markdown links and formatting
-      let processed = trimmed
-        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, linkText, url) => {
-          const isExt = /^https?:\/\//i.test(url.trim());
-          const target = isExt ? ' target="_blank" rel="noopener noreferrer"' : '';
-          return `<a href="${url.trim()}" class="text-maroon-deep hover:text-vermilion underline font-bold transition-colors"${target}>${linkText}</a>`;
-        })
-        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-        .replace(/(^|[^*])\*([^*]+)\*([^*]|$)/g, "$1<em>$2</em>$3")
-        .replace(/\n/g, "<br />");
 
+      if (/^\d+\.\s+/.test(trimmed)) {
+        const items = trimmed
+          .split("\n")
+          .map((li) => `<li>${formatInlinePreview(li.replace(/^\d+\.\s+/, "").trim())}</li>`)
+          .join("");
+        return `<ol class="list-decimal list-inside space-y-1 my-2 text-xs text-charcoal-brown/90">${items}</ol>`;
+      }
+
+      if (trimmed.startsWith(">")) {
+        const quote = trimmed
+          .split("\n")
+          .map((l) => formatInlinePreview(l.replace(/^>\s*/, "").trim()))
+          .join("<br />");
+        return `<blockquote class="my-3 pl-3 py-1.5 border-l-4 border-brass-gold bg-marigold/10 italic text-xs text-charcoal-brown/90 rounded-r">${quote}</blockquote>`;
+      }
+
+      if (trimmed.startsWith("<") && trimmed.endsWith(">")) {
+        return trimmed;
+      }
+
+      const processed = formatInlinePreview(trimmed).replace(/\n/g, "<br />");
       return `<p class="text-xs text-charcoal-brown/90 leading-relaxed my-2">${processed}</p>`;
     })
     .join("");
@@ -993,12 +1230,13 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
               <div>
                 <div className="flex justify-between items-center mb-1">
                   <label className="block text-xs uppercase font-bold text-maroon-deep">
-                    Article Body Content (Markdown & HTML Figures supported) <span className="text-red-500">*</span>
+                    Article Body Content (Markdown, Tables & HTML Figures supported) <span className="text-red-500">*</span>
                   </label>
                   <div className="flex gap-2 text-[11px] text-charcoal-brown/60 font-mono">
                     <span>## Heading</span>
                     <span>### Subheading</span>
                     <span>- Bullet point</span>
+                    <span>| Table |</span>
                   </div>
                 </div>
 
@@ -1157,6 +1395,21 @@ export default function BlogEditorForm({ initialPosts, initialConfig }: BlogEdit
                       className="px-2 py-1 text-xs font-bold bg-white border border-brass-gold/40 text-maroon-deep hover:bg-marigold/20 rounded transition-colors"
                     >
                       ❝ Quote
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleFormatWrap(
+                          "\n| Column 1 | Column 2 | Column 3 |\n| --- | --- | --- |\n| ",
+                          " | Value 2 | Value 3 |\n",
+                          "Value 1"
+                        )
+                      }
+                      title="Insert Markdown Table"
+                      className="px-2 py-1 text-xs font-bold bg-white border border-brass-gold/40 text-maroon-deep hover:bg-marigold/20 rounded transition-colors"
+                    >
+                      📊 Table
                     </button>
                   </div>
 
