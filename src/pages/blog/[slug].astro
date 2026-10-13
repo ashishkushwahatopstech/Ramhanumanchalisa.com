@@ -1023,9 +1023,9 @@ const postOgImageAlt = post.imageAlt || `${cleanTitle} - Ram Hanuman Chalisa`;
               <table class="w-full text-left border-collapse text-xs sm:text-sm">
                 {item.headers && item.headers.length > 0 && (
                   <thead>
-                    <tr class="bg-maroon-deep text-stone-ivory border-b border-brass-gold/40">
+                    <tr class="bg-maroon-deep text-white border-b border-brass-gold/40">
                       {item.headers.map((header) => (
-                        <th class="py-3 px-4 font-serif-display font-bold uppercase tracking-wider text-xs sm:text-sm" set:html={header} />
+                        <th class="py-3 px-4 font-serif-display font-bold uppercase tracking-wider text-xs sm:text-sm text-white" set:html={header} />
                       ))}
                     </tr>
                   </thead>
@@ -1256,17 +1256,17 @@ const postOgImageAlt = post.imageAlt || `${cleanTitle} - Ram Hanuman Chalisa`;
   .blog-article-content table {
     width: 100%;
     border-collapse: collapse;
-    margin: 1.5rem 0;
+    margin: 0;
     font-size: 0.875rem;
   }
   .blog-article-content th,
   .blog-article-content td {
     border: 1px solid rgba(197, 160, 89, 0.3);
-    padding: 0.5rem 0.75rem;
+    padding: 0.65rem 0.85rem;
   }
   .blog-article-content th {
-    background-color: rgba(197, 160, 89, 0.15);
-    color: #5c1d11;
+    background-color: #6B1E23;
+    color: #ffffff;
     font-weight: 700;
   }
   .blog-article-content blockquote {

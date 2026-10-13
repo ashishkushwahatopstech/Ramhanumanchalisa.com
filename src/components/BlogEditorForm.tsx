@@ -206,7 +206,7 @@ function previewMarkdown(text: string): string {
           const headers = parsePreviewTableCells(tableLines[0]).map((c) => formatInlinePreview(c));
           const bodyLines = tableLines.slice(1).filter((l) => !isPreviewSeparatorRow(l));
           const headerHtml = headers
-            .map((h) => `<th class="py-2.5 px-3 font-serif font-bold uppercase tracking-wider text-xs">${h}</th>`)
+            .map((h) => `<th class="py-2.5 px-3 font-serif font-bold uppercase tracking-wider text-xs text-white">${h}</th>`)
             .join("");
           const rowsHtml = bodyLines
             .map((rowLine) => {
@@ -220,7 +220,7 @@ function previewMarkdown(text: string): string {
               return `<tr class="border-b border-brass-gold/20 last:border-b-0 even:bg-stone-ivory/60">${cellsHtml}</tr>`;
             })
             .join("");
-          return `<div class="my-4 overflow-x-auto rounded-lg border border-brass-gold/40 shadow-xs bg-white"><table class="w-full text-left border-collapse text-xs"><thead><tr class="bg-maroon-deep text-stone-ivory border-b border-brass-gold/40">${headerHtml}</tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
+          return `<div class="my-4 overflow-x-auto rounded-lg border border-brass-gold/40 shadow-xs bg-white"><table class="w-full text-left border-collapse text-xs"><thead><tr class="bg-maroon-deep text-white border-b border-brass-gold/40">${headerHtml}</tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
         }
       }
 
