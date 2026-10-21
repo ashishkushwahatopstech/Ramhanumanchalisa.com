@@ -46,3 +46,4 @@ dist/
 .wrangler/
 scripts/check-pages.mjs
 scratch_*
+*.db.bak

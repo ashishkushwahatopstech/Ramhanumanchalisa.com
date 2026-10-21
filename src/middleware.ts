@@ -26,29 +26,41 @@ const LEGACY_SLUG_REDIRECTS: Record<string, string> = {
   "/blog/balaji-chalisa-lyrics-in-english-and": "/blog/balaji-chalisa-lyrics-in-english-and-hindi",
   "/blog/gorakhnath-chalisa-lyrics-in-hindi-and": "/blog/gorakhnath-chalisa-lyrics-in-hindi-and-english",
   "/blog/chamunda-chalisa-lyrics-in-hindi-and": "/blog/chamunda-chalisa-lyrics-in-hindi-and-english",
+  "/blog/shri-hanuman-chalisa-english": "/hanuman-chalisa/en",
+  "/blog/shri-hanuman-chalisa-in-telugu-lyrics": "/hanuman-chalisa/te",
+  "/blog/hanuman-chalisa-in-bengali": "/hanuman-chalisa/bn",
+  "/blog/hanuman-chalisa-in-kannada": "/hanuman-chalisa/kn",
+  "/blog/hanuman-chalisa-in-gujarati": "/hanuman-chalisa/gu",
+  "/blog/shri-hanuman-chalisa-hindi": "/",
 };
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
+  let targetPath = url.pathname;
+  let targetHost = url.hostname;
+  let needsRedirect = false;
 
-  // 1. Canonical Host Redirect: www.ramhanumanchalisa.com -> ramhanumanchalisa.com
-  if (url.hostname === "www.ramhanumanchalisa.com") {
-    const cleanUrl = `https://ramhanumanchalisa.com${url.pathname}${url.search}`;
-    return context.redirect(cleanUrl, 301);
+  // 1. Host Normalization: www.ramhanumanchalisa.com -> ramhanumanchalisa.com
+  if (targetHost === "www.ramhanumanchalisa.com") {
+    targetHost = "ramhanumanchalisa.com";
+    needsRedirect = true;
   }
 
   // 2. Trailing slash normalization for non-root paths (e.g. /about/ -> /about)
-  if (url.pathname.length > 1 && url.pathname.endsWith("/")) {
-    const cleanPath = url.pathname.slice(0, -1);
-    const cleanUrl = `${cleanPath}${url.search}`;
-    return context.redirect(cleanUrl, 301);
+  if (targetPath.length > 1 && targetPath.endsWith("/")) {
+    targetPath = targetPath.replace(/\/+$/, "");
+    needsRedirect = true;
   }
 
-  const normalizedPath = url.pathname.replace(/\/+$/, "");
+  // 3. 301 Redirect for legacy malformed slugs and cannibalizing posts
+  if (LEGACY_SLUG_REDIRECTS[targetPath]) {
+    targetPath = LEGACY_SLUG_REDIRECTS[targetPath];
+    needsRedirect = true;
+  }
 
-  // 301 Redirect for legacy malformed slugs
-  if (LEGACY_SLUG_REDIRECTS[normalizedPath]) {
-    return context.redirect(LEGACY_SLUG_REDIRECTS[normalizedPath], 301);
+  if (needsRedirect) {
+    const cleanUrl = `https://${targetHost}${targetPath}${url.search}`;
+    return context.redirect(cleanUrl, 301);
   }
 
   // Protect all /admin routes except the public /admin/login page
@@ -66,6 +78,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("X-Frame-Options", "SAMEORIGIN");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
 
   // High Concurrency Resilience: Edge Caching on Cloudflare Global CDN
   if (context.request.method === "GET") {

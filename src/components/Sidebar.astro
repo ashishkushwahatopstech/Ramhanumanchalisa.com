@@ -1,6 +1,6 @@
 ---
 import { FALLBACK_BLOG_POSTS, type BlogPost } from "../data/blog";
-import { d1GetBlogConfig, d1GetPosts, d1GetSiteConfig } from "../lib/d1";
+import { d1GetBlogConfig, d1GetRecentPostsLight, d1GetSiteConfig } from "../lib/d1";
 import { getBlogConfig, type BlogLayoutConfig } from "../lib/dynamicContent";
 import { getSiteLayoutConfig, type SiteLayoutConfig } from "../lib/siteConfig";
 import GadgetRenderer from "./gadgets/GadgetRenderer.astro";
@@ -34,24 +34,19 @@ if (!blogConfig) {
   blogConfig = getBlogConfig();
 }
 
-// Load Recent Posts for Gadgets
+// Load Recent Posts for Gadgets (lightweight edge-optimized query)
 let recentPosts: BlogPost[] = [];
 try {
   let posts: any[] = [];
   if (db && typeof db.prepare === "function") {
-    posts = await d1GetPosts(db);
+    posts = await d1GetRecentPostsLight(db, 5);
   }
-  if (posts.length === 0) {
-    posts = FALLBACK_BLOG_POSTS;
+  if (!posts || posts.length === 0) {
+    posts = FALLBACK_BLOG_POSTS.slice(0, 5);
   }
-  posts.sort((a: any, b: any) => {
-    const timeA = new Date(a.createdAt).getTime() || 0;
-    const timeB = new Date(b.createdAt).getTime() || 0;
-    return timeB - timeA;
-  });
-  recentPosts = posts.slice(0, 10);
+  recentPosts = posts as BlogPost[];
 } catch (e) {
-  recentPosts = FALLBACK_BLOG_POSTS.slice(0, 10);
+  recentPosts = FALLBACK_BLOG_POSTS.slice(0, 5);
 }
 
 const isSidebarEnabled = siteConfig?.sidebarEnabled ?? (blogConfig?.sidebarEnabled ?? true);

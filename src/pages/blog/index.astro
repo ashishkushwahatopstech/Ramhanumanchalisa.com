@@ -145,9 +145,14 @@ let filteredPosts = posts.filter((p) => {
 const totalPages = Math.ceil(filteredPosts.length / pageSize) || 1;
 const paginatedPosts = filteredPosts.slice((page - 1) * pageSize, page * pageSize);
 const isSidebarActive = blogConfig?.sidebarEnabled ?? true;
+
+const siteBaseUrl = "https://ramhanumanchalisa.com";
+const canonicalUrl = page > 1 
+  ? `${siteBaseUrl}/blog?page=${page}` 
+  : `${siteBaseUrl}/blog`;
 ---
 
-<Layout title={title} description={description} lang="en">
+<Layout title={title} description={description} canonicalUrl={canonicalUrl} lang="en">
   <div class={`space-y-8 mx-auto ${isSidebarActive ? "max-w-7xl px-3 sm:px-4" : "max-w-4xl"}`}>
     
     <!-- Breadcrumbs -->

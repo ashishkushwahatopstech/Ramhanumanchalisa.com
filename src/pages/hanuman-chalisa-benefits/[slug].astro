@@ -7,7 +7,8 @@ import { BENEFITS_DATA, type BenefitDetails } from "../../data/benefits";
 const { slug } = Astro.params;
 
 if (!slug) {
-  return Astro.redirect("/404");
+  Astro.response.status = 404;
+  return Astro.rewrite("/404");
 }
 
 const db = Astro.locals.runtime?.env?.DB;
@@ -133,7 +134,8 @@ if (!benefit && BENEFITS_DATA[slug]) {
 }
 
 if (!benefit) {
-  return Astro.redirect("/404");
+  Astro.response.status = 404;
+  return Astro.rewrite("/404");
 }
 
 // Fetch all other benefits for sidebar (merge DB + fallback)
@@ -221,6 +223,9 @@ if (!pageDescription) {
 
 const canonicalBenefitUrl = `https://ramhanumanchalisa.com/hanuman-chalisa-benefits/${benefit.slug}`;
 
+const publishedIsoDate = (benefit as any).createdAt ? new Date((benefit as any).createdAt).toISOString() : "2026-08-15T08:00:00+05:30";
+const modifiedIsoDate = (benefit as any).updatedAt ? new Date((benefit as any).updatedAt).toISOString() : publishedIsoDate;
+
 // Article schema for E-E-A-T & Google Search Console
 const articleSchema = {
   "@context": "https://schema.org",
@@ -235,8 +240,8 @@ const articleSchema = {
   "inLanguage": "en",
   "mainEntityOfPage": canonicalBenefitUrl,
   "image": "https://ramhanumanchalisa.com/og-image.jpg",
-  "datePublished": "2024-01-15T08:00:00+05:30",
-  "dateModified": "2026-09-02T12:00:00+05:30",
+  "datePublished": publishedIsoDate,
+  "dateModified": modifiedIsoDate,
   "author": {
     "@type": "Organization",
     "name": "Ram Hanuman Chalisa Editorial",

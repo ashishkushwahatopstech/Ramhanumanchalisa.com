@@ -11,7 +11,8 @@ if (lang === "hi") {
 }
 
 if (!lang || !SUPPORTED_LANGS.includes(lang)) {
-  return Astro.redirect("/404");
+  Astro.response.status = 404;
+  return Astro.rewrite("/404");
 }
 
 const db = Astro.locals.runtime?.env?.DB;

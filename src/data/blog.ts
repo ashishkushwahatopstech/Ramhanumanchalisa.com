@@ -1,5 +1,6 @@
 import importedPostsData from "./imported-posts.json";
 import { CONSOLIDATED_MASTER_POSTS, MERGED_GALLERY_SLUGS, MERGED_AARTI_SLUGS } from "./consolidatedPosts";
+import { EXTRA_POSTS } from "./extraPosts";
 
 export interface BlogPost {
   slug: string;
@@ -97,6 +98,7 @@ const MERGED_SLUG_SET = new Set([...MERGED_GALLERY_SLUGS, ...MERGED_AARTI_SLUGS]
 
 const ALL_FALLBACK_POSTS: BlogPost[] = [
   ...STATIC_BLOG_POSTS,
+  ...EXTRA_POSTS,
   ...CONSOLIDATED_MASTER_POSTS,
   ...(importedPostsData as BlogPost[])
     .filter((p) => !MERGED_SLUG_SET.has(p.slug))

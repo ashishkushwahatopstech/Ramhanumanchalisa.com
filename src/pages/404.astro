@@ -4,9 +4,11 @@ import CarvedDivider from "../components/CarvedDivider";
 
 const title = "Page Not Found (404) — Ram Hanuman Chalisa";
 const description = "The page you are looking for is not found. Please return to the homepage to chant the Hanuman Chalisa, view meanings, or listen to synced audio.";
+
+Astro.response.status = 404;
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} noindex={true}>
   <div class="max-w-xl mx-auto text-center space-y-8 py-16 px-4">
     
     <!-- Large Symbol -->

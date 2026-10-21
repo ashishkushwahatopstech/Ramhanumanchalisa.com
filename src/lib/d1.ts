@@ -310,7 +310,6 @@ export async function d1GetImage(
 ): Promise<{ mimeType: string; dataBase64: string; size: number; createdAt: string } | null> {
   if (!db || typeof db.prepare !== "function") return null;
   try {
-    await d1EnsureMediaTable(db);
     const row = await db.prepare(
       "SELECT mimeType, dataBase64, size, createdAt FROM MediaImage WHERE path = ?"
     ).bind(imagePath).first();
@@ -337,22 +336,31 @@ export async function d1EnsureBlogConfigTable(db: any): Promise<void> {
   }
 }
 
+let memoryCachedBlogConfig: any = null;
+let memoryCachedBlogConfigTime = 0;
+
 export async function d1GetBlogConfig(db: any): Promise<any> {
-  if (!db || typeof db.prepare !== "function") return null;
+  if (memoryCachedBlogConfig && Date.now() - memoryCachedBlogConfigTime < 300000) {
+    return memoryCachedBlogConfig;
+  }
+  if (!db || typeof db.prepare !== "function") return memoryCachedBlogConfig;
   try {
-    await d1EnsureBlogConfigTable(db);
     const row = await db.prepare("SELECT value FROM BlogConfig WHERE key = 'main'").first();
     if (row && row.value) {
-      return JSON.parse(row.value);
+      memoryCachedBlogConfig = JSON.parse(row.value);
+      memoryCachedBlogConfigTime = Date.now();
+      return memoryCachedBlogConfig;
     }
     return null;
   } catch (e) {
     console.error("D1 getBlogConfig error:", e);
-    return null;
+    return memoryCachedBlogConfig;
   }
 }
 
 export async function d1SaveBlogConfig(db: any, config: any): Promise<boolean> {
+  memoryCachedBlogConfig = config;
+  memoryCachedBlogConfigTime = Date.now();
   if (!db || typeof db.prepare !== "function") return false;
   try {
     await d1EnsureBlogConfigTable(db);
@@ -390,7 +398,6 @@ export async function d1EnsureRecitationTable(db: any): Promise<void> {
 export async function d1GetRecitations(db: any, date: string): Promise<number> {
   if (!db || typeof db.prepare !== "function") return 0;
   try {
-    await d1EnsureRecitationTable(db);
     const row = await db.prepare("SELECT count FROM RecitationCounter WHERE date = ?").bind(date).first();
     return row ? Number(row.count) : 0;
   } catch (e) {
@@ -435,22 +442,31 @@ export async function d1EnsureSiteConfigTable(db: any): Promise<void> {
   }
 }
 
+let memoryCachedSiteConfig: any = null;
+let memoryCachedSiteConfigTime = 0;
+
 export async function d1GetSiteConfig(db: any): Promise<any> {
-  if (!db || typeof db.prepare !== "function") return null;
+  if (memoryCachedSiteConfig && Date.now() - memoryCachedSiteConfigTime < 300000) {
+    return memoryCachedSiteConfig;
+  }
+  if (!db || typeof db.prepare !== "function") return memoryCachedSiteConfig;
   try {
-    await d1EnsureSiteConfigTable(db);
     const row = await db.prepare("SELECT value FROM SiteConfig WHERE key = 'site_layout'").first();
     if (row && row.value) {
-      return JSON.parse(row.value);
+      memoryCachedSiteConfig = JSON.parse(row.value);
+      memoryCachedSiteConfigTime = Date.now();
+      return memoryCachedSiteConfig;
     }
     return null;
   } catch (e) {
     console.error("D1 getSiteConfig error:", e);
-    return null;
+    return memoryCachedSiteConfig;
   }
 }
 
 export async function d1SaveSiteConfig(db: any, config: any): Promise<boolean> {
+  memoryCachedSiteConfig = config;
+  memoryCachedSiteConfigTime = Date.now();
   if (!db || typeof db.prepare !== "function") return false;
   try {
     await d1EnsureSiteConfigTable(db);
@@ -515,7 +531,6 @@ export async function d1AddSubscriber(db: any, email: string, source: string = "
 export async function d1GetSubscribers(db: any): Promise<any[]> {
   if (!db || typeof db.prepare !== "function") return [];
   try {
-    await d1EnsureSubscriberTable(db);
     const { results } = await db.prepare("SELECT * FROM NewsletterSubscriber ORDER BY createdAt DESC").all();
     return results || [];
   } catch (e) {
@@ -578,11 +593,29 @@ export async function d1SaveContactSubmission(
 export async function d1GetContactSubmissions(db: any): Promise<any[]> {
   if (!db || typeof db.prepare !== "function") return [];
   try {
-    await d1EnsureContactTable(db);
     const { results } = await db.prepare("SELECT * FROM ContactSubmission ORDER BY createdAt DESC LIMIT 50").all();
     return results || [];
   } catch (e) {
     console.error("D1 getContactSubmissions error:", e);
+    return [];
+  }
+}
+
+// Lightweight Recent Posts Query for Sidebar / Widgets (avoids full table scan of 139+ posts)
+export async function d1GetRecentPostsLight(db: any, limit: number = 10): Promise<any[]> {
+  if (!db || typeof db.prepare !== "function") return [];
+  try {
+    const { results } = await db.prepare(
+      "SELECT slug, title, coverImage, excerpt, createdAt FROM Post WHERE published = 1 ORDER BY createdAt DESC LIMIT ?"
+    ).bind(limit).all();
+    return (results || []).map((r: any) => ({
+      ...r,
+      published: true,
+      author: "Admin",
+      readTime: "5 min read",
+    }));
+  } catch (e) {
+    console.error("D1 getRecentPostsLight error:", e);
     return [];
   }
 }
