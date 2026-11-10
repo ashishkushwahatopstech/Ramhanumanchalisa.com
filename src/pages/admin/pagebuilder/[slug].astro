@@ -1,0 +1,23 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import AdminNavigation from "../../../components/AdminNavigation.astro";
+import VisualBlockEditor from "../../../components/pagebuilder/admin/VisualBlockEditor";
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/admin/pagebuilder");
+}
+
+const title = `Edit Page /${slug} — Visual Block Editor`;
+---
+
+<Layout title={title} hideSidebar={true}>
+  <div class="max-w-7xl mx-auto space-y-6">
+    <AdminNavigation activeTab="pagebuilder" />
+
+    <section>
+      <VisualBlockEditor client:load initialSlug={slug} />
+    </section>
+  </div>
+</Layout>

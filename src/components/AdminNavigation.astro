@@ -1,12 +1,13 @@
 ---
 interface Props {
-  activeTab: "dashboard" | "blog" | "benefits" | "faqs" | "audio" | "jayanti" | "languages" | "layout" | "stories";
+  activeTab: "dashboard" | "pagebuilder" | "blog" | "benefits" | "faqs" | "audio" | "jayanti" | "languages" | "layout" | "stories";
 }
 
 const { activeTab } = Astro.props;
 
 const navItems = [
   { id: "dashboard", label: "Dashboard", href: "/admin", icon: "📊" },
+  { id: "pagebuilder", label: "Visual Page Builder", href: "/admin/pagebuilder", icon: "🧱" },
   { id: "layout", label: "Layout & Gadgets", href: "/admin/layout", icon: "🎨" },
   { id: "blog", label: "Blog Articles", href: "/admin/blog", icon: "📝" },
   { id: "benefits", label: "Benefits Pages", href: "/admin/benefits", icon: "🌟" },
@@ -62,10 +63,10 @@ const navItems = [
       return (
         <a
           href={item.href}
-          class={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-200 border ${
+          class={`inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold tracking-wide transition-all ${
             isActive
-              ? "bg-marigold text-maroon-deep border-marigold shadow-md font-extrabold"
-              : "bg-black/20 hover:bg-black/40 text-stone-ivory/80 hover:text-stone-ivory border-stone-ivory/10 hover:border-brass-gold/40"
+              ? "bg-marigold text-maroon-deep font-bold shadow-md scale-102"
+              : "text-stone-ivory/80 hover:text-stone-ivory hover:bg-stone-ivory/10"
           }`}
         >
           <span>{item.icon}</span>

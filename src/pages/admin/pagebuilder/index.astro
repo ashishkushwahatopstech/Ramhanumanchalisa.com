@@ -1,0 +1,17 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import AdminNavigation from "../../../components/AdminNavigation.astro";
+import PageListDashboard from "../../../components/pagebuilder/admin/PageListDashboard";
+
+const title = "Visual Page Builder — Mandir Admin Studio";
+---
+
+<Layout title={title} hideSidebar={true}>
+  <div class="max-w-7xl mx-auto space-y-6">
+    <AdminNavigation activeTab="pagebuilder" />
+
+    <section>
+      <PageListDashboard client:load />
+    </section>
+  </div>
+</Layout>
