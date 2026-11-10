@@ -1,83 +1,125 @@
 @import "tailwindcss";
 
 @theme {
+  /* Premium Devotional Palette */
+  --color-warm-cream: #FFF9F0;
+  --color-soft-bg: #F6F0E8;
+  --color-saffron: #E87524;
+  --color-saffron-deep: #C95716;
+  --color-gold-subtle: #C9A45C;
+  --color-dark-brown: #34251D;
   --color-maroon-deep: #6B1E23;
+  --color-maroon-dark: #4A1216;
+
+  /* Legacy & Semantic Mappings for complete backwards-compatibility */
   --color-marigold: #E8A33D;
   --color-brass-gold: #845B10;
-  --color-brass-gold-light: #C89B3C;
-  --color-stone-ivory: #F3EAD8;
-  --color-vermilion: #C1440E;
-  --color-charcoal-brown: #2B1B12;
+  --color-brass-gold-light: #C9A45C;
+  --color-stone-ivory: #FFF9F0;
+  --color-vermilion: #C95716;
+  --color-charcoal-brown: #34251D;
 
-  --font-serif-display: var(--font-marcellus), serif;
-  --font-hindi-display: var(--font-tiro-devanagari), serif;
-  --font-body: var(--font-mukta), sans-serif;
-  --font-sans: var(--font-mukta), sans-serif;
+  /* Typography */
+  --font-serif-display: var(--font-marcellus), 'Marcellus', Georgia, serif;
+  --font-hindi-display: var(--font-tiro-devanagari), 'Tiro Devanagari Hindi', serif;
+  --font-body: var(--font-mukta), 'Mukta', system-ui, sans-serif;
+  --font-sans: var(--font-mukta), 'Mukta', system-ui, sans-serif;
 }
 
 :root {
-  --background: #F3EAD8; /* stone-ivory */
-  --foreground: #2B1B12; /* charcoal-brown */
+  --background: #FFF9F0; /* warm-cream */
+  --foreground: #34251D; /* dark-brown */
+  --color-border-subtle: rgba(201, 164, 92, 0.35);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
+  overflow-x: hidden;
 }
 
-/* Custom Scrollbar for Temple Vibe */
+/* Custom Scrollbar with Serene Gold Touch */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #F3EAD8;
+  background: #F6F0E8;
 }
 ::-webkit-scrollbar-thumb {
-  background: #C89B3C;
+  background: #C9A45C;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #E8A33D;
+  background: #E87524;
 }
 
-/* Garbhagriha Torana Arch Drawing */
-.torana-arch {
+/* Modern Devotional Card System */
+.devotional-card {
   position: relative;
-  border-top-left-radius: 50% 100%;
-  border-top-right-radius: 50% 100%;
-  border: 3px solid #C89B3C;
-  border-bottom: none;
-  background-color: #F8F3EA;
-  box-shadow: 0 4px 24px rgba(43, 27, 18, 0.08);
+  background-color: #FFFFFF;
+  border: 1px solid rgba(201, 164, 92, 0.35);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(52, 37, 29, 0.04);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease;
 }
 
-/* Carved borders */
-.carved-border-top {
-  border-top: 4px double #C89B3C;
+.devotional-card:hover {
+  border-color: #C9A45C;
+  box-shadow: 0 8px 24px rgba(201, 87, 22, 0.08);
+  transform: translateY(-2px);
 }
 
-.carved-border-bottom {
-  border-bottom: 4px double #C89B3C;
+/* Story Highlight Circle Treatment */
+.story-ring-gradient {
+  background: linear-gradient(135deg, #E87524 0%, #C9A45C 50%, #C95716 100%);
+  padding: 2.5px;
+  border-radius: 9999px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.carved-border-all {
-  border: 4px double #C89B3C;
+.story-ring-gradient:hover {
+  transform: scale(1.06);
 }
 
-/* Manuscript & Epigraph Visual System Utilities */
+.story-ring-inner {
+  background: #FFF9F0;
+  border-radius: 9999px;
+  padding: 2px;
+}
+
+/* Subtitle & Badge Pill */
+.devotional-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #C95716;
+  background-color: rgba(232, 117, 36, 0.09);
+  border: 1px solid rgba(201, 164, 92, 0.35);
+  border-radius: 9999px;
+  padding: 0.2rem 0.75rem;
+}
+
+/* Classic Manuscript Utilities for Sacred Scripture Display */
 .manuscript-frame {
   position: relative;
   background-color: #FAF6EF;
-  border: 1px solid rgba(200, 155, 60, 0.45);
-  box-shadow: 0 1px 3px rgba(43, 27, 18, 0.04);
+  border: 1px solid rgba(201, 164, 92, 0.4);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(52, 37, 29, 0.04);
 }
 
 .manuscript-frame::before {
   content: "";
   position: absolute;
   inset: 3px;
-  border: 1px solid rgba(200, 155, 60, 0.2);
+  border: 1px solid rgba(201, 164, 92, 0.2);
+  border-radius: 0.375rem;
   pointer-events: none;
 }
 
@@ -89,39 +131,32 @@ body {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #C1440E;
+  color: #C95716;
   padding: 0.2rem 0.6rem;
-  border-left: 2px solid #C1440E;
-  border-right: 1px solid rgba(200, 155, 60, 0.4);
-  background-color: rgba(200, 155, 60, 0.08);
+  border-left: 2px solid #C95716;
+  border-right: 1px solid rgba(201, 164, 92, 0.4);
+  background-color: rgba(201, 164, 92, 0.08);
 }
 
-.shilalekh-ledger {
-  background-color: #FAF5EC;
-  border: 1px solid rgba(200, 155, 60, 0.4);
-  transition: all 0.2s ease-in-out;
-}
-
-.shilalekh-ledger:hover {
-  border-color: #C89B3C;
-  background-color: #FCF8F2;
-}
-
-.akhand-sanctum {
-  background-color: #380B0F;
-  border: 2px solid #C89B3C;
-  color: #F3EAD8;
+.torana-arch {
+  position: relative;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  border: 3px solid #C9A45C;
+  border-bottom: none;
+  background-color: #F8F3EA;
+  box-shadow: 0 4px 24px rgba(52, 37, 29, 0.06);
 }
 
 /* Pulsing Diya Glow animation */
 @keyframes diyaGlow {
   0%, 100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 4px rgba(232, 163, 61, 0.7));
+    filter: drop-shadow(0 0 4px rgba(232, 117, 36, 0.7));
   }
   50% {
     transform: scale(1.1);
-    filter: drop-shadow(0 0 12px rgba(193, 68, 14, 0.9));
+    filter: drop-shadow(0 0 12px rgba(201, 87, 22, 0.9));
   }
 }
 
@@ -172,4 +207,13 @@ body {
   display: flex;
   width: max-content;
   animation: marqueeScroll 25s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none !important;
+  }
+  .diya-flame {
+    animation: none !important;
+  }
 }

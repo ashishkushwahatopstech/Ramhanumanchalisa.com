@@ -1,0 +1,136 @@
+---
+interface Props {
+  currentYear?: number;
+  brandingTitle?: string;
+  brandingDesc?: string;
+  copyrightText?: string;
+  disclaimerText?: string;
+}
+
+const {
+  currentYear = new Date().getFullYear(),
+  brandingTitle = "Ram Hanuman Chalisa",
+  brandingDesc = "A digital devotional sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and understand the sacred verses composed by Goswami Tulsidas.",
+  copyrightText = "RamHanumanChalisa.com. All Rights Reserved.",
+  disclaimerText = "Disclaimer: The hymns, commentaries, and materials provided on RamHanumanChalisa.com are compiled exclusively for devotional, spiritual, cultural, and educational purposes with deep reverence for Sanatana Dharma traditions.",
+} = Astro.props;
+---
+
+<footer class="no-print bg-[#34251D] text-[#FFF9F0] border-t-4 border-[#C9A45C] pt-14 pb-24 md:pb-12 mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+      
+      <!-- Column 1: Branding & Mission -->
+      <div class="lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-2.5">
+          <span class="text-3xl filter drop-shadow">🔔</span>
+          <div>
+            <div class="font-serif-display text-xl sm:text-2xl text-[#E8A33D] uppercase tracking-wider font-bold">
+              {brandingTitle}
+            </div>
+            <p class="font-hindi-display text-xs text-[#C9A45C] tracking-widest leading-none mt-1">
+              श्री राम जय राम जय जय राम
+            </p>
+          </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-[#FFF9F0]/80 max-w-md leading-relaxed font-sans">
+          {brandingDesc}
+        </p>
+
+        <!-- Official Verified Social Links -->
+        <div class="pt-2 flex items-center gap-3">
+          <a
+            href="https://www.instagram.com/ramhanumanchalisadotcom/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#4A1216] border border-[#C9A45C]/50 text-xs text-[#FFF9F0] hover:text-[#E8A33D] hover:border-[#E8A33D] transition-all group"
+            aria-label="Follow Ram Hanuman Chalisa on Instagram"
+          >
+            <span class="text-sm group-hover:scale-110 transition-transform">📷</span>
+            <span class="font-semibold">Instagram: @ramhanumanchalisadotcom</span>
+          </a>
+        </div>
+
+        <p class="text-xs text-[#C9A45C] font-mono pt-1">
+          © {currentYear} {copyrightText}
+        </p>
+      </div>
+
+      <!-- Column 2: Sacred Stotras & Chalisas -->
+      <div>
+        <div class="font-serif-display text-xs uppercase tracking-widest text-[#E8A33D] mb-4 font-bold border-b border-[#C9A45C]/30 pb-2">
+          स्तोत्र व चालीसा संग्रह
+        </div>
+        <ul class="space-y-2 text-xs sm:text-sm text-[#FFF9F0]/80 font-sans">
+          <li><a href="/" class="hover:text-[#E8A33D] transition-colors">Shri Hanuman Chalisa</a></li>
+          <li><a href="/ram-chalisa" class="hover:text-[#E8A33D] transition-colors">Shri Ram Chalisa</a></li>
+          <li><a href="/bajrang-baan" class="hover:text-[#E8A33D] transition-colors">Shri Bajrang Baan</a></li>
+          <li><a href="/sankat-mochan-hanumanashtak" class="hover:text-[#E8A33D] transition-colors">Sankat Mochan Ashtak</a></li>
+          <li><a href="/hanuman-aarti" class="hover:text-[#E8A33D] transition-colors">Shri Hanuman Aarti</a></li>
+          <li><a href="/hanuman-stuti" class="hover:text-[#E8A33D] transition-colors">Shri Hanuman Stuti</a></li>
+          <li><a href="/shri-hanuman-chalisa-path-vidhi" class="hover:text-[#E8A33D] transition-colors">Path Vidhi Guidelines</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Study, Audio & Regional Editions -->
+      <div>
+        <div class="font-serif-display text-xs uppercase tracking-widest text-[#E8A33D] mb-4 font-bold border-b border-[#C9A45C]/30 pb-2">
+          साधना एवं बहुभाषी पाठ
+        </div>
+        <ul class="space-y-2 text-xs sm:text-sm text-[#FFF9F0]/80 font-sans">
+          <li><a href="/hanuman-chalisa-meaning" class="hover:text-[#E8A33D] transition-colors">Word-by-Word Meaning</a></li>
+          <li><a href="/hanuman-chalisa-audio-mp3" class="hover:text-[#E8A33D] transition-colors">Synced Audio MP3</a></li>
+          <li><a href="/hanuman-chalisa-pdf" class="hover:text-[#E8A33D] transition-colors">Printable Altar PDF</a></li>
+          <li><a href="/ram-hanuman-chalisa" class="hover:text-[#E8A33D] transition-colors">Ram-Hanuman Bond</a></li>
+          <li><a href="/hanuman-jayanti" class="hover:text-[#E8A33D] transition-colors">Hanuman Jayanti Guide</a></li>
+          <li><a href="/hanuman-chalisa/en" class="hover:text-[#E8A33D] transition-colors">English Translation</a></li>
+          <li><a href="/hanuman-chalisa/te" class="hover:text-[#E8A33D] transition-colors">Telugu (తెలుగు)</a></li>
+          <li><a href="/hanuman-chalisa/bn" class="hover:text-[#E8A33D] transition-colors">Bengali (বাংলা)</a></li>
+          <li><a href="/hanuman-chalisa/gu" class="hover:text-[#E8A33D] transition-colors">Gujarati (ગુજરાતી)</a></li>
+          <li><a href="/hanuman-chalisa/mr" class="hover:text-[#E8A33D] transition-colors">Marathi (मराठी)</a></li>
+          <li><a href="/hanuman-chalisa/kn" class="hover:text-[#E8A33D] transition-colors">Kannada (ಕನ್ನಡ)</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Chaupai Benefits & Gazette -->
+      <div>
+        <div class="font-serif-display text-xs uppercase tracking-widest text-[#E8A33D] mb-4 font-bold border-b border-[#C9A45C]/30 pb-2">
+          चालीसा फलश्रुति एवं आलेख
+        </div>
+        <ul class="space-y-2 text-xs sm:text-sm text-[#FFF9F0]/80 font-sans">
+          <li><a href="/hanuman-chalisa-benefits" class="hover:text-[#E8A33D] transition-colors">All 40 Chaupai Benefits</a></li>
+          <li><a href="/hanuman-chalisa-benefits/career" class="hover:text-[#E8A33D] transition-colors">Career & Promotion</a></li>
+          <li><a href="/hanuman-chalisa-benefits/health" class="hover:text-[#E8A33D] transition-colors">Health & Healing</a></li>
+          <li><a href="/hanuman-chalisa-benefits/exams" class="hover:text-[#E8A33D] transition-colors">Students & Exam Focus</a></li>
+          <li><a href="/hanuman-chalisa-benefits/protection" class="hover:text-[#E8A33D] transition-colors">Protection from Fear</a></li>
+          <li><a href="/hanuman-chalisa-benefits/marriage-delays" class="hover:text-[#E8A33D] transition-colors">Marriage Delays & Harmony</a></li>
+          <li><a href="/blog" class="hover:text-[#E8A33D] transition-colors">Devotional Gazette (Blog)</a></li>
+          <li><a href="/faq" class="hover:text-[#E8A33D] transition-colors">Chanting FAQs</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="my-8 border-[#C9A45C]/25" />
+
+    <!-- Compliance & Legal Row -->
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-[#FFF9F0]/65 font-sans">
+      <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4">
+        <a href="/about" class="hover:text-[#E8A33D] transition-colors">About Us</a>
+        <span>•</span>
+        <a href="/contact" class="hover:text-[#E8A33D] transition-colors">Contact</a>
+        <span>•</span>
+        <a href="/faq" class="hover:text-[#E8A33D] transition-colors">FAQ</a>
+        <span>•</span>
+        <a href="/privacy-policy" class="hover:text-[#E8A33D] transition-colors">Privacy Policy</a>
+        <span>•</span>
+        <a href="/disclaimer" class="hover:text-[#E8A33D] transition-colors">Disclaimer</a>
+      </div>
+      <p class="text-center sm:text-right text-[11px] max-w-xl leading-relaxed text-[#FFF9F0]/50">
+        {disclaimerText}
+      </p>
+    </div>
+
+  </div>
+</footer>

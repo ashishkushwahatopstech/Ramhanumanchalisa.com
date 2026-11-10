@@ -81,8 +81,13 @@ export default function SearchModal() {
         setIsOpen(false);
       }
     };
+    const handleCustomOpen = () => setIsOpen(true);
+    window.addEventListener("open-search-modal", handleCustomOpen);
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("open-search-modal", handleCustomOpen);
+    };
   }, [isOpen]);
 
   // Load search index on open

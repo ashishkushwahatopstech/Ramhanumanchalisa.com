@@ -5,6 +5,8 @@ import ScrollToTop from "../components/ScrollToTop.astro";
 import Sidebar from "../components/Sidebar.astro";
 import AdSlot from "../components/AdSlot.astro";
 import DesktopSideDock, { MobileBottomActionDock } from "../components/DesktopSideDock";
+import HeaderNavigation from "../components/HeaderNavigation";
+import FooterSection from "../components/FooterSection.astro";
 import { d1GetBlogConfig, d1GetSiteConfig } from "../lib/d1";
 import { getBlogConfig } from "../lib/dynamicContent";
 import { getSiteLayoutConfig, type SiteLayoutConfig } from "../lib/siteConfig";
@@ -256,71 +258,19 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
     <!-- Slot for Page Specific Head Elements & Schemas -->
     <slot name="head" />
   </head>
-  <body class="min-h-full flex flex-col font-body bg-stone-ivory text-charcoal-brown selection:bg-marigold selection:text-maroon-deep">
+  <body class="min-h-full flex flex-col font-body bg-[#FFF9F0] text-[#34251D] selection:bg-[#E87524]/20 selection:text-[#C95716]">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJKL5P3X"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
-    <!-- Top Header / Mandir Entrance -->
-    <header class="no-print w-full bg-maroon-deep border-b-4 border-brass-gold text-stone-ivory sticky top-0 z-50 shadow-md">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          
-          <!-- Logo / Title -->
-          <a href="/" class="flex items-center gap-2 group">
-            <span class="text-2xl sm:text-3xl filter drop-shadow group-hover:scale-110 transition-transform duration-300">🔔</span>
-            <div>
-              <div class="font-serif-display text-lg sm:text-xl font-bold tracking-wider text-marigold uppercase leading-none">
-                Ram Hanuman Chalisa
-              </div>
-              <p class="text-xs text-brass-gold tracking-widest leading-none mt-1">
-                श्री राम जय राम जय जय राम
-              </p>
-            </div>
-          </a>
-          
-          <!-- Desktop Pillars Nav -->
-          <nav class="hidden lg:flex items-center space-x-6 text-sm lg:text-[15px] font-semibold tracking-wide">
-            {(siteConfig?.headerMenu || []).filter((item) => item.isEnabled).map((item) => (
-              <a
-                href={item.href}
-                target={item.openNewTab ? "_blank" : undefined}
-                rel={item.openNewTab ? "noopener noreferrer" : undefined}
-                class="hover:text-marigold transition-colors duration-200 py-2 border-b-2 border-transparent hover:border-marigold"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          <!-- Extra Right Button & Language Switcher -->
-          <div class="flex items-center gap-2 sm:gap-3">
-            <LanguageSwitcher client:idle />
-
-            {siteConfig?.headerCta?.isEnabled && (
-              <a
-                href={siteConfig.headerCta.href || "/shri-hanuman-chalisa-path-vidhi"}
-                class="hidden md:inline-block bg-vermilion hover:bg-[#a63405] text-stone-ivory px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider border border-brass-gold shadow-xs transition-colors"
-              >
-                {siteConfig.headerCta.label || "How to Recite"}
-              </a>
-            )}
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Infinite Sita Ram Chanting Marquee -->
-      {siteConfig?.headerNotice?.isEnabled && (
-        <div class="w-full bg-marigold text-maroon-deep font-bold py-1.5 border-t border-brass-gold/20 text-xs tracking-wide select-none overflow-hidden">
-          <div class="animate-marquee whitespace-nowrap flex motion-reduce:animate-none">
-            <span class="font-serif-display shrink-0">&nbsp;{siteConfig.headerNotice.text}&nbsp;</span>
-            <span class="font-serif-display shrink-0">&nbsp;{siteConfig.headerNotice.text}&nbsp;</span>
-          </div>
-        </div>
-      )}
-    </header>
+    <!-- Modern Responsive Header with Full Dropdown & Drawer Navigation -->
+    <HeaderNavigation
+      client:load
+      siteNotice={siteConfig?.headerNotice?.isEnabled ? siteConfig.headerNotice.text : undefined}
+      ctaText={siteConfig?.headerCta?.isEnabled ? (siteConfig.headerCta.label || "How to Recite") : undefined}
+      ctaHref={siteConfig?.headerCta?.isEnabled ? (siteConfig.headerCta.href || "/shri-hanuman-chalisa-path-vidhi") : undefined}
+    />
 
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 pb-24 md:pb-12">
@@ -352,85 +302,17 @@ const breadcrumbSchema = breadcrumbItems.length >= 2 ? {
       </div>
     )}
 
-    <!-- Footer -->
-    <footer class="no-print bg-charcoal-brown text-stone-ivory border-t-8 border-maroon-deep py-12">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-          
-          <!-- Branding Column -->
-          <div class="md:col-span-2">
-            <div class="font-serif-display text-xl text-marigold uppercase tracking-wider mb-3 font-bold" role="heading" aria-level={3}>
-              {siteConfig?.footer?.brandingTitle || "Ram Hanuman Chalisa"}
-            </div>
-            <p class="text-sm text-stone-ivory/80 max-w-sm leading-relaxed">
-              {siteConfig?.footer?.brandingDesc || "A digital sanctum created to offer devotees a pure, immersive, and educational space to read, hear, and digest the glorious verses composed by Goswami Tulsidas."}
-            </p>
-            <div class="mt-4 flex items-center gap-4">
-              <!-- Official Verified Social Links -->
-              <a
-                href="https://www.instagram.com/ramhanumanchalisadotcom/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 text-xs text-stone-ivory/80 hover:text-marigold transition-colors"
-                aria-label="Follow Ram Hanuman Chalisa on Instagram"
-              >
-                <span>📷</span>
-                <span>Instagram</span>
-              </a>
-              {/* TODO: Add official Facebook profile URL once created */}
-              {/* TODO: Add official Twitter/X profile URL once created */}
-              {/* TODO: Add official YouTube channel URL once created */}
-            </div>
-            <p class="mt-4 text-xs text-brass-gold">
-              © {currentYear} {siteConfig?.footer?.copyrightText || "RamHanumanChalisa.com. All Rights Reserved."}
-            </p>
-          </div>
-
-          <!-- Quick Links Column -->
-          <div>
-            <div class="font-serif-display text-sm uppercase tracking-widest text-marigold mb-4 font-bold" role="heading" aria-level={3}>
-              Pillars
-            </div>
-            <ul class="space-y-2 text-sm text-stone-ivory/80">
-              {(siteConfig?.footer?.quickLinks || []).map((link) => (
-                <li><a href={link.href} class="hover:text-marigold transition-colors">{link.label}</a></li>
-              ))}
-            </ul>
-          </div>
-
-          <!-- Supporting Texts & Admin -->
-          <div>
-            <div class="font-serif-display text-base font-bold text-marigold mb-4 tracking-normal" role="heading" aria-level={3}>
-              Devotional Texts
-            </div>
-            <ul class="space-y-2 text-sm text-stone-ivory/80">
-              {(siteConfig?.footer?.devotionalLinks || []).map((link) => (
-                <li><a href={link.href} class="hover:text-marigold transition-colors">{link.label}</a></li>
-              ))}
-            </ul>
-          </div>
-
-        </div>
-
-        <hr class="my-8 border-stone-ivory/20" />
-
-        <!-- Compliance & Footer Links -->
-        <div class="flex flex-wrap justify-between items-center gap-4 text-xs text-stone-ivory/60">
-          <div class="flex flex-wrap gap-4">
-            {(siteConfig?.footer?.complianceLinks || []).map((link) => (
-              <a href={link.href} class="hover:text-marigold">{link.label}</a>
-            ))}
-          </div>
-          <p class="max-w-md text-right text-xs">
-            {siteConfig?.footer?.disclaimerText || "Disclaimer: The materials provided are for devotional, cultural, and educational purposes."}
-          </p>
-        </div>
-
-      </div>
-    </footer>
+    <!-- Modern Responsive Multi-Column Devotional Footer -->
+    <FooterSection
+      currentYear={currentYear}
+      brandingTitle={siteConfig?.footer?.brandingTitle}
+      brandingDesc={siteConfig?.footer?.brandingDesc}
+      copyrightText={siteConfig?.footer?.copyrightText}
+      disclaimerText={siteConfig?.footer?.disclaimerText}
+    />
 
     <!-- Sticky Bottom Nav (Mobile Shortcuts) -->
-    <nav class="no-print md:hidden fixed bottom-0 left-0 right-0 bg-maroon-deep border-t-2 border-brass-gold text-stone-ivory z-40 flex justify-around items-center h-16 shadow-2xl">
+    <nav class="no-print md:hidden fixed bottom-0 left-0 right-0 bg-[#4A1216] border-t-2 border-[#C9A45C] text-[#FFF9F0] z-40 flex justify-around items-center h-16 shadow-2xl">
       <a href="/" class="flex flex-col items-center justify-center w-full h-full hover:text-marigold transition-colors text-xs gap-0.5">
         <span class="text-lg">🕉️</span>
         <span>Chalisa</span>
