@@ -14,19 +14,19 @@ const {
 } = Astro.props;
 ---
 
-<!-- FULL-WIDTH CINEMATIC DEVOTIONAL HERO SECTION -->
+<!-- FULL-WIDTH CINEMATIC DEVOTIONAL HERO SECTION (FLUSH BENEATH NAVBAR & TOUCHING EVERY CORNER) -->
 <section
-  class="relative w-full overflow-hidden bg-[#1F0D05] text-white border-b-2 border-[#C9A45C]/40"
+  class="relative w-full min-h-[580px] sm:min-h-[660px] md:min-h-[740px] lg:min-h-[820px] xl:min-h-[880px] overflow-hidden bg-[#1F0D05] text-white border-b-2 border-[#C9A45C]/40 flex flex-col justify-center"
   aria-label="Shree Hanuman Chalisa Devotional Hero Entrance"
 >
-  <!-- Full-Width Background Poster -->
-  <div class="absolute inset-0 w-full h-full pointer-events-none select-none z-0">
-    <picture>
+  <!-- Full-Width Edge-to-Edge Background Poster -->
+  <div class="absolute inset-0 w-full h-full pointer-events-none select-none z-0 overflow-hidden">
+    <picture class="w-full h-full block">
       <source srcset="/images/hero-hanuman-poster.webp" type="image/webp" />
       <img
         src="/images/hero-hanuman-poster.jpg"
         alt="Bhagwan Shree Hanuman Ji Divya Swaroop - Ram Hanuman Chalisa"
-        class="w-full h-full object-cover object-top sm:object-center brightness-95 contrast-105 transform scale-102 transition-transform duration-1000 ease-out"
+        class="w-full h-full object-cover object-[center_18%] sm:object-center brightness-95 contrast-105"
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -35,20 +35,20 @@ const {
 
     <!-- Multi-Layer Atmospheric Lighting Overlays -->
     <!-- Layer 1: Dark Scrim for Perfect Header & Text Contrast -->
-    <div class="absolute inset-0 bg-gradient-to-t from-[#1F0D05] via-[#1F0D05]/65 to-[#1F0D05]/80"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#1F0D05] via-[#1F0D05]/60 to-[#1F0D05]/80"></div>
     
-    <!-- Layer 2: Radiant Center Halo accentuating Lord Hanuman -->
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(232,117,36,0.3)_0%,rgba(201,87,22,0.15)_45%,transparent_75%)]"></div>
+    <!-- Layer 2: Radiant Center Halo accentuating Lord Hanuman's Divine Radiance -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(232,117,36,0.3)_0%,rgba(201,87,22,0.14)_45%,transparent_75%)]"></div>
     
     <!-- Layer 3: Warm Golden Base Vignette -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#1F0D05]"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-[#1F0D05]"></div>
   </div>
 
   <!-- Decorative Sacred Embers / Glow Accents -->
-  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-[#E87524]/15 rounded-full blur-3xl pointer-events-none z-0"></div>
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-5xl h-96 bg-[#E87524]/15 rounded-full blur-3xl pointer-events-none z-0"></div>
 
-  <!-- Main Hero Content Overlay -->
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-14 sm:pb-20 flex flex-col items-center text-center">
+  <!-- Main Hero Content Overlay (Centered responsive readable container) -->
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 md:py-20 flex flex-col items-center text-center my-auto">
     
     <!-- Top Sacred Invocation Badge -->
     <div class="inline-flex items-center gap-2 sm:gap-2.5 px-4 py-1.5 rounded-full bg-black/60 border border-[#C9A45C]/70 shadow-lg backdrop-blur-md text-[#E8A33D] text-xs sm:text-sm font-semibold tracking-wide uppercase animate-fade-in">
@@ -70,7 +70,7 @@ const {
     </div>
 
     <!-- Spiritual Epigraph / Sacred Verse -->
-    <div class="mt-5 sm:mt-6 max-w-2xl mx-auto bg-black/45 border border-[#C9A45C]/40 rounded-2xl px-5 py-3 sm:py-4 backdrop-blur-md shadow-xl">
+    <div class="mt-5 sm:mt-6 max-w-2xl mx-auto bg-black/50 border border-[#C9A45C]/45 rounded-2xl px-5 py-3.5 sm:py-4 backdrop-blur-md shadow-xl">
       <p class="font-hindi-display text-base sm:text-xl font-bold text-[#FFF9F0] drop-shadow-sm">
         {dailyQuote.verse}
       </p>
@@ -81,16 +81,16 @@ const {
 
     <!-- Key Devotional Pillars Strip -->
     <div class="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold text-white/95">
-      <span class="px-3 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
+      <span class="px-3.5 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
         <span class="text-[#E87524]">🚩</span> ४० सिद्ध चौपाई
       </span>
-      <span class="px-3 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
+      <span class="px-3.5 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
         <span class="text-[#E87524]">🎧</span> सस्वर शुद्ध पाठ
       </span>
-      <span class="px-3 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
+      <span class="px-3.5 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
         <span class="text-[#E87524]">📖</span> शब्दार्थ एवं भावार्थ
       </span>
-      <span class="px-3 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
+      <span class="px-3.5 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
         <span class="text-[#E87524]">🕉️</span> ७ प्रादेशिक भाषाएँ
       </span>
     </div>
@@ -100,7 +100,7 @@ const {
       <!-- Primary CTA: Recitation -->
       <a
         href="#chalisa-recitation"
-        class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#C95716] via-[#E87524] to-[#C95716] hover:from-[#E87524] hover:to-[#C95716] text-white font-bold text-sm sm:text-base tracking-wide uppercase shadow-[0_4px_24px_rgba(232,117,36,0.5)] hover:shadow-[0_6px_32px_rgba(232,117,36,0.7)] transition-all duration-300 flex items-center justify-center gap-2.5 border-2 border-[#C9A45C] group"
+        class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#C95716] via-[#E87524] to-[#C95716] hover:from-[#E87524] hover:to-[#C95716] text-white font-bold text-sm sm:text-base tracking-wide uppercase shadow-[0_4px_24px_rgba(232,117,36,0.5)] hover:shadow-[0_6px_32px_rgba(232,117,36,0.7)] transition-all duration-300 flex items-center justify-center gap-2.5 border-2 border-[#C9A45C] group cursor-pointer"
       >
         <span class="text-lg group-hover:scale-110 transition-transform">▶</span>
         <span>चालीसा पाठ आरम्भ करें</span>
@@ -110,7 +110,7 @@ const {
       <!-- Secondary CTA: Daily Sadhana -->
       <a
         href="#daily-sadhana"
-        class="w-full sm:w-auto px-7 py-4 rounded-full bg-black/60 hover:bg-black/80 text-[#FFF9F0] hover:text-[#E8A33D] font-bold text-sm sm:text-base tracking-wide uppercase border-2 border-[#C9A45C]/60 hover:border-[#C9A45C] shadow-lg backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2"
+        class="w-full sm:w-auto px-7 py-4 rounded-full bg-black/60 hover:bg-black/80 text-[#FFF9F0] hover:text-[#E8A33D] font-bold text-sm sm:text-base tracking-wide uppercase border-2 border-[#C9A45C]/60 hover:border-[#C9A45C] shadow-lg backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
       >
         <span>📿</span>
         <span>आज की साधना</span>
@@ -120,7 +120,7 @@ const {
       <!-- Tertiary CTA: Devotional Stories -->
       <a
         href="/stories"
-        class="w-full sm:w-auto px-6 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base tracking-wide uppercase border border-white/25 hover:border-[#E87524] shadow-md backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2"
+        class="w-full sm:w-auto px-6 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base tracking-wide uppercase border border-white/25 hover:border-[#E87524] shadow-md backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
       >
         <span>✨</span>
         <span>दिव्य कथाएँ</span>
