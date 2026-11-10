@@ -1,0 +1,106 @@
+---
+const COLLECTIONS = [
+  {
+    title: "Hanuman Chalisa with Full Meaning",
+    hindiTitle: "सम्पूर्ण हनुमान चालीसा अर्थ सहित",
+    desc: "Line-by-line Awadhi vocabulary, grammar breakdown, and metaphysical commentary for all 40 chaupais.",
+    href: "/hanuman-chalisa-meaning",
+    icon: "📖",
+    tag: "शब्दार्थ व भावार्थ",
+  },
+  {
+    title: "Synced Audio MP3 Recitation",
+    hindiTitle: "सस्वर ऑडियो पाठ स्टूडियो",
+    desc: "Traditional melodious recitation with real-time synchronized karaoke verse highlighting and speed adjustments.",
+    href: "/hanuman-chalisa-audio-mp3",
+    icon: "🎵",
+    tag: "ऑडियो व गायन",
+  },
+  {
+    title: "Invincible Bajrang Baan",
+    hindiTitle: "श्री बजरंग बाण रक्षा कवच",
+    desc: "The sacred shield hymn invoking the holy oaths of Lord Rama to banish severe fear, nightmares, and negative energies.",
+    href: "/bajrang-baan",
+    icon: "⚡",
+    tag: "रक्षा स्तोत्र",
+  },
+  {
+    title: "Sankat Mochan Hanumanashtak",
+    hindiTitle: "संकटमोचन हनुमानाष्टक",
+    desc: "Eight revered couplets recounting Mahavira's miraculous feats in service of Lord Rama and distressed seekers.",
+    href: "/sankat-mochan-hanumanashtak",
+    icon: "🛡️",
+    tag: "संकट मोचन",
+  },
+  {
+    title: "Shri Ram Chalisa",
+    hindiTitle: "श्री राम चालीसा",
+    desc: "The authentic 40 verses praising Bhagwan Shri Ram Chandra, celebrating his compassionate reign and supreme protection.",
+    href: "/ram-chalisa",
+    icon: "🏹",
+    tag: "मर्यादा पुरुषोत्तम",
+  },
+  {
+    title: "Sunderkand Path Guide",
+    hindiTitle: "सुंदरकांड पाठ एवं महात्म्य",
+    desc: "The glorious chapter of victory from Ramcharitmanas that dispels household distress and awakens unshakeable faith.",
+    href: "/blog/sunderkand",
+    icon: "📜",
+    tag: "विजय काण्ड",
+  },
+];
+---
+
+<section class="max-w-6xl mx-auto px-4 py-8" aria-label="Popular Devotional Collections">
+  <div class="text-center mb-8 space-y-2">
+    <div class="flex justify-center">
+      <span class="rubric-marker">
+        <span>— संग्रह प्रभाग : मुख्य उपासना ग्रंथ —</span>
+      </span>
+    </div>
+    <h2 class="text-2xl sm:text-3xl font-serif-display font-bold text-[#4A1216]">
+      Popular Devotional Collections
+    </h2>
+    <p class="text-xs sm:text-sm text-[#34251D]/75 max-w-xl mx-auto font-sans leading-relaxed">
+      Curated sacred prayers and audio companions revered by millions of devotees for daily home mandir recitation.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {COLLECTIONS.map((item) => (
+      <a
+        href={item.href}
+        class="devotional-card p-6 flex flex-col justify-between group hover:border-[#E87524]"
+      >
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-3xl group-hover:scale-110 transition-transform">
+              {item.icon}
+            </span>
+            <span class="text-[10px] font-bold text-[#C95716] bg-[#E87524]/10 border border-[#C9A45C]/35 px-2.5 py-0.5 rounded-full uppercase">
+              {item.tag}
+            </span>
+          </div>
+
+          <div>
+            <h3 class="font-serif-display font-bold text-lg text-[#4A1216] group-hover:text-[#E87524] transition-colors leading-snug">
+              {item.title}
+            </h3>
+            <span class="font-hindi-display text-xs text-[#C95716] font-semibold block mt-1">
+              {item.hindiTitle}
+            </span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-[#34251D]/75 leading-relaxed font-sans">
+            {item.desc}
+          </p>
+        </div>
+
+        <div class="mt-5 pt-3 border-t border-[#C9A45C]/20 flex items-center justify-between text-xs font-bold text-[#C95716]">
+          <span>Read & Recite</span>
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

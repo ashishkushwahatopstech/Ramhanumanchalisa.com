@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { getPrisma } from "../../lib/prisma";
 import CarvedDivider from "../../components/CarvedDivider";
+import ArticleShareBar from "../../components/ArticleShareBar";
 import { FALLBACK_BLOG_POSTS, type BlogPost } from "../../data/blog";
 import { CONSOLIDATED_REDIRECTS } from "../../data/consolidatedPosts";
 
@@ -765,6 +766,12 @@ const tableOfContents = parsedContent
 
 // Find 3 Related Articles (prioritize same devotional focus, excluding current post)
 const currentKeywords = (post.focusKeywords || post.title).toLowerCase().split(/[\s,]+/);
+
+// Previous and Next article navigation
+const currentIndex = FALLBACK_BLOG_POSTS.findIndex((p) => p.slug === post.slug);
+const prevPost = currentIndex > 0 ? FALLBACK_BLOG_POSTS[currentIndex - 1] : null;
+const nextPost = currentIndex >= 0 && currentIndex < FALLBACK_BLOG_POSTS.length - 1 ? FALLBACK_BLOG_POSTS[currentIndex + 1] : null;
+
 const relatedPosts = FALLBACK_BLOG_POSTS
   .filter((p) => p.slug !== post.slug)
   .map((p) => {
@@ -942,6 +949,9 @@ const postOgImageAlt = post.imageAlt || `${cleanTitle} - Ram Hanuman Chalisa`;
 
     <CarvedDivider icon="🕉️" />
 
+    <!-- Article Reading Progress & Share Actions Bar -->
+    <ArticleShareBar client:load title={post.title} slug={post.slug} />
+
     <!-- Cover Image with SEO tags -->
     {post.coverImage && (
       <figure class="my-6 rounded-lg overflow-hidden border border-brass-gold/30 bg-stone-ivory shadow-md">
@@ -1077,6 +1087,40 @@ const postOgImageAlt = post.imageAlt || `${cleanTitle} - Ram Hanuman Chalisa`;
     </article>
 
     <!-- Related Devotional Articles -->
+    
+    <!-- Previous & Next Article Navigation -->
+    {(prevPost || nextPost) && (
+      <nav class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8 pt-4 border-t border-brass-gold/25" aria-label="Article pagination">
+        {prevPost ? (
+          <a
+            href={`/blog/${prevPost.slug}`}
+            class="p-4 rounded-xl bg-white border border-brass-gold/30 hover:border-maroon-deep transition-all group flex flex-col justify-between"
+          >
+            <span class="text-[11px] font-bold text-brass-gold uppercase tracking-wider flex items-center gap-1">
+              <span>←</span> Previous Hymn
+            </span>
+            <span class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors mt-1 line-clamp-1">
+              {prevPost.title}
+            </span>
+          </a>
+        ) : <div />}
+
+        {nextPost && (
+          <a
+            href={`/blog/${nextPost.slug}`}
+            class="p-4 rounded-xl bg-white border border-brass-gold/30 hover:border-maroon-deep transition-all group flex flex-col justify-between text-right"
+          >
+            <span class="text-[11px] font-bold text-brass-gold uppercase tracking-wider flex items-center justify-end gap-1">
+              Next Hymn <span>→</span>
+            </span>
+            <span class="font-serif-display font-bold text-sm text-maroon-deep group-hover:text-vermilion transition-colors mt-1 line-clamp-1">
+              {nextPost.title}
+            </span>
+          </a>
+        )}
+      </nav>
+    )}
+
     {relatedPosts.length > 0 && (
       <section class="bg-stone-ivory/60 border border-brass-gold/30 rounded-xl p-6 shadow-sm space-y-4">
         <div class="flex items-center gap-2 border-b border-brass-gold/20 pb-2">

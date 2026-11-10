@@ -1,0 +1,83 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { DEVOTIONAL_STORIES } from "../../data/stories";
+
+const pageTitle = "Devotional Web Stories | Ram Hanuman Chalisa";
+const pageDescription = "Explore inspiring interactive visual stories on Lord Hanuman, Bajrang Baan, Ramayana episodes, mantras, and sacred chanting disciplines.";
+
+const publishedStories = DEVOTIONAL_STORIES.filter((s) => s.published);
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl="https://ramhanumanchalisa.com/stories"
+>
+  <div class="max-w-6xl mx-auto px-4 py-8 space-y-10">
+    
+    <!-- Header Banner -->
+    <div class="text-center space-y-3">
+      <span class="devotional-badge">
+        <span>✨ डिजिटल ज्ञान प्रदीप</span>
+      </span>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif-display font-bold text-[#4A1216]">
+        Devotional Stories & Highlights
+      </h1>
+      <p class="text-sm sm:text-base text-[#34251D]/80 max-w-2xl mx-auto font-sans leading-relaxed">
+        Swipe and explore bite-sized visual devotional stories celebrating the heroic feats, divine mantras, and timeless Awadhi verses composed by Goswami Tulsidas.
+      </p>
+    </div>
+
+    <!-- Stories Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {publishedStories.map((story) => (
+        <a
+          href={`/stories/${story.slug}`}
+          class="devotional-card p-6 flex flex-col justify-between group overflow-hidden bg-white border border-[#C9A45C]/30 hover:border-[#E87524]"
+        >
+          <div class="space-y-4">
+            <div className="flex items-center justify-between">
+              <span class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#C95716] via-[#E87524] to-[#C9A45C] p-[2px] inline-flex items-center justify-center shadow-md">
+                <span class="w-full h-full rounded-full bg-[#4A1216] flex items-center justify-center text-xl text-white">
+                  {story.coverIcon || "🕉️"}
+                </span>
+              </span>
+              <span class="text-[11px] font-bold text-[#C95716] bg-[#E87524]/10 border border-[#C9A45C]/30 px-2 py-0.5 rounded-full uppercase">
+                {story.category}
+              </span>
+            </div>
+
+            <div>
+              <h2 class="font-serif-display text-lg font-bold text-[#4A1216] group-hover:text-[#E87524] transition-colors leading-snug">
+                {story.title}
+              </h2>
+              <span class="font-hindi-display text-xs text-[#C95716] font-semibold block mt-1">
+                {story.hindiTitle}
+              </span>
+            </div>
+
+            <p class="text-xs text-[#34251D]/75 line-clamp-3 font-sans leading-relaxed">
+              {story.metaDescription}
+            </p>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-[#C9A45C]/20 flex items-center justify-between text-xs font-bold text-[#C95716]">
+            <span>Read Story ({story.slides.length} Slides)</span>
+            <span class="group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Bottom Nav Back to Home -->
+    <div class="text-center pt-8 border-t border-[#C9A45C]/25">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#4A1216] hover:bg-[#6B1E23] text-white text-xs font-bold uppercase tracking-wider border border-[#C9A45C] shadow-sm transition-all"
+      >
+        <span>← Return to Mandir Homepage</span>
+      </a>
+    </div>
+
+  </div>
+</Layout>

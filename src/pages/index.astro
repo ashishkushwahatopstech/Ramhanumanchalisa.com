@@ -6,6 +6,13 @@ import LanguageBanner from "../components/LanguageBanner";
 import CookieRedirect from "../components/CookieRedirect";
 import DiyaCounter from "../components/DiyaCounter";
 import PageFaqs from "../components/PageFaqs.astro";
+import HeroSection from "../components/HeroSection.astro";
+import StoryHighlights from "../components/StoryHighlights";
+import TodaysDevotion from "../components/TodaysDevotion";
+import CategoryDiscovery from "../components/CategoryDiscovery.astro";
+import PopularCollections from "../components/PopularCollections.astro";
+import InstagramShowcase from "../components/InstagramShowcase.astro";
+import SubscriptionGadget from "../components/gadgets/SubscriptionGadget";
 
 const db = Astro.locals.runtime?.env?.DB;
 const data = await getChalisaData("hi", db);
@@ -210,6 +217,12 @@ const pageDescription = "सम्पूर्ण श्री हनुमा�
         </div>
       </div>
     </section>
+
+    <!-- SECTION G: Category Discovery -->
+    <CategoryDiscovery />
+
+    <!-- SECTION I: Popular Devotional Collections -->
+    <PopularCollections />
 
     <!-- SECTION: Comprehensive Devotional Guide to Shree Hanuman Chalisa -->
     <section class="max-w-6xl mx-auto px-4 space-y-8">
@@ -647,6 +660,23 @@ const pageDescription = "सम्पूर्ण श्री हनुमा�
             </div>
           </article>
         </div>
+      </div>
+    </section>
+
+    <!-- SECTION J: Instagram Community Showcase -->
+    <InstagramShowcase />
+
+    <!-- SECTION K: Daily Devotional Blessings Subscription -->
+    <section class="max-w-4xl mx-auto px-4 py-4">
+      <div class="devotional-card p-6 sm:p-8 bg-gradient-to-br from-[#FFF9F0] via-white to-[#FAF3E8] border border-[#C9A45C]/30 shadow-sm">
+        <SubscriptionGadget
+          client:visible
+          title="Daily Morning Hanuman Blessings"
+          subtitle="Receive daily Chaupai verses, auspicious tithis, and divine audio directly in your inbox."
+          buttonText="Receive Blessings 🙏"
+          placeholder="Enter your email address..."
+          disclaimer="No spam. Pure devotional blessings sent every morning."
+        />
       </div>
     </section>
 

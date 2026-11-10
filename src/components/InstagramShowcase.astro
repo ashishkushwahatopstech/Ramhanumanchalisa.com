@@ -1,0 +1,96 @@
+---
+import { INSTAGRAM_FEATURED_POSTS } from "../data/instagram";
+
+interface Props {
+  profileUrl?: string;
+  handle?: string;
+}
+
+const {
+  profileUrl = "https://www.instagram.com/ramhanumanchalisadotcom/",
+  handle = "@ramhanumanchalisadotcom",
+} = Astro.props;
+---
+
+<section class="max-w-6xl mx-auto px-4 py-10" aria-label="Instagram Devotional Community">
+  <div class="devotional-card p-6 sm:p-10 bg-gradient-to-br from-[#FFF9F0] via-[#FFFFFF] to-[#FAF3E8] border-2 border-[#C9A45C]/35">
+    
+    <!-- Top Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-[#C9A45C]/25 gap-4">
+      <div class="flex items-center gap-3">
+        <span class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#C95716] via-[#E87524] to-[#C9A45C] p-[2px] inline-flex items-center justify-center shadow-md">
+          <span class="w-full h-full rounded-full bg-[#4A1216] flex items-center justify-center text-2xl text-white">
+            📷
+          </span>
+        </span>
+        <div>
+          <h2 class="font-serif-display text-xl sm:text-2xl font-bold text-[#4A1216] leading-none">
+            Follow Our Devotional Community
+          </h2>
+          <span class="text-xs sm:text-sm text-[#C95716] font-semibold block mt-1">
+            Instagram: {handle}
+          </span>
+        </div>
+      </div>
+
+      <a
+        href={profileUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#C95716] to-[#E87524] hover:from-[#E87524] hover:to-[#C95716] text-white text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all border border-[#C9A45C] self-start sm:self-center"
+      >
+        <span>Follow on Instagram</span>
+        <span>↗</span>
+      </a>
+    </div>
+
+    <!-- 4-Card Instagram Showcase Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-8">
+      {INSTAGRAM_FEATURED_POSTS.map((post) => (
+        <a
+          href={post.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group rounded-xl overflow-hidden border border-[#C9A45C]/35 bg-white shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+        >
+          {/* Visual Header with Sacred Verse Gradient */}
+          <div class={`p-5 bg-gradient-to-b ${post.bgGradient} text-white min-h-[140px] flex flex-col justify-between relative overflow-hidden`}>
+            <div class="flex items-center justify-between z-10 text-[10px] font-bold">
+              <span class="px-2 py-0.5 rounded-full bg-black/40 border border-[#C9A45C]/40 text-[#E8A33D] uppercase">
+                {post.tag}
+              </span>
+              <span class="text-white/80">📷 Instagram</span>
+            </div>
+
+            <p class="font-hindi-display text-sm sm:text-base font-bold text-[#E8A33D] leading-relaxed text-center z-10 my-2">
+              {post.verseSnippet}
+            </p>
+
+            <div class="flex items-center justify-between text-[11px] text-white/70 z-10">
+              <span>{handle}</span>
+              {post.likesApprox && <span>❤️ {post.likesApprox}</span>}
+            </div>
+          </div>
+
+          {/* Caption & Read Link */}
+          <div class="p-4 flex flex-col justify-between flex-1 space-y-3">
+            <div>
+              <h3 class="font-serif-display font-bold text-sm text-[#4A1216] group-hover:text-[#E87524] transition-colors leading-snug">
+                {post.title}
+              </h3>
+              <p class="text-xs text-[#34251D]/75 line-clamp-2 mt-1 leading-relaxed font-sans">
+                {post.caption}
+              </p>
+            </div>
+
+            <div class="pt-2 border-t border-[#F6F0E8] flex items-center justify-between text-xs font-bold text-[#C95716]">
+              <span>View on Instagram</span>
+              <span class="group-hover:translate-x-0.5 transition-transform">↗</span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>

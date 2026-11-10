@@ -1,0 +1,99 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { DEVOTIONAL_STORIES, type DevotionalStory } from "../../data/stories";
+import StoryViewer from "../../components/StoryViewer";
+
+const { slug } = Astro.params;
+
+const story = DEVOTIONAL_STORIES.find((s) => s.slug === slug && s.published);
+
+if (!story) {
+  Astro.response.status = 404;
+  return Astro.rewrite("/404");
+}
+
+const canonicalUrl = `https://ramhanumanchalisa.com/stories/${story.slug}`;
+
+const storySchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": story.title,
+  "alternativeHeadline": story.hindiTitle,
+  "description": story.metaDescription,
+  "datePublished": story.publishedAt,
+  "url": canonicalUrl,
+  "author": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ram Hanuman Chalisa",
+    "url": "https://ramhanumanchalisa.com/",
+    "logo": "https://ramhanumanchalisa.com/icon.png"
+  }
+};
+---
+
+<Layout
+  title={story.metaTitle}
+  description={story.metaDescription}
+  canonicalUrl={canonicalUrl}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(storySchema)} />
+  </Fragment>
+
+  <div class="max-w-xl mx-auto px-4 py-4 sm:py-8 flex flex-col items-center">
+    
+    <!-- Top Nav Back Link -->
+    <div class="w-full max-w-md flex items-center justify-between mb-3 text-xs">
+      <a
+        href="/stories"
+        class="inline-flex items-center gap-1 font-bold text-[#C95716] hover:text-[#E87524] transition-colors"
+      >
+        <span>← All Stories</span>
+      </a>
+      <span class="text-[#34251D]/60 font-medium">
+        {story.category}
+      </span>
+    </div>
+
+    <!-- 9:16 Interactive Story Viewer Island -->
+    <StoryViewer
+      client:load
+      stories={DEVOTIONAL_STORIES}
+      initialStorySlug={story.slug}
+      isOpen={true}
+      isStandalonePage={true}
+    />
+
+    <!-- Context Card below Viewer -->
+    <div class="w-full max-w-md mt-6 p-6 rounded-2xl bg-white border border-[#C9A45C]/30 shadow-md space-y-4">
+      <div class="border-b border-[#C9A45C]/20 pb-3">
+        <span class="text-[11px] font-bold text-[#C95716] uppercase tracking-wider block">
+          About This Story
+        </span>
+        <h1 class="font-serif-display text-xl font-bold text-[#4A1216] mt-1">
+          {story.title} ({story.hindiTitle})
+        </h1>
+      </div>
+
+      <p class="text-xs sm:text-sm text-[#34251D]/80 leading-relaxed font-sans">
+        {story.metaDescription}
+      </p>
+
+      {story.relatedUrl && (
+        <a
+          href={story.relatedUrl}
+          class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#C95716] hover:bg-[#E87524] text-white rounded-xl text-xs font-bold tracking-wide uppercase transition-colors shadow-sm"
+        >
+          <span>{story.relatedLabel || "Read Full Scripture"}</span>
+          <span>→</span>
+        </a>
+      )}
+    </div>
+
+  </div>
+</Layout>

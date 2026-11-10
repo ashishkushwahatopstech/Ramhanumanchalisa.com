@@ -1,0 +1,145 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AdminNavigation from "../../components/AdminNavigation.astro";
+import { DEVOTIONAL_STORIES } from "../../data/stories";
+
+const title = "Manage Devotional Stories | Admin Studio";
+const publishedCount = DEVOTIONAL_STORIES.filter((s) => s.published).length;
+const draftCount = DEVOTIONAL_STORIES.length - publishedCount;
+---
+
+<Layout title={title} noindex={true} hideSidebar={true}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <AdminNavigation activeTab="stories" />
+
+    <!-- Header Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div class="p-5 rounded-xl bg-white border border-[#C9A45C]/35 shadow-sm space-y-1">
+        <span class="text-xs font-bold text-[#34251D]/60 uppercase tracking-wider">Total Stories</span>
+        <div class="text-3xl font-bold font-serif-display text-[#4A1216]">
+          {DEVOTIONAL_STORIES.length}
+        </div>
+        <p class="text-[11px] text-[#34251D]/70 font-sans">9:16 interactive vertical format</p>
+      </div>
+
+      <div class="p-5 rounded-xl bg-white border border-[#C9A45C]/35 shadow-sm space-y-1">
+        <span class="text-xs font-bold text-[#34251D]/60 uppercase tracking-wider">Published & Live</span>
+        <div class="text-3xl font-bold font-serif-display text-[#25D366]">
+          {publishedCount}
+        </div>
+        <p class="text-[11px] text-[#34251D]/70 font-sans">Active on homepage highlights & sitemap</p>
+      </div>
+
+      <div class="p-5 rounded-xl bg-white border border-[#C9A45C]/35 shadow-sm space-y-1">
+        <span class="text-xs font-bold text-[#34251D]/60 uppercase tracking-wider">Drafts</span>
+        <div class="text-3xl font-bold font-serif-display text-[#E87524]">
+          {draftCount}
+        </div>
+        <p class="text-[11px] text-[#34251D]/70 font-sans">In progress / hidden from public</p>
+      </div>
+    </div>
+
+    <!-- Management Documentation Box -->
+    <div class="p-6 rounded-2xl bg-gradient-to-r from-[#FFF9F0] via-white to-[#FAF3E8] border border-[#C9A45C]/40 shadow-xs space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📖</span>
+          <h2 class="font-serif-display font-bold text-base text-[#4A1216]">
+            Story Content Management Architecture
+          </h2>
+        </div>
+        <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#E87524]/10 text-[#C95716] border border-[#C9A45C]/40 uppercase">
+          Static Schema + Edge Validated
+        </span>
+      </div>
+
+      <p class="text-xs sm:text-sm text-[#34251D]/80 leading-relaxed font-sans">
+        Devotional stories are managed via the typed, schema-validated file <code class="bg-[#FAF3E8] px-1.5 py-0.5 rounded text-[#C95716] font-mono">src/data/stories.ts</code>. You can add new slides, adjust Awadhi verses, translations, or toggle drafts without running migrations or database rebuilds.
+      </p>
+
+      <div class="pt-2 flex flex-wrap gap-3 text-xs">
+        <a
+          href="/stories"
+          target="_blank"
+          class="inline-flex items-center gap-1 font-bold text-[#C95716] hover:text-[#E87524] underline"
+        >
+          <span>👁️ View Public Stories Directory</span> &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Stories List Table -->
+    <div class="bg-white border border-[#C9A45C]/35 rounded-2xl overflow-hidden shadow-sm">
+      <div class="p-5 bg-[#FAF3E8] border-b border-[#C9A45C]/30 flex items-center justify-between">
+        <h3 class="font-serif-display font-bold text-sm sm:text-base text-[#4A1216] uppercase tracking-wider">
+          Configured Devotional Stories
+        </h3>
+        <span class="text-xs text-[#34251D]/70">
+          Showing {DEVOTIONAL_STORIES.length} entries
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-[#F6F0E8] text-[#4A1216] font-bold uppercase tracking-wider text-[11px] border-b border-[#C9A45C]/20">
+            <tr>
+              <th class="py-3 px-4">Story & Title</th>
+              <th class="py-3 px-4">Category</th>
+              <th class="py-3 px-4">Slides</th>
+              <th class="py-3 px-4">Status</th>
+              <th class="py-3 px-4">Date</th>
+              <th class="py-3 px-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#F6F0E8] font-sans">
+            {DEVOTIONAL_STORIES.map((story) => (
+              <tr class="hover:bg-[#FFF9F0] transition-colors">
+                <td class="py-3.5 px-4">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-7 h-7 rounded-full bg-[#4A1216] text-white flex items-center justify-center text-sm">
+                      {story.coverIcon || "🕉️"}
+                    </span>
+                    <div>
+                      <span class="font-bold text-sm text-[#4A1216] block">{story.title}</span>
+                      <span class="text-[11px] text-[#C95716] font-hindi-display">{story.hindiTitle}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-3.5 px-4 font-semibold text-[#34251D]/80">
+                  {story.category}
+                </td>
+                <td class="py-3.5 px-4 font-mono font-bold text-[#4A1216]">
+                  {story.slides.length} slides
+                </td>
+                <td class="py-3.5 px-4">
+                  {story.published ? (
+                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#25D366] bg-[#25D366]/10 px-2 py-0.5 rounded-full">
+                      <span>●</span> Published
+                    </span>
+                  ) : (
+                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#E87524] bg-[#E87524]/10 px-2 py-0.5 rounded-full">
+                      <span>○</span> Draft
+                    </span>
+                  )}
+                </td>
+                <td class="py-3.5 px-4 text-[#34251D]/60 font-mono">
+                  {story.publishedAt}
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <a
+                    href={`/stories/${story.slug}`}
+                    target="_blank"
+                    class="inline-flex items-center gap-1 px-3 py-1 rounded bg-[#FAF3E8] hover:bg-[#FFF9F0] border border-[#C9A45C]/40 text-xs font-bold text-[#C95716] transition-colors"
+                  >
+                    <span>Preview</span> &rarr;
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</Layout>

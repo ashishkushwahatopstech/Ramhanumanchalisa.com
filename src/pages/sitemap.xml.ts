@@ -3,6 +3,7 @@ import { getPrisma } from "../lib/prisma";
 import { BENEFITS_DATA } from "../data/benefits";
 import { FALLBACK_BLOG_POSTS } from "../data/blog";
 import { CONSOLIDATED_REDIRECTS } from "../data/consolidatedPosts";
+import { DEVOTIONAL_STORIES } from "../data/stories";
 
 export const GET: APIRoute = async (context) => {
   const baseUrl = "https://ramhanumanchalisa.com";
@@ -160,6 +161,25 @@ export const GET: APIRoute = async (context) => {
     <priority>0.9</priority>
   </url>`);
   urls = urls.concat(langUrls);
+  // 5. Devotional stories
+  const storyPaths = [
+    { path: "/stories", lastmod: "2026-09-23T00:00:00.000Z", changefreq: "weekly", priority: "0.8" },
+    ...DEVOTIONAL_STORIES.filter(s => s.published).map(s => ({
+      path: "/stories/" + s.slug,
+      lastmod: s.publishedAt + "T00:00:00.000Z",
+      changefreq: "monthly",
+      priority: "0.7"
+    }))
+  ];
+  const storyUrls = storyPaths.map((item) => `
+  <url>
+    <loc>${baseUrl}${item.path}</loc>
+    <lastmod>${item.lastmod}</lastmod>
+    <changefreq>${item.changefreq}</changefreq>
+    <priority>${item.priority}</priority>
+  </url>`);
+  urls = urls.concat(storyUrls);
+
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join("")}
