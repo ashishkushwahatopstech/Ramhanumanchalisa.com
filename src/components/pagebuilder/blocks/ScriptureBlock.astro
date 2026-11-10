@@ -1,0 +1,72 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const verses = content.verses || [];
+---
+
+<!-- Block: Scripture Verses [LOCKED BLOCK: Byte-for-byte sacred text preservation] -->
+<div id={block.id} class="scripture-verses-block space-y-6 max-w-4xl mx-auto py-4">
+  {content.intro && (
+    <div class="text-center space-y-2 mb-6">
+      {content.title && (
+        <h2 class="font-serif-display text-2xl sm:text-3xl font-bold text-[#4A1216]">
+          {content.title}
+        </h2>
+      )}
+      <p class="text-xs sm:text-sm text-[#34251D]/75 max-w-xl mx-auto leading-relaxed">
+        {content.intro}
+      </p>
+    </div>
+  )}
+
+  <div class="space-y-4 sm:space-y-6">
+    {verses.map((verse: any, index: number) => (
+      <article class="p-5 sm:p-7 rounded-xl bg-white border border-[#C9A45C]/35 shadow-xs hover:border-[#C9A45C] transition-colors space-y-3">
+        <div class="flex items-center justify-between border-b border-[#C9A45C]/20 pb-2.5">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#C95716] font-mono">
+            {verse.title_en || verse.label || `Verse ${index + 1}`}
+          </span>
+          {verse.meter && (
+            <span class="text-[11px] font-semibold text-[#4A1216] bg-[#C9A45C]/15 px-2.5 py-0.5 rounded-full">
+              {verse.meter}
+            </span>
+          )}
+        </div>
+
+        <!-- Devanagari Byte-for-Byte Sacred Verse -->
+        <p class="font-hindi-display text-lg sm:text-xl md:text-2xl font-bold text-[#4A1216] leading-relaxed select-text whitespace-pre-line text-center sm:text-left">
+          {verse.devanagari || verse.text}
+        </p>
+
+        <!-- Transliteration -->
+        {verse.transliteration && (
+          <p class="font-sans text-xs sm:text-sm text-[#34251D]/80 italic leading-relaxed text-center sm:text-left">
+            "{verse.transliteration}"
+          </p>
+        )}
+
+        <!-- Hindi & English Meanings -->
+        {(verse.meaning_hi || verse.meaning_en || verse.meaning) && (
+          <div class="pt-2 border-t border-[#C9A45C]/15 space-y-1.5 text-xs sm:text-sm text-[#34251D]/85">
+            {verse.meaning_hi && (
+              <p class="font-hindi-display leading-relaxed">
+                <strong class="text-[#C95716]">भावार्थ: </strong> {verse.meaning_hi}
+              </p>
+            )}
+            {(verse.meaning_en || verse.meaning) && (
+              <p class="font-sans leading-relaxed text-[#34251D]/75 italic">
+                <strong class="text-[#4A1216] not-italic font-bold">Meaning: </strong> {verse.meaning_en || verse.meaning}
+              </p>
+            )}
+          </div>
+        )}
+      </article>
+    ))}
+  </div>
+</div>

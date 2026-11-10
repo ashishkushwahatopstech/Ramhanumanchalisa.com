@@ -1,0 +1,23 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+import SubscriptionGadget from "../../gadgets/SubscriptionGadget";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+---
+
+<!-- Block: Newsletter Subscription -->
+<div id={block.id} class="newsletter-block max-w-xl mx-auto py-8">
+  <SubscriptionGadget
+    client:visible
+    title={content.title}
+    subtitle={content.subtitle}
+    buttonText={content.buttonText}
+    placeholder={content.placeholder}
+    disclaimer={content.disclaimer}
+  />
+</div>

@@ -1,0 +1,59 @@
+{
+  "slug": "privacy-policy",
+  "template": "legal_informational",
+  "status": "published",
+  "seo": {
+    "title": "Privacy Policy — Data Security, Cookies &amp; AdSense Terms",
+    "description": "Read our Privacy Policy covering data protection, cookie policy, anonymous analytics, local storage, and Google AdSense terms.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/privacy-policy",
+    "language": "en"
+  },
+  "h1": {
+    "text": "Privacy Policy",
+    "subheading": "Read our Privacy Policy covering data protection, cookie policy, anonymous analytics, local storage, and Google AdSense "
+  },
+  "sections": [
+    {
+      "id": "sec-privacy-policy-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-privacy-policy-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-privacy-policy-main",
+              "blocks": [
+                {
+                  "id": "blk-privacy-policy-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Privacy Policy",
+                    "paragraph": "Read our Privacy Policy covering data protection, cookie policy, anonymous analytics, local storage, and Google AdSense terms."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "slug": "shri-hanuman-chalisa-path-vidhi",
+  "template": "prayer_text",
+  "status": "published",
+  "seo": {
+    "title": "Hanuman Chalisa Path Vidhi — Rules and Auspicious Timings",
+    "description": "Learn authentic Hanuman Chalisa path vidhi, correct rules, auspicious timings, asana setup, and Tuesday-Saturday rituals.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/shri-hanuman-chalisa-path-vidhi",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "Hanuman Chalisa Path Vidhi & Rules",
+    "subheading": "Learn authentic Hanuman Chalisa path vidhi, correct rules, auspicious timings, asana setup, and Tuesday-Saturday rituals",
+    "devanagariTag": "॥ भक्ति भाव ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-shri-hanuman-chalisa-path-vidhi-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-shri-hanuman-chalisa-path-vidhi-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-shri-hanuman-chalisa-path-vidhi-main",
+              "blocks": [
+                {
+                  "id": "blk-shri-hanuman-chalisa-path-vidhi-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Hanuman Chalisa Path Vidhi & Rules",
+                    "paragraph": "Learn authentic Hanuman Chalisa path vidhi, correct rules, auspicious timings, asana setup, and Tuesday-Saturday rituals."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

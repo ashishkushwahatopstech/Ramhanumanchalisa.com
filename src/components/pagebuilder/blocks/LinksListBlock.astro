@@ -1,0 +1,38 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const links = content.links || [];
+---
+
+<!-- Block: Links List -->
+<div id={block.id} class="links-list-block max-w-4xl mx-auto py-4">
+  {content.title && (
+    <h3 class="font-serif-display text-lg sm:text-xl font-bold text-[#4A1216] mb-3">
+      {content.title}
+    </h3>
+  )}
+  <ul class="space-y-2 list-none p-0">
+    {links.map((item: any) => (
+      <li class="flex items-center gap-2">
+        <span class="text-[#C95716] text-xs font-bold">✦</span>
+        <a
+          href={item.url}
+          class="text-sm font-semibold text-[#4A1216] hover:text-[#C95716] transition-colors underline decoration-[#C9A45C]/40 underline-offset-4"
+          target={item.newTab ? "_blank" : undefined}
+          rel={item.newTab ? "noopener noreferrer" : undefined}
+        >
+          {item.label}
+        </a>
+        {item.description && (
+          <span class="text-xs text-[#34251D]/60">— {item.description}</span>
+        )}
+      </li>
+    ))}
+  </ul>
+</div>

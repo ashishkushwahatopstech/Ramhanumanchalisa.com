@@ -1,0 +1,60 @@
+{
+  "slug": "hanuman-chalisa-meaning",
+  "template": "prayer_text",
+  "status": "published",
+  "seo": {
+    "title": "Hanuman Chalisa Meaning — Hindi &amp; English Word by Word",
+    "description": "Explore complete Hanuman Chalisa meaning with word-by-word Awadhi breakdown, line-by-line Hindi and English translations.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "Hanuman Chalisa Meaning — Line by Line Translation & Explanation",
+    "subheading": "Explore complete Hanuman Chalisa meaning with word-by-word Awadhi breakdown, line-by-line Hindi and English translations",
+    "devanagariTag": "॥ भक्ति भाव ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-hanuman-chalisa-meaning-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-hanuman-chalisa-meaning-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-hanuman-chalisa-meaning-main",
+              "blocks": [
+                {
+                  "id": "blk-hanuman-chalisa-meaning-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Hanuman Chalisa Meaning — Line by Line Translation & Explanation",
+                    "paragraph": "Explore complete Hanuman Chalisa meaning with word-by-word Awadhi breakdown, line-by-line Hindi and English translations."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

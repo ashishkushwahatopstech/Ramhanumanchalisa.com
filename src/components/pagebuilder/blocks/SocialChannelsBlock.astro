@@ -1,0 +1,73 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+
+const channels = [
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/ramhanumanchalisadotcom/",
+    handle: "@ramhanumanchalisadotcom",
+    badge: "Official Page",
+    icon: "📸",
+    color: "hover:border-[#E1306C]",
+  },
+  {
+    name: "WhatsApp Community",
+    url: content.whatsappUrl || "https://whatsapp.com/channel/ramhanumanchalisa",
+    handle: "Daily Chaupai & Muhurat",
+    badge: "Join Community",
+    icon: "💬",
+    color: "hover:border-[#25D366]",
+  },
+  {
+    name: "YouTube Channel",
+    url: content.youtubeUrl || "https://www.youtube.com/@ramhanumanchalisa",
+    handle: "Sacred Chants & Audio",
+    badge: "Subscribe",
+    icon: "🎥",
+    color: "hover:border-[#FF0000]",
+  },
+];
+---
+
+<!-- Block: Social Channels Hub -->
+<section id={block.id} class="social-channels-block max-w-5xl mx-auto py-8">
+  <div class="text-center space-y-2 mb-6">
+    <h3 class="font-serif-display text-2xl font-bold text-[#4A1216]">
+      {content.title || "Connect With Our Devotional Satsang"}
+    </h3>
+    <p class="text-xs sm:text-sm text-[#34251D]/75 max-w-md mx-auto">
+      {content.subtitle || "Receive daily sacred chaupais, festival muhurat alerts, and spiritual commentary on your favorite platforms."}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    {channels.map((ch) => (
+      <a
+        href={ch.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={`group p-4 rounded-xl bg-white border border-[#C9A45C]/30 shadow-xs transition-all flex items-center gap-3.5 ${ch.color}`}
+      >
+        <span class="text-2xl">{ch.icon}</span>
+        <div class="space-y-0.5">
+          <span class="text-xs font-bold text-[#4A1216] block group-hover:text-[#C95716] transition-colors">
+            {ch.name}
+          </span>
+          <span class="text-[11px] text-[#34251D]/70 block font-mono">
+            {ch.handle}
+          </span>
+          <span class="text-[10px] font-semibold text-[#C95716] uppercase tracking-wider block">
+            {ch.badge} &rarr;
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

@@ -4,11 +4,13 @@ import HanumanashtakClient from "../components/HanumanashtakClient";
 import PageFaqs from "../components/PageFaqs.astro";
 import hanumanashtakData from "../data/scriptures/sankat-mochan-hanumanashtak.json";
 import type { ScriptureVerse } from "../types/scripture";
+import { getPageBySlug } from "../lib/pagebuilder/store";
 
-const verses = hanumanashtakData as ScriptureVerse[];
+const pageModel = getPageBySlug("sankat-mochan-hanumanashtak");
+const verses = (pageModel?.sections?.find((s: any) => s.id === "sec-scripture")?.containers?.[0]?.columns?.[0]?.blocks?.[0]?.content?.verses || hanumanashtakData) as ScriptureVerse[];
 
-const title = "Sankat Mochan Hanuman Ashtak — Lyrics, Meaning & Audio";
-const description = "Read Sankat Mochan Hanuman Ashtak lyrics in Hindi & English with line-by-line meaning, synced audio, and printable PDF.";
+const title = pageModel?.seo?.title || "Sankat Mochan Hanuman Ashtak — Lyrics, Meaning & Audio";
+const description = pageModel?.seo?.description || "Read Sankat Mochan Hanuman Ashtak lyrics in Hindi & English with line-by-line meaning, synced audio, and printable PDF.";
 
 const compositionSchema = {
   "@context": "https://schema.org",

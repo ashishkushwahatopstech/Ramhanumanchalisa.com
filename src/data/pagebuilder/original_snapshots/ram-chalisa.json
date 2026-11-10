@@ -1,0 +1,60 @@
+{
+  "slug": "ram-chalisa",
+  "template": "prayer_text",
+  "status": "published",
+  "seo": {
+    "title": "Shri Ram Chalisa Lyrics in English &amp; Hindi with Meaning",
+    "description": "Read Shri Ram Chalisa lyrics in Hindi &#38; English with line-by-line meaning, path vidhi, spiritual benefits, and printable PDF.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/ram-chalisa",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "Shri Ram Chalisa in English & Hindi",
+    "subheading": "Read Shri Ram Chalisa lyrics in Hindi &#38; English with line-by-line meaning, path vidhi, spiritual benefits, and print",
+    "devanagariTag": "॥ भक्ति भाव ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-ram-chalisa-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-ram-chalisa-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-ram-chalisa-main",
+              "blocks": [
+                {
+                  "id": "blk-ram-chalisa-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Shri Ram Chalisa in English & Hindi",
+                    "paragraph": "Read Shri Ram Chalisa lyrics in Hindi &#38; English with line-by-line meaning, path vidhi, spiritual benefits, and printable PDF."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

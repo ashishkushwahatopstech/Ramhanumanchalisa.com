@@ -1,0 +1,54 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+
+const defaultPosts = [
+  {
+    title: "Hanuman Chalisa in Multiple Indian Languages",
+    slug: "hanuman-chalisa-multilingual-guide",
+    date: "Recent Guide",
+  },
+  {
+    title: "Significance of Tuesday & Saturday Hanuman Vrat",
+    slug: "tuesday-saturday-hanuman-vrat-vidhi",
+    date: "Devotional Routine",
+  },
+  {
+    title: "Sankat Mochan Stotra Benefits for Planetary Protection",
+    slug: "sankat-mochan-benefits-astrology",
+    date: "Spiritual Science",
+  },
+];
+
+const posts = content.posts && content.posts.length > 0 ? content.posts : defaultPosts;
+---
+
+<!-- Block: Latest Posts -->
+<div id={block.id} class="latest-posts-block space-y-4 max-w-4xl mx-auto py-4">
+  {content.title && (
+    <h3 class="font-serif-display text-lg sm:text-xl font-bold text-[#4A1216] border-b border-[#C9A45C]/25 pb-2">
+      {content.title}
+    </h3>
+  )}
+  <ul class="space-y-3 list-none p-0">
+    {posts.map((p: any) => (
+      <li class="flex items-baseline justify-between border-b border-stone-200/60 pb-2">
+        <a
+          href={p.slug ? `/blog/${p.slug}` : (p.url || "/blog")}
+          class="text-sm font-semibold text-[#4A1216] hover:text-[#C95716] transition-colors"
+        >
+          {p.title}
+        </a>
+        {p.date && (
+          <span class="text-xs text-[#34251D]/50 shrink-0 ml-4 font-mono">{p.date}</span>
+        )}
+      </li>
+    ))}
+  </ul>
+</div>

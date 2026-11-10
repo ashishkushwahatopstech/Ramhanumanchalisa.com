@@ -1,0 +1,56 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+
+// Sanitize video embed URL to strictly YouTube or Vimeo
+function getEmbedUrl(url: string = ""): string {
+  if (url.includes("youtube.com/embed/")) return url;
+  const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|v\/|embed\/))([a-zA-Z0-9_-]{11})/);
+  if (ytMatch) {
+    return `https://www.youtube-nocookie.com/embed/${ytMatch[1]}`;
+  }
+  const vimeoMatch = url.match(/vimeo\.com\/([0-9]+)/);
+  if (vimeoMatch) {
+    return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+  }
+  return "";
+}
+
+const embedUrl = getEmbedUrl(content.url);
+---
+
+<!-- Block: Video Embed -->
+<div id={block.id} class="video-embed-block max-w-3xl mx-auto my-6 space-y-3">
+  {content.title && (
+    <h4 class="font-serif-display text-lg font-bold text-[#4A1216] text-center">
+      {content.title}
+    </h4>
+  )}
+  {embedUrl ? (
+    <div class="relative w-full overflow-hidden rounded-xl border border-[#C9A45C]/35 bg-black shadow-md" style="padding-top: 56.25%;">
+      <iframe
+        src={embedUrl}
+        title={content.title || "Devotional Video"}
+        class="absolute top-0 left-0 w-full h-full border-0"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      />
+    </div>
+  ) : (
+    <div class="p-6 text-center text-xs text-[#34251D]/60 bg-stone-100 rounded-lg">
+      Video URL not configured or unsupported.
+    </div>
+  )}
+  {content.caption && (
+    <p class="text-xs text-center text-[#34251D]/75 italic">
+      {content.caption}
+    </p>
+  )}
+</div>

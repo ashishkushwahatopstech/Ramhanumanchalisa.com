@@ -1,0 +1,60 @@
+{
+  "slug": "hanuman-stuti",
+  "template": "prayer_text",
+  "status": "published",
+  "seo": {
+    "title": "Shri Hanuman Stuti Lyrics — Sanskrit, English &amp; Meaning",
+    "description": "Read sacred Shri Hanuman Stuti in Sanskrit &#38; English with word meaning, Manojavam shloka lyrics, and chanting benefits.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/hanuman-stuti",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "Shri Hanuman Stuti Lyrics in English & Sanskrit",
+    "subheading": "Read sacred Shri Hanuman Stuti in Sanskrit &#38; English with word meaning, Manojavam shloka lyrics, and chanting benefi",
+    "devanagariTag": "॥ भक्ति भाव ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-hanuman-stuti-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-hanuman-stuti-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-hanuman-stuti-main",
+              "blocks": [
+                {
+                  "id": "blk-hanuman-stuti-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Shri Hanuman Stuti Lyrics in English & Sanskrit",
+                    "paragraph": "Read sacred Shri Hanuman Stuti in Sanskrit &#38; English with word meaning, Manojavam shloka lyrics, and chanting benefits."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

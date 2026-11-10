@@ -1,0 +1,29 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+---
+
+<!-- Block: Image -->
+<figure id={block.id} class="image-block max-w-4xl mx-auto py-4 text-center">
+  <div class="overflow-hidden rounded-xl border border-[#C9A45C]/35 shadow-xs inline-block bg-[#FFF9F0]">
+    <img
+      src={content.src}
+      alt={content.alt || "Devotional Image"}
+      width={content.width || 800}
+      height={content.height || 450}
+      loading={content.lazy ? "lazy" : "eager"}
+      class="max-w-full h-auto object-cover"
+    />
+  </div>
+  {content.caption && (
+    <figcaption class="text-xs text-[#34251D]/60 mt-2 italic font-sans">
+      {content.caption}
+    </figcaption>
+  )}
+</figure>

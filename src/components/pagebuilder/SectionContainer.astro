@@ -1,0 +1,80 @@
+---
+import type { SectionModel } from "../../lib/pagebuilder/schema";
+import BlockRenderer from "./BlockRenderer.astro";
+
+interface Props {
+  section: SectionModel;
+}
+
+const { section } = Astro.props;
+
+if (!section || section.visible === false) {
+  return null;
+}
+
+const settings = section.settings || {};
+
+// Map background setting to classes
+const bgClasses: Record<string, string> = {
+  warm_cream: "bg-[#FFF9F0]",
+  soft_bg: "bg-[#FBF8F2]",
+  maroon_deep: "bg-[#4A1216] text-[#FAF7F2]",
+  dark_brown: "bg-[#34251D] text-[#FAF7F2]",
+  gradient_saffron: "bg-gradient-to-b from-[#FFF5E6] to-[#FFF9F0]",
+  transparent: "bg-transparent",
+};
+const bgClass = bgClasses[settings.background || "transparent"] || "bg-transparent";
+
+// Map padding setting to classes
+const paddingClasses: Record<string, string> = {
+  none: "py-0",
+  small: "py-4 sm:py-6",
+  medium: "py-8 sm:py-12",
+  large: "py-12 sm:py-16",
+};
+const paddingClass = paddingClasses[settings.paddingY || "medium"] || "py-8 sm:py-12";
+
+// Map width setting to classes
+const widthClasses: Record<string, string> = {
+  contained_4xl: "max-w-4xl",
+  contained_6xl: "max-w-6xl",
+  contained_7xl: "max-w-7xl",
+  full_width: "w-full",
+};
+const widthClass = widthClasses[settings.width || "contained_6xl"] || "max-w-6xl";
+
+const mobileHideClass = settings.hideOnMobile ? "hidden md:block" : "";
+const dividerTopClass = settings.dividerTop ? "border-t border-[#C9A45C]/25" : "";
+const dividerBottomClass = settings.dividerBottom ? "border-b border-[#C9A45C]/25" : "";
+---
+
+<section
+  id={section.id}
+  class={`pagebuilder-section w-full ${bgClass} ${paddingClass} ${mobileHideClass} ${dividerTopClass} ${dividerBottomClass} ${settings.customCssClass || ""}`}
+>
+  <div class={`mx-auto px-4 sm:px-6 lg:px-8 ${widthClass}`}>
+    {section.containers && section.containers.map((container) => {
+      const colCount = container.columnsCount || 1;
+      const gridClass =
+        colCount === 2
+          ? "grid grid-cols-1 md:grid-cols-2 gap-6"
+          : colCount === 3
+          ? "grid grid-cols-1 md:grid-cols-3 gap-6"
+          : colCount === 4
+          ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          : "space-y-6";
+
+      return (
+        <div id={container.id} class={`container-wrap ${gridClass}`}>
+          {container.columns && container.columns.map((col) => (
+            <div id={col.id} class="column-wrap space-y-6">
+              {col.blocks && col.blocks.map((block) => (
+                <BlockRenderer block={block} />
+              ))}
+            </div>
+          ))}
+        </div>
+      );
+    })}
+  </div>
+</section>

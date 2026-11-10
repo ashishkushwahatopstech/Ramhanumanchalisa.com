@@ -1,0 +1,59 @@
+{
+  "slug": "contact",
+  "template": "legal_informational",
+  "status": "published",
+  "seo": {
+    "title": "Contact Us — Devotional Queries and Scripture Support",
+    "description": "Contact the editorial team at Ram Hanuman Chalisa for scriptural feedback, verse corrections, audio inquiries, and suggestions.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/contact",
+    "language": "en"
+  },
+  "h1": {
+    "text": "Contact Us",
+    "subheading": "Contact the editorial team at Ram Hanuman Chalisa for scriptural feedback, verse corrections, audio inquiries, and sugge"
+  },
+  "sections": [
+    {
+      "id": "sec-contact-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-contact-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-contact-main",
+              "blocks": [
+                {
+                  "id": "blk-contact-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Contact Us",
+                    "paragraph": "Contact the editorial team at Ram Hanuman Chalisa for scriptural feedback, verse corrections, audio inquiries, and suggestions."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

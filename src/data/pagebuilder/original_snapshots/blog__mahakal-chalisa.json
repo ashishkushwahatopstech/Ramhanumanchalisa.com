@@ -1,0 +1,59 @@
+{
+  "slug": "blog__mahakal-chalisa",
+  "template": "article",
+  "status": "published",
+  "seo": {
+    "title": "Mahakal Chalisa, Mahakaleshwar Chalisa Hindi &amp; English Lyr...",
+    "description": "Read Mahakal Chalisa, Mahakaleshwar Chalisa Hindi &#38; English Lyrics, Meaning with full lyrics in Hindi &#38; English, line-by-line spiritual meaning, recitation vidhi, and devotional benefits.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/blog/mahakal-chalisa",
+    "ogType": "article",
+    "language": "en-US"
+  },
+  "h1": {
+    "text": "Mahakal Chalisa, Mahakaleshwar Chalisa Hindi &amp; English Lyrics, Meaning",
+    "subheading": "Sacred Stotra & Chaupais dedicated to Mahakaleshwar Jyotirlinga",
+    "devanagariTag": "॥ श्री महाकाल चालीसा ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-mahakal-content",
+      "name": "Mahakal Chalisa Article Content",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-mahakal-content",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-mahakal-content",
+              "blocks": [
+                {
+                  "id": "blk-mahakal-rich-text",
+                  "type": "rich_text",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "html": "<p>Read Mahakal Chalisa, Mahakaleshwar Chalisa Hindi &#38; English Lyrics, Meaning with full lyrics in Hindi &#38; English, line-by-line spiritual meaning, recitation vidhi, and devotional benefits.</p>"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "system_migration",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

@@ -1,0 +1,26 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const rawHtml = block.content?.html || "";
+
+// Security Sanitization: Strip arbitrary scripts and inline javascript handlers
+function sanitizeCustomHtml(html: string): string {
+  if (!html) return "";
+  let clean = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
+  clean = clean.replace(/\bon\w+\s*=\s*["'][^"']*["']/gi, "");
+  clean = clean.replace(/javascript\s*:/gi, "");
+  return clean;
+}
+
+const safeHtml = sanitizeCustomHtml(rawHtml);
+---
+
+<!-- Block: Restricted Custom HTML -->
+<div id={block.id} class="custom-html-block max-w-4xl mx-auto py-2">
+  <div set:html={safeHtml} />
+</div>

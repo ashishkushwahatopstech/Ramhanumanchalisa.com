@@ -1,0 +1,21 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+import PageFaqs from "../../PageFaqs.astro";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+---
+
+<!-- Block: FAQ Accordion with Schema -->
+<div id={block.id} class="faq-block max-w-4xl mx-auto py-4">
+  <PageFaqs
+    pageSlug={content.pageSlug || "general"}
+    altSlugs={content.altSlugs}
+    fallbackFaqs={content.faqs}
+    title={content.title || "Frequently Asked Questions"}
+  />
+</div>

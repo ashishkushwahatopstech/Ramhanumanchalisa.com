@@ -1,0 +1,23 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+---
+
+<!-- Block: Rich Text -->
+<div id={block.id} class="rich-text-block prose prose-amber max-w-4xl mx-auto py-3 text-xs sm:text-sm text-[#34251D]/90 leading-relaxed font-sans">
+  {content.rawHtml ? (
+    <div set:html={content.rawHtml} />
+  ) : (
+    <div class="space-y-4">
+      {content.paragraphs && Array.isArray(content.paragraphs) && content.paragraphs.map((p: string) => (
+        <p class="leading-relaxed">{p}</p>
+      ))}
+    </div>
+  )}
+</div>

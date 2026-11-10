@@ -1,0 +1,29 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+import CarvedDivider from "../../CarvedDivider";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const icon = content.icon || "🕉️";
+const isSpacer = content.isSpacer || false;
+const height = content.height || "medium";
+
+const heightClass = {
+  small: "h-6",
+  medium: "h-12",
+  large: "h-20",
+}[height as "small" | "medium" | "large"] || "h-12";
+---
+
+<!-- Block: Divider or Spacer -->
+{isSpacer ? (
+  <div class={heightClass} aria-hidden="true" />
+) : (
+  <div id={block.id} class="w-full max-w-4xl mx-auto py-2">
+    <CarvedDivider icon={icon} />
+  </div>
+)}

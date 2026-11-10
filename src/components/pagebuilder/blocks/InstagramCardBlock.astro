@@ -1,0 +1,50 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const handle = content.handle || "ramhanumanchalisadotcom";
+const instagramUrl = `https://www.instagram.com/${handle}/`;
+---
+
+<!-- Block: Instagram Follow Card -->
+<div id={block.id} class="instagram-card-block max-w-4xl mx-auto py-6">
+  <div class="devotional-card p-6 sm:p-8 bg-gradient-to-br from-[#FFF9F0] via-white to-[#F6EFE3] border border-[#C9A45C]/35 shadow-sm">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-md shrink-0">
+          <div class="w-full h-full rounded-full bg-white p-0.5 flex items-center justify-center">
+            <div class="w-full h-full rounded-full bg-[#4A1216] flex items-center justify-center text-white text-2xl font-bold">
+              🚩
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-center sm:justify-start gap-1.5">
+            <h4 class="font-serif-display text-base sm:text-lg font-bold text-[#4A1216]">
+              @{handle}
+            </h4>
+            <span class="text-blue-500 text-sm" title="Verified Devotional Channel">✓</span>
+          </div>
+          <p class="text-xs text-[#34251D]/70 font-sans mt-0.5">
+            {content.bio || "Daily Shree Hanuman Chaupais, Sacred Mantras, & Ramayana Quotes"}
+          </p>
+        </div>
+      </div>
+
+      <a
+        href={instagramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white font-bold text-xs uppercase tracking-wider shadow-sm hover:shadow-md transition-transform hover:scale-105 shrink-0"
+      >
+        <span>Follow on Instagram</span>
+        <span>↗</span>
+      </a>
+    </div>
+  </div>
+</div>

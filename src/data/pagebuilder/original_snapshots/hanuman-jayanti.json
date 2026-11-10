@@ -1,0 +1,140 @@
+{
+  "slug": "hanuman-jayanti",
+  "template": "festival",
+  "status": "published",
+  "seo": {
+    "title": "Hanuman Jayanti 2026 — Date, Shubh Muhurat & Puja Vidhi",
+    "description": "Find Hanuman Jayanti 2026 date, shubh muhurat timings, fasting rules, and puja vidhi to worship Lord Hanuman for blessings.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/hanuman-jayanti",
+    "language": "en"
+  },
+  "h1": {
+    "text": "Hanuman Jayanti Date & Muhurat",
+    "subheading": "Hanuman Jayanti celebrates the divine birth of Lord Hanuman to Mother Anjana and King Kesari, under the influence of the Wind God (Vayu Dev).",
+    "devanagariTag": "Hanuman Birth Anniversary (जन्मोत्सव)"
+  },
+  "sections": [
+    {
+      "id": "sec-jayanti-date",
+      "name": "Upcoming Festival Date & Muhurat",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "maroon_deep",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-jayanti-date",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-jayanti-date",
+              "blocks": [
+                {
+                  "id": "blk-jayanti-date-banner",
+                  "type": "rich_text",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "title": "Upcoming Festival Date",
+                    "html": "\n<div class=\"text-center space-y-3\">\n  <span class=\"text-xs text-[#E5A93C] font-bold uppercase tracking-widest block\">Upcoming Festival Date</span>\n  <h2 class=\"font-serif-display text-2xl sm:text-3xl font-bold text-white\">Thursday, April 2, 2026</h2>\n  <p class=\"text-xs text-white/70 mt-1\">Celebrated on Chaitra Purnima (Full Moon Day in the Hindu month of Chaitra)</p>\n</div>\n<div class=\"grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-[#C9A45C]/30 pt-6 text-xs sm:text-sm mt-6\">\n  <div class=\"bg-white/10 p-4 rounded border border-[#C9A45C]/20 space-y-2 text-white\">\n    <h3 class=\"font-bold text-[#E5A93C] uppercase tracking-wider text-sm\">Tithi Timings</h3>\n    <p class=\"text-xs text-white/80\"><b>Purnima Tithi Begins:</b> April 1, 2026, 06:12 PM</p>\n    <p class=\"text-xs text-white/80\"><b>Purnima Tithi Ends:</b> April 2, 2026, 08:35 PM</p>\n  </div>\n  <div class=\"bg-white/10 p-4 rounded border border-[#C9A45C]/20 space-y-2 text-white\">\n    <h3 class=\"font-bold text-[#E5A93C] uppercase tracking-wider text-sm\">Recommended Puja Muhurat</h3>\n    <p class=\"text-xs text-white/80\"><b>Sunrise Puja:</b> 06:05 AM to 08:32 AM (Brahma Muhurat & Sunrise)</p>\n    <p class=\"text-xs text-white/80 leading-relaxed\">Hanuman was born at sunrise, making the early morning puja period highly auspicious.</p>\n  </div>\n</div>"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-jayanti-vidhi",
+      "name": "How to Celebrate & Puja Vidhi",
+      "visible": true,
+      "order": 2,
+      "settings": {
+        "background": "warm_cream",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-jayanti-vidhi",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-jayanti-vidhi",
+              "blocks": [
+                {
+                  "id": "blk-vidhi-content",
+                  "type": "rich_text",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "title": "How to Celebrate Hanuman Jayanti at Home",
+                    "html": "\n<div class=\"space-y-6\">\n  <div class=\"grid grid-cols-1 md:grid-cols-2 gap-6 text-sm leading-relaxed text-[#34251D]/85\">\n    <div class=\"space-y-3\">\n      <h3 class=\"font-bold text-[#C95716] uppercase tracking-wide text-sm\">1. Fasting (Vrata) Rules</h3>\n      <p>Many devotees observe a complete or partial fast (Vrat) on Hanuman Jayanti. The fast begins at sunrise and is broken in the evening after offering prayers to Lord Hanuman. During the fast, take only fruits, milk, and water. Maintain complete celibacy (Brahmacharya).</p>\n    </div>\n    <div class=\"space-y-3\">\n      <h3 class=\"font-bold text-[#C95716] uppercase tracking-wide text-sm\">2. Puja Setup & Offering</h3>\n      <p>Decorate Lord Hanuman's photo with red flowers and marigold garlands. Apply orange sindoor mixed with sesame oil to the idol or photo. Offer red Boondi, Besan Ladoo, bananas, and sweet leaves (Paan) as prasadam.</p>\n      <p>Recite the <b>Hanuman Chalisa</b> 11 times or chant the <b>Bajrang Baan</b> to seek protection and blessing.</p>\n    </div>\n  </div>\n  <div class=\"border-t border-[#C9A45C]/20 pt-4 text-center\">\n    <a href=\"/\" class=\"inline-block bg-[#C95716] hover:bg-[#E5A93C] text-white hover:text-[#4A1216] px-5 py-2.5 rounded text-xs font-bold uppercase border border-[#C9A45C] shadow-sm transition-all duration-300\">Chant Hanuman Chalisa Now &rarr;</a>\n  </div>\n</div>"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-jayanti-faqs",
+      "name": "Hanuman Jayanti FAQs",
+      "visible": true,
+      "order": 3,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-jayanti-faqs",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-jayanti-faqs",
+              "blocks": [
+                {
+                  "id": "blk-jayanti-faqs",
+                  "type": "faq_block",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "title": "Hanuman Jayanti FAQs",
+                    "faqs": [
+                      {
+                        "question": "When is Hanuman Jayanti celebrated?",
+                        "answer": "In North India, Hanuman Jayanti is celebrated on Chaitra Purnima (full moon day of Chaitra month). In South Indian traditions (such as Andhra Pradesh and Telangana), Hanuman Jayanti is celebrated on Krishna Paksha Dashami of Vaishakha month."
+                      },
+                      {
+                        "question": "What is the best time to do Hanuman Jayanti Puja?",
+                        "answer": "Because Lord Hanuman was born at the hour of sunrise, the Brahma Muhurat (around 06:05 AM to 08:32 AM) is considered the most auspicious window for chanting and performing puja."
+                      },
+                      {
+                        "question": "What offerings are dear to Lord Hanuman?",
+                        "answer": "Sindoor mixed with jasmine/sesame oil (Chola), red flowers, bananas, motichoor or besan ladoos, and sweet betel leaf (meetha paan) are revered offerings."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "system_migration",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

@@ -1,0 +1,77 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+
+const defaultCategories = [
+  {
+    title: "चालीसा संग्रह (Chalisa Sangrah)",
+    description: "Shree Hanuman Chalisa, Ram Chalisa, Shiv Chalisa, and more.",
+    url: "/category/chalisa",
+    icon: "📜",
+  },
+  {
+    title: "आरती संग्रह (Aarti Sangrah)",
+    description: "Hanuman Aarti, Ram Aarti, and traditional devotional songs.",
+    url: "/category/aarti",
+    icon: "🪔",
+  },
+  {
+    title: "मंत्र एवं स्तोत्र (Mantra & Stotra)",
+    description: "Sankat Mochan Ashtak, Bajrang Baan, Maruti Stotra with meanings.",
+    url: "/category/stotra",
+    icon: "🕉️",
+  },
+  {
+    title: "धार्मिक पर्व (Vedic Festivals)",
+    description: "Hanuman Jayanti, Ram Navami dates, puja vidhi, and shubh muhurat.",
+    url: "/category/festivals",
+    icon: "🌺",
+  },
+];
+
+const categories = content.categories || defaultCategories;
+---
+
+<!-- Block: Category Cards -->
+<section id={block.id} class="category-cards-block space-y-6 max-w-6xl mx-auto py-6">
+  {content.title && (
+    <div class="text-center space-y-2">
+      <h3 class="font-serif-display text-2xl sm:text-3xl font-bold text-[#4A1216]">
+        {content.title}
+      </h3>
+      {content.subtitle && (
+        <p class="text-xs sm:text-sm text-[#34251D]/75 max-w-xl mx-auto">
+          {content.subtitle}
+        </p>
+      )}
+    </div>
+  )}
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+    {categories.map((cat: any) => (
+      <a
+        href={cat.url}
+        class="group p-5 rounded-xl bg-white border border-[#C9A45C]/35 shadow-xs hover:border-[#C9A45C] hover:shadow-md transition-all flex flex-col justify-between"
+      >
+        <div class="space-y-2">
+          <div class="text-2xl mb-1">{cat.icon || "🕉️"}</div>
+          <h4 class="font-serif-display text-base font-bold text-[#4A1216] group-hover:text-[#C95716] transition-colors">
+            {cat.title}
+          </h4>
+          <p class="text-xs text-[#34251D]/75 leading-relaxed font-sans">
+            {cat.description}
+          </p>
+        </div>
+        <span class="mt-4 text-xs font-bold text-[#C95716] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+          Explore Treasury &rarr;
+        </span>
+      </a>
+    ))}
+  </div>
+</section>

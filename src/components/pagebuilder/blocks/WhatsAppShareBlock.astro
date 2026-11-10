@@ -1,0 +1,34 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const shareText = encodeURIComponent(content.text || "🚩 जय श्री राम! Read authentic Hanuman Chalisa on https://ramhanumanchalisa.com/");
+const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}`;
+---
+
+<!-- Block: WhatsApp Share -->
+<div id={block.id} class="whatsapp-share-block max-w-xl mx-auto py-4 text-center">
+  <div class="devotional-card p-5 bg-[#FAF6EE] border border-[#C9A45C]/35 rounded-xl space-y-3">
+    <span class="text-2xl block">💬</span>
+    <h4 class="font-serif-display text-base font-bold text-[#4A1216]">
+      {content.title || "Share Sacred Blessings with Family & Friends"}
+    </h4>
+    <p class="text-xs text-[#34251D]/75 font-sans leading-relaxed">
+      {content.subtitle || "Share this sacred hymn to spread peace, protection, and devotion."}
+    </p>
+    <a
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider shadow-xs hover:shadow-md transition-transform hover:scale-103"
+    >
+      <span>Share on WhatsApp</span>
+      <span>💬</span>
+    </a>
+  </div>
+</div>

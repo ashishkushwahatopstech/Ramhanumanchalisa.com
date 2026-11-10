@@ -3,6 +3,9 @@ import Layout from "../layouts/Layout.astro";
 import CarvedDivider from "../components/CarvedDivider";
 import PageFaqs from "../components/PageFaqs.astro";
 import { getPrisma } from "../lib/prisma";
+import { getPageBySlug } from "../lib/pagebuilder/store";
+
+const pageModel = getPageBySlug("hanuman-jayanti");
 
 const db = Astro.locals.runtime?.env?.DB;
 const prisma = getPrisma(db);
@@ -22,8 +25,8 @@ const purnimaTithiEnd = "April 2, 2026, 08:35 PM";
 const recommendedPujaTime = config?.pujaMuhurat || "06:05 AM to 08:32 AM (Brahma Muhurat & Sunrise)";
 const descriptionText = config?.description || "Hanuman Jayanti celebrates the divine birth of Lord Hanuman to Mother Anjana and King Kesari, under the influence of the Wind God (Vayu Dev).";
 
-const title = "Hanuman Jayanti 2026 — Date, Shubh Muhurat & Puja Vidhi";
-const description = "Find Hanuman Jayanti 2026 date, shubh muhurat timings, fasting rules, and puja vidhi to worship Lord Hanuman for blessings.";
+const title = pageModel?.seo?.title || "Hanuman Jayanti 2026 — Date, Shubh Muhurat & Puja Vidhi";
+const description = pageModel?.seo?.description || "Find Hanuman Jayanti 2026 date, shubh muhurat timings, fasting rules, and puja vidhi to worship Lord Hanuman for blessings.";
 
 const eventSchema = {
   "@context": "https://schema.org",

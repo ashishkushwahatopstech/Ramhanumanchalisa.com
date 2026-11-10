@@ -1,0 +1,176 @@
+{
+  "slug": "home",
+  "template": "homepage",
+  "status": "published",
+  "seo": {
+    "title": "हनुमान चालीसा लिरिक्स अर्थ सहित | Hanuman Chalisa Lyrics",
+    "description": "सम्पूर्ण श्री हनुमान चालीसा लिरिक्स हिंदी और English अर्थ सहित पढ़ें। Read complete Hanuman Chalisa lyrics with full meaning.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "श्री हनुमान चालीसा (Shree Hanuman Chalisa)",
+    "subheading": "सम्पूर्ण ४० चौपाई एवं दोहे हिंदी व English अर्थ सहित",
+    "devanagariTag": "॥ श्री सीताराम ॥ • ॥ श्रीहनुमते नमः ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-home-hero",
+      "name": "Cinematic Full-Width Hero",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "none",
+        "width": "full_width"
+      },
+      "containers": [
+        {
+          "id": "cont-home-hero",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-home-hero",
+              "blocks": [
+                {
+                  "id": "blk-hero-poster",
+                  "type": "hero",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "headline": "श्री हनुमान चालीसा",
+                    "subheading": "Shree Hanuman Chalisa",
+                    "description": "Awadhi text composed by Goswami Tulsidas with word-by-word meaning, audio recitation, and printable format.",
+                    "badge": "॥ श्री सीताराम ॥ • ॥ श्रीहनुमते नमः ॥",
+                    "primaryCtaText": "Recite Chalisa Now ↓",
+                    "primaryCtaUrl": "#chalisa-recitation",
+                    "secondaryCtaText": "Hanuman Ashtak",
+                    "secondaryCtaUrl": "/sankat-mochan-hanumanashtak"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-home-categories",
+      "name": "Sacred Treasury Categories",
+      "visible": true,
+      "order": 2,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_6xl"
+      },
+      "containers": [
+        {
+          "id": "cont-home-categories",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-home-categories",
+              "blocks": [
+                {
+                  "id": "blk-home-categories",
+                  "type": "category_cards",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "title": "सम्पूर्ण स्तोत्र एवं चालीसा संग्रह",
+                    "subtitle": "Recite timeless Vedic and Awadhi prayers dedicated to Lord Rama and Mahavira Hanuman with authentic lyrics and translations."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-home-articles",
+      "name": "Featured Devotional Insights",
+      "visible": true,
+      "order": 3,
+      "settings": {
+        "background": "warm_cream",
+        "paddingY": "medium",
+        "width": "contained_6xl"
+      },
+      "containers": [
+        {
+          "id": "cont-home-articles",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-home-articles",
+              "blocks": [
+                {
+                  "id": "blk-home-related-articles",
+                  "type": "related_articles",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "title": "Featured Insights on Hanuman Sadhana"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-home-social-news",
+      "name": "Social Community & Newsletter",
+      "visible": true,
+      "order": 4,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_6xl"
+      },
+      "containers": [
+        {
+          "id": "cont-home-social",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-home-social",
+              "blocks": [
+                {
+                  "id": "blk-home-social",
+                  "type": "social_channels",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "title": "Connect With Our Devotional Satsang",
+                    "subtitle": "Receive daily sacred chaupais, festival muhurat alerts, and spiritual commentary."
+                  }
+                },
+                {
+                  "id": "blk-home-newsletter",
+                  "type": "newsletter",
+                  "visible": true,
+                  "order": 2,
+                  "content": {
+                    "title": "Daily Morning Hanuman Blessings",
+                    "subtitle": "Receive daily Chaupai verses, auspicious tithis, and divine audio directly in your inbox."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "system_migration",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

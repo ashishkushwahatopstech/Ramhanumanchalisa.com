@@ -1,0 +1,59 @@
+{
+  "slug": "faq",
+  "template": "legal_informational",
+  "status": "published",
+  "seo": {
+    "title": "Hanuman Chalisa FAQs — Meaning, Rules, Purity &amp; Benefits",
+    "description": "Find authentic answers to Hanuman Chalisa questions: author Goswami Tulsidas, meaning, rules, 100 recitations, and benefits.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/faq",
+    "language": "en"
+  },
+  "h1": {
+    "text": "Frequently Asked Questions",
+    "subheading": "Find authentic answers to Hanuman Chalisa questions: author Goswami Tulsidas, meaning, rules, 100 recitations, and benef"
+  },
+  "sections": [
+    {
+      "id": "sec-faq-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-faq-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-faq-main",
+              "blocks": [
+                {
+                  "id": "blk-faq-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Frequently Asked Questions",
+                    "paragraph": "Find authentic answers to Hanuman Chalisa questions: author Goswami Tulsidas, meaning, rules, 100 recitations, and benefits."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "slug": "blog__significance-of-forty-verses",
+  "template": "article",
+  "status": "published",
+  "seo": {
+    "title": "Why Hanuman Chalisa Has Exactly 40 Verses",
+    "description": "Explore the astronomical, biological, and scriptural significance of the number 40 in the Hanuman Chalisa composed by Tulsidas.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/blog/significance-of-forty-verses",
+    "ogType": "article",
+    "language": "en"
+  },
+  "h1": {
+    "text": "Why Hanuman Chalisa Has Exactly 40 Verses",
+    "subheading": "By Ram Hanuman Chalisa Editorial • 4 min read",
+    "devanagariTag": "Vedic Numerology & Planetary Cycles"
+  },
+  "sections": [
+    {
+      "id": "sec-art-content",
+      "name": "Article Content",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-art-content",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-art-content",
+              "blocks": [
+                {
+                  "id": "blk-art-body",
+                  "type": "rich_text",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "html": "\n<p>The word <b>Chalisa</b> is derived from <i>Chalis</i>, the Hindi word for forty. Goswami Tulsidas composed exactly forty quatrains (Chaupais) praising Lord Hanuman, preceded by two introductory couplets (Dohas) and followed by one concluding couplet.</p>\n<p>But why did Tulsidas choose the number forty? In ancient Indian sciences, the number forty holds profound significance across physical, biological, and planetary cycles.</p>\n<h3>1. Planetary Cycles (The Mars Connection)</h3>\n<p>Lord Hanuman is closely connected to the planet Mars (<i>Mangal</i>), which represents strength, focus, and fire. In Vedic astrology, a complete cycle of Mars across constellations takes a specific duration of time, and short-term chanting disciplines of forty days (<i>Mandala</i>) are designed to align with Mars' influence, balancing planetary alignments in the devotee's horoscope.</p>\n<h3>2. Biological Regeneration</h3>\n<p>In traditional Ayurveda, the human body undergoes a complete cellular and metabolic cycle every forty days. This is known as a <i>Mandala</i> cycle. Observing a disciplined chanting session of the Hanuman Chalisa for forty consecutive days aligns with this biological clock, allowing the positive neural and mental shifts of sound chanting to become permanently integrated into the nervous system.</p>\n<h3>3. Psychological Habit Formation</h3>\n<p>Modern neuroscience indicates that it takes approximately 21 to 40 days to break old habit loops and construct new neural pathways. By dedicating yourself to a daily recitation of the Chalisa for forty days, you establish a peaceful routine, overwrite anxiety loops, and build deep focus.</p>\n<h3>The Chanting Vow (Anushthan)</h3>\n<p>Chaupai 38 itself explicitly calls out the number hundred (which equals ten sets of ten or corresponds to repeating cycles):<br>\n<i>“Jo sat bar path kare koi, chutahi bandi maha sukh hoi.”</i><br>\n(He who recites this hundred times is freed from worldly bondage and attains supreme bliss.)</p>\n<p>Whether you recite it forty times in a single sitting on a special festival day, or read it daily for forty consecutive days, this number represents a complete spiritual cycle that purifies the devotee's surroundings.</p>"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec-art-related",
+      "name": "Related Insights",
+      "visible": true,
+      "order": 2,
+      "settings": {
+        "background": "warm_cream",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-art-related",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-art-related",
+              "blocks": [
+                {
+                  "id": "blk-art-related",
+                  "type": "related_articles",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "title": "Explore More Sacred Insights"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "system_migration",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

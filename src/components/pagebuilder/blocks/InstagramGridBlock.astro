@@ -1,0 +1,55 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const posts = content.posts || [];
+---
+
+<!-- Block: Curated Instagram Posts Grid (Zero scraping, authentic manual URLs) -->
+<div id={block.id} class="instagram-grid-block max-w-6xl mx-auto py-6 space-y-4">
+  {content.title && (
+    <div class="text-center space-y-1 mb-6">
+      <h3 class="font-serif-display text-xl sm:text-2xl font-bold text-[#4A1216]">
+        {content.title}
+      </h3>
+      {content.subtitle && (
+        <p class="text-xs sm:text-sm text-[#C95716] font-hindi-display">
+          {content.subtitle}
+        </p>
+      )}
+    </div>
+  )}
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+    {posts.map((post: { url: string; title: string; category?: string; icon?: string }) => (
+      <a
+        href={post.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group devotional-card p-4 flex flex-col justify-between hover:border-[#E87524] transition-all bg-white"
+      >
+        <div class="space-y-2">
+          <div class="w-full aspect-square rounded-lg bg-gradient-to-br from-[#FAF3E8] to-[#FFF9F0] border border-[#C9A45C]/25 flex flex-col items-center justify-center text-center p-3">
+            <span class="text-3xl mb-1 group-hover:scale-110 transition-transform">{post.icon || "🕉️"}</span>
+            <span class="text-[11px] font-bold text-[#C95716] uppercase tracking-wider font-mono">
+              {post.category || "Devotion"}
+            </span>
+          </div>
+          <h4 class="font-hindi-display text-xs sm:text-sm font-bold text-[#4A1216] line-clamp-2 leading-snug group-hover:text-[#E87524] transition-colors">
+            {post.title}
+          </h4>
+        </div>
+
+        <div class="mt-3 pt-2 border-t border-[#C9A45C]/15 flex items-center justify-between text-[11px] font-semibold text-[#34251D]/60">
+          <span>View on Instagram</span>
+          <span class="group-hover:translate-x-0.5 transition-transform">↗</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>

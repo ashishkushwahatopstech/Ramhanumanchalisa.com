@@ -1,0 +1,24 @@
+---
+import type { PageModel } from "../../lib/pagebuilder/schema";
+import SectionContainer from "./SectionContainer.astro";
+
+interface Props {
+  page: PageModel;
+}
+
+const { page } = Astro.props;
+
+if (!page || !page.sections) {
+  return null;
+}
+
+const visibleSections = page.sections
+  .filter((s) => s.visible !== false)
+  .sort((a, b) => (a.order || 0) - (b.order || 0));
+---
+
+<div class="pagebuilder-root w-full space-y-0">
+  {visibleSections.map((section) => (
+    <SectionContainer section={section} />
+  ))}
+</div>

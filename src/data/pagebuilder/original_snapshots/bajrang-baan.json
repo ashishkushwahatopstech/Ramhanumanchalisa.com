@@ -1,0 +1,60 @@
+{
+  "slug": "bajrang-baan",
+  "template": "prayer_text",
+  "status": "published",
+  "seo": {
+    "title": "Shree Bajrang Baan Lyrics — Hindi, English &amp; Path Vidhi",
+    "description": "Read Shree Bajrang Baan lyrics in Hindi &#38; English with line-by-line meaning, authentic path vidhi, and protection benefits.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/bajrang-baan",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "Shree Bajrang Baan",
+    "subheading": "Read Shree Bajrang Baan lyrics in Hindi &#38; English with line-by-line meaning, authentic path vidhi, and protection be",
+    "devanagariTag": "॥ भक्ति भाव ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-bajrang-baan-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-bajrang-baan-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-bajrang-baan-main",
+              "blocks": [
+                {
+                  "id": "blk-bajrang-baan-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Shree Bajrang Baan",
+                    "paragraph": "Read Shree Bajrang Baan lyrics in Hindi &#38; English with line-by-line meaning, authentic path vidhi, and protection benefits."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

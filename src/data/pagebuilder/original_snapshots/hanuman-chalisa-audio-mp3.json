@@ -1,0 +1,60 @@
+{
+  "slug": "hanuman-chalisa-audio-mp3",
+  "template": "prayer_text",
+  "status": "published",
+  "seo": {
+    "title": "Hanuman Chalisa Audio MP3 — Synced Lyrics and Audio Player",
+    "description": "Listen to Hanuman Chalisa audio MP3 with synced lyrics, speed control, pronunciation guide, and sacred devotional recitations.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/hanuman-chalisa-audio-mp3",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "Hanuman Chalisa Synced Audio Player",
+    "subheading": "Listen to Hanuman Chalisa audio MP3 with synced lyrics, speed control, pronunciation guide, and sacred devotional recita",
+    "devanagariTag": "॥ भक्ति भाव ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-hanuman-chalisa-audio-mp3-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-hanuman-chalisa-audio-mp3-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-hanuman-chalisa-audio-mp3-main",
+              "blocks": [
+                {
+                  "id": "blk-hanuman-chalisa-audio-mp3-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Hanuman Chalisa Synced Audio Player",
+                    "paragraph": "Listen to Hanuman Chalisa audio MP3 with synced lyrics, speed control, pronunciation guide, and sacred devotional recitations."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

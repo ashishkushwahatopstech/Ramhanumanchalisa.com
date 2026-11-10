@@ -1,0 +1,59 @@
+{
+  "slug": "disclaimer",
+  "template": "legal_informational",
+  "status": "published",
+  "seo": {
+    "title": "Disclaimer — Devotional Content &amp; Spiritual Guidelines",
+    "description": "Read our official spiritual disclaimer regarding devotional texts, traditional meanings, medical advice, and liability terms.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/disclaimer",
+    "language": "en"
+  },
+  "h1": {
+    "text": "Disclaimer",
+    "subheading": "Read our official spiritual disclaimer regarding devotional texts, traditional meanings, medical advice, and liability t"
+  },
+  "sections": [
+    {
+      "id": "sec-disclaimer-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-disclaimer-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-disclaimer-main",
+              "blocks": [
+                {
+                  "id": "blk-disclaimer-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Disclaimer",
+                    "paragraph": "Read our official spiritual disclaimer regarding devotional texts, traditional meanings, medical advice, and liability terms."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

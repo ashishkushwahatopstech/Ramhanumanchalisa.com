@@ -1,0 +1,60 @@
+{
+  "slug": "hanuman-chalisa-pdf",
+  "template": "prayer_text",
+  "status": "published",
+  "seo": {
+    "title": "Hanuman Chalisa PDF Download — Free Printable Clean Sheet",
+    "description": "Download free Hanuman Chalisa PDF printable sheet in Hindi &#38; English. High-quality prayer booklet with 40 chaupais and aarti.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/hanuman-chalisa-pdf",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "Download & Save Prayers (PDF, Verses & Cards)",
+    "subheading": "Download free Hanuman Chalisa PDF printable sheet in Hindi &#38; English. High-quality prayer booklet with 40 chaupais a",
+    "devanagariTag": "॥ भक्ति भाव ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-hanuman-chalisa-pdf-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-hanuman-chalisa-pdf-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-hanuman-chalisa-pdf-main",
+              "blocks": [
+                {
+                  "id": "blk-hanuman-chalisa-pdf-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Download & Save Prayers (PDF, Verses & Cards)",
+                    "paragraph": "Download free Hanuman Chalisa PDF printable sheet in Hindi &#38; English. High-quality prayer booklet with 40 chaupais and aarti."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

@@ -1,0 +1,29 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+---
+
+<!-- Block: Meaning & Explanation -->
+<section id={block.id} class="meaning-explanation-block space-y-4 max-w-4xl mx-auto py-4">
+  {content.title && (
+    <h3 class="font-serif-display text-xl sm:text-2xl font-bold text-[#4A1216] border-b border-[#C9A45C]/25 pb-2">
+      {content.title}
+    </h3>
+  )}
+  {content.explanationDevanagari && (
+    <div class="p-4 sm:p-5 rounded-lg bg-[#FFF9F0] border border-[#C9A45C]/30 text-[#4A1216] font-hindi-display text-base sm:text-lg leading-relaxed">
+      {content.explanationDevanagari}
+    </div>
+  )}
+  {content.explanationEnglish && (
+    <div class="p-4 sm:p-5 rounded-lg bg-white border border-[#C9A45C]/20 text-[#34251D]/85 font-sans text-sm sm:text-base leading-relaxed">
+      {content.explanationEnglish}
+    </div>
+  )}
+</section>

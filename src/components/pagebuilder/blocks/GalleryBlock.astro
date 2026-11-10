@@ -1,0 +1,46 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const images = content.images || [];
+const columns = content.columns || 3;
+
+const gridColsClass =
+  columns === 2
+    ? "grid-cols-1 sm:grid-cols-2"
+    : columns === 4
+    ? "grid-cols-2 sm:grid-cols-4"
+    : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3";
+---
+
+<!-- Block: Gallery -->
+<div id={block.id} class="gallery-block space-y-4 max-w-6xl mx-auto py-4">
+  {content.title && (
+    <h3 class="font-serif-display text-xl sm:text-2xl font-bold text-[#4A1216] text-center mb-6">
+      {content.title}
+    </h3>
+  )}
+  <div class={`grid ${gridColsClass} gap-4`}>
+    {images.map((img: any, idx: number) => (
+      <figure class="group relative overflow-hidden rounded-xl border border-[#C9A45C]/30 bg-[#FFF9F0] shadow-xs">
+        <img
+          src={img.src}
+          alt={img.alt || `Gallery image ${idx + 1}`}
+          loading="lazy"
+          decoding="async"
+          class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        {img.caption && (
+          <figcaption class="p-2.5 text-center text-xs font-serif-display text-[#4A1216] bg-white/90 border-t border-[#C9A45C]/20">
+            {img.caption}
+          </figcaption>
+        )}
+      </figure>
+    ))}
+  </div>
+</div>

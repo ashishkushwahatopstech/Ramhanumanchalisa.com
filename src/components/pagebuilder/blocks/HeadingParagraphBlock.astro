@@ -1,0 +1,40 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const level = content.level || "h2";
+---
+
+<!-- Block: Heading + Paragraph -->
+<div id={block.id} class={`heading-paragraph-block max-w-4xl mx-auto py-4 ${content.centered ? "text-center" : "text-left"} space-y-2`}>
+  {content.badge && (
+    <div class={content.centered ? "flex justify-center" : "flex"}>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E87524]/10 border border-[#C9A45C]/40 text-[#C95716] text-xs font-bold font-hindi-display">
+        {content.badge}
+      </span>
+    </div>
+  )}
+
+  {level === "h2" && (
+    <h2 class="font-serif-display text-2xl sm:text-3xl font-bold text-[#4A1216] tracking-tight">
+      {content.title}
+    </h2>
+  )}
+
+  {level === "h3" && (
+    <h3 class="font-serif-display text-xl sm:text-2xl font-bold text-[#4A1216] tracking-tight">
+      {content.title}
+    </h3>
+  )}
+
+  {content.description && (
+    <p class="text-xs sm:text-sm text-[#34251D]/80 leading-relaxed font-sans max-w-2xl mx-auto">
+      {content.description}
+    </p>
+  )}
+</div>

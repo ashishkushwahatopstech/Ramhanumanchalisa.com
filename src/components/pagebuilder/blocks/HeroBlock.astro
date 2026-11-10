@@ -1,0 +1,104 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+---
+
+<!-- Block: Hero -->
+<section
+  id={block.id}
+  class={`relative w-full overflow-hidden bg-[#1F0D05] text-white border-b-2 border-[#C9A45C]/40 flex flex-col justify-center ${
+    content.isFullWidth ? "min-h-[580px] sm:min-h-[660px] md:min-h-[740px] lg:min-h-[820px] xl:min-h-[880px]" : "py-12"
+  }`}
+  aria-label={content.headline || "Devotional Hero Banner"}
+>
+  {content.posterImage && (
+    <div class="absolute inset-0 w-full h-full pointer-events-none select-none z-0 overflow-hidden">
+      <picture class="w-full h-full block">
+        {content.posterImageWebp && <source srcset={content.posterImageWebp} type="image/webp" />}
+        <img
+          src={content.posterImage}
+          alt={content.posterAlt || content.headline || "Hero Poster"}
+          class="w-full h-full object-cover object-[center_18%] sm:object-center brightness-95 contrast-105"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </picture>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#1F0D05] via-[#1F0D05]/60 to-[#1F0D05]/80"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(232,117,36,0.3)_0%,rgba(201,87,22,0.14)_45%,transparent_75%)]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-[#1F0D05]"></div>
+    </div>
+  )}
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 md:py-20 flex flex-col items-center text-center my-auto">
+    {content.badge && (
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/60 border border-[#C9A45C]/70 shadow-lg backdrop-blur-md text-[#E8A33D] text-xs sm:text-sm font-semibold tracking-wide uppercase">
+        <span class="text-base text-[#E87524]">🪔</span>
+        <span class="font-hindi-display font-bold">{content.badge}</span>
+        <span class="text-base text-[#E87524]">🪔</span>
+      </div>
+    )}
+
+    {content.headline && (
+      <div class="mt-6 sm:mt-8 space-y-2 max-w-4xl mx-auto">
+        <h1 class="font-hindi-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-[#FFF9F0] drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] leading-[1.1]">
+          {content.headline}
+        </h1>
+        {content.subheadline && (
+          <p class="font-serif-display text-sm sm:text-lg md:text-xl font-bold tracking-[0.25em] text-[#E8A33D] uppercase drop-shadow-md">
+            {content.subheadline}
+          </p>
+        )}
+      </div>
+    )}
+
+    {content.epigraph && (
+      <div class="mt-5 sm:mt-6 max-w-2xl mx-auto bg-black/50 border border-[#C9A45C]/45 rounded-2xl px-5 py-3.5 sm:py-4 backdrop-blur-md shadow-xl">
+        <p class="font-hindi-display text-base sm:text-xl font-bold text-[#FFF9F0]">
+          {content.epigraph.verse}
+        </p>
+        {content.epigraph.meaning && (
+          <p class="font-sans text-xs sm:text-sm text-[#C9A45C] mt-1 italic">
+            "{content.epigraph.meaning}"
+          </p>
+        )}
+      </div>
+    )}
+
+    {content.pills && Array.isArray(content.pills) && content.pills.length > 0 && (
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold text-white/95">
+        {content.pills.map((pill: { icon?: string; text: string }) => (
+          <span class="px-3.5 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
+            {pill.icon && <span class="text-[#E87524]">{pill.icon}</span>}
+            <span>{pill.text}</span>
+          </span>
+        ))}
+      </div>
+    )}
+
+    {content.actions && Array.isArray(content.actions) && content.actions.length > 0 && (
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5 w-full max-w-md sm:max-w-none">
+        {content.actions.map((act: { label: string; href: string; sub?: string; icon?: string; primary?: boolean }) => (
+          <a
+            href={act.href}
+            class={`w-full sm:w-auto px-7 py-3.5 rounded-full font-bold text-sm sm:text-base tracking-wide uppercase transition-all duration-300 flex items-center justify-center gap-2 border-2 ${
+              act.primary
+                ? "bg-gradient-to-r from-[#C95716] via-[#E87524] to-[#C95716] text-white border-[#C9A45C] shadow-[0_4px_24px_rgba(232,117,36,0.5)] hover:shadow-[0_6px_32px_rgba(232,117,36,0.7)]"
+                : "bg-black/60 hover:bg-black/80 text-[#FFF9F0] hover:text-[#E8A33D] border-[#C9A45C]/60 hover:border-[#C9A45C] shadow-lg backdrop-blur-md"
+            }`}
+          >
+            {act.icon && <span>{act.icon}</span>}
+            <span>{act.label}</span>
+            {act.sub && <span class="text-xs opacity-75 font-normal">({act.sub})</span>}
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

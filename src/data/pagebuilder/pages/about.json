@@ -1,0 +1,59 @@
+{
+  "slug": "about",
+  "template": "legal_informational",
+  "status": "published",
+  "seo": {
+    "title": "About Ram Hanuman Chalisa — Vedic Mission &amp; Authenticity",
+    "description": "Learn about our spiritual mission, authenticated Gita Press sources, editorial board, and strict review standards.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/about",
+    "language": "en"
+  },
+  "h1": {
+    "text": "About Ram Hanuman Chalisa",
+    "subheading": "Learn about our spiritual mission, authenticated Gita Press sources, editorial board, and strict review standards."
+  },
+  "sections": [
+    {
+      "id": "sec-about-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-about-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-about-main",
+              "blocks": [
+                {
+                  "id": "blk-about-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "About Ram Hanuman Chalisa",
+                    "paragraph": "Learn about our spiritual mission, authenticated Gita Press sources, editorial board, and strict review standards."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

@@ -1,0 +1,66 @@
+---
+import type { BlockInstance } from "../../lib/pagebuilder/schema";
+
+// Block component imports
+import HeroBlock from "./blocks/HeroBlock.astro";
+import ScriptureBlock from "./blocks/ScriptureBlock.astro";
+import MeaningExplanationBlock from "./blocks/MeaningExplanationBlock.astro";
+import RichTextBlock from "./blocks/RichTextBlock.astro";
+import HeadingParagraphBlock from "./blocks/HeadingParagraphBlock.astro";
+import ImageBlock from "./blocks/ImageBlock.astro";
+import GalleryBlock from "./blocks/GalleryBlock.astro";
+import DividerSpacerBlock from "./blocks/DividerSpacerBlock.astro";
+import ContainerColumnsBlock from "./blocks/ContainerColumnsBlock.astro";
+import LinksListBlock from "./blocks/LinksListBlock.astro";
+import CallToActionBlock from "./blocks/CallToActionBlock.astro";
+import AudioEmbedBlock from "./blocks/AudioEmbedBlock.astro";
+import VideoEmbedBlock from "./blocks/VideoEmbedBlock.astro";
+import FaqBlock from "./blocks/FaqBlock.astro";
+import SidebarBlock from "./blocks/SidebarBlock.astro";
+import CategoryCardsBlock from "./blocks/CategoryCardsBlock.astro";
+import RelatedArticlesBlock from "./blocks/RelatedArticlesBlock.astro";
+import LatestPostsBlock from "./blocks/LatestPostsBlock.astro";
+import InstagramCardBlock from "./blocks/InstagramCardBlock.astro";
+import InstagramGridBlock from "./blocks/InstagramGridBlock.astro";
+import WhatsAppShareBlock from "./blocks/WhatsAppShareBlock.astro";
+import SocialChannelsBlock from "./blocks/SocialChannelsBlock.astro";
+import NewsletterBlock from "./blocks/NewsletterBlock.astro";
+import CustomHtmlBlock from "./blocks/CustomHtmlBlock.astro";
+import AdSlotBlock from "./blocks/AdSlotBlock.astro";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+
+if (!block || block.visible === false) {
+  return null;
+}
+---
+
+{block.type === "hero" && <HeroBlock block={block} />}
+{block.type === "scripture_verses" && <ScriptureBlock block={block} />}
+{block.type === "meaning_explanation" && <MeaningExplanationBlock block={block} />}
+{block.type === "rich_text" && <RichTextBlock block={block} />}
+{block.type === "heading_paragraph" && <HeadingParagraphBlock block={block} />}
+{block.type === "image" && <ImageBlock block={block} />}
+{block.type === "gallery" && <GalleryBlock block={block} />}
+{block.type === "divider_spacer" && <DividerSpacerBlock block={block} />}
+{block.type === "container_columns" && <ContainerColumnsBlock block={block} />}
+{block.type === "links_list" && <LinksListBlock block={block} />}
+{block.type === "call_to_action" && <CallToActionBlock block={block} />}
+{block.type === "audio_embed" && <AudioEmbedBlock block={block} />}
+{block.type === "video_embed" && <VideoEmbedBlock block={block} />}
+{block.type === "faq_block" && <FaqBlock block={block} />}
+{block.type === "sidebar_block" && <SidebarBlock block={block} />}
+{block.type === "category_cards" && <CategoryCardsBlock block={block} />}
+{block.type === "related_articles" && <RelatedArticlesBlock block={block} />}
+{block.type === "latest_posts" && <LatestPostsBlock block={block} />}
+{block.type === "instagram_card" && <InstagramCardBlock block={block} />}
+{block.type === "instagram_grid" && <InstagramGridBlock block={block} />}
+{block.type === "whatsapp_share" && <WhatsAppShareBlock block={block} />}
+{block.type === "social_channels" && <SocialChannelsBlock block={block} />}
+{block.type === "newsletter" && <NewsletterBlock block={block} />}
+{block.type === "custom_html" && <CustomHtmlBlock block={block} />}
+{block.type === "ad_slot" && <AdSlotBlock block={block} />}

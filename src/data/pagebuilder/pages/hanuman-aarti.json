@@ -1,0 +1,60 @@
+{
+  "slug": "hanuman-aarti",
+  "template": "prayer_text",
+  "status": "published",
+  "seo": {
+    "title": "Shree Hanuman Aarti Lyrics — Aarti Kije Hanuman Lala Ki",
+    "description": "Chant Shree Hanuman Aarti lyrics (Aarti Kije Hanuman Lala Ki) in Hindi &#38; English with audio, puja vidhi, and printable PDF.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/hanuman-aarti",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "Shree Hanuman Aarti",
+    "subheading": "Chant Shree Hanuman Aarti lyrics (Aarti Kije Hanuman Lala Ki) in Hindi &#38; English with audio, puja vidhi, and printab",
+    "devanagariTag": "॥ भक्ति भाव ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-hanuman-aarti-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-hanuman-aarti-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-hanuman-aarti-main",
+              "blocks": [
+                {
+                  "id": "blk-hanuman-aarti-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Shree Hanuman Aarti",
+                    "paragraph": "Chant Shree Hanuman Aarti lyrics (Aarti Kije Hanuman Lala Ki) in Hindi &#38; English with audio, puja vidhi, and printable PDF."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

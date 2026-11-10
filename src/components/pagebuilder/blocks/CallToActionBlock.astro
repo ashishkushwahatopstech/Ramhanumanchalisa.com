@@ -1,0 +1,41 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+---
+
+<!-- Block: Call to Action -->
+<div id={block.id} class="cta-block max-w-4xl mx-auto py-6">
+  <div class="devotional-card p-6 sm:p-8 bg-gradient-to-br from-[#FFF9F0] via-white to-[#FAF3E8] border-2 border-[#C9A45C]/40 shadow-md text-center space-y-4">
+    {content.badge && (
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E87524]/10 border border-[#C9A45C]/40 text-[#C95716] text-xs font-bold font-hindi-display">
+        {content.badge}
+      </span>
+    )}
+    <h3 class="font-serif-display text-xl sm:text-2xl font-bold text-[#4A1216]">
+      {content.title}
+    </h3>
+    {content.description && (
+      <p class="text-xs sm:text-sm text-[#34251D]/75 max-w-xl mx-auto leading-relaxed font-sans">
+        {content.description}
+      </p>
+    )}
+    {content.buttonText && content.buttonHref && (
+      <div class="pt-2">
+        <a
+          href={content.buttonHref}
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#C95716] to-[#E87524] text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-transform hover:scale-103"
+        >
+          {content.buttonIcon && <span>{content.buttonIcon}</span>}
+          <span>{content.buttonText}</span>
+          <span>→</span>
+        </a>
+      </div>
+    )}
+  </div>
+</div>

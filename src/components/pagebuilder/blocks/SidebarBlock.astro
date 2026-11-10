@@ -1,0 +1,39 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const items = content.items || [
+  { title: "Shree Hanuman Chalisa", url: "/" },
+  { title: "Sankat Mochan Hanuman Ashtak", url: "/sankat-mochan-hanumanashtak" },
+  { title: "Bajrang Baan", url: "/bajrang-baan" },
+  { title: "Shree Ram Chalisa", url: "/ram-chalisa" },
+  { title: "Hanuman Aarti", url: "/hanuman-aarti" },
+];
+---
+
+<!-- Block: Sidebar Block -->
+<aside id={block.id} class="sidebar-block p-5 rounded-xl bg-[#FFF9F0] border border-[#C9A45C]/30 shadow-xs space-y-4">
+  <div class="flex items-center gap-2 border-b border-[#C9A45C]/25 pb-2">
+    <span class="text-[#C95716] font-bold">✦</span>
+    <h4 class="font-serif-display text-base font-bold text-[#4A1216]">
+      {content.title || "Devotional Treasury"}
+    </h4>
+  </div>
+  <ul class="space-y-2 list-none p-0 text-sm">
+    {items.map((it: any) => (
+      <li>
+        <a
+          href={it.url}
+          class="block py-1 px-2.5 rounded text-[#34251D] hover:text-[#4A1216] hover:bg-[#C9A45C]/15 transition-colors font-medium text-xs sm:text-sm"
+        >
+          {it.title}
+        </a>
+      </li>
+    ))}
+  </ul>
+</aside>

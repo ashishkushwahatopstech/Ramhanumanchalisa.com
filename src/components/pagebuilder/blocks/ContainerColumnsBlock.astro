@@ -1,0 +1,41 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+const items = content.items || [];
+const columnsCount = content.columnsCount || 2;
+
+const gridClass =
+  columnsCount === 3
+    ? "grid-cols-1 md:grid-cols-3"
+    : columnsCount === 4
+    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+    : "grid-cols-1 md:grid-cols-2";
+---
+
+<!-- Block: Container Columns -->
+<div id={block.id} class="container-columns-block space-y-4 max-w-6xl mx-auto py-4">
+  {content.title && (
+    <h3 class="font-serif-display text-xl sm:text-2xl font-bold text-[#4A1216] text-center mb-6">
+      {content.title}
+    </h3>
+  )}
+  <div class={`grid ${gridClass} gap-6`}>
+    {items.map((col: any) => (
+      <div class="p-6 rounded-xl bg-white border border-[#C9A45C]/30 shadow-xs space-y-3">
+        {col.title && (
+          <h4 class="font-serif-display text-lg font-bold text-[#4A1216]">
+            {col.title}
+          </h4>
+        )}
+        {col.html && <div class="text-sm text-[#34251D]/85 leading-relaxed" set:html={col.html} />}
+        {col.text && <p class="text-sm text-[#34251D]/85 leading-relaxed">{col.text}</p>}
+      </div>
+    ))}
+  </div>
+</div>

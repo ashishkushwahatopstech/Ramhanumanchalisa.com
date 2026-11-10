@@ -1,0 +1,60 @@
+{
+  "slug": "ram-hanuman-chalisa",
+  "template": "prayer_text",
+  "status": "published",
+  "seo": {
+    "title": "Ram Hanuman Connection — Bond of Supreme Bhakti &amp; Seva",
+    "description": "Explore the divine bond between Lord Rama and Hanuman. Discover how selfless devotion, surrender, and seva empower the seeker.",
+    "canonicalUrl": "https://ramhanumanchalisa.com/ram-hanuman-chalisa",
+    "language": "hi"
+  },
+  "h1": {
+    "text": "Shree Ram & Hanuman Connection",
+    "subheading": "Explore the divine bond between Lord Rama and Hanuman. Discover how selfless devotion, surrender, and seva empower the s",
+    "devanagariTag": "॥ भक्ति भाव ॥"
+  },
+  "sections": [
+    {
+      "id": "sec-ram-hanuman-chalisa-content",
+      "name": "Main Section",
+      "visible": true,
+      "order": 1,
+      "settings": {
+        "background": "transparent",
+        "paddingY": "medium",
+        "width": "contained_4xl"
+      },
+      "containers": [
+        {
+          "id": "cont-ram-hanuman-chalisa-main",
+          "columnsCount": 1,
+          "columns": [
+            {
+              "id": "col-ram-hanuman-chalisa-main",
+              "blocks": [
+                {
+                  "id": "blk-ram-hanuman-chalisa-heading",
+                  "type": "heading_paragraph",
+                  "visible": true,
+                  "order": 1,
+                  "content": {
+                    "level": "h2",
+                    "heading": "Shree Ram & Hanuman Connection",
+                    "paragraph": "Explore the divine bond between Lord Rama and Hanuman. Discover how selfless devotion, surrender, and seva empower the seeker."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auditMeta": {
+    "createdAt": "2026-11-10T12:00:00Z",
+    "updatedAt": "2026-11-10T12:00:00Z",
+    "updatedBy": "batch_migration_1",
+    "version": 1,
+    "hasScriptureModifications": false
+  }
+}

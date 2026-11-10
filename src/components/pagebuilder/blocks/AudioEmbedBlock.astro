@@ -1,0 +1,37 @@
+---
+import type { BlockInstance } from "../../../lib/pagebuilder/schema";
+
+interface Props {
+  block: BlockInstance;
+}
+
+const { block } = Astro.props;
+const content = block.content || {};
+---
+
+<!-- Block: Audio Embed -->
+<div id={block.id} class="audio-embed-block max-w-2xl mx-auto my-6 p-5 rounded-xl bg-[#FFF9F0] border border-[#C9A45C]/40 shadow-xs">
+  {content.title && (
+    <div class="flex items-center gap-2 mb-3">
+      <span class="text-lg">🎵</span>
+      <h4 class="font-serif-display text-base font-bold text-[#4A1216]">
+        {content.title}
+      </h4>
+    </div>
+  )}
+  {content.description && (
+    <p class="text-xs text-[#34251D]/75 mb-3 leading-relaxed">
+      {content.description}
+    </p>
+  )}
+  {content.src && (
+    <audio
+      controls
+      preload="none"
+      class="w-full h-10 rounded focus:outline-none focus:ring-2 focus:ring-[#C95716]"
+    >
+      <source src={content.src} type={content.mimeType || "audio/mpeg"} />
+      Your browser does not support the audio element.
+    </audio>
+  )}
+</div>
