@@ -409,20 +409,6 @@ export default function HeaderNavigation({
 
             {/* Quick Actions (Right Header) */}
             <div className="flex items-center gap-2 sm:gap-3">
-              {/* Search Modal Trigger Button */}
-              <button
-                type="button"
-                onClick={handleOpenSearch}
-                className="flex items-center gap-1.5 bg-[#340B0F] hover:bg-[#6B1E23] text-[#FFF9F0] border border-[#C9A45C]/50 hover:border-[#E8A33D] px-2.5 sm:px-3 py-1.5 rounded text-xs font-semibold transition-colors"
-                title="Search scriptures and hymns (Ctrl+K)"
-                aria-label="Search website"
-              >
-                <span>🔍</span>
-                <span className="hidden sm:inline">Search</span>
-                <kbd className="hidden md:inline-block text-[10px] bg-[#4A1216] text-[#C9A45C] px-1 py-0.5 rounded border border-[#C9A45C]/30 font-mono">
-                  ⌘K
-                </kbd>
-              </button>
 
               {/* Language Switcher */}
               <div className="hidden sm:block">
