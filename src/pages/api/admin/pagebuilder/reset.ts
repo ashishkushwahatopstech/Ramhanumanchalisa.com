@@ -1,8 +1,8 @@
 import type { APIRoute } from "astro";
 import { resetPageToOriginal } from "../../../../lib/pagebuilder/store";
 
-export const POST: APIRoute = async ({ request, cookies }) => {
-  const sessionCookie = cookies.get("admin_session")?.value;
+export const POST: APIRoute = async (context) => {
+  const sessionCookie = context.cookies.get("admin_session")?.value;
   if (!sessionCookie || sessionCookie !== "authenticated") {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
@@ -12,7 +12,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
   let body: any;
   try {
-    body = await request.json();
+    body = await context.request.json();
   } catch (e) {
     return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
       status: 400,
@@ -28,7 +28,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     });
   }
 
-  const res = resetPageToOriginal(slug);
+  const db = (context.locals as any)?.runtime?.env?.DB;
+  const res = await resetPageToOriginal(slug, db);
+
   if (!res.success) {
     return new Response(JSON.stringify({ error: res.error || "Failed to reset page to original snapshot." }), {
       status: 400,

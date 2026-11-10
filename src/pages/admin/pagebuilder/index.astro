@@ -2,6 +2,10 @@
 import Layout from "../../../layouts/Layout.astro";
 import AdminNavigation from "../../../components/AdminNavigation.astro";
 import PageListDashboard from "../../../components/pagebuilder/admin/PageListDashboard";
+import { listAllPageSummaries } from "../../../lib/pagebuilder/store";
+
+const db = (Astro.locals as any)?.runtime?.env?.DB;
+const initialPages = await listAllPageSummaries(db);
 
 const title = "Visual Page Builder — Mandir Admin Studio";
 ---
@@ -11,7 +15,7 @@ const title = "Visual Page Builder — Mandir Admin Studio";
     <AdminNavigation activeTab="pagebuilder" />
 
     <section>
-      <PageListDashboard client:load />
+      <PageListDashboard client:load initialPages={initialPages} />
     </section>
   </div>
 </Layout>

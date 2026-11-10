@@ -1,14 +1,9 @@
 import type { APIRoute } from "astro";
-import fs from "node:fs";
-import path from "node:path";
-import { savePage } from "../../../../lib/pagebuilder/store";
+import { savePage, getPageBySlugWithDb } from "../../../../lib/pagebuilder/store";
 import { validatePage } from "../../../../lib/pagebuilder/validator";
-import type { PageModel } from "../../../../lib/pagebuilder/schema";
 
-const ORIGINALS_DIR = path.resolve(process.cwd(), "src/data/pagebuilder/original_snapshots");
-
-export const POST: APIRoute = async ({ request, cookies }) => {
-  const sessionCookie = cookies.get("admin_session")?.value;
+export const POST: APIRoute = async (context) => {
+  const sessionCookie = context.cookies.get("admin_session")?.value;
   if (!sessionCookie || sessionCookie !== "authenticated") {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
@@ -18,7 +13,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
   let body: any;
   try {
-    body = await request.json();
+    body = await context.request.json();
   } catch (e) {
     return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
       status: 400,
@@ -34,17 +29,10 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     });
   }
 
-  // Load original snapshot to verify against
-  const fileKey = page.slug === "/" || page.slug === "home" ? "home" : page.slug.replace(/^\/+|\/+$/g, "").replace(/\//g, "__");
-  const origPath = path.join(ORIGINALS_DIR, `${fileKey}.json`);
-  let originalPage: PageModel | null = null;
-  if (fs.existsSync(origPath)) {
-    try {
-      originalPage = JSON.parse(fs.readFileSync(origPath, "utf8"));
-    } catch (e) {
-      console.warn("Could not parse original snapshot:", e);
-    }
-  }
+  const db = (context.locals as any)?.runtime?.env?.DB;
+
+  // Load original baseline snapshot to verify against
+  const originalPage = await getPageBySlugWithDb(page.slug, db);
 
   // HARD SAFETY RULE: Scripture Verses byte-for-byte protection (Rule 3)
   if (originalPage) {
@@ -100,8 +88,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     );
   }
 
-  // Save to page store
-  const saveResult = savePage(page, "ashishkushwaha88643@gmail.com");
+  // Save to page store and D1
+  const saveResult = await savePage(page, "ashishkushwaha88643@gmail.com", db);
   if (!saveResult.success) {
     return new Response(JSON.stringify({ error: saveResult.error || "Failed to persist page model" }), {
       status: 500,

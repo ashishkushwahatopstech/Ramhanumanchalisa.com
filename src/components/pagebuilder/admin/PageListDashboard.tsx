@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-interface PageSummary {
+export interface PageSummary {
   slug: string;
   title: string;
   template: string;
@@ -13,9 +13,13 @@ interface PageSummary {
   isModifiedFromOriginal: boolean;
 }
 
-export default function PageListDashboard() {
-  const [pages, setPages] = useState<PageSummary[]>([]);
-  const [loading, setLoading] = useState(true);
+interface Props {
+  initialPages?: PageSummary[];
+}
+
+export default function PageListDashboard({ initialPages = [] }: Props) {
+  const [pages, setPages] = useState<PageSummary[]>(initialPages);
+  const [loading, setLoading] = useState(initialPages.length === 0);
   const [search, setSearch] = useState("");
   const [templateFilter, setTemplateFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -23,24 +27,30 @@ export default function PageListDashboard() {
   const [resetConfirmSlug, setResetConfirmSlug] = useState<string | null>(null);
 
   const fetchPages = async () => {
-    setLoading(true);
+    if (pages.length === 0) setLoading(true);
     try {
       const res = await fetch("/api/admin/pagebuilder/pages");
       const data = await res.json();
-      if (data.success) {
+      if (data.success && Array.isArray(data.pages)) {
         setPages(data.pages);
       } else {
-        setActionMessage({ text: data.error || "Failed to load pages.", type: "error" });
+        if (pages.length === 0) {
+          setActionMessage({ text: data.error || "Failed to load pages.", type: "error" });
+        }
       }
     } catch (err: any) {
-      setActionMessage({ text: "Failed to load pages: " + err.message, type: "error" });
+      if (pages.length === 0) {
+        setActionMessage({ text: "Failed to load pages: " + err.message, type: "error" });
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPages();
+    if (pages.length === 0) {
+      fetchPages();
+    }
   }, []);
 
   const handleResetToOriginal = async (slug: string) => {

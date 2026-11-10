@@ -2,12 +2,16 @@
 import Layout from "../../../layouts/Layout.astro";
 import AdminNavigation from "../../../components/AdminNavigation.astro";
 import VisualBlockEditor from "../../../components/pagebuilder/admin/VisualBlockEditor";
+import { getPageBySlugWithDb } from "../../../lib/pagebuilder/store";
 
 const { slug } = Astro.params;
 
 if (!slug) {
   return Astro.redirect("/admin/pagebuilder");
 }
+
+const db = (Astro.locals as any)?.runtime?.env?.DB;
+const initialPage = await getPageBySlugWithDb(slug, db);
 
 const title = `Edit Page /${slug} — Visual Block Editor`;
 ---
@@ -17,7 +21,7 @@ const title = `Edit Page /${slug} — Visual Block Editor`;
     <AdminNavigation activeTab="pagebuilder" />
 
     <section>
-      <VisualBlockEditor client:load initialSlug={slug} />
+      <VisualBlockEditor client:load initialSlug={slug} initialPageData={initialPage} />
     </section>
   </div>
 </Layout>

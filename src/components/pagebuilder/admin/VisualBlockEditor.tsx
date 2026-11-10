@@ -5,11 +5,12 @@ import type { PageModel, SectionModel, BlockInstance, BlockType } from "../../..
 
 interface Props {
   initialSlug: string;
+  initialPageData?: PageModel | null;
 }
 
-export default function VisualBlockEditor({ initialSlug }: Props) {
-  const [page, setPage] = useState<PageModel | null>(null);
-  const [loading, setLoading] = useState(true);
+export default function VisualBlockEditor({ initialSlug, initialPageData }: Props) {
+  const [page, setPage] = useState<PageModel | null>(initialPageData || null);
+  const [loading, setLoading] = useState(!initialPageData);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<"blocks" | "seo" | "preview">("blocks");
   const [previewWidth, setPreviewWidth] = useState<"desktop" | "mobile">("desktop");
@@ -42,7 +43,9 @@ export default function VisualBlockEditor({ initialSlug }: Props) {
   };
 
   useEffect(() => {
-    loadPageData();
+    if (!page) {
+      loadPageData();
+    }
   }, [initialSlug]);
 
   if (loading) {
