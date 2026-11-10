@@ -14,73 +14,132 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative overflow-hidden pt-4 pb-8 sm:py-12 bg-gradient-to-b from-[#FFF9F0] via-[#FAF3E8] to-[#FFF9F0] border-b border-[#C9A45C]/25" aria-label="Devotional Hero Entrance">
-  <!-- Subtle Ambient Glow -->
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-80 bg-gradient-to-b from-[#E87524]/10 via-[#C9A45C]/5 to-transparent blur-3xl pointer-events-none" />
+<!-- FULL-WIDTH CINEMATIC DEVOTIONAL HERO SECTION -->
+<section
+  class="relative w-full overflow-hidden bg-[#1F0D05] text-white border-b-2 border-[#C9A45C]/40"
+  aria-label="Shree Hanuman Chalisa Devotional Hero Entrance"
+>
+  <!-- Full-Width Background Poster -->
+  <div class="absolute inset-0 w-full h-full pointer-events-none select-none z-0">
+    <picture>
+      <source srcset="/images/hero-hanuman-poster.webp" type="image/webp" />
+      <img
+        src="/images/hero-hanuman-poster.jpg"
+        alt="Bhagwan Shree Hanuman Ji Divya Swaroop - Ram Hanuman Chalisa"
+        class="w-full h-full object-cover object-top sm:object-center brightness-95 contrast-105 transform scale-102 transition-transform duration-1000 ease-out"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
 
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center space-y-5 max-w-3xl mx-auto">
-      
-      <!-- Rubric Badge -->
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E87524]/10 border border-[#C9A45C]/40 text-[#C95716] text-xs font-bold uppercase tracking-wider">
-        <span class="animate-pulse">🪔</span>
-        <span>श्री राम जय राम जय जय राम • नित्य साधना पीठ</span>
-      </div>
+    <!-- Multi-Layer Atmospheric Lighting Overlays -->
+    <!-- Layer 1: Dark Scrim for Perfect Header & Text Contrast -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#1F0D05] via-[#1F0D05]/65 to-[#1F0D05]/80"></div>
+    
+    <!-- Layer 2: Radiant Center Halo accentuating Lord Hanuman -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(232,117,36,0.3)_0%,rgba(201,87,22,0.15)_45%,transparent_75%)]"></div>
+    
+    <!-- Layer 3: Warm Golden Base Vignette -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#1F0D05]"></div>
+  </div>
 
-      <!-- Main Headline -->
-      <h1 class="font-serif-display text-3xl sm:text-5xl lg:text-6xl font-bold text-[#4A1216] tracking-tight leading-[1.15]">
-        Shree Hanuman Chalisa
-        <span class="font-hindi-display block text-2xl sm:text-4xl text-[#C95716] font-semibold mt-2">
-          सम्पूर्ण चालीसा पाठ एवं शब्दार्थ
-        </span>
-      </h1>
+  <!-- Decorative Sacred Embers / Glow Accents -->
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-[#E87524]/15 rounded-full blur-3xl pointer-events-none z-0"></div>
 
-      <!-- Description -->
-      <p class="text-sm sm:text-base text-[#34251D]/85 leading-relaxed font-sans max-w-2xl mx-auto">
-        Recite the timeless 40 Awadhi chaupais composed by Goswami Tulsidas with authentic word breakdowns, synchronized audio recitations, downloadable PDF sheets, and step-by-step path vidhi.
-      </p>
-
-      <!-- Key Attribute Badges -->
-      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs font-semibold text-[#4A1216] pt-1">
-        <span class="px-3 py-1 rounded-full bg-white border border-[#C9A45C]/35 shadow-2xs">४० सिद्ध चौपाई</span>
-        <span class="px-3 py-1 rounded-full bg-white border border-[#C9A45C]/35 shadow-2xs">७ प्रादेशिक भाषाएं</span>
-        <span class="px-3 py-1 rounded-full bg-white border border-[#C9A45C]/35 shadow-2xs">सस्वर ऑडियो प्लेयर</span>
-        <span class="px-3 py-1 rounded-full bg-white border border-[#C9A45C]/35 shadow-2xs">शास्त्रोक्त विधि</span>
-      </div>
-
-      <!-- Primary Action Buttons -->
-      <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-        <a
-          href="#chalisa-recitation"
-          class="w-full sm:w-auto px-7 py-3 rounded-full bg-[#C95716] hover:bg-[#E87524] text-white font-bold text-sm tracking-wide uppercase shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 border border-[#C9A45C]"
-        >
-          <span>🕉️</span>
-          <span>Read Hanuman Chalisa</span>
-          <span>↓</span>
-        </a>
-        <a
-          href="/stories"
-          class="w-full sm:w-auto px-6 py-3 rounded-full bg-white hover:bg-[#FAF3E8] text-[#4A1216] font-bold text-sm tracking-wide uppercase border border-[#C9A45C]/50 hover:border-[#E87524] shadow-xs transition-all flex items-center justify-center gap-2"
-        >
-          <span>✨</span>
-          <span>Explore Devotional Stories</span>
-          <span>→</span>
-        </a>
-      </div>
-
-      <!-- Sacred Daily Assurance Card -->
-      <div class="mt-8 p-4 sm:p-5 rounded-2xl bg-white/80 border border-[#C9A45C]/35 shadow-xs max-w-xl mx-auto backdrop-blur-xs">
-        <div class="text-[11px] font-bold uppercase tracking-wider text-[#C95716] mb-1">
-          — अमृत वचन • Sacred Verse of Protection —
-        </div>
-        <p class="font-hindi-display text-base sm:text-lg text-[#4A1216] font-bold">
-          {dailyQuote.verse}
-        </p>
-        <p class="text-xs text-[#34251D]/75 mt-1 font-sans italic">
-          "{dailyQuote.meaning}"
-        </p>
-      </div>
-
+  <!-- Main Hero Content Overlay -->
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-14 sm:pb-20 flex flex-col items-center text-center">
+    
+    <!-- Top Sacred Invocation Badge -->
+    <div class="inline-flex items-center gap-2 sm:gap-2.5 px-4 py-1.5 rounded-full bg-black/60 border border-[#C9A45C]/70 shadow-lg backdrop-blur-md text-[#E8A33D] text-xs sm:text-sm font-semibold tracking-wide uppercase animate-fade-in">
+      <span class="text-base text-[#E87524]">🪔</span>
+      <span class="font-hindi-display font-bold">॥ श्री हनुमते नमः ॥</span>
+      <span class="hidden sm:inline text-[#C9A45C]/60">•</span>
+      <span class="hidden sm:inline text-white/90 font-serif-display text-xs">रामदूत अतुलितबलधामा</span>
+      <span class="text-base text-[#E87524]">🪔</span>
     </div>
+
+    <!-- Main Grand Devotional Headline -->
+    <div class="mt-6 sm:mt-8 space-y-2 sm:space-y-3 max-w-4xl mx-auto">
+      <h1 class="font-hindi-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-[#FFF9F0] drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] leading-[1.1]">
+        सम्पूर्ण श्री हनुमान चालीसा
+      </h1>
+      <p class="font-serif-display text-sm sm:text-lg md:text-xl font-bold tracking-[0.25em] text-[#E8A33D] uppercase drop-shadow-md">
+        Shree Hanuman Chalisa • Complete 40 Chaupais & Meaning
+      </p>
+    </div>
+
+    <!-- Spiritual Epigraph / Sacred Verse -->
+    <div class="mt-5 sm:mt-6 max-w-2xl mx-auto bg-black/45 border border-[#C9A45C]/40 rounded-2xl px-5 py-3 sm:py-4 backdrop-blur-md shadow-xl">
+      <p class="font-hindi-display text-base sm:text-xl font-bold text-[#FFF9F0] drop-shadow-sm">
+        {dailyQuote.verse}
+      </p>
+      <p class="font-sans text-xs sm:text-sm text-[#C9A45C] mt-1 italic leading-relaxed">
+        "{dailyQuote.meaning}"
+      </p>
+    </div>
+
+    <!-- Key Devotional Pillars Strip -->
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold text-white/95">
+      <span class="px-3 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
+        <span class="text-[#E87524]">🚩</span> ४० सिद्ध चौपाई
+      </span>
+      <span class="px-3 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
+        <span class="text-[#E87524]">🎧</span> सस्वर शुद्ध पाठ
+      </span>
+      <span class="px-3 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
+        <span class="text-[#E87524]">📖</span> शब्दार्थ एवं भावार्थ
+      </span>
+      <span class="px-3 py-1.5 rounded-full bg-white/10 border border-[#C9A45C]/40 backdrop-blur-sm shadow-xs flex items-center gap-1.5">
+        <span class="text-[#E87524]">🕉️</span> ७ प्रादेशिक भाषाएँ
+      </span>
+    </div>
+
+    <!-- Action Buttons Cluster -->
+    <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5 w-full max-w-md sm:max-w-none">
+      <!-- Primary CTA: Recitation -->
+      <a
+        href="#chalisa-recitation"
+        class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#C95716] via-[#E87524] to-[#C95716] hover:from-[#E87524] hover:to-[#C95716] text-white font-bold text-sm sm:text-base tracking-wide uppercase shadow-[0_4px_24px_rgba(232,117,36,0.5)] hover:shadow-[0_6px_32px_rgba(232,117,36,0.7)] transition-all duration-300 flex items-center justify-center gap-2.5 border-2 border-[#C9A45C] group"
+      >
+        <span class="text-lg group-hover:scale-110 transition-transform">▶</span>
+        <span>चालीसा पाठ आरम्भ करें</span>
+        <span class="text-xs opacity-75 font-serif-display font-normal">(Start Recitation)</span>
+      </a>
+
+      <!-- Secondary CTA: Daily Sadhana -->
+      <a
+        href="#daily-sadhana"
+        class="w-full sm:w-auto px-7 py-4 rounded-full bg-black/60 hover:bg-black/80 text-[#FFF9F0] hover:text-[#E8A33D] font-bold text-sm sm:text-base tracking-wide uppercase border-2 border-[#C9A45C]/60 hover:border-[#C9A45C] shadow-lg backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2"
+      >
+        <span>📿</span>
+        <span>आज की साधना</span>
+        <span class="text-xs text-[#C9A45C] font-serif-display font-normal">(Daily Sadhana)</span>
+      </a>
+
+      <!-- Tertiary CTA: Devotional Stories -->
+      <a
+        href="/stories"
+        class="w-full sm:w-auto px-6 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base tracking-wide uppercase border border-white/25 hover:border-[#E87524] shadow-md backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2"
+      >
+        <span>✨</span>
+        <span>दिव्य कथाएँ</span>
+        <span class="text-xs text-white/70 font-serif-display font-normal">(Stories)</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- Quick Scripture Navigation Bar -->
+    <div class="mt-10 pt-6 border-t border-[#C9A45C]/30 w-full max-w-3xl flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-serif-display text-white/80">
+      <span class="text-[#E8A33D] font-bold uppercase tracking-wider text-[11px]">त्वरित पाठ :</span>
+      <a href="/ram-chalisa" class="hover:text-[#E8A33D] transition-colors hover:underline">श्री राम चालीसा</a>
+      <span class="text-[#C9A45C]/40">•</span>
+      <a href="/bajrang-baan" class="hover:text-[#E8A33D] transition-colors hover:underline">श्री बजरंग बाण</a>
+      <span class="text-[#C9A45C]/40">•</span>
+      <a href="/sankat-mochan-hanumanashtak" class="hover:text-[#E8A33D] transition-colors hover:underline">संकटमोचन हनुमानाष्टक</a>
+      <span class="text-[#C9A45C]/40">•</span>
+      <a href="/hanuman-ji-ki-aarti" class="hover:text-[#E8A33D] transition-colors hover:underline">आरती कीजै हनुमान लला की</a>
+    </div>
+
   </div>
 </section>
