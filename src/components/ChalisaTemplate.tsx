@@ -147,7 +147,9 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
       )}
       
       {/* 1. Garbhagriha Hero Section (Sanctum) */}
-      <section className="relative overflow-hidden w-full manuscript-frame max-w-4xl mx-auto">
+      {!isHomepage && (
+        <>
+          <section className="relative overflow-hidden w-full manuscript-frame max-w-4xl mx-auto">
         {/* Content Wrapper */}
         <div className="relative z-10 max-w-4xl mx-auto py-8 sm:py-10 px-4 sm:px-8 space-y-6 text-center">
           <div className="flex justify-center">
@@ -217,6 +219,8 @@ export default function ChalisaTemplate({ data, isHomepage = false }: ChalisaTem
       </section>
 
       <CarvedDivider icon="🔔" />
+        </>
+      )}
 
       {/* 2. Integrated Altar Pathway (Navigation Ledger) */}
       <section className="manuscript-frame max-w-5xl mx-auto overflow-hidden">
