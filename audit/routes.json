@@ -1,0 +1,1907 @@
+{
+  "totalRoutes": 173,
+  "templateCounts": {
+    "homepage": 1,
+    "prayer_text": 16,
+    "festival": 1,
+    "legal_informational": 5,
+    "category": 3,
+    "article": 139,
+    "story": 8
+  },
+  "generatedAt": "2026-11-10T12:22:04.363Z",
+  "routes": [
+    {
+      "path": "/",
+      "fullUrl": "https://ramhanumanchalisa.com/",
+      "type": "hardcoded",
+      "template": "homepage",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "HeroSection (Full-width Lord Hanuman Poster)",
+          "type": "hero",
+          "shared": false
+        },
+        {
+          "name": "StoryHighlights",
+          "type": "highlights",
+          "shared": true
+        },
+        {
+          "name": "ChalisaTemplate (40 Chaupais + Synced Audio)",
+          "type": "scripture_recitation",
+          "shared": true
+        },
+        {
+          "name": "DiyaCounter",
+          "type": "interactive_puja",
+          "shared": true
+        },
+        {
+          "name": "CategoryDiscovery",
+          "type": "category_grid",
+          "shared": true
+        },
+        {
+          "name": "PopularCollections",
+          "type": "collection_grid",
+          "shared": true
+        },
+        {
+          "name": "Sacred Stotras & Chalisas Hub (Ram Chalisa, Bajrang Baan, etc.)",
+          "type": "cards_grid",
+          "shared": false
+        },
+        {
+          "name": "InstagramShowcase",
+          "type": "social_showcase",
+          "shared": true
+        },
+        {
+          "name": "Devotional Study Guide",
+          "type": "rich_text_guide",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "SubscriptionGadget",
+          "type": "newsletter",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/sankat-mochan-hanumanashtak",
+      "fullUrl": "https://ramhanumanchalisa.com/sankat-mochan-hanumanashtak",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "HanumanashtakClient (8 Awadhi Stanzas + Meanings)",
+          "type": "scripture_recitation",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs (Hanuman Ashtak FAQs)",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/hanuman-jayanti",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-jayanti",
+      "type": "hardcoded",
+      "template": "festival",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Header & Badge",
+          "type": "heading_banner",
+          "shared": false
+        },
+        {
+          "name": "CarvedDivider",
+          "type": "divider",
+          "shared": true
+        },
+        {
+          "name": "Upcoming Festival Date & Tithi Timings Card",
+          "type": "event_details",
+          "shared": false
+        },
+        {
+          "name": "Significance & Legends Grid",
+          "type": "content_columns",
+          "shared": false
+        },
+        {
+          "name": "Puja Vidhi & Ritual Guidelines",
+          "type": "step_by_step_list",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs (Hanuman Jayanti FAQs)",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/bajrang-baan",
+      "fullUrl": "https://ramhanumanchalisa.com/bajrang-baan",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Sacred Sankalp & Warning Callout",
+          "type": "alert_box",
+          "shared": false
+        },
+        {
+          "name": "Bajrang Baan Verses & Meaning",
+          "type": "scripture_recitation",
+          "shared": false
+        },
+        {
+          "name": "Chanting Rules & Vidhi",
+          "type": "rich_text",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/ram-chalisa",
+      "fullUrl": "https://ramhanumanchalisa.com/ram-chalisa",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Header & Significance",
+          "type": "heading_banner",
+          "shared": false
+        },
+        {
+          "name": "Ram Chalisa 40 Chaupais & Dohas",
+          "type": "scripture_recitation",
+          "shared": false
+        },
+        {
+          "name": "Meaning & Translation",
+          "type": "translation_grid",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/hanuman-aarti",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-aarti",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "AartiClient (Aarti Kije Hanuman Lala Ki)",
+          "type": "scripture_recitation",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/hanuman-stuti",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-stuti",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Stuti Verses & Meaning",
+          "type": "scripture_recitation",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/hanuman-chalisa-meaning",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa-meaning",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Header & Overview",
+          "type": "heading_banner",
+          "shared": false
+        },
+        {
+          "name": "Line-by-Line Word Breakdown & Meaning (40 Chaupais + 3 Dohas)",
+          "type": "scripture_meaning_table",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/shri-hanuman-chalisa-path-vidhi",
+      "fullUrl": "https://ramhanumanchalisa.com/shri-hanuman-chalisa-path-vidhi",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Path Vidhi Rules, Timing & Sankalp Steps",
+          "type": "step_by_step_list",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/ram-hanuman-chalisa",
+      "fullUrl": "https://ramhanumanchalisa.com/ram-hanuman-chalisa",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "The Divine Bond: Shri Ram & Hanuman Ji in Scriptures",
+          "type": "rich_text",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/hanuman-chalisa-audio-mp3",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa-audio-mp3",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Audio Player & Recitation Tracks",
+          "type": "audio_player",
+          "shared": false
+        },
+        {
+          "name": "Download Audio Guide",
+          "type": "call_to_action",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/hanuman-chalisa-pdf",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa-pdf",
+      "type": "hardcoded",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Print & PDF Download Sheet",
+          "type": "printable_doc",
+          "shared": false
+        },
+        {
+          "name": "PageFaqs",
+          "type": "faqs",
+          "shared": true
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/about",
+      "fullUrl": "https://ramhanumanchalisa.com/about",
+      "type": "hardcoded",
+      "template": "legal_informational",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Mission & Sanatana Dharma Archival Purpose",
+          "type": "rich_text",
+          "shared": false
+        },
+        {
+          "name": "Editorial Standards & Sources",
+          "type": "rich_text",
+          "shared": false
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/contact",
+      "fullUrl": "https://ramhanumanchalisa.com/contact",
+      "type": "hardcoded",
+      "template": "legal_informational",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Contact Details & Inquiries",
+          "type": "contact_form",
+          "shared": false
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/faq",
+      "fullUrl": "https://ramhanumanchalisa.com/faq",
+      "type": "hardcoded",
+      "template": "legal_informational",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "BreadcrumbNav",
+          "type": "breadcrumb",
+          "shared": true
+        },
+        {
+          "name": "Complete Devotional FAQs Hub",
+          "type": "faqs_hub",
+          "shared": false
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/privacy-policy",
+      "fullUrl": "https://ramhanumanchalisa.com/privacy-policy",
+      "type": "hardcoded",
+      "template": "legal_informational",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "Privacy Policy Legal Text",
+          "type": "legal_text",
+          "shared": false
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/disclaimer",
+      "fullUrl": "https://ramhanumanchalisa.com/disclaimer",
+      "type": "hardcoded",
+      "template": "legal_informational",
+      "inSitemap": true,
+      "sections": [
+        {
+          "name": "HeaderNavigation",
+          "type": "header",
+          "shared": true
+        },
+        {
+          "name": "Religious Content & Accuracy Disclaimer",
+          "type": "legal_text",
+          "shared": false
+        },
+        {
+          "name": "FooterSection",
+          "type": "footer",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "path": "/hanuman-chalisa/en",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa/en",
+      "type": "dynamic_collection",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "lang": "en",
+      "source": "src/pages/hanuman-chalisa/[lang].astro"
+    },
+    {
+      "path": "/hanuman-chalisa/te",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa/te",
+      "type": "dynamic_collection",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "lang": "te",
+      "source": "src/pages/hanuman-chalisa/[lang].astro"
+    },
+    {
+      "path": "/hanuman-chalisa/bn",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa/bn",
+      "type": "dynamic_collection",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "lang": "bn",
+      "source": "src/pages/hanuman-chalisa/[lang].astro"
+    },
+    {
+      "path": "/hanuman-chalisa/kn",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa/kn",
+      "type": "dynamic_collection",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "lang": "kn",
+      "source": "src/pages/hanuman-chalisa/[lang].astro"
+    },
+    {
+      "path": "/hanuman-chalisa/gu",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa/gu",
+      "type": "dynamic_collection",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "lang": "gu",
+      "source": "src/pages/hanuman-chalisa/[lang].astro"
+    },
+    {
+      "path": "/hanuman-chalisa/mr",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa/mr",
+      "type": "dynamic_collection",
+      "template": "prayer_text",
+      "inSitemap": true,
+      "lang": "mr",
+      "source": "src/pages/hanuman-chalisa/[lang].astro"
+    },
+    {
+      "path": "/blog",
+      "fullUrl": "https://ramhanumanchalisa.com/blog",
+      "type": "category_listing",
+      "template": "category",
+      "inSitemap": true,
+      "source": "src/pages/blog/index.astro"
+    },
+    {
+      "path": "/hanuman-chalisa-benefits",
+      "fullUrl": "https://ramhanumanchalisa.com/hanuman-chalisa-benefits",
+      "type": "category_listing",
+      "template": "category",
+      "inSitemap": true,
+      "source": "src/pages/hanuman-chalisa-benefits/index.astro"
+    },
+    {
+      "path": "/stories",
+      "fullUrl": "https://ramhanumanchalisa.com/stories",
+      "type": "category_listing",
+      "template": "category",
+      "inSitemap": true,
+      "source": "src/pages/stories/index.astro"
+    },
+    {
+      "path": "/blog/mahakal-chalisa",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/mahakal-chalisa",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/ayyappa-suprabhatham-lyrics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/ayyappa-suprabhatham-lyrics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/ganpati-stotra",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/ganpati-stotra",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/deva-ho-deva-ganpati-deva-song-lyrics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/deva-ho-deva-ganpati-deva-song-lyrics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/ganesh-chalisa-lyrics-in-english-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/ganesh-chalisa-lyrics-in-english-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/ganesh-pictures-photos-images-pics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/ganesh-pictures-photos-images-pics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/sukhkarta-dukhharta-ganesh-aarti",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/sukhkarta-dukhharta-ganesh-aarti",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/jai-ganesh-aarti",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/jai-ganesh-aarti",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/giriraj-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/giriraj-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/ambe-mata-aarti-lyrics-in-english-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/ambe-mata-aarti-lyrics-in-english-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/durga-pictures",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/durga-pictures",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/aarti-durga-ki",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/aarti-durga-ki",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/goddess-durga-bhajan-aarti-puja",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/goddess-durga-bhajan-aarti-puja",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/durga-chalisa-lyrics-in-english-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/durga-chalisa-lyrics-in-english-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/aarti-krishna-ki",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/aarti-krishna-ki",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/krishna-photos-images-pics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/krishna-photos-images-pics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/krishna-chalisa-lyrics-in-english-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/krishna-chalisa-lyrics-in-english-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/kali-maa-aarti-kali-devi-bhajan-kali",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/kali-maa-aarti-kali-devi-bhajan-kali",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-kali-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-kali-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-laxmi-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-laxmi-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/salasar-balaji-aarti",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/salasar-balaji-aarti",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/balaji-aarti-meaning-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/balaji-aarti-meaning-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/aarti-balaji-ki-bhajan-balaji-ji-ka",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/aarti-balaji-ki-bhajan-balaji-ji-ka",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/balaji-pictures-download-lord-balaji-ji",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/balaji-pictures-download-lord-balaji-ji",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/balaji-photos-images-pics-download-lord",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/balaji-photos-images-pics-download-lord",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/bhagwan-mahavir-aarti-bhajan-mantra",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/bhagwan-mahavir-aarti-bhajan-mantra",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-mahavir-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-mahavir-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-mahavir-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-mahavir-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-sadguru-aarti-lord-sadguru-prayer-in-marathi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-sadguru-aarti-lord-sadguru-prayer-in-marathi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/durga-aarti-goddess-durga-prayer-in-marathi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/durga-aarti-goddess-durga-prayer-in-marathi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ram-aarti-lord-ram-prayer-in-marathi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ram-aarti-lord-ram-prayer-in-marathi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-krishna-aarti-lord-krishna-prayer-in-marathi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-krishna-aarti-lord-krishna-prayer-in-marathi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-vishnu-aarti-lord-vishnu-prayer-in-marathi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-vishnu-aarti-lord-vishnu-prayer-in-marathi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-shankar-aarti-lord-shiva-prayer-in-marathi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-shankar-aarti-lord-shiva-prayer-in-marathi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ganpati-aarti-lord-ganesh-prayer-in-marathi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ganpati-aarti-lord-ganesh-prayer-in-marathi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-datta-chi-aarti-lord-dattatreya-prayer-in-marathi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-datta-chi-aarti-lord-dattatreya-prayer-in-marathi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-parshuram-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-parshuram-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-parvati-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-parvati-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-radha-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-radha-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ramchandra-kripalu-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ramchandra-kripalu-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ramchandra-kripalu-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ramchandra-kripalu-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ramdev-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ramdev-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-rani-sati-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-rani-sati-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/santoshi-mata-aarti-santoshi-maa-bhajan",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/santoshi-mata-aarti-santoshi-maa-bhajan",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-santoshi-chalisa-meaning-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-santoshi-chalisa-meaning-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-saraswati-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-saraswati-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-shitala-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-shitala-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/bhairavnath-babaji-ki-aarti",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/bhairavnath-babaji-ki-aarti",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/god-shiv-pictures-download-lord-shankar",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/god-shiv-pictures-download-lord-shankar",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/aarti-shiv-ji-ki-bhajan-shankar-ji-ka",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/aarti-shiv-ji-ki-bhajan-shankar-ji-ka",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shiva-photos-images-pics-download-lord",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shiva-photos-images-pics-download-lord",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-shiv-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-shiv-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-kaal-bhairav-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-kaal-bhairav-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/god-kalbhairav-pictures-download-lord",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/god-kalbhairav-pictures-download-lord",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/god-kal-bhairav-photos-images-pics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/god-kal-bhairav-photos-images-pics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-kaal-bhairav-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-kaal-bhairav-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-kalbhairav-aarti-bhairavnath-baba",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-kalbhairav-aarti-bhairavnath-baba",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-surya-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-surya-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/god-surya-dev-photos-images-pics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/god-surya-dev-photos-images-pics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/god-surya-dev-pictures-download-lord",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/god-surya-dev-pictures-download-lord",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/surya-dev-aarti-bhajan-lyrics-in-english-and-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/surya-dev-aarti-bhajan-lyrics-in-english-and-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-sai-baba-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-sai-baba-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/sai-baba-pictures-photos-images-pics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/sai-baba-pictures-photos-images-pics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/aarti-sai-baba-ki-bhajan-sai-baba-ji-ka",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/aarti-sai-baba-ki-bhajan-sai-baba-ji-ka",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-shani-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-shani-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shani-shingnapur-mandir-pictures-photos",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shani-shingnapur-mandir-pictures-photos",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shani-dev-photos-images-pics-download",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shani-dev-photos-images-pics-download",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shani-dev-pictures-download-lord-shani",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shani-dev-pictures-download-lord-shani",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/aarti-shani-dev-ki-bhajan-shanidev-ji-ki",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/aarti-shani-dev-ki-bhajan-shanidev-ji-ki",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-shani-dev-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-shani-dev-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-vindheshwari-chalisa-lyrics-in-english-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-vindheshwari-chalisa-lyrics-in-english-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-vishnu-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-vishnu-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-annapurna-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-annapurna-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ganga-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ganga-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-saraswati-chalisa-lyrics-in-english-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-saraswati-chalisa-lyrics-in-english-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/ramdev-baba-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/ramdev-baba-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/japji-sahib-path-in-hindi-punjabi-and-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/japji-sahib-path-in-hindi-punjabi-and-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/sukhmani-sahib-path-in-hindi-punjabi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/sukhmani-sahib-path-in-hindi-punjabi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/dukh-bhanjani-sahib-path-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/dukh-bhanjani-sahib-path-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/rehras-sahib-path-in-hindi-punjabi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/rehras-sahib-path-in-hindi-punjabi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/chaupai-sahib-path-in-hindi-punjabi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/chaupai-sahib-path-in-hindi-punjabi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/aadinath-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/aadinath-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ardhnarishwar-stotram-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ardhnarishwar-stotram-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-baba-balaknath-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-baba-balaknath-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-baglamukhi-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-baglamukhi-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/bhuvaneshwari-stotram-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/bhuvaneshwari-stotram-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-brahma-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-brahma-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/brihaspati-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/brihaspati-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-chandraprabhu-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-chandraprabhu-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-datta-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-datta-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-gayatri-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-gayatri-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/jaharveer-goga-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/jaharveer-goga-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-gopal-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-gopal-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-kuber-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-kuber-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/parasnath-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/parasnath-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/khatu-shyam-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/khatu-shyam-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-tulsi-chalisa-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-tulsi-chalisa-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/navgraha-chalisa-lyrics-in-english-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/navgraha-chalisa-lyrics-in-english-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/lalitha-chalisa-lyrics-in-hindi-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/lalitha-chalisa-lyrics-in-hindi-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/karni-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/karni-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ram-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ram-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/balaji-chalisa-lyrics-in-english-and-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/balaji-chalisa-lyrics-in-english-and-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-shantinath-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-shantinath-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/pitra-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/pitra-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/santoshi-mata-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/santoshi-mata-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/gorakhnath-chalisa-lyrics-in-hindi-and-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/gorakhnath-chalisa-lyrics-in-hindi-and-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/padam-prabhu-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/padam-prabhu-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/chamunda-chalisa-lyrics-in-hindi-and-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/chamunda-chalisa-lyrics-in-hindi-and-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-narmada-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-narmada-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/vishwakarma-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/vishwakarma-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/vaishno-devi-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/vaishno-devi-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/namokar-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/namokar-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/batuk-bhairav-chalisa-lyrics-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/batuk-bhairav-chalisa-lyrics-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/vishnu-sahasranamam-lyrics-in-hindi-pdf",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/vishnu-sahasranamam-lyrics-in-hindi-pdf",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ram-chandra-kripalu-bhajman-lyrics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ram-chandra-kripalu-bhajman-lyrics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/aarti-shri-ramayan-ji-ki-lyrics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/aarti-shri-ramayan-ji-ki-lyrics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-ram-jai-ram-jai-jai-ram-aarti",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-ram-jai-ram-jai-jai-ram-aarti",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/mangal-bhavan-amangal-haari-lyrics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/mangal-bhavan-amangal-haari-lyrics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/ram-siya-ram-siya-ram-lyrics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/ram-siya-ram-siya-ram-lyrics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/pavan-tanay-sankat-haran-mangal-murati",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/pavan-tanay-sankat-haran-mangal-murati",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/jai-jai-hanuman-gusai-aarti",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/jai-jai-hanuman-gusai-aarti",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/sunderkand",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/sunderkand",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-bahuk-lyrics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-bahuk-lyrics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-chalisa-in-punjabi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-chalisa-in-punjabi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-chalisa-in-odia",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-chalisa-in-odia",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-chalisa-in-malayalam",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-chalisa-in-malayalam",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-chalisa-in-tamil",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-chalisa-in-tamil",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-chalisa-in-bengali",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-chalisa-in-bengali",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-chalisa-in-kannada",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-chalisa-in-kannada",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-chalisa-in-gujarati",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-chalisa-in-gujarati",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/bajrang-baan-lyrics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/bajrang-baan-lyrics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/sankat-mochan-lyrics-meaning-in-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/sankat-mochan-lyrics-meaning-in-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/sankat-mochan-lyrics-in-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/sankat-mochan-lyrics-in-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-hanuman-chalisa-in-telugu-lyrics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-hanuman-chalisa-in-telugu-lyrics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-hanuman-chalisa-english",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-hanuman-chalisa-english",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-photos-images-pics",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-photos-images-pics",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/aarti-bajrangbali-hanuman-ki",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/aarti-bajrangbali-hanuman-ki",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/hanuman-pictures",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/hanuman-pictures",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/blog/shri-hanuman-chalisa-hindi",
+      "fullUrl": "https://ramhanumanchalisa.com/blog/shri-hanuman-chalisa-hindi",
+      "type": "dynamic_content",
+      "template": "article",
+      "inSitemap": true,
+      "source": "src/data/imported-posts.json"
+    },
+    {
+      "path": "/stories/shri-hanuman-chalisa-origin",
+      "fullUrl": "https://ramhanumanchalisa.com/stories/shri-hanuman-chalisa-origin",
+      "type": "dynamic_content",
+      "template": "story",
+      "inSitemap": true,
+      "source": "src/data/stories.ts"
+    },
+    {
+      "path": "/stories/bajrang-baan-sacred-shield",
+      "fullUrl": "https://ramhanumanchalisa.com/stories/bajrang-baan-sacred-shield",
+      "type": "dynamic_content",
+      "template": "story",
+      "inSitemap": true,
+      "source": "src/data/stories.ts"
+    },
+    {
+      "path": "/stories/sanjeevani-mountain-feat",
+      "fullUrl": "https://ramhanumanchalisa.com/stories/sanjeevani-mountain-feat",
+      "type": "dynamic_content",
+      "template": "story",
+      "inSitemap": true,
+      "source": "src/data/stories.ts"
+    },
+    {
+      "path": "/stories/panchamukhi-hanuman-significance",
+      "fullUrl": "https://ramhanumanchalisa.com/stories/panchamukhi-hanuman-significance",
+      "type": "dynamic_content",
+      "template": "story",
+      "inSitemap": true,
+      "source": "src/data/stories.ts"
+    },
+    {
+      "path": "/stories/sacred-hanuman-mantras",
+      "fullUrl": "https://ramhanumanchalisa.com/stories/sacred-hanuman-mantras",
+      "type": "dynamic_content",
+      "template": "story",
+      "inSitemap": true,
+      "source": "src/data/stories.ts"
+    },
+    {
+      "path": "/stories/brahma-muhurat-chanting-rules",
+      "fullUrl": "https://ramhanumanchalisa.com/stories/brahma-muhurat-chanting-rules",
+      "type": "dynamic_content",
+      "template": "story",
+      "inSitemap": true,
+      "source": "src/data/stories.ts"
+    },
+    {
+      "path": "/stories/hanuman-jayanti-celebration",
+      "fullUrl": "https://ramhanumanchalisa.com/stories/hanuman-jayanti-celebration",
+      "type": "dynamic_content",
+      "template": "story",
+      "inSitemap": true,
+      "source": "src/data/stories.ts"
+    },
+    {
+      "path": "/stories/sundarkand-triumph-over-distress",
+      "fullUrl": "https://ramhanumanchalisa.com/stories/sundarkand-triumph-over-distress",
+      "type": "dynamic_content",
+      "template": "story",
+      "inSitemap": true,
+      "source": "src/data/stories.ts"
+    }
+  ]
+}
