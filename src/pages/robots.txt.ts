@@ -20,7 +20,17 @@ Disallow: /api/auth
 Disallow: /api/admin
 Disallow: /unauthorized
 
-# Block AI scrapers and training crawlers
+# Allow AI Search & Answer Engine Bots for Citations
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Block Bulk AI Training Scrapers
 User-agent: GPTBot
 Disallow: /
 
